@@ -7,9 +7,8 @@ use App\Http\Controllers\Controller;
 class BaseXCS extends Controller
 {
     /**
-     * Show the profile for the given user.
+     * Show the welcome view for XCS
      *
-     * @param  int  $id
      * @return View
      */
     public function show()
