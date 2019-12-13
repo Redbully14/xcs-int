@@ -20,3 +20,12 @@
   font-size: 2rem;
   margin-right: 0.3rem!important;
 }
+
+#xcs-header-sub {
+  font-size: 20%;
+}
+
+body
+{   
+    padding-bottom: 5;   
+}
