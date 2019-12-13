@@ -4,9 +4,9 @@
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
     <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fas fa-laugh-wink"></i>
+      <i class="{{ $constants['application_icon'] }}"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+    <div class="sidebar-brand-text mx-3">{{ $constants['application_name'] }} <sup>{{ $constants['application_subname'] }}</sup></div>
   </a>
 
   <!-- Divider -->

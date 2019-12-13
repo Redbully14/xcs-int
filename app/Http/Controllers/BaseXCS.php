@@ -12,9 +12,14 @@ class BaseXCS extends Controller
      * @return View
      */
     public function xcsInfo()
-    {
-        
-        
+    {   
         return view('welcome');
+    }
+
+    public function dashboard()
+    {
+    	$constants = \Config::get('constants.global');
+
+    	return view('dashboard')->with('constants', $constants);
     }
 }
