@@ -17,4 +17,8 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', 'BaseXCS@show');
+Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
+
+Route::get('/', function () {
+    return view('dashboard');
+});
