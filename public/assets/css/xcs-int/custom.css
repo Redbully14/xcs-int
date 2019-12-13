@@ -1,0 +1,31 @@
+#xcs-header {
+	color: white;
+	text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.rotate-15 {
+  transform: rotate(15deg);
+}
+
+.rotate-n-15 {
+  transform: rotate(-15deg);
+}
+
+#xcs-header-icon {
+  font-size: 2rem;
+  margin-right: 0.3rem!important;
+}
+
+#xcs-header-sub {
+  font-size: 20%;
+}
+
+body
+{   
+    padding-bottom: 5;   
+}
