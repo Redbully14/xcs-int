@@ -16,8 +16,10 @@
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
+    <link href="/assets/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- endinject -->
     <!-- Layout styles -->
+    <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
@@ -27,8 +29,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="/assets/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="index.html" id="xcs-header"><i id="xcs-header-icon" class="fas fa-laugh-wink rotate-n-15"></i> TEST</a>
+          <a class="sidebar-brand brand-logo-mini" href="index.html" id="xcs-header"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
