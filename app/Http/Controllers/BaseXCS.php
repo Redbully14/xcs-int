@@ -11,8 +11,10 @@ class BaseXCS extends Controller
      *
      * @return View
      */
-    public function show()
+    public function xcsInfo()
     {
+        
+        
         return view('welcome');
     }
 }
