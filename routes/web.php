@@ -17,5 +17,12 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
+// Authentication Routes
+Route::get('logout', 'Auth\LoginController@logout', function () {
+    return abort(404);
+});
+Auth::routes();
+
+// Main Routes
 Route::get('/', 'BaseXCS@dashboard');
+Route::get('/xcsinfo', 'BaseXCS@xcsInfo');

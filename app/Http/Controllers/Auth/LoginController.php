@@ -37,4 +37,26 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        $constants = \Config::get('constants.global');
+        
+        return view('auth.login')->with('constants', $constants);
+    }
+
+    /**
+     * Change email field to username field.
+     *
+     * @return void
+     */
+    public function username()
+    {
+        return 'username';
+    }
 }
