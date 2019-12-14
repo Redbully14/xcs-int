@@ -19,5 +19,19 @@ return [
         'application_version' => 'canary',
         'application_footer' => 'Department of Justice RP',
         'application_icon' => 'fab fa-asymmetrik',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Page Name Constants
+    |--------------------------------------------------------------------------
+    |
+    | Page Name Constants are used to define page names within the application
+    | that will reflect the changes throughout the website.
+    |
+    */
+    'pages' => [
+        'dashboard' => 'Dashboard',
+        'member_admin' => 'Member Settings'
     ]
 ];

@@ -24,5 +24,6 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 Auth::routes();
 
 // Main Routes
-Route::get('/', 'BaseXCS@dashboard');
+Route::get('/', 'AntelopeController@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
+Route::get('/member_admin', 'AntelopeController@memberAdmin');
