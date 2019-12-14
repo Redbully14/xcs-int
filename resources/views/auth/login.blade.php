@@ -28,6 +28,11 @@
             <div class="card col-lg-4">
               <div class="card-body px-5 py-5">
                 <h1 class="card-title text-left mb-3" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['application_icon'] }} rotate-n-15"></i> {{ $constants['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['application_subname'] }}</sup></h1>
+
+                @if($errors->any())
+                    <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> The username or password is incorrect. </div>
+                @endif
+
                 <h3 class="card-title text-left mb-3">Login</h3>
                 <form method="POST" action="{{ route('login') }}">
                   @csrf
