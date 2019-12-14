@@ -19,3 +19,6 @@ Route::get('/', function () {
 
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
 Route::get('/', 'BaseXCS@dashboard');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
