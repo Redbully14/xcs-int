@@ -3,6 +3,7 @@
 @section('customcss')
 <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
 <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+<link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
 @endsection
 
 @section('content')
@@ -124,8 +125,10 @@
 @section('pluginjs')
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
 @endsection
 
 @section('customjs')
 <script src="/assets/js/select2.js"></script>
+<script src="/assets/js/xcs-int/toast.js"></script>
 @endsection
