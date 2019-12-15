@@ -1,5 +1,10 @@
 @extends('master.app')
 
+@section('customcss')
+<link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+<link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+@endsection
+
 @section('content')
 <div class="content-wrapper" style="padding-bottom: 650px;">
   <div class="page-header">
@@ -81,13 +86,40 @@
               <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
             </div>
 
+            <div class="form-group">
+              <label>Antelope Permission Level</label>
+              <select class="js-example-basic-single" style="width:100%">
+                @foreach($access as $item => $value)
+                  <option value="{{ $item }}">{{ $value }}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Rank</label>
+              <select class="js-example-basic-single" style="width:100%">
+                @foreach($ranks as $rank => $value)
+                  <option value="{{ $rank }}">{{ $value }}</option>
+                @endforeach
+              </select>
+            </div>
+
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Create</button>
+            <button type="submit" class="btn btn-success">Add</button>
             <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
           </div>
       </form>
     </div>
   </div>
 </div>
+@endsection
+
+@section('pluginjs')
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+@endsection
+
+@section('customjs')
+<script src="/assets/js/select2.js"></script>
 @endsection

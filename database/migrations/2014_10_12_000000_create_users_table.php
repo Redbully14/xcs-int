@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->nullable();
             $table->string('rank')->nullable();
             $table->string('access')->nullable();
+            $table->string('website_id')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

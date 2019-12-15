@@ -39,7 +39,16 @@ class AntelopeController extends Controller
     {
         $constants = \Config::get('constants.global');
         $users = DB::table('users')->get();
+        $access = \Config::get('constants.access');
+        $ranks = \Config::get('constants.rank');
 
-        return view('member_admin')->with('constants', $constants)->with('users', $users);
+        // Removing superadmin access
+        array_shift($access);
+
+        return view('member_admin')
+        ->with('constants', $constants)
+        ->with('users', $users)
+        ->with('access', $access)
+        ->with('ranks', $ranks);
     }
 }
