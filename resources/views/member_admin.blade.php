@@ -37,8 +37,14 @@
                   <td>{{ $user->id }}</td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->username }}</td>
-                  <td>{{ $user->rank }}</td>
-                  <td>{{ $user->access }}</td>
+                  <td>{{ $ranks[$user->rank] }}</td>
+                  <td>@php 
+                    try {
+                      echo $access[$user->access];
+                    } catch (Exception $e) {
+                      echo 'Antelope Developer';
+                    };
+                  @endphp</td>
                   <td>
                     <label class="badge badge-info">Test</label>
                   </td>
