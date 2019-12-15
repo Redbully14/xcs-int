@@ -25,29 +25,7 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Register</h3>
-                <form method="POST" action="{{ route('register') }}">
-                @csrf
-
-                  <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" autofocus>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
-                  </div>
-
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" class="form-control p_input" require id="password-confirm" name="password_confirmation" autocomplete="new-password">
-                  </div>
-
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn">Register</button>
-                  </div>
-                </form>
+                <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> Trying to hack the system I see? :D </div>
               </div>
             </div>
           </div>

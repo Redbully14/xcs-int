@@ -57,7 +57,7 @@
       <span class="nav-link">Navigation</span>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="/">
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i>
         </span>
@@ -65,27 +65,12 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="pages/widgets/widgets.html">
+      <a class="nav-link" href="/member_admin">
         <span class="menu-icon">
-          <i class="mdi mdi-texture"></i>
+          <i class="mdi mdi-security"></i>
         </span>
-        <span class="menu-title">Widgets</span>
+        <span class="menu-title">Member Settings</span>
       </a>
-    </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
-        <span class="menu-icon">
-          <i class="mdi mdi-view-list"></i>
-        </span>
-        <span class="menu-title">Page Layouts</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="page-layouts">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/layout/boxed-layout.html">Boxed</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/layout/rtl-layout.html">RTL</a></li>
-        </ul>
-      </div>
     </li>
   </ul>
 </nav>
