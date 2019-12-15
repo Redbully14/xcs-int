@@ -41,6 +41,8 @@ class AntelopeController extends Controller
         $users = DB::table('users')->get();
         $access = \Config::get('constants.access');
         $ranks = \Config::get('constants.rank');
+        $status_colors = \Config::get('constants.antelope_status_color');
+        $status_text = \Config::get('constants.antelope_status_text');
 
         // Removing superadmin access
         array_shift($access);
@@ -49,6 +51,8 @@ class AntelopeController extends Controller
         ->with('constants', $constants)
         ->with('users', $users)
         ->with('access', $access)
-        ->with('ranks', $ranks);
+        ->with('ranks', $ranks)
+        ->with('status_colors', $status_colors)
+        ->with('status_text', $status_text);
     }
 }

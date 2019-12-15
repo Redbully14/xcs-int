@@ -37,6 +37,35 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Antelope Member Status Colors
+    |--------------------------------------------------------------------------
+    |
+    | Antelope Member Status Colors Constant defines the type of color that
+    | that would reflect a member when access is marked as either active or
+    | inactive on the website.
+    |
+    */
+    'antelope_status_color' => [
+        true => 'success',
+        false => 'danger',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Antelope Member Status Text
+    |--------------------------------------------------------------------------
+    |
+    | Antelope Member Status Colors Constant defines the type of text that
+    | would appear on the website when searching up a member.
+    |
+    */
+    'antelope_status_text' => [
+        true => 'Active Profile',
+        false => 'Inactive Profile',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Access Level Constants
     |--------------------------------------------------------------------------
     |

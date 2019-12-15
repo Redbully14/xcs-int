@@ -46,7 +46,7 @@
                     };
                   @endphp</td>
                   <td>
-                    <label class="badge badge-info">Test</label>
+                    <label class="badge badge-{{ $status_colors[$user->antelope_status] }}">{{ $status_text[$user->antelope_status] }}</label>
                   </td>
                   <td>
                     <button class="btn btn-outline-primary">Edit</button>
