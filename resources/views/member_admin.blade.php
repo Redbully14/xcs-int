@@ -8,14 +8,14 @@
 @section('content')
 <div class="content-wrapper" style="padding-bottom: 650px;">
   <div class="page-header">
-    <h3 class="page-title"> Data table </h3>
+    <h3 class="page-title"> Member Settings </h3>
     <nav aria-label="breadcrumb">
       <a class="nav-link btn btn-success create-new-button" data-toggle="modal" aria-expanded="false" href="#" data-target="#memberAddModal">+ Add a Member</a>
     </nav>
   </div>
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Data table</h4>
+      <h4 class="card-title">Member Settings</h4>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
@@ -49,7 +49,7 @@
                     <label class="badge badge-info">Test</label>
                   </td>
                   <td>
-                    <button class="btn btn-outline-primary">View</button>
+                    <button class="btn btn-outline-primary">Edit</button>
                   </td>
                 </tr>
                 @endforeach
