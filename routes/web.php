@@ -17,6 +17,9 @@ Route::get('/', function () {
 });
 */
 
+// IMPORTANT IMPORTANT IMPORTANT: Fucking delete this once Antelope goes live otherwise there will be 5000 olivers in the database
+Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
+
 // Authentication Routes
 Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);

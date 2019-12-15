@@ -56,6 +56,8 @@ class NewMemberController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'name' => ['required', 'string', 'max:255'],
+            'access' => ['required', 'string', 'max:30'],
+            'rank' => ['required', 'string', 'max:30'],
         ]);
     }
 
@@ -71,6 +73,8 @@ class NewMemberController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'name' => $data['name'],
+            'access' => $data['access'],
+            'rank' => $data['rank'],
         ]);
     }
 

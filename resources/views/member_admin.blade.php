@@ -88,7 +88,7 @@
 
             <div class="form-group">
               <label>Antelope Permission Level</label>
-              <select class="js-example-basic-single" style="width:100%">
+              <select class="js-example-basic-single" style="width:100%" id="access" name="access">
                 @foreach($access as $item => $value)
                   <option value="{{ $item }}">{{ $value }}</option>
                 @endforeach
@@ -97,7 +97,7 @@
 
             <div class="form-group">
               <label>Rank</label>
-              <select class="js-example-basic-single" style="width:100%">
+              <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
                 @foreach($ranks as $rank => $value)
                   <option value="{{ $rank }}">{{ $value }}</option>
                 @endforeach
