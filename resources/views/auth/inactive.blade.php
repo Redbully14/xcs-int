@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>U hax0r :D</title>
+    <title>{{ $constants['application_name'] }}</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
@@ -25,7 +25,10 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> Trying to hack the system I see? :D </div>
+                <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> {{ session('message') }} </div>
+              </div>
+              <div class="text-center">
+                  <button type="button" class="btn btn-primary btn-block enter-btn" href='/login'>Back to login</button>
               </div>
             </div>
           </div>
