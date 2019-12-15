@@ -129,12 +129,6 @@
 
 @section('ajax')
 <script text="text/javascript">
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
   $('#ajax_member_admin').on('submit', function(e) {
     var name = $('#name').val();
     var username = $('#username').val();
@@ -146,7 +140,6 @@
       type: 'POST',
       url: '{{ url('member_admin/new') }}',
       data: {name:name, username:username, password:password, access:access, rank:rank}
-
     });
   });
 </script>
