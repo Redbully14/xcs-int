@@ -5,10 +5,7 @@
   <div class="page-header">
     <h3 class="page-title"> Data table </h3>
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Tables</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data table</li>
-      </ol>
+      <a class="nav-link btn btn-success create-new-button" data-toggle="modal" aria-expanded="false" href="#" data-target="#memberAddModal">+ Add a Member</a>
     </nav>
   </div>
   <div class="card">
@@ -50,6 +47,46 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Adding a Member - Modal -->
+
+<div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="memberAddModalLabel">Adding a Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="POST" action="/member_admin/new">
+          @csrf
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control p_input" require id="name" name="name" autocomplete="name" autofocus>
+            </div>
+
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" >
+            </div>
+
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Create</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+          </div>
+      </form>
     </div>
   </div>
 </div>

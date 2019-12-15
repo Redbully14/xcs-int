@@ -23,7 +23,10 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 });
 Auth::routes();
 
-// Main Routes
+// Main GET Routes
 Route::get('/', 'AntelopeController@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
 Route::get('/member_admin', 'AntelopeController@memberAdmin');
+
+// POST routes
+Route::post('/member_admin/new', 'Auth\NewMemberController@register');
