@@ -21,7 +21,21 @@ Route::get('/', function () {
 Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
-Auth::routes();
+Route::get('/register', function () {
+    return view('auth.register');
+});
+Route::get('login', [
+  'as' => 'login',
+  'uses' => 'Auth\LoginController@showLoginForm'
+]);
+Route::post('login', [
+  'as' => '',
+  'uses' => 'Auth\LoginController@login'
+]);
+Route::post('logout', [
+  'as' => 'logout',
+  'uses' => 'Auth\LoginController@logout'
+]);
 
 // Main GET Routes
 Route::get('/', 'AntelopeController@dashboard');
