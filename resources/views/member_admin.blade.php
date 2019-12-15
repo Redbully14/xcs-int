@@ -74,8 +74,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form method="POST" action="/member_admin/new">
-          @csrf
+        <form id="ajax_member_admin">
           <div class="modal-body">
 
             <div class="form-group">
@@ -128,7 +127,27 @@
 <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
 @endsection
 
-@section('customjs')
-<script src="/assets/js/select2.js"></script>
-<script src="/assets/js/xcs-int/toast.js"></script>
+@section('ajax')
+<script text="text/javascript">
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $('#ajax_member_admin').on('submit', function(e) {
+    var name = $('#name').val();
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var access = $('#access').val();
+    var rank = $('#rank').val();
+
+    $.ajax({
+      type: 'POST',
+      url: '{{ url('member_admin/new') }}',
+      data: {name:name, username:username, password:password, access:access, rank:rank}
+
+    });
+  });
+</script>
 @endsection

@@ -27,6 +27,9 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 Route::get('/register', function () {
     return view('auth.register');
 });
+Route::get('/inactive', [
+	'as' => 'inactive',
+	'uses' => 'Auth\InactiveController@inactive']);
 Route::get('login', [
   'as' => 'login',
   'uses' => 'Auth\LoginController@showLoginForm'
@@ -41,7 +44,10 @@ Route::post('logout', [
 ]);
 
 // Main GET Routes
-Route::get('/', 'AntelopeController@dashboard');
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+Route::get('/dashboard', 'AntelopeController@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
 Route::get('/member_admin', 'AntelopeController@memberAdmin');
 
