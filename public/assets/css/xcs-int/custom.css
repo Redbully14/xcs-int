@@ -25,7 +25,11 @@
   font-size: 20%;
 }
 
-body
+.content-wrapper
 {   
-    padding-bottom: 5;   
+  min-height: 100vh;
+}
+
+body, html {
+  background: #000000;
 }

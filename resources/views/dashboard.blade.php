@@ -1,7 +1,7 @@
 @extends('master.app')
 
 @section('content')
-<div class="content-wrapper" style="padding-bottom: 650px;">
+<div class="content-wrapper">
 	<div class="row">
 	  <div class="col-12 grid-margin stretch-card">
 	    <div class="card corona-gradient-card">

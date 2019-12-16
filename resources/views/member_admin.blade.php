@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<div class="content-wrapper" style="padding-bottom: 650px;">
+<div class="content-wrapper">
   <div class="page-header">
     <h3 class="page-title"> Member Settings </h3>
     <nav aria-label="breadcrumb">
