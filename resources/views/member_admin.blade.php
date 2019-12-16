@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
 <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
 <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
+<link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 @endsection
 
 @section('content')
@@ -98,7 +99,8 @@
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
 @endsection
 
 @section('ajax')
