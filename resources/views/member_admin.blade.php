@@ -169,7 +169,7 @@
         } 
       },
       { data: 'antelope_status', name: 'antelope_status', render: function (data, type, row) {
-          return '<div class="badge badge-outline-'+constants_status_color[data]+' badge">'+constants_status_text[data]+'</div>';
+          return '<div class="badge badge-outline-'+constants_status_color[data]+' badge-pill">'+constants_status_text[data]+'</div>';
         } 
       },
      ]
