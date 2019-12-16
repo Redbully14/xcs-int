@@ -27,72 +27,15 @@
                   <th>Antelope ID</th>
                   <th>Name</th>
                   <th>Username</th>
-                  <th>Rank</th>
                   <th>Antelope Access</th>
                   <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
             </table>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Adding a Member - Modal -->
-
-<div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="memberAddModalLabel">Adding a Member</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <form id="ajax_member_admin">
-          <div class="modal-body">
-
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control p_input" require id="name" name="name" autocomplete="name" autofocus>
-            </div>
-
-            <div class="form-group">
-              <label>Username</label>
-              <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" >
-            </div>
-
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
-            </div>
-
-            <div class="form-group">
-              <label>Antelope Permission Level</label>
-              <select class="js-example-basic-single" style="width:100%" id="access" name="access">
-                @foreach($constants['access'] as $item => $value)
-                  <option value="{{ $item }}">{{ $value }}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Rank</label>
-              <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
-                @foreach($constants['rank'] as $rank => $value)
-                  <option value="{{ $rank }}">{{ $value }}</option>
-                @endforeach
-              </select>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Add</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelAddMember">Cancel</button>
-          </div>
-      </form>
     </div>
   </div>
 </div>
@@ -113,26 +56,6 @@
   var constants_status_text = @json($constants['antelope_status_text']);
   var constants_status_color = @json($constants['antelope_status_color']);
 
-  $('#ajax_member_admin').on('submit', function(e) {
-    e.preventDefault();
-    var name = $('#name').val();
-    var username = $('#username').val();
-    var password = $('#password').val();
-    var access = $('#access').val();
-    var rank = $('#rank').val();
-
-    $.ajax({
-      type: 'POST',
-      url: '{{ url('member_admin/new') }}',
-      data: {name:name, username:username, password:password, access:access, rank:rank},
-      success: function() {
-        showSuccessToast();
-        $('#cancelAddMember').click();
-        $('#usersTable').load(document.URL +  ' #usersTable');
-      }
-    });
-  });
-
   showSuccessToast = function() {
     'use strict';
     $.toast({
@@ -149,16 +72,12 @@
      serverSide: true,
      ajax: '{{ url('member_admin/get_users') }}',
      columns: [
-      { data: 'id', name: 'id' },
-      { data: 'name', name: 'name' },
-      { data: 'username', name: 'username' },
+      { data: 'id', name: 'id', searchable: true },
+      { data: 'name', name: 'name', searchable: true },
+      { data: 'username', name: 'username', searchable: true },
       // the fucking part below was made thanks to stackoverflow
       // fucking <th>
-      { data: 'rank', name: 'rank', render: function (data, type, row) {
-          return constants_ranks[data];
-        } 
-      },
-      { data: 'access', name: 'access', render: function (data, type, row) {
+      { data: 'access', name: 'access', searchable: true, render: function (data, type, row) {
           try {
              if(constants_access[data] == null) throw "Antelope Developer"; 
              else return constants_access[data];
@@ -168,12 +87,18 @@
           } 
         } 
       },
-      { data: 'antelope_status', name: 'antelope_status', render: function (data, type, row) {
+      { data: 'antelope_status', searchable: false, name: 'antelope_status', render: function (data, type, row) {
           return '<div class="badge badge-outline-'+constants_status_color[data]+' badge-pill">'+constants_status_text[data]+'</div>';
         } 
       },
+      // dude wtf is going on
+      { data: null, searchable: false, defaultContent: '<button>Edit</button>' },
      ]
     });
   });
 </script>
+@endsection
+
+@section('modals')
+  @include('modals.add_member_action_modal')
 @endsection

@@ -76,5 +76,8 @@
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->
+    <!-- Modals for this page-->
+    @yield('modals')
+    <!-- End modals for this page -->
   </body>
 </html>
