@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Datatables;
+use App\User;
 
 class AntelopeController extends Controller
 {
@@ -54,5 +56,15 @@ class AntelopeController extends Controller
         ->with('ranks', $ranks)
         ->with('status_colors', $status_colors)
         ->with('status_text', $status_text);
+    }
+
+    /**
+     * Gets all users in database
+     *
+     * @return View
+     */
+    public function passUserData()
+    {
+        return Datatables::of(User::query())->make(true);
     }
 }

@@ -20,41 +20,14 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive" id="usersTable">
-            <table id="order-listing" class="table">
+            <table id="tableElement" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Antelope ID</th>
                   <th>Name</th>
                   <th>Username</th>
-                  <th>Rank</th>
-                  <th>Access Level</th>
-                  <th>Status</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach($users as $user)
-                <tr>
-                  <td>{{ $user->id }}</td>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->username }}</td>
-                  <td>{{ $ranks[$user->rank] }}</td>
-                  <td>@php 
-                    try {
-                      echo $access[$user->access];
-                    } catch (Exception $e) {
-                      echo 'Antelope Developer';
-                    };
-                  @endphp</td>
-                  <td>
-                    <label class="badge badge-{{ $status_colors[$user->antelope_status] }}">{{ $status_text[$user->antelope_status] }}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-outline-primary">Edit</button>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
             </table>
           </div>
         </div>
@@ -125,6 +98,7 @@
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 @endsection
 
 @section('ajax')
@@ -159,6 +133,18 @@
       loaderBg: '#f96868',
       position: 'top-right'
     })
-  };
+  };         
+  $(function() {
+     $('#tableElement').DataTable({
+     processing: true,
+     serverSide: true,
+     ajax: '{{ url('member_admin/get_users') }}',
+     columns: [
+              { data: 'id', name: 'id' },
+              { data: 'name', name: 'name' },
+              { data: 'username', name: 'username' }
+           ]
+    });
+  });
 </script>
 @endsection
