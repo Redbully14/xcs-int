@@ -27,6 +27,9 @@
                   <th>Antelope ID</th>
                   <th>Name</th>
                   <th>Username</th>
+                  <th>Rank</th>
+                  <th>Antelope Access</th>
+                  <th>Status</th>
                 </tr>
               </thead>
             </table>
@@ -69,7 +72,7 @@
             <div class="form-group">
               <label>Antelope Permission Level</label>
               <select class="js-example-basic-single" style="width:100%" id="access" name="access">
-                @foreach($access as $item => $value)
+                @foreach($constants['access'] as $item => $value)
                   <option value="{{ $item }}">{{ $value }}</option>
                 @endforeach
               </select>
@@ -78,7 +81,7 @@
             <div class="form-group">
               <label>Rank</label>
               <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
-                @foreach($ranks as $rank => $value)
+                @foreach($constants['rank'] as $rank => $value)
                   <option value="{{ $rank }}">{{ $value }}</option>
                 @endforeach
               </select>
@@ -105,6 +108,11 @@
 
 @section('ajax')
 <script text="text/javascript">
+  var constants_ranks = @json($constants['rank']);
+  var constants_access = @json($constants['access']);
+  var constants_status_text = @json($constants['antelope_status_text']);
+  var constants_status_color = @json($constants['antelope_status_color']);
+
   $('#ajax_member_admin').on('submit', function(e) {
     e.preventDefault();
     var name = $('#name').val();
@@ -138,14 +146,33 @@
   };         
   $(function() {
      $('#tableElement').DataTable({
-     processing: true,
      serverSide: true,
      ajax: '{{ url('member_admin/get_users') }}',
      columns: [
-              { data: 'id', name: 'id' },
-              { data: 'name', name: 'name' },
-              { data: 'username', name: 'username' }
-           ]
+      { data: 'id', name: 'id' },
+      { data: 'name', name: 'name' },
+      { data: 'username', name: 'username' },
+      // the fucking part below was made thanks to stackoverflow
+      // fucking <th>
+      { data: 'rank', name: 'rank', render: function (data, type, row) {
+          return constants_ranks[data];
+        } 
+      },
+      { data: 'access', name: 'access', render: function (data, type, row) {
+          try {
+             if(constants_access[data] == null) throw "Antelope Developer"; 
+             else return constants_access[data];
+          } 
+          catch(e) {
+            return e;
+          } 
+        } 
+      },
+      { data: 'antelope_status', name: 'antelope_status', render: function (data, type, row) {
+          return '<div class="badge badge-outline-'+constants_status_color[data]+' badge">'+constants_status_text[data]+'</div>';
+        } 
+      },
+     ]
     });
   });
 </script>

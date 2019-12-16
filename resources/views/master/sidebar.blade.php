@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['application_icon'] }} rotate-n-15"></i> {{ $constants['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['application_subname'] }}</sup></a>
-    <a class="sidebar-brand brand-logo-mini" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['application_icon'] }} rotate-n-15"></i></a>
+    <a class="sidebar-brand brand-logo" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></a>
+    <a class="sidebar-brand brand-logo-mini" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i></a>
   </div>
   <ul class="nav">
     <li class="nav-item profile">
