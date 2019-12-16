@@ -19,7 +19,7 @@
       <h4 class="card-title">Member Settings</h4>
       <div class="row">
         <div class="col-12">
-          <div class="table-responsive">
+          <div class="table-responsive" id="usersTable">
             <table id="order-listing" class="table">
               <thead>
                 <tr>
@@ -113,7 +113,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Add</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelAddMember">Cancel</button>
           </div>
       </form>
     </div>
@@ -130,6 +130,7 @@
 @section('ajax')
 <script text="text/javascript">
   $('#ajax_member_admin').on('submit', function(e) {
+    e.preventDefault();
     var name = $('#name').val();
     var username = $('#username').val();
     var password = $('#password').val();
@@ -139,8 +140,25 @@
     $.ajax({
       type: 'POST',
       url: '{{ url('member_admin/new') }}',
-      data: {name:name, username:username, password:password, access:access, rank:rank}
+      data: {name:name, username:username, password:password, access:access, rank:rank},
+      success: function() {
+        showSuccessToast();
+        $('#cancelAddMember').click();
+        $('#usersTable').load(document.URL +  ' #usersTable');
+      }
     });
   });
+
+  showSuccessToast = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Added!',
+      text: 'New user has been added to the database, you are now able to view/edit the profile.',
+      showHideTransition: 'slide',
+      icon: 'success',
+      loaderBg: '#f96868',
+      position: 'top-right'
+    })
+  };
 </script>
 @endsection
