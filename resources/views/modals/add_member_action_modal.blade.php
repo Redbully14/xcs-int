@@ -54,25 +54,35 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript">
   $('#ajax_add_member').on('submit', function(e) {
-  e.preventDefault();
-  var name = $('#name').val();
-  var username = $('#username').val();
-  var password = $('#password').val();
-  var access = $('#access').val();
-  var rank = $('#rank').val();
+    e.preventDefault();
+    var name = $('#name').val();
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var access = $('#access').val();
+    var rank = $('#rank').val();
 
-  $.ajax({
-    type: 'POST',
-    url: '{{ url('member_admin/new') }}',
-    data: {name:name, username:username, password:password, access:access, rank:rank},
-    success: function() {
-      showSuccessToast();
-      $('#cancelAddMember').click();
-      $('#usersTable').load(document.URL +  ' #usersTable');
-    }
+    $.ajax({
+      type: 'POST',
+      url: '{{ url('member_admin/new') }}',
+      data: {name:name, username:username, password:password, access:access, rank:rank},
+      success: function() {
+        showSuccessToast();
+        $('#cancelAddMember').click();
+        $('#usersTable').load(document.URL +  ' #usersTable');
+      }
+    });
   });
-});
+  (function($) {
+    'use strict';
+
+    if ($(".js-example-basic-single").length) {
+      $(".js-example-basic-single").select2();
+    }
+    if ($(".js-example-basic-multiple").length) {
+      $(".js-example-basic-multiple").select2();
+    }
+  })(jQuery);
 </script>
+
