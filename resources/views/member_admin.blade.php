@@ -44,6 +44,7 @@
 @endsection
 
 @section('pluginjs')
+<script src="/assets/vendors/jquery-toast-plugin/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
 <script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
