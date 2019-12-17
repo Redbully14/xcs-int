@@ -1,3 +1,5 @@
+<?php $page_name = 'dashboard' ?>
+
 @extends('master.app')
 
 @section('customcss')

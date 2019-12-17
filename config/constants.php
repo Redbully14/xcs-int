@@ -23,6 +23,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Department Constants
+    |--------------------------------------------------------------------------
+    |
+    | The magic of Antelope happens here, changing this will change the system-
+    | wide setting for which department this system is meant for.
+    |
+    */
+    'department' => [
+        'department_name' => 'Civilian Operations',
+        'department_short_name' => 'Civilians',
+        'department_unit_name' => 'Civilian',
+        'department_callsign' => 'Civilian Number',
+        'department_director' => 'Ryan S. Civ-1',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Page Name Constants
     |--------------------------------------------------------------------------
     |
@@ -74,7 +91,7 @@ return [
     |
     */
     'access' => [
-        'superadmin' => 'Developer Access',
+        'superadmin' => 'Antelope Developer',
         'admin' => 'Administration Access',
         'seniorstaff' => 'Senior Staff Access',
         'staff' => 'Staff Access',

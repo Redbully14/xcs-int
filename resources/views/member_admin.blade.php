@@ -1,3 +1,5 @@
+<?php $page_name = 'member_admin' ?>
+
 @extends('master.app')
 
 @section('customcss')

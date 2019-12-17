@@ -12,8 +12,8 @@
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
-            <h5 class="mb-0 font-weight-normal">Oliver G. Civ-6</h5>
-            <span>Civilian Manager</span>
+            <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</h5>
+            <span>{{ $constants['rank'][Auth::user()->rank] }}</span>
           </div>
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
