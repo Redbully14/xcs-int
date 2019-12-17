@@ -45,7 +45,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $constants = \Config::get('constants.global');
+        $constants = \Config::get('constants');
         
         return view('auth.login')->with('constants', $constants);
     }

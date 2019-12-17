@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $constants['application_name'] }}</title>
+    <title>{{ $constants['global']['application_name'] }} :: {{ $constants['department']['department_name'] }}</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
@@ -27,7 +27,7 @@
           <div class="content-wrapper full-page-wrapper auth login-2 login-bg">
             <div class="card col-lg-4">
               <div class="card-body px-5 py-5">
-                <h1 class="card-title text-left mb-3" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['application_icon'] }} rotate-n-15"></i> {{ $constants['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['application_subname'] }}</sup></h1>
+                <h1 class="card-title text-left mb-3" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></h1>
 
                 @if($errors->any())
                     <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> The username or password is incorrect. </div>
