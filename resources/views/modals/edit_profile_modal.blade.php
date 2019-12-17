@@ -119,4 +119,23 @@
       $(".js-example-basic-multiple").select2();
     }
   })(jQuery);
+
+    $('#ajax_edit_member').on('submit', function(e) {
+      e.preventDefault();
+      var id = $('#ajax_open_modal_edit').val();
+      var name = $('#profile-name-field').val();
+      var website_id = $('#profile-website-id-field').val();
+      var department_id = $('#profile-department-id-field').val();
+      var rank = $('#profile-rank-field').val();
+      var antelope_status = $('#profile-active-field').prop('checked');
+
+      $.ajax({
+        type: 'POST',
+        url: '{{ url('member/edit/edit_user/') }}/'+id,
+        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
+        success: function() {
+          $('#cancelAddMember').click();
+          }
+      });
+    });
 </script>
