@@ -17,25 +17,14 @@
               <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Transaction History</h4>
-                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                      <div class="text-md-center text-xl-left">
-                        <h6 class="mb-1">Transfer to Paypal</h6>
-                        <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                      </div>
-                      <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                        <h6 class="font-weight-bold mb-0">$236</h6>
-                      </div>
-                    </div>
-                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                      <div class="text-md-center text-xl-left">
-                        <h6 class="mb-1">Tranfer to Stripe</h6>
-                        <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                      </div>
-                      <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                        <h6 class="font-weight-bold mb-0">$593</h6>
-                      </div>
-                    </div>
+                    <h2 class="card-title" id="profile-display-name">ajax-profile-display-name</h2>
+                    <h5 class="card-title">General Data</h5>
+
+                    <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control p_input" require id="profile-name-field" name="name" autocomplete="name" autofocus value="ajax-profile-display-input-name">
+                  </div>
+
                   </div>
                 </div>
               </div>
@@ -162,7 +151,9 @@
          type: "POST",
          url: '{{ url('member/edit/get_data/') }}/'+id,
          success: function(data){
-             console.log(data);
+           console.log(data);
+           $("#profile-display-name").text(data['name']);
+           $("#profile-name-field").val(data['name']);
          }
       });
 

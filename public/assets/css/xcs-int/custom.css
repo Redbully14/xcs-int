@@ -33,3 +33,11 @@
 body, html {
   background: #000000;
 }
+
+input, select, textarea{
+    color: #ffffff !important;
+}
+
+textarea:focus, input:focus {
+    color: #ffffff !important ;
+}
