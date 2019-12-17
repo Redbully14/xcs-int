@@ -54,3 +54,4 @@ Route::get('/member_admin/get_users', 'AntelopeController@passUserData');
 
 // POST routes
 Route::post('/member_admin/new', 'Auth\NewMemberController@register');
+Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata');

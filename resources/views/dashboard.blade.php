@@ -15,7 +15,7 @@
 	            <p class="mb-0 font-weight-normal d-none d-sm-block">Antelope	 now with a new facelift for enhanced legibility and aesthetics!</p>
 	          </div>
 	          <div class="col-3 col-sm-2 col-xl-2 pl-0 text-center">
-	            <button class="btn btn-outline-light btn-rounded get-started-btn" data-toggle="modal" data-target="#editProfileModal">Get Started</button>
+	            <button class="btn btn-outline-light btn-rounded get-started-btn" id="ajax_open_modal_edit" value="{{ '2' }}">Get Started</button>
 	          </div>
 	        </div>
 	      </div>
