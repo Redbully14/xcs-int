@@ -71,6 +71,9 @@
         showSuccessToast();
         $('#cancelAddMember').click();
         $('#usersTable').load(document.URL +  ' #usersTable');
+      },
+      error: function() {
+        showFailToast();
       }
     });
   });

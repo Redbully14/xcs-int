@@ -68,7 +68,20 @@
       loaderBg: '#f96868',
       position: 'top-right'
     })
-  };         
+  };
+
+  showFailToast = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Adding Failed!',
+      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
+      showHideTransition: 'slide',
+      icon: 'error',
+      loaderBg: '#f2a654',
+      position: 'top-right'
+    })
+  };
+
   $(function() {
      $('#tableElement').DataTable({
      serverSide: true,
