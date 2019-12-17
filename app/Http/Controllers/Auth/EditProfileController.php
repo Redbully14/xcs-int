@@ -40,9 +40,9 @@ class EditProfileController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function userdata(User $id)
-    {
-        return Auth::user();
+    protected function userdata($user)
+    {;
+        return User::find($user);
     }
 
     /**

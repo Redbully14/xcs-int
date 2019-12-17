@@ -47,7 +47,7 @@
                     <div class="form-group">
                       <label>Profile Settings</label>
                       <div class="form-check form-check-success">
-                        <label class="form-check-label"><input type="checkbox" class="form-check-input" checked=""> Active Profile <i class="input-helper"></i></label>
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Active Profile <i class="input-helper"></i></label>
                       </div>
                     </div>
 
@@ -102,6 +102,7 @@
              $("#profile-website-id-field").val(data['website_id']);
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
+             $("#profile-active-field").prop('checked', data['antelope_status']);
          }
       });
 
