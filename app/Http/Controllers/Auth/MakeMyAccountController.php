@@ -54,6 +54,7 @@ class MakeMyAccountController extends Controller
             'access' => 'superadmin',
             'rank' => 'manager',
             'website_id' => 519,
+            'department_id' => 'Civ-9'
         ]);
     }
 }

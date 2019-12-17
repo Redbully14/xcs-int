@@ -26,12 +26,29 @@
                     </div>
 
                     <div class="form-group">
+                      <label>Website ID</label>
+                      <input type="text" class="form-control p_input" require id="profile-website-id-field" name="website-id" value="ajax-profile-display-input-website-id">
+                    </div>
+
+                    <div class="form-group">
+                      <label>{{ 'Civilian ID -- changeme' }}</label>
+                      <input type="text" class="form-control p_input" require id="profile-department-id-field" name="department-id" value="ajax-profile-display-input-department-id">
+                    </div>
+
+                    <div class="form-group">
                       <label>Rank</label>
                       <select class="js-example-basic-single" style="width:100%" id="profile-rank-field" name="rank">
                         @foreach($constants['rank'] as $rank => $value)
                           <option value="{{ $rank }}">{{ $value }}</option>
                         @endforeach
                       </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Profile Settings</label>
+                      <div class="form-check form-check-success">
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Active Profile <i class="input-helper"></i></label>
+                      </div>
                     </div>
 
                   </div>
@@ -76,9 +93,16 @@
          url: '{{ url('member/edit/get_data/') }}/'+id,
          success: function(data){
            console.log(data);
-           $("#profile-display-name").text(data['name']);
-           $("#profile-name-field").val(data['name']);
-           $("#profile-rank-field").val(data['rank']).change();
+             if(data['department_id'] == null) {
+                var name_unitnumber = data['name'];
+             } else var name_unitnumber = data['name']+' '+data['department_id'];
+
+             $("#profile-display-name").text(name_unitnumber);
+             $("#profile-name-field").val(data['name']);
+             $("#profile-website-id-field").val(data['website_id']);
+             $("#profile-department-id-field").val(data['department_id']);
+             $("#profile-rank-field").val(data['rank']).change();
+             $("#profile-active-field").prop('checked', data['antelope_status']);
          }
       });
 
@@ -95,4 +119,23 @@
       $(".js-example-basic-multiple").select2();
     }
   })(jQuery);
+
+    $('#ajax_edit_member').on('submit', function(e) {
+      e.preventDefault();
+      var id = $('#ajax_open_modal_edit').val();
+      var name = $('#profile-name-field').val();
+      var website_id = $('#profile-website-id-field').val();
+      var department_id = $('#profile-department-id-field').val();
+      var rank = $('#profile-rank-field').val();
+      var antelope_status = $('#profile-active-field').prop('checked');
+
+      $.ajax({
+        type: 'POST',
+        url: '{{ url('member/edit/edit_user/') }}/'+id,
+        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
+        success: function() {
+          $('#cancelAddMember').click();
+          }
+      });
+    });
 </script>

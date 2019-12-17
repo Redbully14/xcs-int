@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EditProfileController extends Controller
 {
@@ -40,9 +41,9 @@ class EditProfileController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function userdata(User $id)
-    {
-        return Auth::user();
+    protected function userdata($user)
+    {;
+        return User::find($user);
     }
 
     /**
@@ -53,52 +54,28 @@ class EditProfileController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255', 'unique:users']
+            'name' => ['required', 'string', 'max:255'],
+            'website_id' => ['required', 'integer'],
+            'department_id' => ['string', 'max:10'],
+            'rank' => ['required', 'string', 'max:30'],
+            'antelope_status' => ['required'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
+    public function edit(User $user)
     {
-        return User::create([
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'name' => $data['name'],
-            'access' => $data['access'],
-            'rank' => $data['rank'],
-        ]);
-    }
+        $this->validator(request()->all())->validate();
 
-    /**
-     * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function edited(Request $request, $user)
-    {
-        //
-    }
 
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
-        $this->validator($request->all())->validate();
+        $user->name = request('name');
+        $user->website_id = request('website_id');
+        $user->rank = request('rank');
+        $user->department_id = request('department_id');
+        $user->antelope_status = request('antelope_status') ? 1 : 0;
+        $user->save();
 
-        event(new Edited($user = $this->create($request->all())));
-
-        return $this->edited($request, $user);
+        return;
     }
 }
