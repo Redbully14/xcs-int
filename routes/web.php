@@ -50,6 +50,9 @@ Route::get('/', function () {
 Route::get('/dashboard', 'AntelopeController@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
 Route::get('/member_admin', 'AntelopeController@memberAdmin');
+Route::get('/member_admin/get_users', 'AntelopeController@passUserData');
 
 // POST routes
 Route::post('/member_admin/new', 'Auth\NewMemberController@register');
+Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata');
+Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit');

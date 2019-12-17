@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{ $constants['application_name'] }}</title>
+    <title>{{ $constants['global']['application_name'] }}</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
@@ -76,5 +76,8 @@
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->
+    <!-- Modals for this page-->
+    @yield('modals')
+    <!-- End modals for this page -->
   </body>
 </html>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Datatables;
+use App\User;
 
 class AntelopeController extends Controller
 {
@@ -25,7 +27,7 @@ class AntelopeController extends Controller
      */
     public function dashboard()
     {
-    	$constants = \Config::get('constants.global');
+    	$constants = \Config::get('constants');
 
     	return view('dashboard')->with('constants', $constants);
     }
@@ -37,22 +39,21 @@ class AntelopeController extends Controller
      */
     public function memberAdmin()
     {
-        $constants = \Config::get('constants.global');
-        $users = DB::table('users')->get();
-        $access = \Config::get('constants.access');
-        $ranks = \Config::get('constants.rank');
-        $status_colors = \Config::get('constants.antelope_status_color');
-        $status_text = \Config::get('constants.antelope_status_text');
+        $constants = \Config::get('constants');
 
-        // Removing superadmin access
-        array_shift($access);
+        // remove the ability to add superadmins
+        array_shift($constants['access']);
 
-        return view('member_admin')
-        ->with('constants', $constants)
-        ->with('users', $users)
-        ->with('access', $access)
-        ->with('ranks', $ranks)
-        ->with('status_colors', $status_colors)
-        ->with('status_text', $status_text);
+        return view('member_admin')->with('constants', $constants);
+    }
+
+    /**
+     * Gets all users in database
+     *
+     * @return View
+     */
+    public function passUserData()
+    {
+        return Datatables::of(User::query())->make(true);
     }
 }

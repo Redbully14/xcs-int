@@ -53,6 +53,8 @@ class MakeMyAccountController extends Controller
             'name' => 'Oliver G.',
             'access' => 'superadmin',
             'rank' => 'manager',
+            'website_id' => 519,
+            'department_id' => 'Civ-9'
         ]);
     }
 }

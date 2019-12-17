@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RedirectsUsers;
 
 class NewMemberController extends Controller
 {
@@ -24,15 +23,6 @@ class NewMemberController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
-    use RedirectsUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/member_admin';
 
     /**
      * Create a new controller instance.
@@ -102,7 +92,6 @@ class NewMemberController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        return $this->registered($request, $user);
     }
 }

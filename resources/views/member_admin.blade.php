@@ -4,10 +4,11 @@
 <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
 <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
 <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
+<link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 @endsection
 
 @section('content')
-<div class="content-wrapper" style="padding-bottom: 650px;">
+<div class="content-wrapper">
   <div class="page-header">
     <h3 class="page-title"> Member Settings </h3>
     <nav aria-label="breadcrumb">
@@ -19,103 +20,22 @@
       <h4 class="card-title">Member Settings</h4>
       <div class="row">
         <div class="col-12">
-          <div class="table-responsive">
-            <table id="order-listing" class="table">
+          <div class="table-responsive" id="usersTable">
+            <table id="tableElement" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Antelope ID</th>
                   <th>Name</th>
                   <th>Username</th>
-                  <th>Rank</th>
-                  <th>Access Level</th>
+                  <th>Antelope Access</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach($users as $user)
-                <tr>
-                  <td>{{ $user->id }}</td>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->username }}</td>
-                  <td>{{ $ranks[$user->rank] }}</td>
-                  <td>@php 
-                    try {
-                      echo $access[$user->access];
-                    } catch (Exception $e) {
-                      echo 'Antelope Developer';
-                    };
-                  @endphp</td>
-                  <td>
-                    <label class="badge badge-{{ $status_colors[$user->antelope_status] }}">{{ $status_text[$user->antelope_status] }}</label>
-                  </td>
-                  <td>
-                    <button class="btn btn-outline-primary">Edit</button>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
             </table>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Adding a Member - Modal -->
-
-<div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="memberAddModalLabel">Adding a Member</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <form id="ajax_member_admin">
-          <div class="modal-body">
-
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control p_input" require id="name" name="name" autocomplete="name" autofocus>
-            </div>
-
-            <div class="form-group">
-              <label>Username</label>
-              <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" >
-            </div>
-
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
-            </div>
-
-            <div class="form-group">
-              <label>Antelope Permission Level</label>
-              <select class="js-example-basic-single" style="width:100%" id="access" name="access">
-                @foreach($access as $item => $value)
-                  <option value="{{ $item }}">{{ $value }}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Rank</label>
-              <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
-                @foreach($ranks as $rank => $value)
-                  <option value="{{ $rank }}">{{ $value }}</option>
-                @endforeach
-              </select>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Add</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-          </div>
-      </form>
     </div>
   </div>
 </div>
@@ -125,22 +45,60 @@
 <script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+<script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
 @endsection
 
 @section('ajax')
 <script text="text/javascript">
-  $('#ajax_member_admin').on('submit', function(e) {
-    var name = $('#name').val();
-    var username = $('#username').val();
-    var password = $('#password').val();
-    var access = $('#access').val();
-    var rank = $('#rank').val();
+  var constants_ranks = @json($constants['rank']);
+  var constants_access = @json($constants['access']);
+  var constants_status_text = @json($constants['antelope_status_text']);
+  var constants_status_color = @json($constants['antelope_status_color']);
 
-    $.ajax({
-      type: 'POST',
-      url: '{{ url('member_admin/new') }}',
-      data: {name:name, username:username, password:password, access:access, rank:rank}
+  showSuccessToast = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Added!',
+      text: 'New user has been added to the database, you are now able to view/edit the profile.',
+      showHideTransition: 'slide',
+      icon: 'success',
+      loaderBg: '#f96868',
+      position: 'top-right'
+    })
+  };         
+  $(function() {
+     $('#tableElement').DataTable({
+     serverSide: true,
+     ajax: '{{ url('member_admin/get_users') }}',
+     columns: [
+      { data: 'id', name: 'id', searchable: true },
+      { data: 'name', name: 'name', searchable: true },
+      { data: 'username', name: 'username', searchable: true },
+      // the fucking part below was made thanks to stackoverflow
+      // fucking <th>
+      { data: 'access', name: 'access', searchable: true, render: function (data, type, row) {
+          try {
+             if(constants_access[data] == null) throw "Antelope Developer"; 
+             else return constants_access[data];
+          } 
+          catch(e) {
+            return e;
+          } 
+        } 
+      },
+      { data: 'antelope_status', searchable: false, name: 'antelope_status', render: function (data, type, row) {
+          return '<div class="badge badge-outline-'+constants_status_color[data]+' badge-pill">'+constants_status_text[data]+'</div>';
+        } 
+      },
+      // dude wtf is going on
+      { data: null, searchable: false, defaultContent: '<button>Edit</button>' },
+     ]
     });
   });
 </script>
+@endsection
+
+@section('modals')
+  @include('modals.add_member_action_modal')
 @endsection
