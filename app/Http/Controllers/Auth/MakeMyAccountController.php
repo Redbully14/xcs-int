@@ -58,7 +58,7 @@ class MakeMyAccountController extends Controller
             'department_id' => 'Civ-9'
         ]);
 
-        $role = Role::where('name', '=', 'Admin')->first();
+        $role = Role::where('slug', '=', 'superadmin')->first();
         $user->attachRole($role);
 
         return $user;

@@ -17,22 +17,52 @@ class RolesTableSeeder extends Seeder
          */
         $RoleItems = [
             [
-                'name'        => 'Admin',
+                'name'        => \Config::get('constants.role.superadmin'),
+                'slug'        => 'superadmin',
+                'description' => 'SuperAdmin Role',
+                'level'       => 8,
+            ],
+            [
+                'name'        => \Config::get('constants.role.admin'),
                 'slug'        => 'admin',
                 'description' => 'Admin Role',
+                'level'       => 7,
+            ],
+            [
+                'name'        => \Config::get('constants.role.seniorstaff'),
+                'slug'        => 'seniorstaff',
+                'description' => 'Senior Staff Role',
+                'level'       => 6,
+            ],
+            [
+                'name'        => \Config::get('constants.role.staff'),
+                'slug'        => 'staff',
+                'description' => 'Staff Role',
                 'level'       => 5,
             ],
             [
-                'name'        => 'User',
-                'slug'        => 'user',
-                'description' => 'User Role',
-                'level'       => 1,
+                'name'        => \Config::get('constants.role.sit'),
+                'slug'        => 'sit',
+                'description' => 'Staff in Training Role',
+                'level'       => 4,
             ],
             [
-                'name'        => 'Unverified',
-                'slug'        => 'unverified',
-                'description' => 'Unverified Role',
-                'level'       => 0,
+                'name'        => \Config::get('constants.role.intern'),
+                'slug'        => 'intern',
+                'description' => 'Intern Role',
+                'level'       => 3,
+            ],
+            [
+                'name'        => \Config::get('constants.role.member'),
+                'slug'        => 'member',
+                'description' => 'Member Role',
+                'level'       => 2,
+            ],
+           [
+                'name'        => \Config::get('constants.role.guest'),
+                'slug'        => 'guest',
+                'description' => 'Guest Role',
+                'level'       => 1,
             ],
         ];
 

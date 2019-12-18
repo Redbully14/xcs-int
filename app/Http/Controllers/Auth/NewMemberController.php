@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 class NewMemberController extends Controller
 {
@@ -59,13 +61,17 @@ class NewMemberController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'name' => $data['name'],
-            'access' => $data['access'],
             'rank' => $data['rank'],
         ]);
+
+        $role = Role::where('slug', '=', $data['role'])->first();
+        $user->attachRole($role);
+
+        return $user;
     }
 
     /**

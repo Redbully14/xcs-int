@@ -92,7 +92,9 @@
       { data: 'username', name: 'username', searchable: true },
       // the fucking part below was made thanks to stackoverflow
       // fucking <th>
-      { data: 'access', name: 'access', searchable: true, render: function (data, type, row) {
+      // MAN FUCK PHP->JSON CONVESION, I JUST SPENT ONE FUCKING HOUR CAUSE I HAD TO LITTERALLY DEFINE THE FACT THAT ROLES HAS TWO TREE ARRAYS FUCK THAT SHIT
+      { data: 'roles[0].slug', name: 'role', searchable: true, render: function (data, type, row) {
+        console.log(data);
           try {
              if(constants_access[data] == null) throw "Antelope Developer"; 
              else return constants_access[data];

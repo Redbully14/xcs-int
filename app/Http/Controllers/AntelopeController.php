@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Datatables;
 use App\User;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 class AntelopeController extends Controller
 {
@@ -54,6 +56,6 @@ class AntelopeController extends Controller
      */
     public function passUserData()
     {
-        return Datatables::of(User::query())->make(true);
+        return Datatables::of(User::query()->with('roles'))->make(true);
     }
 }

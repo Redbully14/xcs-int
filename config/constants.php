@@ -87,7 +87,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Role Level Constants are the names of the Antelope Access Level
-    | abilities that are reflected through the website.
+    | abilities that are reflected through the website. 
+    | (!) -> DB::TABLE 'role_user' MUST BE REBUILT UPON CHANGE
     |
     */
     'role' => [

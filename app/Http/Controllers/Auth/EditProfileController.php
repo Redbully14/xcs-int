@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 class EditProfileController extends Controller
 {
