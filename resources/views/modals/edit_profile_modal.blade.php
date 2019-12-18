@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label>{{ 'Civilian ID -- changeme' }}</label>
+                      <label>{{ $constants['department']['department_callsign'] }}</label>
                       <input type="text" class="form-control p_input" require id="profile-department-id-field" name="department-id" value="ajax-profile-display-input-department-id">
                     </div>
 
