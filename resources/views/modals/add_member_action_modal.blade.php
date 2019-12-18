@@ -106,7 +106,7 @@
       success: function() {
         showSuccessToast_AddMember();
         $('#cancelAddMember').click();
-        $('#usersTable').load(document.URL +  ' #usersTable');
+        $('#tableElement').DataTable().ajax.reload();
       },
       error: function() {
         showFailToast_AddMember();

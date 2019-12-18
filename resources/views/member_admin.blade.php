@@ -59,7 +59,7 @@
   var constants_status_color = @json($constants['antelope_status_color']);
 
   $(function() {
-     $('#tableElement').DataTable({
+    $('#tableElement').DataTable({
      serverSide: true,
      ajax: '{{ url('member_admin/get_users') }}',
      columns: [
