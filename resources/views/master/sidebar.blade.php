@@ -64,6 +64,7 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/member_admin">
         <span class="menu-icon">
@@ -72,5 +73,6 @@
         <span class="menu-title">Member Settings</span>
       </a>
     </li>
+    @endif
   </ul>
 </nav>

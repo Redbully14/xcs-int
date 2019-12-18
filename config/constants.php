@@ -83,14 +83,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Access Level Constants
+    | Role Level Constants
     |--------------------------------------------------------------------------
     |
-    | Access Level Constants are the names of the Antelope Access Level
-    | abilities that are reflected through the website.
+    | Role Level Constants are the names of the Antelope Access Level
+    | abilities that are reflected through the website. 
+    | (!) -> DB::TABLE 'role_user' MUST BE REBUILT UPON CHANGE
     |
     */
-    'access' => [
+    'role' => [
         'superadmin' => 'Antelope Developer',
         'admin' => 'Administration Access',
         'seniorstaff' => 'Senior Staff Access',
@@ -99,6 +100,26 @@ return [
         'intern' => 'Intern Access',
         'member' => 'Member Access',
         'guest' => 'Guest Access',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Levels
+    |--------------------------------------------------------------------------
+    |
+    | Auth Levels show what type of level each role is, this is unchangable,
+    | it's mainly just for easier access. 
+    |
+    */
+    'access_level' => [
+        'superadmin' => 8,
+        'admin' => 7,
+        'seniorstaff' => 6,
+        'staff' => 5,
+        'sit' => 4,
+        'intern' => 3,
+        'member' => 2,
+        'guest' => 1,
     ],
 
     /*

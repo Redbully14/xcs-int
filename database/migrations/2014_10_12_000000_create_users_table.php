@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('name');
             $table->string('rank');
-            $table->string('access');
             $table->integer('website_id');
             $table->string('department_id')->nullable();
             $table->string('password');
