@@ -117,7 +117,9 @@
             </div>
 
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Add</button>
+            @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+            <button type="submit" class="btn btn-success">Edit</button>
+            @endif
             <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelEditMember">Cancel</button>
           </div>
       @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
@@ -129,30 +131,80 @@
 
 <script type="text/javascript">
 
+  showFailToast_EditSuperAdmin = function() {
+    'use strict';
+    $.toast({
+      heading: 'Profile Protected!',
+      text: 'You are not allowed to edit other superadmins.',
+      showHideTransition: 'slide',
+      icon: 'error',
+      loaderBg: '#f2a654',
+      position: 'top-right'
+    })
+  };
+
   // TODO: Implement case not on member_admin
+  // Future self here: what the fuck did I mean by that?
   $table = $('#tableElement');
   $table.on('click', '#ajax_open_modal_edit', function () {
+    var isSuperAdmin = false;
     var id = $(this).val();
       $.ajax({
          type: "POST",
          url: '{{ url('member/edit/get_data/') }}/'+id,
          success: function(data){
+            var role = data.roles.map(function(dt) {
+              return dt.slug;
+            });
            console.log(data);
+           console.log(role);
+           if (role == "superadmin") {
+              return false;
+           } else {
              if(data['department_id'] == null) {
                 var name_unitnumber = data['name'];
              } else var name_unitnumber = data['name']+' '+data['department_id'];
-
              $("#profile-display-name").text(name_unitnumber);
              $("#profile-name-field").val(data['name']);
              $("#profile-website-id-field").val(data['website_id']);
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
              $("#profile-active-field").prop('checked', data['antelope_status']);
+           }
          }
+      }).done(function(data) {
+        var role = data.roles.map(function(dt) {
+          return dt.slug;
+        });
+        if(role == 'superadmin') {
+          showFailToast_EditSuperAdmin();
+        } else $("#editProfileModal").modal("toggle");
       });
-
-    $("#editProfileModal").modal("toggle");
   });
+
+  showSuccessToast_EditMember = function() {
+    'use strict';
+    $.toast({
+      heading: 'Profile Edited!',
+      text: 'This profile has been edited and the new data has been sent to the database!',
+      showHideTransition: 'slide',
+      icon: 'success',
+      loaderBg: '#f96868',
+      position: 'top-right'
+    })
+  };
+
+  showFailToast_EditMember = function() {
+    'use strict';
+    $.toast({
+      heading: 'Profile Edit Failed!',
+      text: 'Profile Edit failed, double check the fields to make sure that nothing is missing and that the website ID is not taken.',
+      showHideTransition: 'slide',
+      icon: 'error',
+      loaderBg: '#f2a654',
+      position: 'top-right'
+    })
+  };
 
   (function($) {
     'use strict';
@@ -179,7 +231,10 @@
         url: '{{ url('member/edit/edit_user/') }}/'+id,
         data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
         success: function() {
-          $('#cancelEditMember').click();
+            showSuccessToast_EditMember();
+          },
+        error: function() {
+            showFailToast_EditMember();
           }
       });
     });

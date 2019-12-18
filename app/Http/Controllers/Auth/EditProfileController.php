@@ -44,8 +44,12 @@ class EditProfileController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function userdata($user)
-    {;
-        return User::find($user);
+    {
+        $user = User::find($user);
+
+        $user = $user->load('roles');
+
+        return $user;
     }
 
     /**

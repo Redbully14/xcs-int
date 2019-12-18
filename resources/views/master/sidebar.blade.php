@@ -25,29 +25,7 @@
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-            </div>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item preview-item">
-            <div class="preview-thumbnail">
-              <div class="preview-icon bg-dark rounded-circle">
-                <i class="mdi mdi-onepassword  text-info"></i>
-              </div>
-            </div>
-            <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-            </div>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item preview-item">
-            <div class="preview-thumbnail">
-              <div class="preview-icon bg-dark rounded-circle">
-                <i class="mdi mdi-calendar-today text-success"></i>
-              </div>
-            </div>
-            <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+              <p class="preview-subject ellipsis mb-1 text-small">Account settings (not implemented yet)</p>
             </div>
           </a>
         </div>
