@@ -229,7 +229,7 @@
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
-        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
+        data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
         success: function() {
             showSuccessToast_EditMember();
           },

@@ -64,22 +64,24 @@ class EditProfileController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'website_id' => ['required', 'integer'],
-            'department_id' => ['string', 'max:10'],
+            'department_id' => ['string', 'max:10', 'nullable'],
             'rank' => ['required', 'string', 'max:30'],
             'antelope_status' => ['required'],
         ]);
     }
 
-    public function edit(User $user)
+    public function edit(Request $request)
     {
-        $this->validator(request()->all())->validate();
+        $user = User::find($request['id']);
+
+        $this->validator($request->all())->validate();
 
 
-        $user->name = request('name');
-        $user->website_id = request('website_id');
-        $user->rank = request('rank');
-        $user->department_id = request('department_id');
-        $user->antelope_status = request('antelope_status') ? 1 : 0;
+        $user->name = $request['name'];
+        $user->website_id = $request['website_id'];
+        $user->rank = $request['rank'];
+        $user->department_id = $request['department_id'];
+        $user->antelope_status = $request['antelope_status'] ? 1 : 0;
         $user->save();
 
         return;
