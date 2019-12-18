@@ -1,3 +1,4 @@
+@if(Auth::user()->level() >= $constants['access_level']['sit'])
 <!-- Edit a Profile - Modal -->
 <!-- Open modal with button id #ajax_open_modal_edit -->
 
@@ -139,3 +140,4 @@
       });
     });
 </script>
+@endif

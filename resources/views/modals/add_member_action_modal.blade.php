@@ -1,5 +1,5 @@
+@if(Auth::user()->level() >= $constants['access_level']['admin'])
 <!-- Adding a Member - Modal -->
-
 <div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -88,4 +88,4 @@
     }
   })(jQuery);
 </script>
-
+@endif

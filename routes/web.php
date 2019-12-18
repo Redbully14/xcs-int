@@ -29,7 +29,8 @@ Route::get('/register', function () {
 });
 Route::get('/inactive', [
 	'as' => 'inactive',
-	'uses' => 'Auth\InactiveController@inactive']);
+	'uses' => 'Auth\InactiveController@inactive'
+]);
 Route::get('login', [
   'as' => 'login',
   'uses' => 'Auth\LoginController@showLoginForm'
@@ -49,10 +50,10 @@ Route::get('/', function () {
 });
 Route::get('/dashboard', 'AntelopeController@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
-Route::get('/member_admin', 'AntelopeController@memberAdmin');
-Route::get('/member_admin/get_users', 'AntelopeController@passUserData');
+Route::get('/member_admin', 'AntelopeController@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::get('/member_admin/get_users', 'AntelopeController@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
 
 // POST routes
-Route::post('/member_admin/new', 'Auth\NewMemberController@register');
-Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata');
-Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit');
+Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
