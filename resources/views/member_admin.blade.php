@@ -60,6 +60,7 @@
 
   $(function() {
     $('#tableElement').DataTable({
+     ordering: false,
      serverSide: true,
      ajax: '{{ url('member_admin/get_users') }}',
      columns: [
@@ -69,7 +70,7 @@
       // the fucking part below was made thanks to stackoverflow
       // fucking <th>
       // MAN FUCK PHP->JSON CONVESION, I JUST SPENT ONE FUCKING HOUR CAUSE I HAD TO LITTERALLY DEFINE THE FACT THAT ROLES HAS TWO TREE ARRAYS FUCK THAT SHIT
-      { data: 'roles[0].slug', name: 'role', searchable: false, ordering: false, render: function (data, type, row) {
+      { data: 'roles[0].slug', name: 'role', searchable: false, render: function (data, type, row) {
         console.log(data);
           try {
              if(constants_access[data] == null) throw "Antelope Developer"; 
