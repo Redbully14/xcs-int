@@ -48,8 +48,10 @@ class NewMemberController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'name' => ['required', 'string', 'max:255'],
-            'access' => ['required', 'string', 'max:30'],
+            'role' => ['required', 'string', 'max:30'],
             'rank' => ['required', 'string', 'max:30'],
+            'website_id' => ['required', 'integer'],
+            'department_id' => ['string', 'max:30', 'nullable'],
         ]);
     }
 
@@ -66,6 +68,8 @@ class NewMemberController extends Controller
             'password' => Hash::make($data['password']),
             'name' => $data['name'],
             'rank' => $data['rank'],
+            'website_id' => $data['website_id'],
+            'department_id' => $data['department_id'],
         ]);
 
         $role = Role::where('slug', '=', $data['role'])->first();

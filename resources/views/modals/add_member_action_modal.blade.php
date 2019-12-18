@@ -28,6 +28,16 @@
             </div>
 
             <div class="form-group">
+              <label>Website ID</label>
+              <input type="text" class="form-control p_input" require id="website_id" name="website_id">
+            </div>
+
+            <div class="form-group">
+              <label>{{ $constants['department']['department_callsign'] }}</label>
+              <input type="text" class="form-control p_input" require id="department_id" name="department_id">
+            </div>
+
+            <div class="form-group">
               <label>Antelope Permission Level</label>
               <select class="js-example-basic-single" style="width:100%" id="role" name="role">
                 @foreach($constants['role'] as $item => $value)
@@ -55,25 +65,51 @@
   </div>
 </div>
 <script type="text/javascript">
+  showSuccessToast_AddMember = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Added!',
+      text: 'New user has been added to the database, you are now able to view/edit the profile.',
+      showHideTransition: 'slide',
+      icon: 'success',
+      loaderBg: '#f96868',
+      position: 'top-right'
+    })
+  };
+
+  showFailToast_AddMember = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Adding Failed!',
+      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
+      showHideTransition: 'slide',
+      icon: 'error',
+      loaderBg: '#f2a654',
+      position: 'top-right'
+    })
+  };
+
   $('#ajax_add_member').on('submit', function(e) {
     e.preventDefault();
     var name = $('#name').val();
     var username = $('#username').val();
     var password = $('#password').val();
+    var website_id = $('#website_id').val();
+    var department_id = $('#department_id').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
 
     $.ajax({
       type: 'POST',
       url: '{{ url('member_admin/new') }}',
-      data: {name:name, username:username, password:password, role:role, rank:rank},
+      data: {name:name, username:username, password:password, role:role, rank:rank, website_id:website_id, department_id:department_id},
       success: function() {
-        showSuccessToast();
+        showSuccessToast_AddMember();
         $('#cancelAddMember').click();
-        $('#usersTable').load(document.URL +  ' #usersTable');
+        $('#tableElement').DataTable().ajax.reload();
       },
       error: function() {
-        showFailToast();
+        showFailToast_AddMember();
       }
     });
   });

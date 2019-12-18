@@ -58,32 +58,9 @@
   var constants_status_text = @json($constants['antelope_status_text']);
   var constants_status_color = @json($constants['antelope_status_color']);
 
-  showSuccessToast = function() {
-    'use strict';
-    $.toast({
-      heading: 'User Added!',
-      text: 'New user has been added to the database, you are now able to view/edit the profile.',
-      showHideTransition: 'slide',
-      icon: 'success',
-      loaderBg: '#f96868',
-      position: 'top-right'
-    })
-  };
-
-  showFailToast = function() {
-    'use strict';
-    $.toast({
-      heading: 'User Adding Failed!',
-      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
-      showHideTransition: 'slide',
-      icon: 'error',
-      loaderBg: '#f2a654',
-      position: 'top-right'
-    })
-  };
-
   $(function() {
-     $('#tableElement').DataTable({
+    $('#tableElement').DataTable({
+     ordering: false,
      serverSide: true,
      ajax: '{{ url('member_admin/get_users') }}',
      columns: [
@@ -93,7 +70,7 @@
       // the fucking part below was made thanks to stackoverflow
       // fucking <th>
       // MAN FUCK PHP->JSON CONVESION, I JUST SPENT ONE FUCKING HOUR CAUSE I HAD TO LITTERALLY DEFINE THE FACT THAT ROLES HAS TWO TREE ARRAYS FUCK THAT SHIT
-      { data: 'roles[0].slug', name: 'role', searchable: true, render: function (data, type, row) {
+      { data: 'roles[0].slug', name: 'role', searchable: false, render: function (data, type, row) {
         console.log(data);
           try {
              if(constants_access[data] == null) throw "Antelope Developer"; 
