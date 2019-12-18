@@ -15,6 +15,7 @@ class BaseXCS extends Controller
      */
     public function xcsInfo()
     {   
-        return view('welcome');
+    	$constants = \Config::get('constants');
+        return view('welcome')->with('constants', $constants);
     }
 }

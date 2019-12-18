@@ -44,6 +44,12 @@
                 text-align: center;
             }
 
+            .version {
+                padding-top: 30px;
+                font-size: 11px;
+                color: #636b6f;
+            }
+
             .title {
                 font-size: 84px;
             }
@@ -74,6 +80,14 @@
                 <div class="links">
                     By Oliver G.
                 </div>
+
+                <div class="content">
+                    How many times I have restarted work on the framework from the base: <b>3</b><br>
+                    How many times I made something only to realise that a library exists that does the exact same thing: <b>52</b>
+                    <br>
+                    <br>
+                </div>
+                <div class="version"><b>{{ $constants['global']['application_version'] }}</b></div>
             </div>
         </div>
     </body>
