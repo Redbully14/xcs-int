@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label>{{ 'Civilian ID -- changeme' }}</label>
+                      <label>{{ $constants['department']['department_callsign'] }}</label>
                       <input type="text" class="form-control p_input" require id="profile-department-id-field" name="department-id" value="ajax-profile-display-input-department-id">
                     </div>
 
@@ -74,7 +74,7 @@
 
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Add</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelAddMember">Cancel</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelEditMember">Cancel</button>
           </div>
       </form>
     </div>
@@ -82,11 +82,10 @@
 </div>
 
 <script type="text/javascript">
-  $('#ajax_edit_member').on('submit', function(e) {
-    e.preventDefault();
-  });
 
-  $('#ajax_open_modal_edit').on('click', function(e) {
+  // TODO: Implement case not on member_admin
+  $table = $('#tableElement');
+  $table.on('click', '#ajax_open_modal_edit', function () {
     var id = $(this).val();
       $.ajax({
          type: "POST",
@@ -134,7 +133,7 @@
         url: '{{ url('member/edit/edit_user/') }}/'+id,
         data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
         success: function() {
-          $('#cancelAddMember').click();
+          $('#cancelEditMember').click();
           }
       });
     });
