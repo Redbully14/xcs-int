@@ -29,8 +29,8 @@
 
             <div class="form-group">
               <label>Antelope Permission Level</label>
-              <select class="js-example-basic-single" style="width:100%" id="access" name="access">
-                @foreach($constants['access'] as $item => $value)
+              <select class="js-example-basic-single" style="width:100%" id="role" name="role">
+                @foreach($constants['role'] as $item => $value)
                   <option value="{{ $item }}">{{ $value }}</option>
                 @endforeach
               </select>
@@ -60,13 +60,13 @@
     var name = $('#name').val();
     var username = $('#username').val();
     var password = $('#password').val();
-    var access = $('#access').val();
+    var role = $('#role').val();
     var rank = $('#rank').val();
 
     $.ajax({
       type: 'POST',
       url: '{{ url('member_admin/new') }}',
-      data: {name:name, username:username, password:password, access:access, rank:rank},
+      data: {name:name, username:username, password:password, role:role, rank:rank},
       success: function() {
         showSuccessToast();
         $('#cancelAddMember').click();

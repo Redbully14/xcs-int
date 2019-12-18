@@ -54,7 +54,7 @@
 @section('ajax')
 <script text="text/javascript">
   var constants_ranks = @json($constants['rank']);
-  var constants_access = @json($constants['access']);
+  var constants_access = @json($constants['role']);
   var constants_status_text = @json($constants['antelope_status_text']);
   var constants_status_color = @json($constants['antelope_status_color']);
 

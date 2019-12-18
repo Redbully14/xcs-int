@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Support\Facades\Hash;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 class MakeMyAccountController extends Controller
 {
@@ -47,14 +49,18 @@ class MakeMyAccountController extends Controller
      */
     protected function makeOliver()
     {
-        return User::create([
+        $user = User::create([
             'username' => 'redbully14',
             'password' => Hash::make('password'),
             'name' => 'Oliver G.',
-            'access' => 'superadmin',
             'rank' => 'manager',
             'website_id' => 519,
             'department_id' => 'Civ-9'
         ]);
+
+        $role = Role::where('name', '=', 'Admin')->first();
+        $user->attachRole($role);
+
+        return $user;
     }
 }

@@ -83,14 +83,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Access Level Constants
+    | Role Level Constants
     |--------------------------------------------------------------------------
     |
-    | Access Level Constants are the names of the Antelope Access Level
+    | Role Level Constants are the names of the Antelope Access Level
     | abilities that are reflected through the website.
     |
     */
-    'access' => [
+    'role' => [
         'superadmin' => 'Antelope Developer',
         'admin' => 'Administration Access',
         'seniorstaff' => 'Senior Staff Access',
