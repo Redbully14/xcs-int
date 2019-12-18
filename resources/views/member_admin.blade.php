@@ -107,7 +107,7 @@
         } 
       },
       // dude wtf is going on
-      { data: null, searchable: false, defaultContent: '<button>Edit</button>' },
+      { data: 'id', searchable: false, render: function(data, type, row) { return '<button id="ajax_open_modal_edit" value="'+data+'">Edit</button>'; } },
      ]
     });
   });
@@ -116,4 +116,5 @@
 
 @section('modals')
   @include('modals.add_member_action_modal')
+  @include('modals.edit_profile_modal')
 @endsection
