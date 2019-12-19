@@ -109,7 +109,7 @@
         $('#tableElement').DataTable().ajax.reload();
       },
       error: function(data) {
-        console.log(data['responseJSON'].errors);
+        showFailToast_AddMember();
         var errors = data['responseJSON'].errors;
 
         for (var key in errors) {
