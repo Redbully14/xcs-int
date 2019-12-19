@@ -13,31 +13,31 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <label>Name</label>
+              <label>Name (required)</label>
               <input type="text" class="form-control p_input" require id="name" name="name" autocomplete="name" autofocus>
               <label id="add-name-error" class="error mt-2 text-danger" for="name" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Username</label>
+              <label>Username (required)</label>
               <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" >
               <label id="add-username-error" class="error mt-2 text-danger" for="username" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Password</label>
+              <label>Password (required, minimum 8 characters)</label>
               <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
               <label id="add-password-error" class="error mt-2 text-danger" for="password" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Website ID</label>
+              <label>Website ID (required)</label>
               <input type="text" class="form-control p_input" require id="website_id" name="website_id">
               <label id="add-website_id-error" class="error mt-2 text-danger" for="website_id" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>{{ $constants['department']['department_callsign'] }}</label>
+              <label>{{ $constants['department']['department_callsign'] }} (optional)</label>
               <input type="text" class="form-control p_input" require id="department_id" name="department_id">
               <label id="add-department_id-error" class="error mt-2 text-danger" for="department_id" hidden></label>
             </div>

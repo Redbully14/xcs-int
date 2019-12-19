@@ -51,7 +51,7 @@
 
                     @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
                     <div class="form-group">
-                      <label>{{ $constants['department']['department_callsign'] }}</label>
+                      <label>{{ $constants['department']['department_callsign'] }} (optional)</label>
                       <input type="text" class="form-control p_input" require id="profile-department-id-field" name="department-id" value="ajax-profile-display-input-department-id">
                       <label id="edit-department_id-error" class="error mt-2 text-danger" for="profile-department-id-field" hidden></label>
                     </div>
