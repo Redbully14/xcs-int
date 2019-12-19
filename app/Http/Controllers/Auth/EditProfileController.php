@@ -60,20 +60,36 @@ class EditProfileController extends Controller
      */
     protected function validator(array $data)
     {
-
+        $username = User::find($data['id']);
+        $username = $username->username;
         $data['antelope_status'] = $data['antelope_status'] ? true : false;
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'website_id' => ['required', 'integer'],
-            'department_id' => ['string', 'max:10', 'nullable'],
-            'rank' => ['required', 'string', 'max:30'],
-            'antelope_status' => ['required', 'boolean'],
-        ]);
+
+        if($username == $data['username']) {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'role' => ['required', 'string', 'max:30'],
+                'rank' => ['required', 'string', 'max:30'],
+                'website_id' => ['required', 'integer'],
+                'department_id' => ['string', 'max:30', 'nullable'],
+                'antelope_status' => ['required', 'boolean']
+            ]);
+        }
+        else {
+            return Validator::make($data, [
+                'username' => ['required', 'string', 'max:255', 'unique:users'],
+                'name' => ['required', 'string', 'max:255'],
+                'role' => ['required', 'string', 'max:30'],
+                'rank' => ['required', 'string', 'max:30'],
+                'website_id' => ['required', 'integer'],
+                'department_id' => ['string', 'max:30', 'nullable'],
+                'antelope_status' => ['required', 'boolean']
+            ]);
+        }
     }
 
     public function edit(Request $request)
     {
-        $user = User::findOrFail($request['id']);
+        $user = User::find($request['id']);
         $this->validator($request->all())->validate();
 
 
@@ -82,7 +98,10 @@ class EditProfileController extends Controller
         $user->rank = $request['rank'];
         $user->department_id = $request['department_id'];
         $user->antelope_status = $request['antelope_status'];
+        $role = Role::where('slug', '=', $request['role'])->first();
+        $user->username = $request['username'];
         $user->save();
+        $user->attachRole($role);
 
         return;
     }

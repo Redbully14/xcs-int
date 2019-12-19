@@ -108,7 +108,7 @@
 
                     <p>ACCOUNTS - Authentication, Account Creation and Handling</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:83%">83%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:92%">92%</div>
                     </div><br>
 
                     <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>

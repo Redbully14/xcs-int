@@ -115,6 +115,48 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Antelope Data</h5>
+
+                    @if(Auth::user()->level() >= $constants['access_level']['admin'])
+                    <div class="form-group">
+                      <label>Antelope Username</label>
+                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username">
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <label>Antelope Username</label>
+                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled>
+                    </div>
+                    @endif
+
+                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <label>Antelope Access</label>
+                      <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
+                        @foreach($constants['role'] as $role => $value)
+                          <option value="{{ $role }}">{{ $value }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <label>Antelope Access</label>
+                      <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role" disabled>
+                        @foreach($constants['role'] as $role => $value)
+                          <option value="{{ $role }}">{{ $value }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @endif
+
+                  </div>
+                </div>
+              </div>
+            </div>
 
           <div class="modal-footer">
             @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
@@ -172,6 +214,8 @@
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
              $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-role-field").val(role).change();
+             $("#profile-username-field").val(data['username']);
            }
          }
       }).done(function(data) {
@@ -227,12 +271,13 @@
       var department_id = $('#profile-department-id-field').val();
       var rank = $('#profile-rank-field').val();
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
-      console.log(id);
+      var username = $('#profile-username-field').val();
+      var role = $('#profile-role-field').val();
 
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
-        data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status},
+        data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
         success: function() {
             showSuccessToast_EditMember();
           },
