@@ -27,6 +27,7 @@
                     <div class="form-group">
                       <label>Name</label>
                       <input type="text" class="form-control p_input" id="profile-name-field" name="name" autocomplete="name" autofocus value="ajax-profile-display-input-name">
+                      <label id="edit-name-error" class="error mt-2 text-danger" for="profile-name-field" hidden></label>
                     </div>
                     @else
                     <div class="form-group">
@@ -39,6 +40,7 @@
                     <div class="form-group">
                       <label>Website ID</label>
                       <input type="text" class="form-control p_input" require id="profile-website-id-field" name="website-id" value="ajax-profile-display-input-website-id">
+                      <label id="edit-website_id-error" class="error mt-2 text-danger" for="profile-website-id-field" hidden></label>
                     </div>
                     @else
                     <div class="form-group">
@@ -51,6 +53,7 @@
                     <div class="form-group">
                       <label>{{ $constants['department']['department_callsign'] }}</label>
                       <input type="text" class="form-control p_input" require id="profile-department-id-field" name="department-id" value="ajax-profile-display-input-department-id">
+                      <label id="edit-department_id-error" class="error mt-2 text-danger" for="profile-department-id-field" hidden></label>
                     </div>
                     @else
                     <div class="form-group">
@@ -271,6 +274,11 @@
       var department_id = $('#profile-department-id-field').val();
       var rank = $('#profile-rank-field').val();
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
+      var elements = {
+        '#profile-name-field' : '#edit-name-error',
+        '#profile-website-id-field' : '#edit-website_id-error'
+      };
+      console.log(id);
       var username = $('#profile-username-field').val();
       var role = $('#profile-role-field').val();
 
@@ -280,10 +288,38 @@
         data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
         success: function() {
             showSuccessToast_EditMember();
+            for (var element in elements) {
+              $(element).parent().removeClass('has-danger');
+              $(element).removeClass('form-control-danger');
+              $(elements[element]).prop('hidden', true);
+            }
           },
-        error: function() {
-            showFailToast_EditMember();
+        error: function(data) {
+          showFailToast_EditMember();
+          var errors = data['responseJSON'].errors;
+          console.log(errors);
+
+          for (var key in errors) {
+            switch (key) {
+              case 'name':
+                var element = '#profile-name-field';
+                var label = '#edit-name-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
+              case 'website_id':
+                var element = '#profile-website-id-field';
+                var label = '#edit-website_id-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
           }
+        }
+      }
       });
     });
   @endif
