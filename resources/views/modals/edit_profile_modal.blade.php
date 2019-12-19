@@ -128,6 +128,7 @@
                     <div class="form-group">
                       <label>Antelope Username</label>
                       <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username">
+                      <label id="edit-username-error" class="error mt-2 text-danger" for="profile-username-field" hidden></label>
                     </div>
                     @else
                     <div class="form-group">
@@ -136,7 +137,7 @@
                     </div>
                     @endif
 
-                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    @if(Auth::user()->level() >= $constants['access_level']['admin'])
                     <div class="form-group">
                       <label>Antelope Access</label>
                       <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
@@ -274,13 +275,13 @@
       var department_id = $('#profile-department-id-field').val();
       var rank = $('#profile-rank-field').val();
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
-      var elements = {
-        '#profile-name-field' : '#edit-name-error',
-        '#profile-website-id-field' : '#edit-website_id-error'
-      };
-      console.log(id);
       var username = $('#profile-username-field').val();
       var role = $('#profile-role-field').val();
+      var elements = {
+        '#profile-name-field' : '#edit-name-error',
+        '#profile-website-id-field' : '#edit-website_id-error',
+        '$profile-username-field' : '#edit-username-error'
+      };
 
       $.ajax({
         type: 'POST',
@@ -312,6 +313,14 @@
               case 'website_id':
                 var element = '#profile-website-id-field';
                 var label = '#edit-website_id-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
+              case 'username':
+                var element = '#profile-username-field';
+                var label = '#edit-username-error';
                 $(element).parent().addClass('has-danger');
                 $(element).addClass('form-control-danger');
                 $(label).append(errors[key]);
