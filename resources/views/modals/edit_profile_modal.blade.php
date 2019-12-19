@@ -118,7 +118,7 @@
 
           <div class="modal-footer">
             @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="submit" class="btn btn-success" id="ajax_edit_member_save" value="0">Save</button>
             @endif
             <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelEditMember">Cancel</button>
           </div>
@@ -149,6 +149,8 @@
   $table.on('click', '#ajax_open_modal_edit', function () {
     var isSuperAdmin = false;
     var id = $(this).val();
+    $('#ajax_edit_member_save').val(id).change();
+
       $.ajax({
          type: "POST",
          url: '{{ url('member/edit/get_data/') }}/'+id,
@@ -219,12 +221,13 @@
   @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
     $('#ajax_edit_member').on('submit', function(e) {
       e.preventDefault();
-      var id = $('#ajax_open_modal_edit').val();
+      var id = $('#ajax_edit_member_save').val();
       var name = $('#profile-name-field').val();
       var website_id = $('#profile-website-id-field').val();
       var department_id = $('#profile-department-id-field').val();
       var rank = $('#profile-rank-field').val();
-      var antelope_status = $('#profile-active-field').prop('checked');
+      var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
+      console.log(id);
 
       $.ajax({
         type: 'POST',

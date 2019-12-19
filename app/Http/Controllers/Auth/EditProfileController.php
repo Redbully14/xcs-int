@@ -61,19 +61,19 @@ class EditProfileController extends Controller
     protected function validator(array $data)
     {
 
+        $data['antelope_status'] = $data['antelope_status'] ? true : false;
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'website_id' => ['required', 'integer'],
             'department_id' => ['string', 'max:10', 'nullable'],
             'rank' => ['required', 'string', 'max:30'],
-            'antelope_status' => ['required'],
+            'antelope_status' => ['required', 'boolean'],
         ]);
     }
 
     public function edit(Request $request)
     {
-        $user = User::find($request['id']);
-
+        $user = User::findOrFail($request['id']);
         $this->validator($request->all())->validate();
 
 
@@ -81,7 +81,7 @@ class EditProfileController extends Controller
         $user->website_id = $request['website_id'];
         $user->rank = $request['rank'];
         $user->department_id = $request['department_id'];
-        $user->antelope_status = $request['antelope_status'] ? 1 : 0;
+        $user->antelope_status = $request['antelope_status'];
         $user->save();
 
         return;
