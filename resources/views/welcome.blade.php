@@ -118,7 +118,7 @@
 
                     <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:10%">10%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:18%">18%</div>
                     </div><br>
 
                     <p>DISCIPLINARY ACTIONS - Issuing DA and Displaying DA</p>
