@@ -108,8 +108,13 @@
         $('#cancelAddMember').click();
         $('#tableElement').DataTable().ajax.reload();
       },
-      error: function() {
-        showFailToast_AddMember();
+      error: function(data) {
+        console.log(data['responseJSON'].errors);
+        var errors = data['responseJSON'].errors;
+
+        for (var key in errors) {
+          console.log(errors[key]);
+        }
       }
     });
   });

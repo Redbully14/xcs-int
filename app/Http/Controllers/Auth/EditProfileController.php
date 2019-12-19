@@ -73,7 +73,7 @@ class EditProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $user = User::findOrFail($request['id']);
+        $user = User::find($request['id']);
         $this->validator($request->all())->validate();
 
 
