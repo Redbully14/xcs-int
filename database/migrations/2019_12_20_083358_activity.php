@@ -17,11 +17,13 @@ class Activity extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->longText('details')->nullable();
+            $table->date('patrol_date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->longText('details');
             $table->string('patrol_area');
             $table->char('log_type', 20);
+            $table->timestamps();
         });
     }
 

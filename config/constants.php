@@ -153,5 +153,20 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Patrol Types
+    |--------------------------------------------------------------------------
+    |
+    | Types of patrols that civilians are able to choose from, all these patrols
+    | are logged on specific endpoints on the system.
+    |
+    */
+    'patrol_type' => [
+        'normal' => 'Normal Patrol',
+        'subdivisional' => 'Business Patrol',
+        'fto' => 'Field Training',
+    ],
 ];

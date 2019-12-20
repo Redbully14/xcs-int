@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- Plugin css for this page -->
     @yield('customcss')
     <!-- End plugin css for this page -->
@@ -52,6 +53,9 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/assets/vendors/moment/moment.min.js"></script>
+    <script src="/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     @yield('pluginjs')

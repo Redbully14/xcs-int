@@ -15,11 +15,20 @@
     </ul>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown d-none d-lg-block">
-        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit Patrol Log</a>
+        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit Log</a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-          <h6 class="p-3 mb-0">Type of log</h6>
+          <h6 class="p-3 mb-0">Log Type</h6>
           <div class="dropdown-divider"></div>
-          <p class="p-3 mb-0 text-center">Coming soon!</p>
+          <a class="dropdown-item preview-item" data-toggle="modal" data-target="#ajax_new_patrol_log">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-dark rounded-circle">
+                <i class="mdi mdi-file-outline text-primary"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <p class="preview-subject ellipsis mb-1">Patrol Log</p>
+            </div>
+          </a>
         </div>
       </li>
       <li class="nav-item dropdown border-left">
