@@ -176,6 +176,11 @@
 </div>
 
 <script type="text/javascript">
+  var elements = {
+    '#profile-name-field' : '#edit-name-error',
+    '#profile-website-id-field' : '#edit-website_id-error',
+    '#profile-username-field' : '#edit-username-error'
+  };
 
   showFailToast_EditSuperAdmin = function() {
     'use strict';
@@ -193,6 +198,12 @@
   // Future self here: what the fuck did I mean by that?
   $table = $('#tableElement');
   $table.on('click', '#ajax_open_modal_edit', function () {
+    for (var element in elements) {
+      $(element).parent().removeClass('has-danger');
+      $(element).removeClass('form-control-danger');
+      $(elements[element]).prop('hidden', true);
+      $(elements[element]).empty();
+    }
     var isSuperAdmin = false;
     var id = $(this).val();
     $('#ajax_edit_member_save').val(id).change();
@@ -277,25 +288,27 @@
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
       var username = $('#profile-username-field').val();
       var role = $('#profile-role-field').val();
-      var elements = {
-        '#profile-name-field' : '#edit-name-error',
-        '#profile-website-id-field' : '#edit-website_id-error',
-        '$profile-username-field' : '#edit-username-error'
-      };
 
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
         data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
         success: function() {
-            showSuccessToast_EditMember();
             for (var element in elements) {
               $(element).parent().removeClass('has-danger');
               $(element).removeClass('form-control-danger');
               $(elements[element]).prop('hidden', true);
+              $(elements[element]).empty();
             }
+            showSuccessToast_EditMember();
           },
         error: function(data) {
+          for (var element in elements) {
+            $(element).parent().removeClass('has-danger');
+            $(element).removeClass('form-control-danger');
+            $(elements[element]).prop('hidden', true);
+            $(elements[element]).empty();
+          }
           showFailToast_EditMember();
           var errors = data['responseJSON'].errors;
           console.log(errors);

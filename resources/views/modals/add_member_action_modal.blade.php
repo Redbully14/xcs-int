@@ -103,8 +103,6 @@
     var department_id = $('#department_id').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
-
-    // this is really crappy but i just can't be asked anymore
     var elements = {
       '#name' : '#add-name-error',
       '#website_id' : '#add-website_id-error',
@@ -112,10 +110,14 @@
       '#department_id' : '#add-departmnet_id-error',
       '#password' : '#add-password-error',
     };
+
+    // this is really crappy but i just can't be asked anymore
     for (var element in elements) {
       $(element).parent().removeClass('has-danger');
       $(element).removeClass('form-control-danger');
       $(elements[element]).prop('hidden', true);
+      $(element).val('');
+      $(elements[element]).empty();
     }
 
     $.ajax({
@@ -131,9 +133,17 @@
           $(element).removeClass('form-control-danger');
           $(elements[element]).prop('hidden', true);
           $(element).val('');
+          $(elements[element]).empty();
         }
       },
       error: function(data) {
+        for (var element in elements) {
+          $(element).parent().removeClass('has-danger');
+          $(element).removeClass('form-control-danger');
+          $(elements[element]).prop('hidden', true);
+          $(element).val('');
+          $(elements[element]).empty();
+        }
         showFailToast_AddMember();
         var errors = data['responseJSON'].errors;
 

@@ -94,13 +94,13 @@
                 <div class="content">
                     <p>CHAIN OF COMMAND TESTING RELEASE</p>
                     <div class="progress">
-                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:13%">13%</div>
+                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:18%">18%</div>
                     </div><br>
                 </div>
 
                 <div class="content">
                     How many times I have restarted work on the framework from the base: <b>3</b><br>
-                    How many times I made something only to realise that a library exists that does the exact same thing: <b>52</b>
+                    How many times I made something only to realise that a library exists that does the exact same thing: <b>54</b>
                     <br>
 
                     <div class="version"><b>{{ $constants['global']['application_version'] }}</b></div>
@@ -108,7 +108,7 @@
 
                     <p>ACCOUNTS - Authentication, Account Creation and Handling</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:92%">92%</div>
+                      <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width:100%">100%</div>
                     </div><br>
 
                     <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>
@@ -118,7 +118,7 @@
 
                     <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:18%">18%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:20%">20%</div>
                     </div><br>
 
                     <p>DISCIPLINARY ACTIONS - Issuing DA and Displaying DA</p>
