@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
     <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <!-- Plugin css for this page -->
     @yield('customcss')
     <!-- End plugin css for this page -->
@@ -57,6 +59,8 @@
     <script src="/assets/vendors/moment/moment.min.js"></script>
     <script src="/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
     <script src="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="/assets/vendors/select2/select2.min.js"></script>
+    <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     @yield('pluginjs')

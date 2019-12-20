@@ -29,30 +29,30 @@
                 <span class="input-group-addoan input-group-append border-left">
                   <span class="mdi mdi-calendar input-group-text"></span>
                 </span>
-                <label id="patrol-date-error" class="error mt-2 text-danger" for="patrol-log-date" hidden></label>
               </div>
+              <label id="patrol-date-error" class="error mt-2 text-danger" for="patrol-log-date" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Patrol Start Time (required)</label>
               <div class="input-group date" id="patrol-start-time" data-target-input="nearest">
                 <div class="input-group" data-target="#patrol-start-time" data-toggle="datetimepicker">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#patrol-start-time" />
+                  <input type="text" class="form-control datetimepicker-input" data-target="#patrol-start-time" id="patrol-start-time-input" />
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
-                <label id="patrol-start_time-error" class="error mt-2 text-danger" for="patrol-start-time" hidden></label>
               </div>
+              <label id="patrol-start_time-error" class="error mt-2 text-danger" for="patrol-start-time" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Patrol End Time (required)</label>
               <div class="input-group date" id="patrol-end-time" data-target-input="nearest">
                 <div class="input-group" data-target="#patrol-end-time" data-toggle="datetimepicker">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#patrol-end-time" />
+                  <input type="text" class="form-control datetimepicker-input" data-target="#patrol-end-time" id="patrol-end-time-input" />
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
-                <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
               </div>
+              <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
             </div>
 
             <div class="form-group">
@@ -99,11 +99,14 @@
     e.preventDefault();
     var type = $('#patrol-log-type').val();
     var patrol_date = $('#patrol-log-date').val();
-    var start_time = $('#patrol-start-time').val();
-    var end_time = $('#patrol-end-time').val();
-    var details = $('#details').val();
+    var start_time = $('#patrol-start-time-input').val();
+    var end_time = $('#patrol-end-time-input').val();
+    var details = $('#patrol-details').val();
     var elements = {
       '#patrol-log-date' : '#patrol-date-error',
+      '#patrol-start-time-input' : '#patrol-start_time-error',
+      '#patrol-end-time-input' : '#patrol-end_time-error',
+      // yes this is dirty but it will do
       '#patrol-start-time' : '#patrol-start_time-error',
       '#patrol-end-time' : '#patrol-end_time-error',
       '#patrol-details' : '#patrol-details-error',
@@ -114,7 +117,6 @@
       $(element).parent().removeClass('has-danger');
       $(element).removeClass('form-control-danger');
       $(elements[element]).prop('hidden', true);
-      $(element).val('');
       $(elements[element]).empty();
     }
 
@@ -123,9 +125,7 @@
       url: '{{ url('activity/submit') }}',
       data: {type:type, patrol_date:patrol_date, start_time:start_time, end_time:end_time, details:details},
       success: function() {
-        showSuccessToast_SubmitPAL();
-        $('#cancelAddMember').click();
-        $('#tableElement').DataTable().ajax.reload();
+        $('#ajax_new_patrol_log_cancel').click();
         for (var element in elements) {
           $(element).parent().removeClass('has-danger');
           $(element).removeClass('form-control-danger');
@@ -133,13 +133,13 @@
           $(element).val('');
           $(elements[element]).empty();
         }
+        showSuccessToast_SubmitPAL();
       },
       error: function(data) {
         for (var element in elements) {
           $(element).parent().removeClass('has-danger');
           $(element).removeClass('form-control-danger');
           $(elements[element]).prop('hidden', true);
-          $(element).val('');
           $(elements[element]).empty();
         }
         showFailToast_SubmitPAL();
@@ -157,7 +157,7 @@
             break;
             case 'start_time':
               var element = '#patrol-start-time';
-              var label = '#patrol-date-error';
+              var label = '#patrol-start_time-error';
               $(element).parent().addClass('has-danger');
               $(element).addClass('form-control-danger');
               $(label).append(errors[key]);

@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+	protected $table = 'activity';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username'
+        'patrol_date', 'start_time', 'end_time', 'details', 'patrol_area', 'type', 'user_id'
     ];
 }
