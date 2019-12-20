@@ -216,7 +216,6 @@
               return dt.slug;
             });
            console.log(data);
-           console.log(role);
            if (role == "superadmin") {
               return false;
            } else {
