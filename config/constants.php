@@ -107,8 +107,8 @@ return [
     | Auth Levels
     |--------------------------------------------------------------------------
     |
-    | Auth Levels show what type of level each role is, this is unchangable,
-    | it's mainly just for easier access. 
+    | Auth Levels show what type of level each role is, this should only be
+    | changed if you really know what you are doing. 
     |
     */
     'access_level' => [
