@@ -76,6 +76,10 @@
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->
+    <!-- Global modals for this page-->
+    @include('modals.submit_patrol_log_modal')
+    <!-- End global modals for this page-->
+    <!-- End modals for this page -->
     <!-- Modals for this page-->
     @yield('modals')
     <!-- End modals for this page -->
