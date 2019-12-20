@@ -94,7 +94,7 @@
                 <div class="content">
                     <p>CHAIN OF COMMAND TESTING RELEASE</p>
                     <div class="progress">
-                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:18%">18%</div>
+                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:20%">20%</div>
                     </div><br>
                 </div>
 
@@ -113,7 +113,7 @@
 
                     <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:0%">0%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:17%">17%</div>
                     </div><br>
 
                     <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>

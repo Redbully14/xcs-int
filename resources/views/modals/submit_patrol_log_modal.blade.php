@@ -74,8 +74,8 @@
   showSuccessToast_SubmitPAL = function() {
     'use strict';
     $.toast({
-      heading: 'User Added!',
-      text: 'New user has been added to the database, you are now able to view/edit the profile.',
+      heading: 'Patrol Log Submitted!',
+      text: 'The patrol log has been submitted and has been logged into our database.',
       showHideTransition: 'slide',
       icon: 'success',
       loaderBg: '#f96868',
@@ -86,8 +86,8 @@
   showFailToast_SubmitPAL = function() {
     'use strict';
     $.toast({
-      heading: 'User Adding Failed!',
-      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
+      heading: 'Patrol Submission Failed!',
+      text: 'Please double check the fields to ensure everything is correct.',
       showHideTransition: 'slide',
       icon: 'error',
       loaderBg: '#f2a654',
