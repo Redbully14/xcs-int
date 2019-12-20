@@ -15,7 +15,7 @@
 
             <div class="form-group">
               <label>Patrol Type</label>
-              <select class="js-example-basic-single" style="width:100%" id="patrol-log-type" name="role">
+              <select class="select2-patrol-type" style="width:100%" id="patrol-log-type" name="role">
                 @foreach($constants['patrol_type'] as $item => $value)
                   <option value="{{ $item }}">{{ $value }}</option>
                 @endforeach
@@ -29,6 +29,7 @@
                 <span class="input-group-addoan input-group-append border-left">
                   <span class="mdi mdi-calendar input-group-text"></span>
                 </span>
+                <label id="patrol-date-error" class="error mt-2 text-danger" for="patrol-log-date" hidden></label>
               </div>
             </div>
 
@@ -39,6 +40,7 @@
                   <input type="text" class="form-control datetimepicker-input" data-target="#patrol-start-time" />
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
+                <label id="patrol-start_time-error" class="error mt-2 text-danger" for="patrol-start-time" hidden></label>
               </div>
             </div>
 
@@ -49,12 +51,14 @@
                   <input type="text" class="form-control datetimepicker-input" data-target="#patrol-end-time" />
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
+                <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
               </div>
             </div>
 
             <div class="form-group">
               <label>Patrol Description (required)</label>
               <textarea class="form-control" id="patrol-details" rows="6"></textarea>
+              <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
 
           </div>
@@ -67,11 +71,127 @@
   </div>
 </div>
 <script type="text/javascript">
+  showSuccessToast_SubmitPAL = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Added!',
+      text: 'New user has been added to the database, you are now able to view/edit the profile.',
+      showHideTransition: 'slide',
+      icon: 'success',
+      loaderBg: '#f96868',
+      position: 'top-right'
+    })
+  };
+
+  showFailToast_SubmitPAL = function() {
+    'use strict';
+    $.toast({
+      heading: 'User Adding Failed!',
+      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
+      showHideTransition: 'slide',
+      icon: 'error',
+      loaderBg: '#f2a654',
+      position: 'top-right'
+    })
+  };
+
+  $('#ajax_submit_patrol_log').on('submit', function(e) {
+    e.preventDefault();
+    var type = $('#patrol-log-type').val();
+    var patrol_date = $('#patrol-log-date').val();
+    var start_time = $('#patrol-start-time').val();
+    var end_time = $('#patrol-end-time').val();
+    var details = $('#details').val();
+    var elements = {
+      '#patrol-log-date' : '#patrol-date-error',
+      '#patrol-start-time' : '#patrol-start_time-error',
+      '#patrol-end-time' : '#patrol-end_time-error',
+      '#patrol-details' : '#patrol-details-error',
+    };
+
+    // this is really crappy but i just can't be asked anymore
+    for (var element in elements) {
+      $(element).parent().removeClass('has-danger');
+      $(element).removeClass('form-control-danger');
+      $(elements[element]).prop('hidden', true);
+      $(element).val('');
+      $(elements[element]).empty();
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '{{ url('activity/submit') }}',
+      data: {type:type, patrol_date:patrol_date, start_time:start_time, end_time:end_time, details:details},
+      success: function() {
+        showSuccessToast_SubmitPAL();
+        $('#cancelAddMember').click();
+        $('#tableElement').DataTable().ajax.reload();
+        for (var element in elements) {
+          $(element).parent().removeClass('has-danger');
+          $(element).removeClass('form-control-danger');
+          $(elements[element]).prop('hidden', true);
+          $(element).val('');
+          $(elements[element]).empty();
+        }
+      },
+      error: function(data) {
+        for (var element in elements) {
+          $(element).parent().removeClass('has-danger');
+          $(element).removeClass('form-control-danger');
+          $(elements[element]).prop('hidden', true);
+          $(element).val('');
+          $(elements[element]).empty();
+        }
+        showFailToast_SubmitPAL();
+        var errors = data['responseJSON'].errors;
+
+        for (var key in errors) {
+          switch (key) {
+            case 'patrol_date':
+              var element = '#patrol-log-date';
+              var label = '#patrol-date-error';
+              $(element).parent().addClass('has-danger');
+              $(element).addClass('form-control-danger');
+              $(label).append(errors[key]);
+              $(label).prop('hidden', false);
+            break;
+            case 'start_time':
+              var element = '#patrol-start-time';
+              var label = '#patrol-date-error';
+              $(element).parent().addClass('has-danger');
+              $(element).addClass('form-control-danger');
+              $(label).append(errors[key]);
+              $(label).prop('hidden', false);
+            break;
+            case 'end_time':
+              var element = '#patrol-end-time';
+              var label = '#patrol-end_time-error';
+              $(element).parent().addClass('has-danger');
+              $(element).addClass('form-control-danger');
+              $(label).append(errors[key]);
+              $(label).prop('hidden', false);
+            break;
+            case 'details':
+              var element = '#patrol-details';
+              var label = '#patrol-details-error';
+              $(element).parent().addClass('has-danger');
+              $(element).addClass('form-control-danger');
+              $(label).append(errors[key]);
+              $(label).prop('hidden', false);
+            break;
+          }
+        }
+      }
+    });
+  });
+
   (function($) {
     'use strict';
 
-    if ($(".js-example-basic-single").length) {
-      $(".js-example-basic-single").select2();
+    if ($(".select2-patrol-type").length) {
+      $('.select2-patrol-type').select2({
+          minimumResultsForSearch: -1
+      });
     }
     if ($(".js-example-basic-multiple").length) {
       $(".js-example-basic-multiple").select2();

@@ -21,8 +21,8 @@ class Activity extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->longText('details');
-            $table->string('patrol_area');
-            $table->char('log_type', 20);
+            $table->string('patrol_area')->nullable();
+            $table->char('type', 20);
             $table->timestamps();
         });
     }
