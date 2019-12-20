@@ -48,10 +48,10 @@ Route::post('logout', [
 Route::get('/', function () {
     return redirect('/dashboard');
 });
-Route::get('/dashboard', 'AntelopeController@dashboard');
+Route::get('/dashboard', 'Antelope@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
-Route::get('/member_admin', 'AntelopeController@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
-Route::get('/member_admin/get_users', 'AntelopeController@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
 
 // POST routes
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));

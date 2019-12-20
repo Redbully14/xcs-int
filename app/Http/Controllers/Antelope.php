@@ -10,7 +10,7 @@ use App\User;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 
-class AntelopeController extends Controller
+class Antelope extends Controller
 {
     /**
      * Create a new controller instance.
