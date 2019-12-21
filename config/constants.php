@@ -50,6 +50,7 @@ return [
     'pages' => [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
+        'activity_database' => 'Activity Database',
     ],
 
     /*

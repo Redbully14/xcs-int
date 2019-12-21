@@ -58,9 +58,8 @@ class EditProfileController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator($username, array $data)
     {
-        $username = User::find($data['id']);
         $username = $username->username;
         $data['antelope_status'] = $data['antelope_status'] ? true : false;
 
@@ -89,8 +88,8 @@ class EditProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $user = User::find($request['id']);
-        $this->validator($request->all())->validate();
+        $user = User::find($request->route('user'));
+        $this->validator($user, $request->all())->validate();
 
 
         $user->name = $request['name'];

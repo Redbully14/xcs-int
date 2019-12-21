@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Activity;
+use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,5 +93,29 @@ class AntelopeActivity extends Controller
         $log = $this->create($request->all());
 
         return $this->submitted($request, $log);
+    }
+
+    /**
+     * Construct Activity Page
+     *
+     * @return View
+     */
+    public function constructPage()
+    {
+        $constants = \Config::get('constants');
+
+        return view('activity_database')->with('constants', $constants);
+    }
+
+    /**
+     * Gets all activity in database
+     *
+     * @return View
+     */
+    public function passActivityData()
+    {
+        return Datatables::of(Activity::query())
+        // ->addColumn() in case I add a column
+        ->make(true);
     }
 }
