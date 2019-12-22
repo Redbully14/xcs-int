@@ -113,7 +113,7 @@
 
                     <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:17%">17%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:30%">30%</div>
                     </div><br>
 
                     <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>
