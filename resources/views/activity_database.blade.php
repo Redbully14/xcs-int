@@ -22,7 +22,12 @@
               <thead>
                 <tr>
                   <th>Patrol Log ID</th>
-                  <th>Name</th>
+                  <th>Name & Unit Number</th>
+                  <th>Website ID</th>
+                  <th>Patrol Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Patrol Details</th>
                 </tr>
               </thead>
             </table>
@@ -46,10 +51,25 @@
     $('#tableElement').DataTable({
      ordering: false,
      serverSide: true,
+     searching: false,
      ajax: '{{ url('activity/collection') }}',
      columns: [
-      { data: 'id', name: 'id', searchable: true },
-      { data: 'name', name: 'name', searchable: true },
+      { data: 'id', name: 'id', render: function (data, type, row) {
+        return  '{{ $constants['global_id']['patrol_log'] }}' + data;
+      } },
+      { data: 'name_department_id', name: 'name_department_id' },
+      { data: 'website_id', name: 'website_id' },
+      { data: 'patrol_date', name: 'patrol_date' },
+      { data: 'start_time', name: 'start_time' },
+      { data: 'end_time', name: 'end_time' },
+      { data: 'details', name: 'details', render: function (data, type, row) {
+        var allowedLength = 35;
+        if (data.length >= allowedLength) {
+          return data.substr(0, allowedLength)+'...';
+        } else {
+          return data;
+        };
+      } }
      ]
     });
   });

@@ -170,4 +170,17 @@ return [
         'subdivisional' => 'Business Patrol',
         'fto' => 'Field Training',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global IDs
+    |--------------------------------------------------------------------------
+    |
+    | Global IDs are abbriviations that are put before the actual ID of an
+    | item that is within the system.
+    |
+    */
+    'global_id' => [
+        'patrol_log' => 'PL-',
+    ],
 ];

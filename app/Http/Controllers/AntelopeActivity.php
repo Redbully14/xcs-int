@@ -124,11 +124,19 @@ class AntelopeActivity extends Controller
         'activity.details',
         'activity.type',
         'users.name',
+        'users.department_id',
+        'users.website_id'
     ])
     ->join('users', function($join) {
         $join->on('activity.user_id', '=', 'users.id');
     });
 
-    return datatables($query)->toJson();
+    return datatables($query)
+    ->addColumn('name_department_id', function($row){
+                if ( $row->department_id == null ) {
+                    return $row->name;
+                }
+                else return $row->name.' '.$row->department_id;})
+    ->toJson();
     }
 }
