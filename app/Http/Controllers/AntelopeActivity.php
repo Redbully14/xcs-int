@@ -114,8 +114,21 @@ class AntelopeActivity extends Controller
      */
     public function passActivityData()
     {
-        return Datatables::of(Activity::query())
-        // ->addColumn() in case I add a column
-        ->make(true);
+    $query = Activity::query()
+    ->select([
+        'activity.id',
+        'activity.user_id',
+        'activity.patrol_date',
+        'activity.start_time',
+        'activity.end_time',
+        'activity.details',
+        'activity.type',
+        'users.name',
+    ])
+    ->join('users', function($join) {
+        $join->on('activity.user_id', '=', 'users.id');
+    });
+
+    return datatables($query)->toJson();
     }
 }

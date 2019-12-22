@@ -49,7 +49,7 @@
      ajax: '{{ url('activity/collection') }}',
      columns: [
       { data: 'id', name: 'id', searchable: true },
-      { data: 'user_id', name: 'user_id', searchable: true },
+      { data: 'name', name: 'name', searchable: true },
      ]
     });
   });
