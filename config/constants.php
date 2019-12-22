@@ -50,6 +50,7 @@ return [
     'pages' => [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
+        'activity_database' => 'Activity Database',
     ],
 
     /*
@@ -168,5 +169,18 @@ return [
         'normal' => 'Normal Patrol',
         'subdivisional' => 'Business Patrol',
         'fto' => 'Field Training',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global IDs
+    |--------------------------------------------------------------------------
+    |
+    | Global IDs are abbriviations that are put before the actual ID of an
+    | item that is within the system.
+    |
+    */
+    'global_id' => [
+        'patrol_log' => 'PL-',
     ],
 ];

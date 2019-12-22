@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Activity;
+use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,5 +93,50 @@ class AntelopeActivity extends Controller
         $log = $this->create($request->all());
 
         return $this->submitted($request, $log);
+    }
+
+    /**
+     * Construct Activity Page
+     *
+     * @return View
+     */
+    public function constructPage()
+    {
+        $constants = \Config::get('constants');
+
+        return view('activity_database')->with('constants', $constants);
+    }
+
+    /**
+     * Gets all activity in database
+     *
+     * @return View
+     */
+    public function passActivityData()
+    {
+    $query = Activity::query()
+    ->select([
+        'activity.id',
+        'activity.user_id',
+        'activity.patrol_date',
+        'activity.start_time',
+        'activity.end_time',
+        'activity.details',
+        'activity.type',
+        'users.name',
+        'users.department_id',
+        'users.website_id'
+    ])
+    ->join('users', function($join) {
+        $join->on('activity.user_id', '=', 'users.id');
+    });
+
+    return datatables($query)
+    ->addColumn('name_department_id', function($row){
+                if ( $row->department_id == null ) {
+                    return $row->name;
+                }
+                else return $row->name.' '.$row->department_id;})
+    ->toJson();
     }
 }

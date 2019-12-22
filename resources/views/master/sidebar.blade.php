@@ -42,6 +42,16 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() >= $constants['access_level']['staff'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/activity">
+        <span class="menu-icon">
+          <i class="mdi mdi-database"></i>
+        </span>
+        <span class="menu-title">Activity Database</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/member_admin">
