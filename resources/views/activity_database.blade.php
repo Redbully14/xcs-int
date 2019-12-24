@@ -28,6 +28,7 @@
                   <th>Start Time</th>
                   <th>End Time</th>
                   <th>Patrol Details</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
             </table>
@@ -69,9 +70,14 @@
         } else {
           return data;
         };
-      } }
+      } },
+      { data: 'id', searchable: false, render: function(data, type, row) { return '<button id="ajax_view_patrol_log_open" value="'+data+'">View</button>'; } }
      ]
     });
   });
 </script>
+@endsection
+
+@section('modals')
+@include('modals.show_patrol_log_modal')
 @endsection
