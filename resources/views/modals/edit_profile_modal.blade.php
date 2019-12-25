@@ -105,7 +105,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Statistics or something</h4>
+                      <h4 class="card-title mb-1">This section is still work in progress</h4>
                       <p class="text-muted mb-1">Your data status</p>
                     </div>
                     <div class="row">
@@ -157,6 +157,32 @@
                     </div>
                     @endif
 
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="column">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Test</h4>
+                    <div class="row">
+                      <div class="table-responsive" id="profilePatrolLogsTable">
+                        <table id="profileActivity" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Antelope ID</th>
+                              <th>Name</th>
+                              <th>Username</th>
+                              <th>Antelope Access</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
