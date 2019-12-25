@@ -155,4 +155,27 @@ class AntelopeActivity extends Controller
 
         return $log;
     }
+
+
+    /**
+     * Gets a specific users' activity
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function activityData($id)
+    {
+        $query = Activity::query()
+        ->select([
+            'id',
+            'user_id',
+            'patrol_date',
+            'start_time',
+            'end_time',
+            'details',
+            'type',
+        ])->where('user_id', '=', $id);
+
+        return Datatables($query)->toJson();
+    }
 }

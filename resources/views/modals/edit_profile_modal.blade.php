@@ -163,21 +163,20 @@
             </div>
 
             <div class="row">
-              <div class="column">
+              <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Test</h4>
                     <div class="row">
                       <div class="table-responsive" id="profilePatrolLogsTable">
-                        <table id="profileActivity" class="table table-bordered">
+                        <table id="profileActivity" class="table table-bordered" style="width:100%">
                           <thead>
                             <tr>
-                              <th>Antelope ID</th>
-                              <th>Name</th>
-                              <th>Username</th>
-                              <th>Antelope Access</th>
-                              <th>Status</th>
-                              <th>Actions</th>
+                              <th>Patrol Log ID</th>
+                              <th>Patrol Date</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Patrol Details</th>
                             </tr>
                           </thead>
                         </table>
@@ -220,6 +219,25 @@
     })
   };
 
+  getUsersActivity = function(id) {
+  $('#profileActivity').DataTable({
+     ordering: false,
+     serverSide: true,
+     searching: true,
+     destroy: true,
+     ajax: '{{ url('activity/get_profile_logs/') }}/'+id,
+     columns: [
+      { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
+        return  '{{ $constants['global_id']['patrol_log'] }}' + data;
+      } },
+      { data: 'patrol_date', name: 'patrol_date' },
+      { data: 'start_time', name: 'start_time' },
+      { data: 'end_time', name: 'end_time' },
+      { data: 'details', name: 'details' },
+     ]
+    });
+  };
+
   // TODO: Implement case not on member_admin
   // Future self here: what the fuck did I mean by that?
   $table = $('#tableElement');
@@ -232,6 +250,7 @@
     }
     var isSuperAdmin = false;
     var id = $(this).val();
+    getUsersActivity(id);
     $('#ajax_edit_member_save').val(id).change();
 
       $.ajax({
