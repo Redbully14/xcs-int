@@ -139,4 +139,20 @@ class AntelopeActivity extends Controller
                 else return $row->name.' '.$row->department_id;})
     ->toJson();
     }
+
+    /**
+     * Gets specific activity instance
+     *
+     * @return View
+     */
+    public function passActivityInstance($id)
+    {
+        $log = Activity::find($id);
+
+        $log->user_name = User::find($log['user_id'])->name;
+        $log->department_id = User::find($log['user_id'])->department_id;
+        $log->website_id = User::find($log['user_id'])->website_id;
+
+        return $log;
+    }
 }
