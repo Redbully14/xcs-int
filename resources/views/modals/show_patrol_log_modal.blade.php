@@ -13,8 +13,18 @@
         <div class="modal-body">
 
           <div class="form-group">
+            <label>Submitted by:</label>
+            <h5 id="ajax-patrol-log-by"></h5>
+          </div>
+
+          <div class="form-group">
+            <label>Website ID:</label>
+            <h5 id="ajax-patrol-website-id"></h5>
+          </div>
+
+          <div class="form-group">
             <label>Patrol Type</label>
-            <select class="select2-patrol-type" style="width:100%" id="ajax-input-patrol-log-type" name="role" disabled>
+            <select class="js-example-basic-single" style="width:100%" id="ajax-input-patrol-log-type" name="patrol_type" disabled>
               @foreach($constants['patrol_type'] as $item => $value)
                 <option value="{{ $item }}">{{ $value }}</option>
               @endforeach
@@ -61,9 +71,32 @@
          success: function(data){
            console.log(data);
             // $("#profile-username-field").val(data['username']);
+            if(data['department_id'] == null) {
+                var uniqueunitnumber = data['user_name'];
+             } else var uniqueunitnumber = data['user_name']+' '+data['department_id'];
             $("#ajax_view_patrol_log").modal("toggle");
+            $("#ajax-patrol-log-by").empty();
+            $("#ajax-patrol-log-by").append(uniqueunitnumber);
+            $("#ajax-patrol-website-id").empty();
+            $("#ajax-patrol-website-id").append(data['website_id']);
+            $("#ajax-input-patrol-log-type").val(data['type']).change();
+            $("#ajax-input-patrol-log-date").val(data['patrol_date']);
+            $("#ajax-input-patrol-start-time").val(data['start_time']);
+            $("#ajax-input-patrol-end-time").val(data['end_time']);
+            $("#ajax-input-patrol-details").val(data['details']);
          }
       }).done(function(data) {});
   });
+
+  (function($) {
+    'use strict';
+
+    if ($(".js-example-basic-single").length) {
+      $(".js-example-basic-single").select2();
+    }
+    if ($(".js-example-basic-multiple").length) {
+      $(".js-example-basic-multiple").select2();
+    }
+  })(jQuery);
 </script>
 @endif

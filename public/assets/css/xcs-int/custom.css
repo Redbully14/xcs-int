@@ -34,6 +34,16 @@ body, html {
   background: #000000;
 }
 
+input:disabled, select:disabled, textarea:disabled {
+    color: #ffffff !important;
+    background-color: #2A3038 !important;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single {
+    color: #ffffff !important;
+    background-color: #2A3038 !important;
+}
+
 input, select, textarea{
     color: #ffffff !important;
 }

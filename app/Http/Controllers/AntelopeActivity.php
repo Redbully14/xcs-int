@@ -147,8 +147,12 @@ class AntelopeActivity extends Controller
      */
     public function passActivityInstance($id)
     {
-        $log = User::find($id);
+        $log = Activity::find($id);
 
-        return $id;
+        $log->user_name = User::find($log['user_id'])->name;
+        $log->department_id = User::find($log['user_id'])->department_id;
+        $log->website_id = User::find($log['user_id'])->website_id;
+
+        return $log;
     }
 }
