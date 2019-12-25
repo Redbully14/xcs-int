@@ -16,7 +16,7 @@ return [
         'framework_name' => 'xcs_int',
         'application_name' => 'Antelope',
         'application_subname' => 'PHP',
-        'application_version' => 'canary',
+        'application_version' => 'nightly',
         'application_footer' => 'Department of Justice RP',
         'application_icon' => 'fab fa-asymmetrik',
     ],

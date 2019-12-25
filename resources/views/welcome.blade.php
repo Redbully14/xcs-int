@@ -94,7 +94,7 @@
                 <div class="content">
                     <p>CHAIN OF COMMAND TESTING RELEASE</p>
                     <div class="progress">
-                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:20%">20%</div>
+                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:52%">52%</div>
                     </div><br>
                 </div>
 
@@ -113,12 +113,12 @@
 
                     <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:30%">30%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:83%">83%</div>
                     </div><br>
 
                     <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>
                     <div class="progress">
-                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:20%">20%</div>
+                      <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:43%">43%</div>
                     </div><br>
 
                     <p>DISCIPLINARY ACTIONS - Issuing DA and Displaying DA</p>
