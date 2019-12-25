@@ -52,6 +52,9 @@ Route::get('/dashboard', 'Antelope@dashboard');
 Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
 Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::get('/superadmin/help', function () {
+    return view('stackpath.superadmin_help');
+})->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 
 // Activty GET Routes
 Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));
