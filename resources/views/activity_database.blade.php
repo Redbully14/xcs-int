@@ -60,7 +60,7 @@
       } },
       { data: 'name_department_id', name: 'name_department_id' },
       { data: 'website_id', name: 'website_id' },
-      { data: 'patrol_date', name: 'patrol_date' },
+      { data: 'patrol_start_date', name: 'patrol_start_date' },
       { data: 'start_time', name: 'start_time' },
       { data: 'end_time', name: 'end_time' },
       { data: 'details', name: 'details', render: function (data, type, row) {

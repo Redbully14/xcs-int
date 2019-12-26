@@ -80,7 +80,7 @@
             $("#ajax-patrol-website-id").empty();
             $("#ajax-patrol-website-id").append(data['website_id']);
             $("#ajax-input-patrol-log-type").val(data['type']).change();
-            $("#ajax-input-patrol-log-date").val(data['patrol_date']);
+            $("#ajax-input-patrol-log-date").val(data['patrol_start_date']);
             $("#ajax-input-patrol-start-time").val(data['start_time']);
             $("#ajax-input-patrol-end-time").val(data['end_time']);
             $("#ajax-input-patrol-details").val(data['details']);

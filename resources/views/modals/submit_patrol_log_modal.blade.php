@@ -23,7 +23,7 @@
             </div>
 
             <div class="form-group">
-              <label>Patrol Date (required)</label>
+              <label>Patrol Start Date (required)</label>
               <div id="datepicker-popup" class="input-group date datepicker">
                 <input type="text" class="form-control" id="patrol-log-date" required>
                 <span class="input-group-addoan input-group-append border-left">
@@ -98,7 +98,7 @@
   $('#ajax_submit_patrol_log').on('submit', function(e) {
     e.preventDefault();
     var type = $('#patrol-log-type').val();
-    var patrol_date = $('#patrol-log-date').val();
+    var patrol_start_date = $('#patrol-log-date').val();
     var start_time = $('#patrol-start-time-input').val();
     var end_time = $('#patrol-end-time-input').val();
     var details = $('#patrol-details').val();
@@ -123,7 +123,7 @@
     $.ajax({
       type: 'POST',
       url: '{{ url('activity/submit') }}',
-      data: {type:type, patrol_date:patrol_date, start_time:start_time, end_time:end_time, details:details},
+      data: {type:type, patrol_start_date:patrol_start_date, start_time:start_time, end_time:end_time, details:details},
       success: function() {
         $('#ajax_new_patrol_log_cancel').click();
         for (var element in elements) {

@@ -14,6 +14,6 @@ class Activity extends Model
      * @var array
      */
     protected $fillable = [
-        'patrol_date', 'start_time', 'end_time', 'details', 'patrol_area', 'type', 'user_id'
+        'patrol_start_date', 'patrol_end_date', 'start_time', 'end_time', 'details', 'patrol_area', 'type', 'user_id'
     ];
 }
