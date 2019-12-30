@@ -18,7 +18,7 @@ class CreateActivityTable extends Migration
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('patrol_start_date');
-            $table->date('patrol_end_date');
+            $table->date('patrol_end_date')->nullable();
             $table->time('start_time');
             $table->time('end_time');
             $table->longText('details');

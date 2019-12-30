@@ -41,6 +41,7 @@ class AntelopeActivity extends Controller
     {
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
+            'patrol_end_date' => ['date', 'nullable'],
             'start_time' => ['required', 'string'],
             'end_time' => ['required', 'string', new TimeValidation($data['start_time'])],
             'type' => ['required', 'string', 'max:30'],
@@ -56,9 +57,13 @@ class AntelopeActivity extends Controller
      */
     protected function create(array $data)
     {
-
+        if ($data['patrol_end_date'] == null) {
+            $data['patrol_end_date'] = $data['patrol_start_date'];
+        };
+        
         $log = Activity::create([
-            'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_date'])),
+            'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
+            'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
             'type' => $data['type'],
