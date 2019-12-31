@@ -49,7 +49,9 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 Route::get('/dashboard', 'Antelope@dashboard');
-Route::get('/xcsinfo', 'BaseXCS@xcsInfo');
+Route::get('/xcsinfo', function () {
+    return view('stackpath.welcome');
+});
 Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/superadmin/help', function () {
