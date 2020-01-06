@@ -171,7 +171,7 @@
             break;
             case 'patrol_end_date':
               var element = '#patrol-end-log-date';
-              var label = '#patrol-end-date-error';
+              var label = '#patrol-end-log-date-error';
               $(element).parent().addClass('has-danger');
               $(element).addClass('form-control-danger');
               $(label).append(errors[key]);
@@ -236,12 +236,14 @@
     $('#patrol_start_date_datepicker').datepicker({
       enableOnReadonly: true,
       todayHighlight: true,
+      autoclose: true
     });
   }
   if ($("#patrol_end_date_datepicker").length) {
     $('#patrol_end_date_datepicker').datepicker({
       enableOnReadonly: true,
       todayHighlight: true,
+      autoclose: true
     });
   }
 })(jQuery);
