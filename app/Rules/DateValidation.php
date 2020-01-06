@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class TimeValidation implements Rule
+class DateValidation implements Rule
 {
     public $secondValue;
 
@@ -37,6 +37,6 @@ class TimeValidation implements Rule
      */
     public function message()
     {
-        return 'The start time is greater then the end time.';
+        return 'The start date is greater then the end date.';
     }
 }

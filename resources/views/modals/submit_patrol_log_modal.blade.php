@@ -24,7 +24,7 @@
 
             <div class="form-group">
               <label>Patrol Start Date (required)</label>
-              <div id="datepicker-popup" class="input-group date datepicker">
+              <div id="patrol_start_date_datepicker" class="input-group date datepicker">
                 <input type="text" class="form-control" id="patrol_start_date" required>
                 <span class="input-group-addoan input-group-append border-left">
                   <span class="mdi mdi-calendar input-group-text"></span>
@@ -35,7 +35,7 @@
 
             <div class="form-group">
               <label>Patrol End Date (optional)</label>
-              <div id="datepicker-popup" class="input-group date datepicker">
+              <div id="patrol_end_date_datepicker" class="input-group date datepicker">
                 <input type="text" class="form-control" id="patrol-end-log-date">
                 <span class="input-group-addoan input-group-append border-left">
                   <span class="mdi mdi-calendar input-group-text"></span>
@@ -232,8 +232,14 @@
       format: 'LT'
     });
   }
-  if ($("#datepicker-popup").length) {
-    $('#datepicker-popup').datepicker({
+  if ($("#patrol_start_date_datepicker").length) {
+    $('#patrol_start_date_datepicker').datepicker({
+      enableOnReadonly: true,
+      todayHighlight: true,
+    });
+  }
+  if ($("#patrol_end_date_datepicker").length) {
+    $('#patrol_end_date_datepicker').datepicker({
       enableOnReadonly: true,
       todayHighlight: true,
     });

@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Activity;
 use App\Rules\TimeValidation;
+use App\Rules\DateValidation;
 use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -39,11 +40,22 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        if($data['patrol_end_date'] == null) {
+            return Validator::make($data, [
+                'patrol_start_date' => ['required', 'date'],
+                'patrol_end_date' => ['date', 'nullable'],
+                'start_time' => ['required', 'string'],
+                'end_time' => ['required', 'string', new TimeValidation($data['start_time'])],
+                'type' => ['required', 'string', 'max:30'],
+                'details' => ['required', 'string'],
+            ]);
+        }
+
+        else return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
-            'patrol_end_date' => ['date', 'nullable'],
+            'patrol_end_date' => ['date', new DateValidation($data['patrol_start_date'])],
             'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string', new TimeValidation($data['start_time'])],
+            'end_time' => ['required', 'string'],
             'type' => ['required', 'string', 'max:30'],
             'details' => ['required', 'string'],
         ]);
