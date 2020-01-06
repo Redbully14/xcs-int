@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Activity;
+use App\Rules\TimeValidation;
+use App\Rules\DateValidation;
 use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +40,20 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'patrol_date' => ['required', 'date'],
+        if($data['patrol_end_date'] == null) {
+            return Validator::make($data, [
+                'patrol_start_date' => ['required', 'date'],
+                'patrol_end_date' => ['date', 'nullable'],
+                'start_time' => ['required', 'string'],
+                'end_time' => ['required', 'string', new TimeValidation($data['start_time'])],
+                'type' => ['required', 'string', 'max:30'],
+                'details' => ['required', 'string'],
+            ]);
+        }
+
+        else return Validator::make($data, [
+            'patrol_start_date' => ['required', 'date'],
+            'patrol_end_date' => ['date', new DateValidation($data['patrol_start_date'])],
             'start_time' => ['required', 'string'],
             'end_time' => ['required', 'string'],
             'type' => ['required', 'string', 'max:30'],
@@ -55,9 +69,13 @@ class AntelopeActivity extends Controller
      */
     protected function create(array $data)
     {
-
+        if ($data['patrol_end_date'] == null) {
+            $data['patrol_end_date'] = $data['patrol_start_date'];
+        };
+        
         $log = Activity::create([
-            'patrol_date' => date("Y-m-d", strtotime($data['patrol_date'])),
+            'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
+            'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
             'type' => $data['type'],
@@ -118,7 +136,7 @@ class AntelopeActivity extends Controller
     ->select([
         'activity.id',
         'activity.user_id',
-        'activity.patrol_date',
+        'activity.patrol_start_date',
         'activity.start_time',
         'activity.end_time',
         'activity.details',
@@ -169,7 +187,7 @@ class AntelopeActivity extends Controller
         ->select([
             'id',
             'user_id',
-            'patrol_date',
+            'patrol_start_date',
             'start_time',
             'end_time',
             'details',
