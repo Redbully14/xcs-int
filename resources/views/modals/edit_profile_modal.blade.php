@@ -230,7 +230,7 @@
       { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
         return  '{{ $constants['global_id']['patrol_log'] }}' + data;
       } },
-      { data: 'patrol_start_date', name: 'patrol_date' },
+      { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
       { data: 'start_time', name: 'start_time' },
       { data: 'end_time', name: 'end_time' },
       { data: 'details', name: 'details' },

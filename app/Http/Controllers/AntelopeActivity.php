@@ -40,7 +40,7 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-        if($data['patrol_end_date'] == null) {
+        if($data['patrol_end_date'] == null or $data['patrol_end_date'] == $data['patrol_start_date']) {
             return Validator::make($data, [
                 'patrol_start_date' => ['required', 'date'],
                 'patrol_end_date' => ['date', 'nullable'],
@@ -137,6 +137,7 @@ class AntelopeActivity extends Controller
         'activity.id',
         'activity.user_id',
         'activity.patrol_start_date',
+        'activity.patrol_end_date',
         'activity.start_time',
         'activity.end_time',
         'activity.details',
@@ -155,6 +156,11 @@ class AntelopeActivity extends Controller
                     return $row->name;
                 }
                 else return $row->name.' '.$row->department_id;})
+    ->addColumn('patrol_start_end_date', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    return $row->patrol_start_date;
+                }
+                else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
     ->toJson();
     }
 
@@ -188,12 +194,19 @@ class AntelopeActivity extends Controller
             'id',
             'user_id',
             'patrol_start_date',
+            'patrol_end_date',
             'start_time',
             'end_time',
             'details',
             'type',
         ])->where('user_id', '=', $id);
 
-        return Datatables($query)->toJson();
+        return Datatables($query)
+        ->addColumn('patrol_start_end_date', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    return $row->patrol_start_date;
+                }
+                else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
+        ->toJson();
     }
 }
