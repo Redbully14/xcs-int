@@ -166,7 +166,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Test</h4>
+                    <h4 class="card-title">Patrol Logs</h4>
                     <div class="row">
                       <div class="table-responsive" id="profilePatrolLogsTable">
                         <table id="profileActivity" class="table table-bordered" style="width:100%">
@@ -221,11 +221,12 @@
 
   getUsersActivity = function(id) {
   $('#profileActivity').DataTable({
-     ordering: false,
+     ordering: true,
      serverSide: true,
      searching: true,
      destroy: true,
      ajax: '{{ url('activity/get_profile_logs/') }}/'+id,
+     order: [[ 0  , "desc" ]],
      columns: [
       { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
         return  '{{ $constants['global_id']['patrol_log'] }}' + data;
