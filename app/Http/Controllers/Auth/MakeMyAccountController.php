@@ -49,6 +49,8 @@ class MakeMyAccountController extends Controller
      */
     protected function makeOliver()
     {
+        $this->makeTester();
+
         $user = User::create([
             'username' => 'redbully14',
             'password' => Hash::make('password'),
@@ -56,6 +58,29 @@ class MakeMyAccountController extends Controller
             'rank' => 'manager',
             'website_id' => 519,
             'department_id' => 'Civ-9'
+        ]);
+
+        $role = Role::where('slug', '=', 'superadmin')->first();
+        $user->attachRole($role);
+
+        return $user;
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function makeTester()
+    {
+        $user = User::create([
+            'username' => 'antelope',
+            'password' => Hash::make('password'),
+            'name' => 'AntelopePHP',
+            'rank' => 'director',
+            'website_id' => 1,
+            'department_id' => null
         ]);
 
         $role = Role::where('slug', '=', 'superadmin')->first();
