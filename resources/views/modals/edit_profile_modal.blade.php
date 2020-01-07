@@ -166,7 +166,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Test</h4>
+                    <h4 class="card-title">Patrol Logs</h4>
                     <div class="row">
                       <div class="table-responsive" id="profilePatrolLogsTable">
                         <table id="profileActivity" class="table table-bordered" style="width:100%">
@@ -176,6 +176,7 @@
                               <th>Patrol Date</th>
                               <th>Start Time</th>
                               <th>End Time</th>
+                              <th>Patrol Duration</th>
                               <th>Patrol Details</th>
                             </tr>
                           </thead>
@@ -221,18 +222,20 @@
 
   getUsersActivity = function(id) {
   $('#profileActivity').DataTable({
-     ordering: false,
+     ordering: true,
      serverSide: true,
      searching: true,
      destroy: true,
      ajax: '{{ url('activity/get_profile_logs/') }}/'+id,
+     order: [[ 0  , "desc" ]],
      columns: [
       { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
         return  '{{ $constants['global_id']['patrol_log'] }}' + data;
       } },
-      { data: 'patrol_start_date', name: 'patrol_date' },
+      { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
       { data: 'start_time', name: 'start_time' },
       { data: 'end_time', name: 'end_time' },
+      { data: 'patrol_duration', name: 'patrol_duration' },
       { data: 'details', name: 'details' },
      ]
     });

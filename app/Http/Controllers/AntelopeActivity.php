@@ -12,6 +12,7 @@ use App\Rules\DateValidation;
 use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AntelopeActivity extends Controller
 {
@@ -40,7 +41,7 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-        if($data['patrol_end_date'] == null) {
+        if($data['patrol_end_date'] == null or $data['patrol_end_date'] == $data['patrol_start_date']) {
             return Validator::make($data, [
                 'patrol_start_date' => ['required', 'date'],
                 'patrol_end_date' => ['date', 'nullable'],
@@ -137,6 +138,7 @@ class AntelopeActivity extends Controller
         'activity.id',
         'activity.user_id',
         'activity.patrol_start_date',
+        'activity.patrol_end_date',
         'activity.start_time',
         'activity.end_time',
         'activity.details',
@@ -155,6 +157,11 @@ class AntelopeActivity extends Controller
                     return $row->name;
                 }
                 else return $row->name.' '.$row->department_id;})
+    ->addColumn('patrol_start_end_date', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    return $row->patrol_start_date;
+                }
+                else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
     ->toJson();
     }
 
@@ -188,12 +195,37 @@ class AntelopeActivity extends Controller
             'id',
             'user_id',
             'patrol_start_date',
+            'patrol_end_date',
             'start_time',
             'end_time',
             'details',
             'type',
         ])->where('user_id', '=', $id);
 
-        return Datatables($query)->toJson();
+        return Datatables($query)
+        ->addColumn('patrol_start_end_date', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    return $row->patrol_start_date;
+                }
+                else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
+        ->addColumn('patrol_duration', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    $start = Carbon::parse($row->start_time);
+                    $end = Carbon::parse($row->end_time);
+                    $totalDuration = $end->diffInSeconds($start);
+                    return gmdate('H:i:s', $totalDuration);
+                }
+                else {
+                    $start_date_time = date('Y-m-d H:i:s', strtotime("$row->patrol_start_date $row->start_time"));
+                    $end_date_time = date('Y-m-d H:i:s', strtotime("$row->patrol_end_date $row->end_time"));
+
+                    $start_date_time = strtotime($start_date_time);
+                    $end_date_time = strtotime($end_date_time);
+
+                    $total_duration = $end_date_time - $start_date_time;
+
+                    return BaseXCS::convertToDuration($total_duration);
+                };})
+        ->toJson();
     }
 }
