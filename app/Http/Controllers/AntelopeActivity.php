@@ -12,6 +12,7 @@ use App\Rules\DateValidation;
 use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AntelopeActivity extends Controller
 {
@@ -207,6 +208,24 @@ class AntelopeActivity extends Controller
                     return $row->patrol_start_date;
                 }
                 else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
+        ->addColumn('patrol_duration', function($row){
+                if ( $row->patrol_end_date == null or $row->patrol_end_date == $row->patrol_start_date ) {
+                    $start = Carbon::parse($row->start_time);
+                    $end = Carbon::parse($row->end_time);
+                    $totalDuration = $end->diffInSeconds($start);
+                    return gmdate('H:i:s', $totalDuration);
+                }
+                else {
+                    $start_date_time = date('Y-m-d H:i:s', strtotime("$row->patrol_start_date $row->start_time"));
+                    $end_date_time = date('Y-m-d H:i:s', strtotime("$row->patrol_end_date $row->end_time"));
+
+                    $start_date_time = strtotime($start_date_time);
+                    $end_date_time = strtotime($end_date_time);
+
+                    $total_duration = $end_date_time - $start_date_time;
+
+                    return BaseXCS::convertToDuration($total_duration);
+                };})
         ->toJson();
     }
 }

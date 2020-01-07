@@ -176,6 +176,7 @@
                               <th>Patrol Date</th>
                               <th>Start Time</th>
                               <th>End Time</th>
+                              <th>Patrol Duration</th>
                               <th>Patrol Details</th>
                             </tr>
                           </thead>
@@ -234,6 +235,7 @@
       { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
       { data: 'start_time', name: 'start_time' },
       { data: 'end_time', name: 'end_time' },
+      { data: 'patrol_duration', name: 'patrol_duration' },
       { data: 'details', name: 'details' },
      ]
     });
