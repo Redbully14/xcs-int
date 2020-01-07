@@ -3,9 +3,7 @@
 @extends('master.app')
 
 @section('customcss')
-<link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
 <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-<link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
 <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 @endsection
 
@@ -29,6 +27,7 @@
                   <th>Antelope ID</th>
                   <th>Name</th>
                   <th>Username</th>
+                  <th>Website ID</th>
                   <th>Antelope Access</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -44,9 +43,7 @@
 @endsection
 
 @section('pluginjs')
-<script src="/assets/vendors/select2/select2.min.js"></script>
 <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-<script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
 <script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
 @endsection
@@ -67,6 +64,7 @@
       { data: 'id', name: 'id', searchable: true },
       { data: 'name', name: 'name', searchable: true },
       { data: 'username', name: 'username', searchable: true },
+      { data: 'website_id', name: 'website_id', searchable: true },
       // the fucking part below was made thanks to stackoverflow
       // fucking <th>
       // MAN FUCK PHP->JSON CONVESION, I JUST SPENT ONE FUCKING HOUR CAUSE I HAD TO LITTERALLY DEFINE THE FACT THAT ROLES HAS TWO TREE ARRAYS FUCK THAT SHIT
@@ -86,7 +84,7 @@
         } 
       },
       // dude wtf is going on
-      { data: 'id', searchable: false, render: function(data, type, row) { return '<button id="ajax_open_modal_edit" value="'+data+'">Edit</button>'; } },
+      { data: 'id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_open_modal_edit" value="'+data+'"><i class="mdi mdi-lead-pencil"></i> Edit</button>'; } },
      ]
     });
   });

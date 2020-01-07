@@ -16,7 +16,7 @@ return [
         'framework_name' => 'xcs_int',
         'application_name' => 'Antelope',
         'application_subname' => 'PHP',
-        'application_version' => 'canary',
+        'application_version' => 'nightly',
         'application_footer' => 'Department of Justice RP',
         'application_icon' => 'fab fa-asymmetrik',
     ],
@@ -50,6 +50,7 @@ return [
     'pages' => [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
+        'activity_database' => 'Activity Database',
     ],
 
     /*
@@ -153,5 +154,33 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Patrol Types
+    |--------------------------------------------------------------------------
+    |
+    | Types of patrols that civilians are able to choose from, all these patrols
+    | are logged on specific endpoints on the system.
+    |
+    */
+    'patrol_type' => [
+        'normal' => 'Normal Patrol',
+        'subdivisional' => 'Business Patrol',
+        'fto' => 'Field Training',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global IDs
+    |--------------------------------------------------------------------------
+    |
+    | Global IDs are abbriviations that are put before the actual ID of an
+    | item that is within the system.
+    |
+    */
+    'global_id' => [
+        'patrol_log' => 'PL-',
+    ],
 ];

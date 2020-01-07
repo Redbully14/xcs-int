@@ -105,7 +105,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Statistics or something</h4>
+                      <h4 class="card-title mb-1">This section is still work in progress</h4>
                       <p class="text-muted mb-1">Your data status</p>
                     </div>
                     <div class="row">
@@ -162,6 +162,32 @@
               </div>
             </div>
 
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Patrol Logs</h4>
+                    <div class="row">
+                      <div class="table-responsive" id="profilePatrolLogsTable">
+                        <table id="profileActivity" class="table table-bordered" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>Patrol Log ID</th>
+                              <th>Patrol Date</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Patrol Duration</th>
+                              <th>Patrol Details</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           <div class="modal-footer">
             @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
             <button type="submit" class="btn btn-success" id="ajax_edit_member_save" value="0">Save</button>
@@ -194,6 +220,27 @@
     })
   };
 
+  getUsersActivity = function(id) {
+  $('#profileActivity').DataTable({
+     ordering: true,
+     serverSide: true,
+     searching: true,
+     destroy: true,
+     ajax: '{{ url('activity/get_profile_logs/') }}/'+id,
+     order: [[ 0  , "desc" ]],
+     columns: [
+      { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
+        return  '{{ $constants['global_id']['patrol_log'] }}' + data;
+      } },
+      { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
+      { data: 'start_time', name: 'start_time' },
+      { data: 'end_time', name: 'end_time' },
+      { data: 'patrol_duration', name: 'patrol_duration' },
+      { data: 'details', name: 'details' },
+     ]
+    });
+  };
+
   // TODO: Implement case not on member_admin
   // Future self here: what the fuck did I mean by that?
   $table = $('#tableElement');
@@ -206,6 +253,7 @@
     }
     var isSuperAdmin = false;
     var id = $(this).val();
+    getUsersActivity(id);
     $('#ajax_edit_member_save').val(id).change();
 
       $.ajax({
@@ -216,7 +264,6 @@
               return dt.slug;
             });
            console.log(data);
-           console.log(role);
            if (role == "superadmin") {
               return false;
            } else {
@@ -292,7 +339,7 @@
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
-        data: {id:id, name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
+        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
         success: function() {
             for (var element in elements) {
               $(element).parent().removeClass('has-danger');
