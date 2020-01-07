@@ -50,9 +50,10 @@
 <script text="text/javascript">
   $(function() {
     $('#tableElement').DataTable({
-     ordering: false,
+     ordering: true,
      serverSide: true,
      searching: false,
+     order: [[ 0  , "desc" ]],
      ajax: '{{ url('activity/collection') }}',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
@@ -71,8 +72,8 @@
           return data;
         };
       } },
-      { data: 'id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'"><i class="mdi mdi-eye"></i> View</button>'; } }
-     ]
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'"><i class="mdi mdi-eye"></i> View</button>'; } }
+     ],
     });
   });
 </script>
