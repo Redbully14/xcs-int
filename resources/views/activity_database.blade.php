@@ -71,7 +71,7 @@
           return data;
         };
       } },
-      { data: 'id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'">View</button>'; } }
+      { data: 'id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'"><i class="mdi mdi-eye"></i> View</button>'; } }
      ]
     });
   });
