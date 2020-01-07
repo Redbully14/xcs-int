@@ -53,12 +53,12 @@
 
                           <p>ACTIVITY - Patrol Logging, Displaying and Validating</p>
                           <div class="progress">
-                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:87%">87%</div>
+                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:92%">92%</div>
                           </div><br>
 
                           <p>PROFILES - Personal Profiles, Account Settings and Account Validation</p>
                           <div class="progress">
-                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:43%">43%</div>
+                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:47%">47%</div>
                           </div><br>
 
                           <p>DISCIPLINARY ACTIONS - Issuing DA and Displaying DA</p>
