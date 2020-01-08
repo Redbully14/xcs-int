@@ -19,6 +19,7 @@ return [
         'application_version' => 'canary',
         'application_footer' => 'Department of Justice RP',
         'application_icon' => 'fab fa-asymmetrik',
+        'application_favicon' => 'favicon.ico',
     ],
 
     /*
