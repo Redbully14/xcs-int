@@ -70,29 +70,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  showSuccessToast_AddMember = function() {
-    'use strict';
-    $.toast({
-      heading: 'User Added!',
-      text: 'New user has been added to the database, you are now able to view/edit the profile.',
-      showHideTransition: 'slide',
-      icon: 'success',
-      loaderBg: '#f96868',
-      position: 'top-right'
-    })
-  };
-
-  showFailToast_AddMember = function() {
-    'use strict';
-    $.toast({
-      heading: 'User Adding Failed!',
-      text: 'Adding user failed, double check if the civilian ID, Website ID or username fields are taken.',
-      showHideTransition: 'slide',
-      icon: 'error',
-      loaderBg: '#f2a654',
-      position: 'top-right'
-    })
-  };
 
   $('#ajax_add_member').on('submit', function(e) {
     e.preventDefault();
@@ -125,7 +102,11 @@
       url: '{{ url('member_admin/new') }}',
       data: {name:name, username:username, password:password, role:role, rank:rank, website_id:website_id, department_id:department_id},
       success: function() {
-        showSuccessToast_AddMember();
+        var toast_heading = "User Added!";
+        var toast_text = "New user has been added to the database, you are now able to view/edit the profile.";
+        var toast_icon = "success";
+        var toast_color = "#f96868";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
         $('#cancelAddMember').click();
         $('#tableElement').DataTable().ajax.reload();
         for (var element in elements) {
@@ -144,7 +125,11 @@
           $(element).val('');
           $(elements[element]).empty();
         }
-        showFailToast_AddMember();
+        var toast_heading = "User Adding Failed!";
+        var toast_text = "Adding user failed, double check if the civilian ID, Website ID or username fields are taken.";
+        var toast_icon = "error";
+        var toast_color = "#f2a654";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
         var errors = data['responseJSON'].errors;
 
         for (var key in errors) {
