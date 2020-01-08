@@ -3,7 +3,6 @@
 @extends('master.app')
 
 @section('customcss')
-<link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
 <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 @endsection
 
