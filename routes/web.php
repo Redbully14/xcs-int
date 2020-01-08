@@ -69,6 +69,7 @@ Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData')
 
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
+Route::post('/settings/change_avatar', 'Antelope@setAvatar');
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));

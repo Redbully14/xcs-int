@@ -20,7 +20,7 @@
 
               	<h5>Change Password</h5><br>
 
-				<form id="ajax_change_password">
+				        <form id="ajax_change_password">
                   <div class="form-group">
                     <label for="ajax_change_password-current_password">Current Password</label>
                     <input type="password" class="form-control" id="ajax_change_password-current_password" placeholder="Password">
@@ -37,6 +37,20 @@
                    	<label id="ajax_change_password-confirm_new_password-error" class="error mt-2 text-danger" for="ajax_change_password-confirm_new_password" hidden></label>
                   </div>
                   <button type="submit" class="btn btn-primary mr-2">Change Password</button>
+                </form><hr>
+
+                <h5>Avatar</h5><br>
+
+                <form id="ajax_change_avatar">
+                  <div class="form-group">
+                    <label>Avatar Name</label>
+                    <select class="select2-ajax_avatar_type" style="width:100%" id="ajax_change_avatar-type" name="ajax_change_avatar-type">
+                      @foreach($constants['avatars'] as $item => $value)
+                        <option value="{{ $item }}">{{ $value }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-success mr-2">Change Avatar</button>
                 </form>
 
           </div>
@@ -151,14 +165,42 @@
     });
   });
 
+  $('#ajax_change_avatar').on('submit', function(e) {
+    e.preventDefault();
+    var avatar = $('#ajax_change_avatar-type').val();
+
+    $.ajax({
+      type: 'POST',
+      url: '{{ url('settings/change_avatar') }}',
+      data: {avatar:avatar},
+      success: function() {
+        var toast_heading = "Avatar Changed!";
+        var toast_text = "Your avatar has been changed, reload the page for the changes to take effect!";
+        var toast_icon = "success";
+        var toast_color = "#f96868";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      },
+      error: function(data) {
+        var toast_heading = "Avatar Error!";
+        var toast_text = "Your avatar could not be changed, contact a member of the CoC with this error!";
+        var toast_icon = "error";
+        var toast_color = "#f2a654";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      }
+    });
+  });
+
+    $("document").ready(function() {
+        $('#ajax_change_avatar-type').val('{{ Auth::user()->avatar }}').change();
+    });
+
   (function($) {
     'use strict';
 
-    if ($(".js-example-basic-single").length) {
-      $(".js-example-basic-single").select2();
-    }
-    if ($(".js-example-basic-multiple").length) {
-      $(".js-example-basic-multiple").select2();
+    if ($(".select2-ajax_avatar_type").length) {
+      $('.select2-ajax_avatar_type').select2({
+          minimumResultsForSearch: -1
+      });
     }
   })(jQuery);
 </script>

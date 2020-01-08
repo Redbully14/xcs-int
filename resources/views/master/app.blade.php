@@ -83,6 +83,18 @@
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
+
+    globalToast = function(heading, text, icon, color) {
+      'use strict';
+      $.toast({
+        heading: heading,
+        text: text,
+        showHideTransition: 'slide',
+        icon: icon,
+        loaderBg: color,
+        position: 'top-right'
+      })
+    };
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->
