@@ -19,6 +19,7 @@ return [
         'application_version' => 'canary',
         'application_footer' => 'Department of Justice RP',
         'application_icon' => 'fab fa-asymmetrik',
+        'application_favicon' => 'favicon.png',
     ],
 
     /*
@@ -51,6 +52,7 @@ return [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
+        'account_settings' => 'Account Settings',
     ],
 
     /*
@@ -182,5 +184,33 @@ return [
     */
     'global_id' => [
         'patrol_log' => 'PL-',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Avatar Names
+    |--------------------------------------------------------------------------
+    |
+    | Types of avatars that can be accessed by everyone through member setings
+    | BE CAREFUL WHEN EDIITNG THIS!.
+    |
+    */
+    'avatars' => [
+        'antelope' => 'Antelope Default Avatar',
+        'antelope2' => 'Antelope Better Avatar'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Avatar Files
+    |--------------------------------------------------------------------------
+    |
+    | Avatar files inside public/assets/xcs-info/avatars/
+    | BE CAREFUL WHEN EDIITNG THIS!.
+    |
+    */
+    'avatar_filename' => [
+        'antelope' => 'antelope.png',
+        'antelope2' => 'antelope2.jpg'
     ],
 ];

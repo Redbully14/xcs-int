@@ -52,6 +52,10 @@ Route::get('/dashboard', 'Antelope@dashboard');
 Route::get('/xcsinfo', function () {
     return view('stackpath.welcome');
 });
+Route::get('/settings', [
+  'as' => 'settings',
+  'uses' => 'Antelope@accountSettings'
+]);
 Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/superadmin/help', function () {
@@ -64,6 +68,8 @@ Route::get('/activity/collection', 'AntelopeActivity@passActivityData')->middlew
 Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
 // POST routes
+Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
+Route::post('/settings/change_avatar', 'Antelope@setAvatar');
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));

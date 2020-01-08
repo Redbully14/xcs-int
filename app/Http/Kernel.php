@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
 
             //xcs-int
             \App\Http\Middleware\CheckActiveProfile::class,
+            \App\Http\Middleware\CheckTempPass::class,
         ],
 
         'api' => [

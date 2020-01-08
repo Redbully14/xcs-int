@@ -8,7 +8,7 @@
       <div class="profile-desc">
         <div class="profile-pic">
           <div class="count-indicator">
-            <img class="img-xs rounded-circle " src="/assets/images/faces/face15.jpg" alt="">
+            <img class="img-xs rounded-circle " src="/assets/images/xcs-int/avatars/{{ $constants['avatar_filename'][Auth::user()->avatar] }}" alt="">
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
@@ -18,14 +18,14 @@
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-          <a href="#" class="dropdown-item preview-item">
+          <a href="/settings" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="mdi mdi-settings text-primary"></i>
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Account settings (not implemented yet)</p>
+              <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
             </div>
           </a>
         </div>

@@ -9,6 +9,7 @@ use Datatables;
 use App\User;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class Antelope extends Controller
 {
@@ -57,5 +58,33 @@ class Antelope extends Controller
     public function passUserData()
     {
         return Datatables::of(User::query()->with('roles'))->make(true);
+    }
+
+    /**
+     * Returns and generates the account settings view.
+     *
+     * @return View
+     */
+    public function accountSettings()
+    {
+        $constants = \Config::get('constants');
+
+        return view('account_settings')->with('constants', $constants);
+    }
+
+    /**
+     * Change user avatar.
+     *
+     * @return View
+     */
+    public function setAvatar(Request $request)
+    {
+        $constants = \Config::get('constants');
+
+        $request->validate([
+            'avatar' => ['required', 'string'] // todo: make a rule that will check if it's in constants.
+        ]);
+
+        User::find(auth()->user()->id)->update(['avatar' => $request->avatar]);
     }
 }

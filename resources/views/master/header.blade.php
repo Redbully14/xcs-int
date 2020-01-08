@@ -83,7 +83,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <img class="img-xs rounded-circle" src="/assets/images/faces/face15.jpg" alt="">
+            <img class="img-xs rounded-circle" src="/assets/images/xcs-int/avatars/{{ $constants['avatar_filename'][Auth::user()->avatar] }}" alt="">
             <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
@@ -91,8 +91,7 @@
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
           <h6 class="p-3 mb-0">Profile</h6>
           <div class="dropdown-divider"></div>
-          <!--
-          <a class="dropdown-item preview-item">
+          <a class="dropdown-item preview-item" href="/settings">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="mdi mdi-settings text-success"></i>
@@ -102,7 +101,6 @@
               <p class="preview-subject mb-1">Settings</p>
             </div>
           </a>
-        -->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item" href="/logout">
             <div class="preview-thumbnail">

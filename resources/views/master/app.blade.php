@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <!-- Plugin css for this page -->
     @yield('customcss')
@@ -30,7 +31,7 @@
     <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/xcs-int/{{ $constants['global']['application_favicon'] }}" />
   </head>
   <body>
     <div class="container-scroller">
@@ -82,6 +83,18 @@
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
+
+    globalToast = function(heading, text, icon, color) {
+      'use strict';
+      $.toast({
+        heading: heading,
+        text: text,
+        showHideTransition: 'slide',
+        icon: icon,
+        loaderBg: color,
+        position: 'top-right'
+      })
+    };
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->

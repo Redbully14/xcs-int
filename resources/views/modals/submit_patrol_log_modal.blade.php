@@ -82,29 +82,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  showSuccessToast_SubmitPAL = function() {
-    'use strict';
-    $.toast({
-      heading: 'Patrol Log Submitted!',
-      text: 'The patrol log has been submitted and has been logged into our database.',
-      showHideTransition: 'slide',
-      icon: 'success',
-      loaderBg: '#f96868',
-      position: 'top-right'
-    })
-  };
-
-  showFailToast_SubmitPAL = function() {
-    'use strict';
-    $.toast({
-      heading: 'Patrol Submission Failed!',
-      text: 'Please double check the fields to ensure everything is correct.',
-      showHideTransition: 'slide',
-      icon: 'error',
-      loaderBg: '#f2a654',
-      position: 'top-right'
-    })
-  };
 
   $('#ajax_submit_patrol_log').on('submit', function(e) {
     e.preventDefault();
@@ -147,7 +124,11 @@
           $(element).val('');
           $(elements[element]).empty();
         }
-        showSuccessToast_SubmitPAL();
+        var toast_heading = "Patrol Log Submitted!";
+        var toast_text = "The patrol log has been submitted and has been logged into our database.";
+        var toast_icon = "success";
+        var toast_color = "#f96868";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
       },
       error: function(data) {
         for (var element in elements) {
@@ -156,7 +137,11 @@
           $(elements[element]).prop('hidden', true);
           $(elements[element]).empty();
         }
-        showFailToast_SubmitPAL();
+        var toast_heading = "Patrol Submission Failed!";
+        var toast_text = "Please double check the fields to ensure everything is correct.";
+        var toast_icon = "error";
+        var toast_color = "#f2a654";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color)
         var errors = data['responseJSON'].errors;
 
         for (var key in errors) {

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/xcs-info/{{ $constants['global']['application_favicon'] }}" />
   </head>
   <body>
     <div class="container-scroller">
