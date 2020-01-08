@@ -100,7 +100,7 @@ class EditProfileController extends Controller
         $role = Role::where('slug', '=', $request['role'])->first();
         $user->username = $request['username'];
         $user->save();
-        $user->attachRole($role);
+        $user->roles()->sync($role);
 
         return;
     }
