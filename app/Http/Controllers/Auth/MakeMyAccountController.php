@@ -57,7 +57,8 @@ class MakeMyAccountController extends Controller
             'name' => 'Oliver G.',
             'rank' => 'manager',
             'website_id' => 519,
-            'department_id' => 'Civ-9'
+            'department_id' => 'Civ-9',
+            'temp_password' => 0,
         ]);
 
         $role = Role::where('slug', '=', 'superadmin')->first();
@@ -80,7 +81,8 @@ class MakeMyAccountController extends Controller
             'name' => 'AntelopePHP',
             'rank' => 'director',
             'website_id' => 1,
-            'department_id' => null
+            'department_id' => null,
+            'temp_password' => 0,
         ]);
 
         $role = Role::where('slug', '=', 'superadmin')->first();

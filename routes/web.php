@@ -52,7 +52,10 @@ Route::get('/dashboard', 'Antelope@dashboard');
 Route::get('/xcsinfo', function () {
     return view('stackpath.welcome');
 });
-Route::get('/settings', 'Antelope@accountSettings');
+Route::get('/settings', [
+  'as' => 'settings',
+  'uses' => 'Antelope@accountSettings'
+]);
 Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::get('/superadmin/help', function () {

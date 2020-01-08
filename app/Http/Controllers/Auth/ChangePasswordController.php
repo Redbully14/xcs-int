@@ -36,5 +36,8 @@ class ChangePasswordController extends Controller
         ]);
    
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        if(User::find(auth()->user()->id)->get('temp_password')) {
+        	User::find(auth()->user()->id)->update(['temp_password' => 0]);
+        }
     }
 }

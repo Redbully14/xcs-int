@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->integer('website_id');
             $table->string('department_id')->nullable();
             $table->string('password');
+            $table->boolean('temp_password')->default(true);
+            $table->string('avatar')->default('antelope');
             $table->boolean('antelope_status')->default(true);
             $table->rememberToken();
             $table->timestamps();

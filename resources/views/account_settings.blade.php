@@ -12,6 +12,9 @@
     </div>
     <div class="row">
       <div class="col-12">
+      	@if( \Session::get('temp_password_required') )
+            <div class="alert alert-warning" role="alert"><i class="mdi mdi-alert-circle"></i> The account currently has a temporary password, you are required to change it in order to use Antelope. </div>
+        @endif
         <div class="card">
           <div class="card-body">
 

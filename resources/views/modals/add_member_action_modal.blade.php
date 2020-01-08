@@ -25,7 +25,7 @@
             </div>
 
             <div class="form-group">
-              <label>Password (required, minimum 8 characters)</label>
+              <label>Temporary Password (required, minimum 8 characters)</label>
               <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
               <label id="add-password-error" class="error mt-2 text-danger" for="password" hidden></label>
             </div>
