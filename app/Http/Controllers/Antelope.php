@@ -87,4 +87,21 @@ class Antelope extends Controller
 
         User::find(auth()->user()->id)->update(['avatar' => $request->avatar]);
     }
+
+    /**
+     * Constructs a user's profile
+     *
+     * @return View
+     */
+    public function getProfile($id)
+    {
+        $constants = \Config::get('constants');
+
+        $user_data = User::find($id);
+        $role = User::find($id)->getRoles();
+
+        return view('user_profile')->with('user_data', $user_data)
+                                   ->with('constants', $constants)
+                                   ->with('role', $role);
+    }
 }

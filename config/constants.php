@@ -53,6 +53,7 @@ return [
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
         'account_settings' => 'Account Settings',
+        'user_profile' => 'User Profile',
     ],
 
     /*
@@ -80,8 +81,8 @@ return [
     |
     */
     'antelope_status_text' => [
-        true => 'Active Profile',
-        false => 'Inactive Profile',
+        true => 'Profile Activated',
+        false => 'Profile Deactivated',
     ],
 
     /*
@@ -123,6 +124,26 @@ return [
         'intern' => 3,
         'member' => 2,
         'guest' => 1,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Colors
+    |--------------------------------------------------------------------------
+    |
+    | Auth Colors are mainly for customization only, it doesn't use RGB so
+    | don't change anything if you really know what you are doing. 
+    |
+    */
+    'access_color' => [
+        'superadmin' => 'info',
+        'admin' => 'danger',
+        'seniorstaff' => 'danger',
+        'staff' => 'warning',
+        'sit' => 'primary',
+        'intern' => 'primary',
+        'member' => 'primary',
+        'guest' => 'bright',
     ],
 
     /*
@@ -197,7 +218,8 @@ return [
     */
     'avatars' => [
         'antelope' => 'Antelope Default Avatar',
-        'antelope2' => 'Antelope Better Avatar'
+        'antelope2' => 'Antelope Better Avatar',
+        'gnomed' => 'Get gnomed',
     ],
 
     /*
@@ -211,6 +233,7 @@ return [
     */
     'avatar_filename' => [
         'antelope' => 'antelope.png',
-        'antelope2' => 'antelope2.jpg'
+        'antelope2' => 'antelope2.jpg',
+        'gnomed' => 'morris.png'
     ],
 ];
