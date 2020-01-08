@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/vendors/pwstabs/jquery.pwstabs.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="/stackpath/style.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/xcs-int/favicon.ico" />
 </head>
 <body>
     <div class="container-fluid documentation">

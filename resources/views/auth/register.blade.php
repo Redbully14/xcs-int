@@ -16,7 +16,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/xcs-info/favicon.ico" />
   </head>
   <body>
     <div class="container-scroller">
