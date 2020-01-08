@@ -52,6 +52,7 @@ return [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
+        'account_settings' => 'Account Settings',
     ],
 
     /*

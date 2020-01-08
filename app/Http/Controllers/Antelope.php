@@ -58,4 +58,16 @@ class Antelope extends Controller
     {
         return Datatables::of(User::query()->with('roles'))->make(true);
     }
+
+    /**
+     * Returns and generates the account settings view.
+     *
+     * @return View
+     */
+    public function accountSettings()
+    {
+        $constants = \Config::get('constants');
+
+        return view('account_settings')->with('constants', $constants);
+    }
 }
