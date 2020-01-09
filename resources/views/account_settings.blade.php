@@ -43,7 +43,7 @@
 
                 <form id="ajax_change_avatar">
                   <div class="form-group">
-                    <label>Avatar Name</label>
+                    <label>Select an Avatar</label>
                     <select class="select2-ajax_avatar_type" style="width:100%" id="ajax_change_avatar-type" name="ajax_change_avatar-type">
                       @foreach($constants['avatars'] as $item => $value)
                         <option value="{{ $item }}">{{ $value }}</option>

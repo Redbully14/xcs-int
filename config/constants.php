@@ -220,6 +220,7 @@ return [
         'antelope' => 'Antelope Default Avatar',
         'antelope2' => 'Antelope Better Avatar',
         'gnomed' => 'Get gnomed',
+        'coolpepe' => 'Cool Pepe',
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
     'avatar_filename' => [
         'antelope' => 'antelope.png',
         'antelope2' => 'antelope2.jpg',
-        'gnomed' => 'morris.png'
+        'gnomed' => 'morris.png',
+        'coolpepe' => 'coolpepe.png'
     ],
 ];

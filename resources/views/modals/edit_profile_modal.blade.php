@@ -87,14 +87,14 @@
                     <div class="form-group">
                       <label>Profile Settings</label>
                       <div class="form-check form-check-success">
-                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Active Profile <i class="input-helper"></i></label>
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Profile Activated <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @else
                     <div class="form-group">
                       <label>Profile Settings</label>
                       <div class="form-check form-check-success">
-                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Active Profile <i class="input-helper"></i></label>
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Profile Activated <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @endif
