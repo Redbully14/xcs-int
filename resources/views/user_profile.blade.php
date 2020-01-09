@@ -135,11 +135,11 @@
                             </div>
                             <p class="clearfix">
                               <span class="float-left"> Last Seen </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['last_seen'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Last Timestamp </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['last_timestamp'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Status </span>

@@ -10,6 +10,7 @@ use App\User;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\AntelopeCalculate;
 
 class Antelope extends Controller
 {
@@ -99,9 +100,15 @@ class Antelope extends Controller
 
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
+        $calculations = [
+            'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
+            'last_seen' => AntelopeCalculate::get_last_seen($id),
+
+        ];
 
         return view('user_profile')->with('user_data', $user_data)
                                    ->with('constants', $constants)
-                                   ->with('role', $role);
+                                   ->with('role', $role)
+                                   ->with('calculations', $calculations);
     }
 }
