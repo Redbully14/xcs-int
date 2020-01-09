@@ -98,9 +98,11 @@
                       <h5 class="mb-0 mr-2 text-muted">{{ $constants['rank'][$user_data['rank']] }}</h5>
                     </div>
                   </div>
+                  @if(Auth::user()->level() >= $constants['access_level']['staff'])
                   <div>
-                    <button class="btn btn-primary">Edit Profile</button>
+                    <button class="btn btn-primary" id="ajax_open_modal_edit_button" value="{{ $user_data['id'] }}">Edit Profile</button>
                   </div>
+                  @endif
                 </div>
                 <div class="mt-4 py-2 border-top border-bottom">
                   <ul class="nav profile-navbar">
@@ -137,4 +139,8 @@
 @endsection
 
 @section('pluginjs')
+@endsection
+
+@section('modals')
+  @include('modals.edit_profile_modal')
 @endsection

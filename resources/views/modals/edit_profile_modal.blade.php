@@ -1,6 +1,7 @@
-@if(Auth::user()->level() >= $constants['access_level']['sit'])
+@if(Auth::user()->level() >= $constants['access_level']['staff'])
 <!-- Edit a Profile - Modal -->
-<!-- Open modal with button id #ajax_open_modal_edit -->
+<!-- Open modal with button (IN TABLE) id #ajax_open_modal_edit -->
+<!-- Open modal with button (ON PAGE) id #ajax_open_modal_edit_button -->
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -245,6 +246,52 @@
   // Future self here: what the fuck did I mean by that?
   $table = $('#tableElement');
   $table.on('click', '#ajax_open_modal_edit', function () {
+    for (var element in elements) {
+      $(element).parent().removeClass('has-danger');
+      $(element).removeClass('form-control-danger');
+      $(elements[element]).prop('hidden', true);
+      $(elements[element]).empty();
+    }
+    var isSuperAdmin = false;
+    var id = $(this).val();
+    getUsersActivity(id);
+    $('#ajax_edit_member_save').val(id).change();
+
+      $.ajax({
+         type: "POST",
+         url: '{{ url('member/edit/get_data/') }}/'+id,
+         success: function(data){
+            var role = data.roles.map(function(dt) {
+              return dt.slug;
+            });
+           console.log(data);
+           if (role == "superadmin") {
+              return false;
+           } else {
+             if(data['department_id'] == null) {
+                var name_unitnumber = data['name'];
+             } else var name_unitnumber = data['name']+' '+data['department_id'];
+             $("#profile-display-name").text(name_unitnumber);
+             $("#profile-name-field").val(data['name']);
+             $("#profile-website-id-field").val(data['website_id']);
+             $("#profile-department-id-field").val(data['department_id']);
+             $("#profile-rank-field").val(data['rank']).change();
+             $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-role-field").val(role).change();
+             $("#profile-username-field").val(data['username']);
+           }
+         }
+      }).done(function(data) {
+        var role = data.roles.map(function(dt) {
+          return dt.slug;
+        });
+        if(role == 'superadmin') {
+          showFailToast_EditSuperAdmin();
+        } else $("#editProfileModal").modal("toggle");
+      });
+  });
+
+  $( "#ajax_open_modal_edit_button" ).click(function() {
     for (var element in elements) {
       $(element).parent().removeClass('has-danger');
       $(element).removeClass('form-control-danger');

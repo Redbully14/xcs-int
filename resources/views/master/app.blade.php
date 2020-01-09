@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
+    <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <!-- Plugin css for this page -->
     @yield('customcss')
     <!-- End plugin css for this page -->
@@ -62,6 +63,8 @@
     <script src="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="/assets/vendors/select2/select2.min.js"></script>
     <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+    <script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     @yield('pluginjs')
