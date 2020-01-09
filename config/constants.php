@@ -280,6 +280,20 @@ return [
         'antelope' => 'antelope.png',
         'antelope2' => 'antelope2.jpg',
         'gnomed' => 'morris.png',
-        'coolpepe' => 'coolpepe.png'
+        'coolpepe' => 'coolpepe.png',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Advanced Training
+    |--------------------------------------------------------------------------
+    |
+    | This will specify the return for advanced training that members have on
+    | their profiles.
+    |
+    */
+    'advanced_training' => [
+        true => 'Yes',
+        false => 'No',
     ],
 ];

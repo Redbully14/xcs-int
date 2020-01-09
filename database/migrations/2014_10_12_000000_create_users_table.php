@@ -24,6 +24,9 @@ class CreateUsersTable extends Migration
             $table->boolean('temp_password')->default(true);
             $table->string('avatar')->default('antelope');
             $table->boolean('antelope_status')->default(true);
+            $table->boolean('advanced_training')->default(false);
+            $table->boolean('requirements_exempt')->default(false);
+            $table->string('department_status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

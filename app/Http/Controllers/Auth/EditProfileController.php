@@ -62,6 +62,8 @@ class EditProfileController extends Controller
     {
         $username = $username->username;
         $data['antelope_status'] = $data['antelope_status'] ? true : false;
+        $data['requirements_exempt'] = $data['requirements_exempt'] ? true : false;
+        $data['advanced_training'] = $data['advanced_training'] ? true : false;
 
         if($username == $data['username']) {
             return Validator::make($data, [
@@ -70,7 +72,9 @@ class EditProfileController extends Controller
                 'rank' => ['required', 'string', 'max:30'],
                 'website_id' => ['required', 'integer'],
                 'department_id' => ['string', 'max:30', 'nullable'],
-                'antelope_status' => ['required', 'boolean']
+                'antelope_status' => ['required', 'boolean'],
+                'requirements_exempt' => ['required', 'boolean'],
+                'advanced_training' => ['required', 'boolean'],
             ]);
         }
         else {
@@ -81,7 +85,9 @@ class EditProfileController extends Controller
                 'rank' => ['required', 'string', 'max:30'],
                 'website_id' => ['required', 'integer'],
                 'department_id' => ['string', 'max:30', 'nullable'],
-                'antelope_status' => ['required', 'boolean']
+                'antelope_status' => ['required', 'boolean'],
+                'requirements_exempt' => ['required', 'boolean'],
+                'advanced_training' => ['required', 'boolean'],
             ]);
         }
     }
@@ -99,6 +105,8 @@ class EditProfileController extends Controller
         $user->antelope_status = $request['antelope_status'];
         $role = Role::where('slug', '=', $request['role'])->first();
         $user->username = $request['username'];
+        $user->requirements_exempt = $request['requirements_exempt'];
+        $user->advanced_training = $request['advanced_training'];
         $user->save();
         $user->roles()->sync($role);
 

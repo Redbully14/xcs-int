@@ -86,15 +86,43 @@
                     @if(Auth::user()->level() >= $constants['access_level']['admin'])
                     <div class="form-group">
                       <label>Profile Settings</label>
-                      <div class="form-check form-check-success">
+                      <div class="form-check form-check-info">
                         <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Profile Activated <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @else
                     <div class="form-group">
                       <label>Profile Settings</label>
-                      <div class="form-check form-check-success">
+                      <div class="form-check form-check-info">
                         <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Profile Activated <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @endif
+
+                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-exempt-field" id="profile-exempt-field"> Exempt from Requirements <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-exempt-field" id="profile-exempt-field" disabled> Exempt from Requirements <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @endif
+
+                    @if(Auth::user()->level() >= $constants['access_level']['staff'])
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-training-field" id="profile-training-field"> Advanced Training <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-training-field" id="profile-training-field" disabled> Advanced Training <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @endif
@@ -277,6 +305,8 @@
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
              $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-training-field").prop('checked', data['advanced_training']);
+             $("#profile-exempt-field").prop('checked', data['requirements_exempt']);
              $("#profile-role-field").val(role).change();
              $("#profile-username-field").val(data['username']);
            }
@@ -323,6 +353,8 @@
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
              $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-training-field").prop('checked', data['advanced_training']);
+             $("#profile-exempt-field").prop('checked', data['requirements_exempt']);
              $("#profile-role-field").val(role).change();
              $("#profile-username-field").val(data['username']);
            }
@@ -382,11 +414,13 @@
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
       var username = $('#profile-username-field').val();
       var role = $('#profile-role-field').val();
+      var advanced_training = $("#profile-training-field").prop("checked") ? 1 : 0;
+      var requirements_exempt = $("#profile-exempt-field").prop("checked") ? 1 : 0;
 
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
-        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
+        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role, advanced_training:advanced_training, requirements_exempt:requirements_exempt},
         success: function() {
             for (var element in elements) {
               $(element).parent().removeClass('has-danger');

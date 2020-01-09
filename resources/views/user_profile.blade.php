@@ -77,7 +77,7 @@
                   <p class="clearfix">
                     <span class="float-left"> Temporary Password </span>
                     @if($user_data['temp_password'])
-                    <span class="float-right text-danger"> Yes </span>
+                    <span class="float-right text-warning"> Yes </span>
                     @else
                     <span class="float-right text-muted"> No </span>
                     @endif
@@ -160,7 +160,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Advanced Training </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $constants['advanced_training'][$user_data['advanced_training']] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Patrol Restriction </span>

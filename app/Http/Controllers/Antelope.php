@@ -100,6 +100,7 @@ class Antelope extends Controller
 
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
+
         $calculations = [
             'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
             'last_seen' => AntelopeCalculate::get_last_seen($id),
