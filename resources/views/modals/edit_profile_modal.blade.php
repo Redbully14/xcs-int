@@ -3,7 +3,7 @@
 <!-- Open modal with button id #ajax_open_modal_edit -->
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg" role="document" style="padding-left: 75px; padding-right: 75px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editProfileModalLabel">Profile</h5>
