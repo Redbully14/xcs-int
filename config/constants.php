@@ -24,6 +24,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | System Calculations
+    |--------------------------------------------------------------------------
+    |
+    | These are calculations that will be made on the system, all inputs here
+    | are and must be numbers.
+    |
+    */
+    'calculation' => [
+        'time_to_inactive' => 2592000, // 30 days without patrol logs
+        'account_is_new' => 604800, // 7 days from the account being made
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Department Constants
     |--------------------------------------------------------------------------
     |
@@ -192,6 +206,36 @@ return [
         'normal' => 'Normal Patrol',
         'subdivisional' => 'Business Patrol',
         'fto' => 'Field Training',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Department Status
+    |--------------------------------------------------------------------------
+    |
+    | Types of status that will be displayed on the roster, profile and on
+    | other pages of the website.
+    |
+    */
+    'department_status' => [
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'new' => 'New',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Department Status Colors
+    |--------------------------------------------------------------------------
+    |
+    | Colors for status that will be displayed on users profiles, this is not
+    | RGB so do not change it if you don't know what you're doing.
+    |
+    */
+    'department_status_colors' => [
+        'active' => 'success',
+        'inactive' => 'danger',
+        'new' => 'warning',
     ],
 
     /*

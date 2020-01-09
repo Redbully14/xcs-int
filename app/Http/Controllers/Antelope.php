@@ -103,7 +103,7 @@ class Antelope extends Controller
         $calculations = [
             'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
             'last_seen' => AntelopeCalculate::get_last_seen($id),
-
+            'department_status' => AntelopeCalculate::get_department_status($id)
         ];
 
         return view('user_profile')->with('user_data', $user_data)

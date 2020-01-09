@@ -143,7 +143,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Status </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-{{ $constants['department_status_colors'][$calculations['department_status']] }}"> {{ $constants['department_status'][$calculations['department_status']] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> LOA Status </span>

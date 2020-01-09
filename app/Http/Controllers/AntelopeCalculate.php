@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
 use App\Activity;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class AntelopeCalculate extends Controller
@@ -42,5 +43,33 @@ class AntelopeCalculate extends Controller
 			return 'Never';
 		}
 		return Carbon::createFromTimeStamp(strtotime($timestamp))->diffForHumans();
+    }
+
+	 /**
+     * Get the user's department status.
+     *
+     * @return string
+     */
+    public static function get_department_status($id) {
+
+    	$constants = \Config::get('constants');
+
+    	$last_timestamp = self::get_last_timestamp($id);
+
+    	$today = strtotime(Carbon::now()->toDateString());
+
+    	if($last_timestamp == 'N/A') {
+    		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
+    			return 'new';
+    		}
+    	}
+
+    	$last_timestamp = strtotime($last_timestamp);
+
+    	if($last_timestamp+$constants['calculation']['time_to_inactive'] < $today ) {
+    		return 'inactive';
+    	}
+
+    	return 'active';
     }
 }
