@@ -8,7 +8,7 @@
       <div class="profile-desc">
         <div class="profile-pic">
           <div class="count-indicator">
-            <img class="img-xs rounded-circle " src="/assets/images/xcs-int/avatars/{{ $constants['avatar_filename'][Auth::user()->avatar] }}" alt="">
+            <img class="img-xs rounded-circle " src="/assets/images/xcs-int/avatars/{{ $baseXCS::convertAvatar(Auth::user()->avatar, 2) }}" alt="">
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">

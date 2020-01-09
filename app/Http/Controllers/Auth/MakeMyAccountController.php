@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Support\Facades\Hash;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Http\Controllers\BaseXCS;
 
 class MakeMyAccountController extends Controller
 {

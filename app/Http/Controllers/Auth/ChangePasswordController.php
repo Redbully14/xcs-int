@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Http\Controllers\BaseXCS;
   
 class ChangePasswordController extends Controller
 {
