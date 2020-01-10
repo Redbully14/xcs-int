@@ -34,6 +34,8 @@ return [
     'calculation' => [
         'time_to_inactive' => 2592000, // 30 days without patrol logs
         'account_is_new' => 604800, // 7 days from the account being made
+        'custom_one_week' => 604800, // Set one week here (default 7 days)
+        'custom_one_month' => 2678400, // Set one month here (default 31 days)
     ],
 
     /*

@@ -161,7 +161,7 @@ class AntelopeCalculate extends Controller
      /**
      * Get the total amount of patrol hours in database (in a month)
      *
-     * @return int
+     * @return H:i:s
      */
     public static function get_month_patrol_hours($id, $calmonth) {
 
@@ -198,5 +198,34 @@ class AntelopeCalculate extends Controller
         }
 
         return BaseXCS::convertToDuration($total_duration);
+    }
+
+     /**
+     * Get the total amount of patrol logs in database (custom time entry)
+     *
+     * @return int
+     */
+    public static function get_ctime_patrol_logs($id, $time) {
+
+        $constants = \Config::get('constants');
+        $patrols = Activity::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $count = 0;
+
+        if(is_string($time)) {
+            $time = $constants['calculation'][$time];
+        }
+
+        foreach($patrols as $patrol) {
+            if (strtotime($patrol->patrol_end_date)+$time > $today) {
+                $count++;
+            }
+        }
+
+        if ($count == 0) {
+            return 'N/A';
+        }
+
+        return $count;
     }
 }

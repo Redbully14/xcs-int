@@ -94,6 +94,10 @@
                       <a>{{ $constants['role'][$role[0]['slug']] }}</a>
                     </span>
                   </p>
+                  <p class="clearfix">
+                    <span class="float-left"> Antelope ID </span>
+                    <span class="float-right text-muted"> {{ $user_data['id'] }} </span>
+                  </p>
                 </div>
               </div>
               <div class="col-lg-8">
@@ -202,7 +206,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> 1 Week Patrols </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_week_logs'] }} </span>
                             </p>
                           </div>
                           <div class="col-sm">
@@ -239,14 +243,6 @@
                             </p>
                           </div>
                           <div class="col-sm">
-                            <p class="clearfix">
-                              <span class="float-left"> Placeholder </span>
-                              <span class="float-right text-muted"> - </span>
-                            </p>
-                            <p class="clearfix">
-                              <span class="float-left"> Placeholder </span>
-                              <span class="float-right text-muted"> - </span>
-                            </p>
                           </div>
                         </div>
                       </div>
