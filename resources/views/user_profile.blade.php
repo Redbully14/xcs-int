@@ -192,7 +192,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Monthly Patrols </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['this_month_logs'] }} </span>
                             </p>
                           </div>
                           <div class="col-sm">
