@@ -171,7 +171,9 @@
                       <label>Antelope Access</label>
                       <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
                         @foreach($constants['role'] as $role => $value)
+                          @if (!$loop->first)
                           <option value="{{ $role }}">{{ $value }}</option>
+                          @endif
                         @endforeach
                       </select>
                     </div>

@@ -202,7 +202,7 @@
                           <div class="col-sm">
                             <p class="clearfix">
                               <span class="float-left"> 1 Week Hours </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_week_hours'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> 1 Week Patrols </span>
@@ -212,11 +212,11 @@
                           <div class="col-sm">
                             <p class="clearfix">
                               <span class="float-left"> 1 Month Hours </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_month_hours'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> 1 Month Patrols </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_month_logs'] }} </span>
                             </p>
                           </div>
                         </div>
@@ -235,11 +235,11 @@
                           <div class="col-sm">
                             <p class="clearfix">
                               <span class="float-left"> 2 Month Hours </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['two_month_hours'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> 2 Month Patrols </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['two_month_logs'] }} </span>
                             </p>
                           </div>
                           <div class="col-sm">

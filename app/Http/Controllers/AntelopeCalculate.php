@@ -194,7 +194,7 @@ class AntelopeCalculate extends Controller
         }
 
         if ($total_duration == 0) {
-            return 'N/A';
+            return '-';
         }
 
         return BaseXCS::convertToDuration($total_duration);
@@ -227,5 +227,41 @@ class AntelopeCalculate extends Controller
         }
 
         return $count;
+    }
+
+     /**
+     * Get the total amount of patrol hours in database (custom time entry)
+     *
+     * @return H:i:s
+     */
+    public static function get_ctime_patrol_hours($id, $time) {
+
+        $constants = \Config::get('constants');
+        $patrols = Activity::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $total_duration = 0;
+
+        if(is_string($time)) {
+            $time = $constants['calculation'][$time];
+        }
+
+        foreach($patrols as $patrol) {
+            if (strtotime($patrol->patrol_end_date)+$time > $today) {
+                $start_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_start_date $patrol->start_time"));
+                $end_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_end_date $patrol->end_time"));
+
+                $start_date_time = strtotime($start_date_time);
+                $end_date_time = strtotime($end_date_time);
+
+                $duration = $end_date_time - $start_date_time;
+                $total_duration = $total_duration + $duration;
+            }
+        }
+
+        if ($total_duration == 0) {
+            return '-';
+        }
+
+        return BaseXCS::convertToDuration($total_duration);
     }
 }

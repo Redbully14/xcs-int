@@ -101,6 +101,7 @@ class Antelope extends Controller
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
 
+        // this gonna be a long list...
         $calculations = [
             'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
             'last_seen' => AntelopeCalculate::get_last_seen($id),
@@ -110,6 +111,11 @@ class Antelope extends Controller
             'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
             'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
             'one_week_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_week'),
+            'one_week_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_week'),
+            'one_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_month'),
+            'one_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_month'),
+            'two_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_two_month'),
+            'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
         ];
 
         return view('user_profile')->with('user_data', $user_data)
