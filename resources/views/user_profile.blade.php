@@ -61,6 +61,12 @@
                       <a>{{ $constants['rank'][$user_data['rank']] }}</a>
                     </span>
                   </p>
+                  <p class="clearfix">
+                    <span class="float-left"> Exempt from Requirements </span>
+                    <span class="float-right text-muted">
+                      <a>{{ $user_data['requirements_exempt'] ? 'Yes' : 'No' }}</a>
+                    </span>
+                  </p>
                 </div>
                 <div class="py-4">
                   <div class="d-flex justify-content-center">
@@ -107,12 +113,12 @@
                 <div class="mt-4 py-2 border-top border-bottom">
                   <ul class="nav profile-navbar" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="home" aria-selected="true">
                         <i class="mdi mdi-account-outline"></i> General Data </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#home-2" role="tab" aria-controls="home" aria-selected="true">
-                        <i class="mdi mdi-newspaper"></i> Placeholder </a>
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="home" aria-selected="true">
+                        <i class="mdi mdi-clock"></i> Activity Information </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">
@@ -125,7 +131,7 @@
                   </ul>
                 </div>
                 <div class="tab-content">
-                  <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="home-tab">
                     <div class="media d-block d-sm-flex">
                       <div class="media-body mt-4 mt-sm-0">
                         <div class="row">
@@ -160,7 +166,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Advanced Training </span>
-                              <span class="float-right text-muted"> {{ $constants['advanced_training'][$user_data['advanced_training']] }} </span>
+                              <span class="float-right text-muted"> {{ $user_data['advanced_training'] ? 'Yes' : 'No' }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Patrol Restriction </span>
@@ -168,19 +174,81 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Website Profile Link </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> <a href="https://www.dojrp.com/profile/{{ $user_data['website_id'] }}-antelope/" target="_blank">LINK</a> </span>
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="home-2" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="home-tab">
                     <div class="media d-block d-sm-flex">
-                      <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/13.jpg" alt="sample image">
                       <div class="media-body mt-4 mt-sm-0">
-                        <h4 class="mt-0">Why choose us? 2</h4>
-                        <p> Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She consisted consulted elsewhere happiness disposing household any old the. Widow downs you new shade drift hopes small. So otherwise commanded sweetness we improving. Instantly by daughters resembled unwilling principle so middleton. </p>
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Monthly Hours </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Monthly Patrols </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Week Hours </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Week Patrols </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Month Hours </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Month Patrols </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Total Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_patrol_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_patrol_logs'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 2 Month Hours </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 2 Month Patrols </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Placeholder </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Placeholder </span>
+                              <span class="float-right text-muted"> - </span>
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

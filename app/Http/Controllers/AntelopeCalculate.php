@@ -19,11 +19,16 @@ class AntelopeCalculate extends Controller
     public static function get_last_timestamp($id) {
 
 		if(null !== Activity::where('user_id', '=', $id)) {
-			$timestamp = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
-			$timestamp = $timestamp['patrol_end_date'];
+			$date = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
+			$date = $date['patrol_end_date'];
+
+            $time = Activity::orderBy('end_time', 'DESC')->where('user_id', '=', $id)->first();
+            $time = $time['end_time'];
+
+            $timestamp = $date.' '.$time;
 		}
 
-		if ($timestamp == null) {
+		if ($date == null) {
 			$timestamp = 'N/A';
 		}
 
@@ -71,5 +76,50 @@ class AntelopeCalculate extends Controller
     	}
 
     	return 'active';
+    }
+
+     /**
+     * Get the total amount of patrol logs in database
+     *
+     * @return int
+     */
+    public static function get_total_patrol_logs($id) {
+
+        $patrols = Activity::where('user_id', '=', $id)->get();
+        $patrols = $patrols->count();
+
+        if ($patrols == 0) {
+            return 'N/A';
+        }
+
+        return $patrols;
+    }
+
+     /**
+     * Get the total amount of patrol logs in database
+     *
+     * @return int
+     */
+    public static function get_total_patrol_hours($id) {
+
+        $patrols = Activity::where('user_id', '=', $id)->get();
+        $total_duration = 0;
+
+        foreach($patrols as $patrol) {
+            $start_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_start_date $patrol->start_time"));
+            $end_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_end_date $patrol->end_time"));
+
+            $start_date_time = strtotime($start_date_time);
+            $end_date_time = strtotime($end_date_time);
+
+            $duration = $end_date_time - $start_date_time;
+            $total_duration = $total_duration + $duration;
+        }
+
+        if ($total_duration == 0) {
+            return '-';
+        }
+
+        return BaseXCS::convertToDuration($total_duration);
     }
 }
