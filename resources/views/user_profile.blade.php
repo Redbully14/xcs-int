@@ -188,7 +188,7 @@
                           <div class="col-sm">
                             <p class="clearfix">
                               <span class="float-left"> Monthly Hours </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['this_month_hours'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Monthly Patrols </span>

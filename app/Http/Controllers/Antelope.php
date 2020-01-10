@@ -108,6 +108,7 @@ class Antelope extends Controller
             'total_patrol_logs' => AntelopeCalculate::get_total_patrol_logs($id),
             'total_patrol_hours' => AntelopeCalculate::get_total_patrol_hours($id),
             'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
+            'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
         ];
 
         return view('user_profile')->with('user_data', $user_data)

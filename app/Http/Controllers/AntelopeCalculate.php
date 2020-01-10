@@ -124,7 +124,7 @@ class AntelopeCalculate extends Controller
     }
 
      /**
-     * Get the total amount of patrol logs in database
+     * Get the total amount of patrol logs in database (in a month)
      *
      * @return int
      */
@@ -156,5 +156,47 @@ class AntelopeCalculate extends Controller
         }
 
         return $count;
+    }
+
+     /**
+     * Get the total amount of patrol hours in database (in a month)
+     *
+     * @return int
+     */
+    public static function get_month_patrol_hours($id, $calmonth) {
+
+        $patrols = Activity::where('user_id', '=', $id)->get();
+        $total_duration = 0;
+
+        $check_month = date('m') - $calmonth;
+        $check_year = date('Y');
+
+        if($check_month <= 0) {
+            $check_year = $check_year - 1;
+            $check_month = 12 + $check_month; // Because it's a negative int this gets negated anyways
+        } else {
+            $check_month = date('m');
+        }
+
+        foreach($patrols as $patrol) {
+            $patrol_month = date('m', strtotime($patrol->patrol_end_date));
+            $patrol_year = date('Y', strtotime($patrol->patrol_end_date));
+            if($patrol_month == $check_month && $patrol_year == $check_year) {
+                $start_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_start_date $patrol->start_time"));
+                $end_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_end_date $patrol->end_time"));
+
+                $start_date_time = strtotime($start_date_time);
+                $end_date_time = strtotime($end_date_time);
+
+                $duration = $end_date_time - $start_date_time;
+                $total_duration = $total_duration + $duration;
+            }
+        }
+
+        if ($total_duration == 0) {
+            return 'N/A';
+        }
+
+        return BaseXCS::convertToDuration($total_duration);
     }
 }
