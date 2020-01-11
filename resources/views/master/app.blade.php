@@ -100,6 +100,29 @@
         position: 'top-right'
       })
     };
+  (function($) {
+    'use strict';
+
+    if ($(".js-example-basic-single").length) {
+      $(".js-example-basic-single").select2();
+    }
+    if ($(".js-example-basic-multiple").length) {
+      $(".js-example-basic-multiple").select2();
+    }
+  })(jQuery);
+    </script>
+
+    <script type="text/javascript">
+    if ($(".ajax_search_member-class").length) {
+      $(".ajax_search_member-class").select2();
+    }
+    $("#ajax_search_member").select2({
+        placeholder: "Search by Website ID, Name or Unit Number",
+        allowClear: true
+    });
+    $("#ajax_search_member").on("select2:select", function (e) {
+      window.location.replace(e.params.data.id);
+    });
     </script>
     @yield('ajax')
     <!-- End ajax for this page -->

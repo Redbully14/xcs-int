@@ -55,4 +55,30 @@ class BaseXCS extends Controller
         }
         return $avatar;
     }
+
+    /**
+     * Get all members
+     *
+     * @return searchable string (000 - User N. Civ-0)
+     */
+    public static function getAllMembersSearchable() {
+        $users = User::all();
+        $members_array = array();
+
+        foreach ($users as $user) {
+            $name = $user->name;
+            $department_id = $user->department_id;
+            $website_id = $user->website_id;
+
+            if ($department_id == null) {
+                $member = $website_id.' - '.$name;
+            } else {
+                $member = $website_id.' - '.$name.' '.$department_id;
+            }
+
+            $members_array[url("/profile/{$user->id}")] = $member;
+        }
+
+        return $members_array;
+    }
 }
