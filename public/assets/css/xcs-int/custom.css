@@ -8,6 +8,10 @@
     text-decoration: none;
 }
 
+.select2-container--default .select2-dropdown .select2-search__field {
+  color: black !important;
+}
+
 .rotate-15 {
   transform: rotate(15deg);
 }
