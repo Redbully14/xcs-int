@@ -113,6 +113,7 @@ class Antelope extends Controller
             'one_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_month'),
             'two_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_two_month'),
             'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
+            'requirements' => AntelopeCalculate::get_month_requirements($id, 0),
         ];
 
         return view('user_profile')->with('user_data', $user_data)

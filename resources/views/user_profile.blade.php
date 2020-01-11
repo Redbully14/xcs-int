@@ -166,7 +166,7 @@
                             </div>
                             <p class="clearfix">
                               <span class="float-left"> Requirements </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-{{ $constants['requirements_colors'][$calculations['requirements']] }}"> {{ $constants['requirements'][$calculations['requirements']] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Advanced Training </span>

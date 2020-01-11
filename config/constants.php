@@ -37,6 +37,8 @@ return [
         'custom_one_week' => 604800, // Set one week here (default 7 days)
         'custom_one_month' => 2678400, // Set one month here (default 31 days)
         'custom_two_month' => 5356800, // Set two month here (default 62 days)
+        'min_requirements_logs' => 4, // 4 logs required
+        'min_requirements_hours' => 10800, // 4 hours required
     ],
 
     /*
@@ -286,5 +288,27 @@ return [
         'antelope2' => 'antelope2.jpg',
         'gnomed' => 'morris.png',
         'coolpepe' => 'coolpepe.png',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Customization
+    |--------------------------------------------------------------------------
+    |
+    | All the customization fields can be found here
+    |
+    */
+    'requirements' => [
+        'met' => 'Met',
+        'not_met' => 'Not Met',
+        'new' => 'New',
+        'exempt' => 'Exempt',
+    ],
+
+    'requirements_colors' => [
+        'met' => 'success',
+        'not_met' => 'danger',
+        'new' => 'warning',
+        'exempt' => 'info',
     ],
 ];

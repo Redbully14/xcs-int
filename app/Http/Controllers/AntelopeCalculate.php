@@ -264,4 +264,46 @@ class AntelopeCalculate extends Controller
 
         return BaseXCS::convertToDuration($total_duration);
     }
+
+     /**
+     * Checks if a person meets requirements (month entry)
+     *
+     * @return string
+     */
+    public static function get_month_requirements($id, $calmonth) {
+
+        $constants = \Config::get('constants');
+        $check_month = date('m') - $calmonth;
+        $check_year = date('Y');
+        $patrols = self::get_month_patrol_logs($id, $calmonth);
+        $hours = strtotime(self::get_month_patrol_hours($id, $calmonth));
+        $member_month = date('m', strtotime(User::find($id)->created_at));
+        $member_year = date('Y', strtotime(User::find($id)->created_at));
+
+        if($check_month <= 0) {
+            $check_year = $check_year - 1;
+            $check_month = 12 + $check_month; // Because it's a negative int this gets negated anyways
+        } else {
+            $check_month = date('m');
+        }
+
+        if ($patrols >= $constants['calculation']['min_requirements_logs'] && $hours >= $constants['calculation']['min_requirements_hours']) {
+            return 'met';
+        }
+
+        if (User::find($id)->requirements_exempt) {
+            return 'exempt';
+        }
+
+        if($member_month == $check_month && $member_year == $check_year) {
+            return 'new';
+        }
+
+
+        return 'not_met';
+
+
+
+
+    }
 }
