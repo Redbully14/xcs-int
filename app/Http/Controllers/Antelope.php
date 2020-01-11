@@ -10,6 +10,7 @@ use App\User;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\BaseXCS;
 
 class Antelope extends Controller
 {

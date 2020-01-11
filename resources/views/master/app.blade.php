@@ -1,3 +1,5 @@
+@inject('baseXCS', 'App\Http\Controllers\BaseXCS')
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

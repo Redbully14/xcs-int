@@ -30,4 +30,29 @@ class BaseXCS extends Controller
         $s = $duration % 60;
         return sprintf("%02d:%02d:%02d", $H, $i, $s);
     }
+
+    /**
+     * Attempt to convert an avatar
+     *
+     * @param $type = either 1 (name) or 2 (file)
+     * @return string
+     */
+    public static function convertAvatar($avatar, $type) {
+        $constants = \Config::get('constants');
+
+        if($type == 1) {
+            try {
+                $avatar = $constants['avatars'][$avatar];
+            } catch(\Exception $e) {
+                $avatar = $constants['avatars']['antelope'];
+            }
+        } else if ($type == 2) {
+            try {
+                $avatar = $constants['avatar_filename'][$avatar];
+            } catch(\Exception $e) {
+                $avatar = $constants['avatar_filename']['antelope'];
+            }
+        }
+        return $avatar;
+    }
 }

@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Registered;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Http\Controllers\BaseXCS;
 
 class EditProfileController extends Controller
 {

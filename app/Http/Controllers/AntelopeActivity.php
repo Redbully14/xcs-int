@@ -13,6 +13,7 @@ use Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Http\Controllers\BaseXCS;
 
 class AntelopeActivity extends Controller
 {
