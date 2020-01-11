@@ -46,7 +46,9 @@
               <label>Antelope Permission Level</label>
               <select class="js-example-basic-single" style="width:100%" id="role" name="role">
                 @foreach($constants['role'] as $item => $value)
+                  @if (!$loop->first)
                   <option value="{{ $item }}">{{ $value }}</option>
+                  @endif
                 @endforeach
               </select>
             </div>

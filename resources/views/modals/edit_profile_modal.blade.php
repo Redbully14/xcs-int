@@ -93,7 +93,7 @@
                     @else
                     <div class="form-group">
                       <label>Profile Settings</label>
-                      <div class="form-check form-check-info">
+                      <div class="form-check form-check-info" hidden>
                         <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Profile Activated <i class="input-helper"></i></label>
                       </div>
                     </div>
@@ -113,7 +113,7 @@
                     </div>
                     @endif
 
-                    @if(Auth::user()->level() >= $constants['access_level']['staff'])
+                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
                     <div class="form-group">
                       <div class="form-check form-check-info">
                         <label class="form-check-label"><input type="checkbox" class="profile-training-field" id="profile-training-field"> Advanced Training <i class="input-helper"></i></label>
@@ -160,19 +160,19 @@
                       <label id="edit-username-error" class="error mt-2 text-danger" for="profile-username-field" hidden></label>
                     </div>
                     @else
-                    <div class="form-group">
-                      <label>Antelope Username</label>
-                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled>
+                    <div class="form-group" hidden>
+                      <label hidden>Antelope Username</label>
+                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled hidden>
                     </div>
                     @endif
 
                     @if(Auth::user()->level() >= $constants['access_level']['admin'])
                     <div class="form-group">
-                      <label>Antelope Access</label>
-                      <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
+                      <label hidden>Antelope Access</label>
+                      <select hidden class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
                         @foreach($constants['role'] as $role => $value)
                           @if (!$loop->first)
-                          <option value="{{ $role }}">{{ $value }}</option>
+                          <option hidden value="{{ $role }}">{{ $value }}</option>
                           @endif
                         @endforeach
                       </select>

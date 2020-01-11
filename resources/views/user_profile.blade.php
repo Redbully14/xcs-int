@@ -78,7 +78,7 @@
                   </p>
                   <p class="clearfix">
                     <span class="float-left"> Antelope Status </span>
-                    <span class="float-right text-muted"> {{ $constants['antelope_status_text'][$user_data['antelope_status']] }} </span>
+                    <span class="float-right text-{{ $constants['antelope_status_color'][$user_data['antelope_status']] }}"> {{ $constants['antelope_status_text'][$user_data['antelope_status']] }} </span>
                   </p>
                   <p class="clearfix">
                     <span class="float-left"> Temporary Password </span>

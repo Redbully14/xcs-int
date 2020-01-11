@@ -45,9 +45,6 @@ class Antelope extends Controller
     {
         $constants = \Config::get('constants');
 
-        // remove the ability to add superadmins
-        array_shift($constants['role']);
-
         return view('member_admin')->with('constants', $constants);
     }
 
