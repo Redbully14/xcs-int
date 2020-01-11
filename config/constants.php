@@ -24,6 +24,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | System Calculations
+    |--------------------------------------------------------------------------
+    |
+    | These are calculations that will be made on the system, all inputs here
+    | are and must be numbers.
+    |
+    */
+    'calculation' => [
+        'time_to_inactive' => 2592000, // 30 days without patrol logs
+        'account_is_new' => 604800, // 7 days from the account being made
+        'custom_one_week' => 604800, // Set one week here (default 7 days)
+        'custom_one_month' => 2678400, // Set one month here (default 31 days)
+        'custom_two_month' => 5356800, // Set two month here (default 62 days)
+        'min_requirements_logs' => 4, // 4 logs required
+        'min_requirements_hours' => 10800, // 4 hours required
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Department Constants
     |--------------------------------------------------------------------------
     |
@@ -53,6 +72,7 @@ return [
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
         'account_settings' => 'Account Settings',
+        'user_profile' => 'User Profile',
     ],
 
     /*
@@ -80,8 +100,8 @@ return [
     |
     */
     'antelope_status_text' => [
-        true => 'Active Profile',
-        false => 'Inactive Profile',
+        true => 'Profile Activated',
+        false => 'Profile Deactivated',
     ],
 
     /*
@@ -123,6 +143,26 @@ return [
         'intern' => 3,
         'member' => 2,
         'guest' => 1,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Colors
+    |--------------------------------------------------------------------------
+    |
+    | Auth Colors are mainly for customization only, it doesn't use RGB so
+    | don't change anything if you really know what you are doing. 
+    |
+    */
+    'access_color' => [
+        'superadmin' => 'info',
+        'admin' => 'danger',
+        'seniorstaff' => 'danger',
+        'staff' => 'warning',
+        'sit' => 'primary',
+        'intern' => 'primary',
+        'member' => 'primary',
+        'guest' => 'bright',
     ],
 
     /*
@@ -175,6 +215,38 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Department Status
+    |--------------------------------------------------------------------------
+    |
+    | Types of status that will be displayed on the roster, profile and on
+    | other pages of the website.
+    |
+    */
+    'department_status' => [
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'new' => 'New',
+        'exempt' => 'Exempt',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Department Status Colors
+    |--------------------------------------------------------------------------
+    |
+    | Colors for status that will be displayed on users profiles, this is not
+    | RGB so do not change it if you don't know what you're doing.
+    |
+    */
+    'department_status_colors' => [
+        'active' => 'success',
+        'inactive' => 'danger',
+        'new' => 'warning',
+        'exempt' => 'info',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Global IDs
     |--------------------------------------------------------------------------
     |
@@ -197,7 +269,9 @@ return [
     */
     'avatars' => [
         'antelope' => 'Antelope Default Avatar',
-        'antelope2' => 'Antelope Better Avatar'
+        'antelope2' => 'Antelope Better Avatar',
+        'gnomed' => 'Get gnomed',
+        'coolpepe' => 'Cool Pepe',
     ],
 
     /*
@@ -211,6 +285,30 @@ return [
     */
     'avatar_filename' => [
         'antelope' => 'antelope.png',
-        'antelope2' => 'antelope2.jpg'
+        'antelope2' => 'antelope2.jpg',
+        'gnomed' => 'morris.png',
+        'coolpepe' => 'coolpepe.png',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Customization
+    |--------------------------------------------------------------------------
+    |
+    | All the customization fields can be found here
+    |
+    */
+    'requirements' => [
+        'met' => 'Met',
+        'not_met' => 'Not Met',
+        'new' => 'New',
+        'exempt' => 'Exempt',
+    ],
+
+    'requirements_colors' => [
+        'met' => 'success',
+        'not_met' => 'danger',
+        'new' => 'warning',
+        'exempt' => 'info',
     ],
 ];

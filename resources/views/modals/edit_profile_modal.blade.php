@@ -1,6 +1,7 @@
-@if(Auth::user()->level() >= $constants['access_level']['sit'])
+@if(Auth::user()->level() >= $constants['access_level']['staff'])
 <!-- Edit a Profile - Modal -->
-<!-- Open modal with button id #ajax_open_modal_edit -->
+<!-- Open modal with button (IN TABLE) id #ajax_open_modal_edit -->
+<!-- Open modal with button (ON PAGE) id #ajax_open_modal_edit_button -->
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document" style="padding-left: 75px; padding-right: 75px;">
@@ -85,15 +86,43 @@
                     @if(Auth::user()->level() >= $constants['access_level']['admin'])
                     <div class="form-group">
                       <label>Profile Settings</label>
-                      <div class="form-check form-check-success">
-                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Active Profile <i class="input-helper"></i></label>
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field"> Profile Activated <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @else
                     <div class="form-group">
                       <label>Profile Settings</label>
-                      <div class="form-check form-check-success">
-                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Active Profile <i class="input-helper"></i></label>
+                      <div class="form-check form-check-info" hidden>
+                        <label class="form-check-label"><input type="checkbox" class="profile-active-field" id="profile-active-field" disabled> Profile Activated <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @endif
+
+                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-exempt-field" id="profile-exempt-field"> Exempt from Requirements <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-exempt-field" id="profile-exempt-field" disabled> Exempt from Requirements <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @endif
+
+                    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-training-field" id="profile-training-field"> Advanced Training <i class="input-helper"></i></label>
+                      </div>
+                    </div>
+                    @else
+                    <div class="form-group">
+                      <div class="form-check form-check-info">
+                        <label class="form-check-label"><input type="checkbox" class="profile-training-field" id="profile-training-field" disabled> Advanced Training <i class="input-helper"></i></label>
                       </div>
                     </div>
                     @endif
@@ -131,18 +160,20 @@
                       <label id="edit-username-error" class="error mt-2 text-danger" for="profile-username-field" hidden></label>
                     </div>
                     @else
-                    <div class="form-group">
-                      <label>Antelope Username</label>
-                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled>
+                    <div class="form-group" hidden>
+                      <label hidden>Antelope Username</label>
+                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled hidden>
                     </div>
                     @endif
 
                     @if(Auth::user()->level() >= $constants['access_level']['admin'])
                     <div class="form-group">
-                      <label>Antelope Access</label>
-                      <select class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
+                      <label hidden>Antelope Access</label>
+                      <select hidden class="js-example-basic-single" style="width:100%" id="profile-role-field" name="role">
                         @foreach($constants['role'] as $role => $value)
-                          <option value="{{ $role }}">{{ $value }}</option>
+                          @if (!$loop->first)
+                          <option hidden value="{{ $role }}">{{ $value }}</option>
+                          @endif
                         @endforeach
                       </select>
                     </div>
@@ -276,6 +307,56 @@
              $("#profile-department-id-field").val(data['department_id']);
              $("#profile-rank-field").val(data['rank']).change();
              $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-training-field").prop('checked', data['advanced_training']);
+             $("#profile-exempt-field").prop('checked', data['requirements_exempt']);
+             $("#profile-role-field").val(role).change();
+             $("#profile-username-field").val(data['username']);
+           }
+         }
+      }).done(function(data) {
+        var role = data.roles.map(function(dt) {
+          return dt.slug;
+        });
+        if(role == 'superadmin') {
+          showFailToast_EditSuperAdmin();
+        } else $("#editProfileModal").modal("toggle");
+      });
+  });
+
+  $( "#ajax_open_modal_edit_button" ).click(function() {
+    for (var element in elements) {
+      $(element).parent().removeClass('has-danger');
+      $(element).removeClass('form-control-danger');
+      $(elements[element]).prop('hidden', true);
+      $(elements[element]).empty();
+    }
+    var isSuperAdmin = false;
+    var id = $(this).val();
+    getUsersActivity(id);
+    $('#ajax_edit_member_save').val(id).change();
+
+      $.ajax({
+         type: "POST",
+         url: '{{ url('member/edit/get_data/') }}/'+id,
+         success: function(data){
+            var role = data.roles.map(function(dt) {
+              return dt.slug;
+            });
+           console.log(data);
+           if (role == "superadmin") {
+              return false;
+           } else {
+             if(data['department_id'] == null) {
+                var name_unitnumber = data['name'];
+             } else var name_unitnumber = data['name']+' '+data['department_id'];
+             $("#profile-display-name").text(name_unitnumber);
+             $("#profile-name-field").val(data['name']);
+             $("#profile-website-id-field").val(data['website_id']);
+             $("#profile-department-id-field").val(data['department_id']);
+             $("#profile-rank-field").val(data['rank']).change();
+             $("#profile-active-field").prop('checked', data['antelope_status']);
+             $("#profile-training-field").prop('checked', data['advanced_training']);
+             $("#profile-exempt-field").prop('checked', data['requirements_exempt']);
              $("#profile-role-field").val(role).change();
              $("#profile-username-field").val(data['username']);
            }
@@ -335,11 +416,13 @@
       var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
       var username = $('#profile-username-field').val();
       var role = $('#profile-role-field').val();
+      var advanced_training = $("#profile-training-field").prop("checked") ? 1 : 0;
+      var requirements_exempt = $("#profile-exempt-field").prop("checked") ? 1 : 0;
 
       $.ajax({
         type: 'POST',
         url: '{{ url('member/edit/edit_user/') }}/'+id,
-        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role},
+        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role, advanced_training:advanced_training, requirements_exempt:requirements_exempt},
         success: function() {
             for (var element in elements) {
               $(element).parent().removeClass('has-danger');
