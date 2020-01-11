@@ -6,6 +6,7 @@
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
       <span class="mdi mdi-menu"></span>
     </button>
+    @if(Auth::user()->level() >= $constants['access_level']['sit'])
     <ul class="navbar-nav w-100">
       <li class="nav-item w-100">
         <select class="ajax_search_member-class" style="width:75%" id="ajax_search_member">
@@ -16,6 +17,7 @@
         </select>
       </li>
     </ul>
+    @endif
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit Log</a>

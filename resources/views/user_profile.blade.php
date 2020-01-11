@@ -72,6 +72,7 @@
                   <div class="d-flex justify-content-center">
                   	<p>Antelope Data</p>
                   </div>
+                  @if(Auth::user()->level() >= $constants['access_level']['admin'])
                   <p class="clearfix">
                     <span class="float-left"> Username </span>
                     <span class="float-right text-muted"> {{ $user_data['username'] }} </span>
@@ -94,6 +95,7 @@
                       <a>{{ $constants['role'][$role[0]['slug']] }}</a>
                     </span>
                   </p>
+                  @endif
                   <p class="clearfix">
                     <span class="float-left"> Antelope ID </span>
                     <span class="float-right text-muted"> {{ $user_data['id'] }} </span>
