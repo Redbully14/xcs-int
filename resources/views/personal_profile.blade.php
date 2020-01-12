@@ -1,4 +1,4 @@
-<?php $page_name = 'user_profile' ?>
+<?php $page_name = 'personal_profile' ?>
 
 @extends('master.app')
 
@@ -61,41 +61,19 @@
                       <a>{{ $constants['rank'][$user_data['rank']] }}</a>
                     </span>
                   </p>
+                  @if($user_data['requirements_exempt'])
                   <p class="clearfix">
                     <span class="float-left"> Exempt from Requirements </span>
                     <span class="float-right text-muted">
                       <a>{{ $user_data['requirements_exempt'] ? 'Yes' : 'No' }}</a>
                     </span>
                   </p>
+                  @endif
                 </div>
                 <div class="py-4">
                   <div class="d-flex justify-content-center">
                   	<p>Antelope Data</p>
                   </div>
-                  @if(Auth::user()->level() >= $constants['access_level']['admin'])
-                  <p class="clearfix">
-                    <span class="float-left"> Username </span>
-                    <span class="float-right text-muted"> {{ $user_data['username'] }} </span>
-                  </p>
-                  <p class="clearfix">
-                    <span class="float-left"> Antelope Status </span>
-                    <span class="float-right text-{{ $constants['antelope_status_color'][$user_data['antelope_status']] }}"> {{ $constants['antelope_status_text'][$user_data['antelope_status']] }} </span>
-                  </p>
-                  <p class="clearfix">
-                    <span class="float-left"> Temporary Password </span>
-                    @if($user_data['temp_password'])
-                    <span class="float-right text-warning"> Yes </span>
-                    @else
-                    <span class="float-right text-muted"> No </span>
-                    @endif
-                  </p>
-                  <p class="clearfix">
-                    <span class="float-left"> Auth Level </span>
-                    <span class="float-right text-muted">
-                      <a>{{ $constants['role'][$role[0]['slug']] }}</a>
-                    </span>
-                  </p>
-                  @endif
                   <p class="clearfix">
                     <span class="float-left"> Antelope ID </span>
                     <span class="float-right text-muted"> {{ $user_data['id'] }} </span>
@@ -110,11 +88,6 @@
                       <h5 class="mb-0 mr-2 text-muted">{{ $constants['rank'][$user_data['rank']] }}</h5>
                     </div>
                   </div>
-                  @if(Auth::user()->level() >= $constants['access_level']['staff'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['admin']) && $user_data['id'] != Auth::user()->id)
-                  <div>
-                    <button class="btn btn-primary" id="ajax_open_modal_edit_button" value="{{ $user_data['id'] }}">Edit Profile</button>
-                  </div>
-                  @endif
                 </div>
                 <div class="mt-4 py-2 border-top border-bottom">
                   <ul class="nav profile-navbar" role="tablist">
@@ -261,8 +234,4 @@
 @endsection
 
 @section('pluginjs')
-@endsection
-
-@section('modals')
-  @include('modals.edit_profile_modal')
 @endsection

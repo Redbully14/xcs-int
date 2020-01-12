@@ -18,6 +18,16 @@
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+          <a href="/myprofile" class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-dark rounded-circle">
+                <i class="mdi mdi-account-card-details text-primary"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <p class="preview-subject ellipsis mb-1 text-small">My Profile</p>
+            </div>
+          </a>
           <a href="/settings" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
@@ -25,7 +35,7 @@
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+              <p class="preview-subject ellipsis mb-1 text-small">Account Settings</p>
             </div>
           </a>
         </div>
