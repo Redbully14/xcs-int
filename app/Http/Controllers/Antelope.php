@@ -11,7 +11,6 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
-use App\Http\Controllers\BaseXCS;
 
 class Antelope extends Controller
 {
@@ -121,5 +120,50 @@ class Antelope extends Controller
                                    ->with('constants', $constants)
                                    ->with('role', $role)
                                    ->with('calculations', $calculations);
+    }
+
+    /**
+     * Constructs a user's personal profile
+     *
+     * @return View
+     */
+    public function myProfile()
+    {
+        $constants = \Config::get('constants');
+
+
+        $id = auth()->user()->id;
+        $user_data = User::find($id);
+        $role = User::find($id)->getRoles();
+
+        if(auth()->user()->level() >= $constants['access_level']['sit']) {
+            return self::getProfile($id);
+        }
+
+        else {
+
+            // this gonna be a long list...
+            $calculations = [
+                'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
+                'last_seen' => AntelopeCalculate::get_last_seen($id),
+                'department_status' => AntelopeCalculate::get_department_status($id),
+                'total_patrol_logs' => AntelopeCalculate::get_total_patrol_logs($id),
+                'total_patrol_hours' => AntelopeCalculate::get_total_patrol_hours($id),
+                'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
+                'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
+                'one_week_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_week'),
+                'one_week_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_week'),
+                'one_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_month'),
+                'one_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_month'),
+                'two_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_two_month'),
+                'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
+                'requirements' => AntelopeCalculate::get_month_requirements($id, 0),
+            ];
+
+            return view('personal_profile')->with('user_data', $user_data)
+                                       ->with('constants', $constants)
+                                       ->with('role', $role)
+                                       ->with('calculations', $calculations);
+        }
     }
 }
