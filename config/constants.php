@@ -74,6 +74,7 @@ return [
         'account_settings' => 'Account Settings',
         'user_profile' => 'User Profile',
         'personal_profile' => 'My Profile',
+        'discipline_database' => 'Discipline Database',
     ],
 
     /*
