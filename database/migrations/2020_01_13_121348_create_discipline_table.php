@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Discipline extends Migration
+class CreateDisciplineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,8 @@ class Discipline extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('issued_by')->unsigned()->index();
+            $table->foreign('issued_by')->references('id')->on('users')->onDelete('cascade');
             $table->date('discipline_date');
             $table->integer('type');
             $table->longText('details');
