@@ -54,7 +54,7 @@ class AntelopeDiscipline extends Controller
 	    $query = Discipline::query()
 	    ->leftJoin('users as t1', 'discipline.user_id', '=', 't1.id')
 	    ->leftJoin('users as t2', 'discipline.issued_by', '=', 't2.id')
-	    ->leftJoin('users as t3', 'discipline.issued_by', '=', 't3.id')
+	    ->leftJoin('users as t3', 'discipline.overturned_by', '=', 't3.id')
 	    ->select([
 	        'discipline.id as discipline_id',
 	        'discipline.user_id as issued_to',
@@ -67,33 +67,36 @@ class AntelopeDiscipline extends Controller
 	        'discipline.overturned_date as discipline_overturned_date',
 	        'discipline.disputed as discipline_disputed',
 	        'discipline.disputed_date as discipline_disputed_date',
-	        't1.name as t1_name',
-	        't1.department_id as t1_department_id',
-	        't1.website_id as t1_website_id',
-	        't2.name as t2_name',
-	        't2.department_id as t2_department_id',
-	        't2.website_id as t2_website_id',
-	        't3.name as t3_name',
-	        't3.department_id as t3_department_id',
-	        't3.website_id as t3_website_id',
+	        't1.name as issued_to_name',
+	        't1.department_id as issued_to_department_id',
+	        't1.website_id as issued_to_website_id',
+	        't2.name as issued_by_name',
+	        't2.department_id as issued_by_department_id',
+	        't2.website_id as issued_by_website_id',
+	        't3.name as overturned_by_name',
+	        't3.department_id as overturned_by_department_id',
+	        't3.website_id as overturned_by_website_id',
 	    ]);
 
 	    return datatables($query)
 	    ->editColumn('issued_to', function($row){
-	                if ( $row->t1_department_id == null ) {
-	                    return $row->t1_name;
+	                if ( $row->issued_to_department_id == null ) {
+	                    return $row->issued_to_name;
 	                }
-	                else return $row->t1_name.' '.$row->t1_department_id;})
+	                else return $row->issued_to_name.' '.$row->issued_to_department_id;})
 	    ->editColumn('issued_by', function($row){
-	                if ( $row->t2_department_id == null ) {
-	                    return $row->t2_name;
+	                if ( $row->issued_by_department_id == null ) {
+	                    return $row->issued_by_name;
 	                }
-	                else return $row->t2_name.' '.$row->t2_department_id;})
+	                else return $row->issued_by_name.' '.$row->issued_by_department_id;})
 	    ->editColumn('discipline_overturned_by', function($row){
-	                if ( $row->t3_department_id == null ) {
-	                    return $row->t3_name;
+	                if ( $row->overturned_by_department_id == null ) {
+	                    return $row->overturned_by_name;
 	                }
-	                else return $row->t3_name.' '.$row->t3_department_id;})
+	                else return $row->overturned_by_name.' '.$row->overturned_by_department_id;})
+	    ->editColumn('discipline_type', function($row){
+	    			$constants = \Config::get('constants');
+	                return $constants['disciplinary_actions'][$row->discipline_type];})
 		->filterColumn('discipline_id', function($query, $keyword) {
 					$constants = \Config::get('constants');
 					$prefix = $constants['global_id']['disciplinary_action'];
@@ -102,7 +105,25 @@ class AntelopeDiscipline extends Controller
 					}
 					$sql = "REPLACE(discipline.id, '".$constants['global_id']['disciplinary_action']."', '')  like ?";
 	                $query->whereRaw($sql, ["%{$keyword}%"]);
-	            })
+	               	})
+		->filterColumn('issued_to', function($query, $keyword) {
+					if (preg_match('/[0-9]/', $keyword)) {
+						$sql = "CONCAT(t1.name,' ',t1.department_id)  like ?";
+		                $query->whereRaw($sql, ["%{$keyword}%"]);
+					} else {
+						$sql = "CONCAT(t1.name)  like ?";
+	                	$query->whereRaw($sql, ["%{$keyword}%"]);
+					}
+	                })
+		->filterColumn('issued_by', function($query, $keyword) {
+					if (preg_match('/[0-9]/', $keyword)) {
+						$sql = "CONCAT(t2.name,' ',t2.department_id)  like ?";
+		                $query->whereRaw($sql, ["%{$keyword}%"]);
+					} else {
+						$sql = "CONCAT(t2.name)  like ?";
+	                	$query->whereRaw($sql, ["%{$keyword}%"]);
+					}
+	                })
 	    ->toJson();
     }
 }
