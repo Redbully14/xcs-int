@@ -9,7 +9,7 @@
     @if(Auth::user()->level() >= $constants['access_level']['sit'])
     <ul class="navbar-nav w-100">
       <li class="nav-item w-100">
-        <select class="ajax_search_member-class" style="width:75%" id="ajax_search_member">
+        <select class="ajax_search_member-class" style="width:75%" id="ajax_search_member-click_redirect">
             <option></option>
           @foreach($baseXCS::getAllMembersSearchable() as $id => $user)
             <option value="{{ $id }}">{{ $user }}</option>

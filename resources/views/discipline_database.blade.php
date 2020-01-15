@@ -16,8 +16,8 @@
       <h4 class="card-title">Disciplinary Actions</h4>
       <div class="row">
         <div class="col-12">
-          <div class="table-responsive" id="activityTable">
-            <table id="tableElement" class="table table-bordered">
+          <div class="table-responsive" id="ajax_disciplinary_actions_table_div">
+            <table id="ajax_disciplinary_actions_table_element" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Disciplinary ID</th>
@@ -44,7 +44,7 @@
 @section('ajax')
 <script text="text/javascript">
   $(function() {
-    $('#tableElement').DataTable({
+    $('#ajax_disciplinary_actions_table_element').DataTable({
      ordering: true,
      serverSide: true,
      searching: true,

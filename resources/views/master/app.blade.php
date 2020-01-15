@@ -111,19 +111,6 @@
     }
   })(jQuery);
     </script>
-
-    <script type="text/javascript">
-    if ($(".ajax_search_member-class").length) {
-      $(".ajax_search_member-class").select2();
-    }
-    $("#ajax_search_member").select2({
-        placeholder: "Search by Website ID, Name or Unit Number",
-        allowClear: true
-    });
-    $("#ajax_search_member").on("select2:select", function (e) {
-      window.location.replace(e.params.data.id);
-    });
-    </script>
     @yield('ajax')
     <!-- End ajax for this page -->
     <!-- Global modals for this page-->
@@ -133,5 +120,22 @@
     <!-- Modals for this page-->
     @yield('modals')
     <!-- End modals for this page -->
+
+    <script type="text/javascript">
+    if ($(".ajax_search_member-class").length) {
+      $(".ajax_search_member-class").select2();
+    }
+    $(".ajax_search_member-class").select2({
+        placeholder: "Search by Website ID, Name or Unit Number",
+        allowClear: true
+    });
+    $("#ajax_search_member-click_redirect").on("select2:select", function (e) {
+      window.location.replace(e.params.data.id);
+    });
+
+    if ($(".antelope_global_select_single").length) {
+      $(".antelope_global_select_single").select2();
+    }
+    </script>
   </body>
 </html>

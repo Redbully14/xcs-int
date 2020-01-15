@@ -81,4 +81,31 @@ class BaseXCS extends Controller
 
         return $members_array;
     }
+
+    /**
+     * Get all members
+     *
+     * @return int
+     */
+    public static function getAllMembers() {
+        $users = User::all();
+        $members_array = array();
+
+        foreach ($users as $user) {
+            $name = $user->name;
+            $department_id = $user->department_id;
+            $website_id = $user->website_id;
+            $id = $user->website_id;
+
+            if ($department_id == null) {
+                $member = $website_id.' - '.$name;
+            } else {
+                $member = $website_id.' - '.$name.' '.$department_id;
+            }
+
+            $members_array[$id] = $member;
+        }
+
+        return $members_array;
+    }
 }
