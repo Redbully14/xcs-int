@@ -95,7 +95,7 @@ class BaseXCS extends Controller
             $name = $user->name;
             $department_id = $user->department_id;
             $website_id = $user->website_id;
-            $id = $user->website_id;
+            $id = $user->id;
 
             if ($department_id == null) {
                 $member = $website_id.' - '.$name;

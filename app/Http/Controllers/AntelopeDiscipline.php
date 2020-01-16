@@ -126,4 +126,69 @@ class AntelopeDiscipline extends Controller
 	                })
 	    ->toJson();
     }
+
+    /**
+     * Get a validator for an incoming discipline request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+
+        return Validator::make($data, [
+            'issued_to' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+            'type' => ['required', 'integer'],
+            'details' => ['required', 'string'],
+        ]);
+    }
+
+    /**
+     * Create a new discipline instance after validation
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function create(array $data)
+    {
+        
+        $discipline = Discipline::create([
+        	'user_id' => $data['issued_to'],
+        	'issued_by' => auth()->user()->id,
+        	'discipline_date' => date("Y-m-d", strtotime($data['date'])),
+        	'type' => $data['type'],
+        	'details' => $data['issued_to'],
+
+        ]);
+
+        return $discipline;
+    }
+
+    /**
+     * The discipline log has been registered
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function submitted(Request $request, $discipline)
+    {
+        //
+    }
+
+    /**
+     * Handle an discipline submit for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function submit(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $discipline = $this->create($request->all());
+
+        return $this->submitted($request, $discipline);
+    }
 }
