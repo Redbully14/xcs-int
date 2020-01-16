@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdfbd031713b1b96ba7dae3e746c342b",
+    "content-hash": "dc0ab53ec8ed07ab1ece5e0eea4b2d8a",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -624,6 +624,62 @@
                 "trusted proxy"
             ],
             "time": "2019-12-20T13:11:11+00:00"
+        },
+        {
+            "name": "hnhdigital-os/laravel-git-info",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hnhdigital-os/laravel-git-info.git",
+                "reference": "68aa557eb09a967c041f26b882e5af5f98bb7991"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hnhdigital-os/laravel-git-info/zipball/68aa557eb09a967c041f26b882e5af5f98bb7991",
+                "reference": "68aa557eb09a967c041f26b882e5af5f98bb7991",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "mockery/mockery": "0.9.*",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "5.*",
+                "squizlabs/php_codesniffer": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bluora\\LaravelGitInfo\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bluora\\LaravelGitInfo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rocco Howard",
+                    "email": "rocco@hnh.digital"
+                }
+            ],
+            "description": "Get information about the current git state.",
+            "keywords": [
+                "branch",
+                "git",
+                "laravel",
+                "version"
+            ],
+            "time": "2018-04-09T04:51:41+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
