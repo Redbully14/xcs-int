@@ -2,6 +2,7 @@
 
 @if(Auth::user()->level() >= $constants['access_level']['sit'])
 <!-- Submitting Disciplinary Actions - Modal -->
+<!-- Open modal with button id #ajax_add_disciplinary_action-button -->
 <div class="modal fade" id="ajax_add_disciplinary_action-modal" tabindex="-1" role="dialog" aria-labelledby="ajax_add_disciplinary_action-label" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -10,6 +10,9 @@
 <div class="content-wrapper">
   <div class="page-header">
     <h3 class="page-title"> Discipline Database </h3>
+    <nav aria-label="breadcrumb">
+      <a class="nav-link btn btn-danger create-new-button" href="#" id="ajax_add_disciplinary_action-button">+ Record Disciplinary Action</a>
+    </nav>
   </div>
   <div class="card">
     <div class="card-body">
@@ -73,4 +76,5 @@
 
 @section('modals')
 @include('modals.show_patrol_log_modal')
+@include('modals.add_disciplinary_action_modal')
 @endsection
