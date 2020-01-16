@@ -30,6 +30,7 @@ class CreateDisciplineTable extends Migration
             $table->boolean('disputed')->default(false);
             $table->date('disputed_date')->nullable();
             $table->longText('disputed_reason')->nullable();
+            $table->date('custom_expiry_date')->nullable();
             $table->timestamps();
         });
     }

@@ -141,6 +141,7 @@ class AntelopeDiscipline extends Controller
             'date' => ['required', 'date'],
             'type' => ['required', 'integer'],
             'details' => ['required', 'string'],
+            'custom_expiry_date' => ['nullable', 'date'],
         ]);
     }
 
@@ -152,14 +153,13 @@ class AntelopeDiscipline extends Controller
      */
     protected function create(array $data)
     {
-        
         $discipline = Discipline::create([
         	'user_id' => $data['issued_to'],
         	'issued_by' => auth()->user()->id,
         	'discipline_date' => date("Y-m-d", strtotime($data['date'])),
         	'type' => $data['type'],
-        	'details' => $data['issued_to'],
-
+        	'details' => $data['details'],
+            'custom_expiry_date' => date("Y-m-d", strtotime($data['custom_expiry_date'])),
         ]);
 
         return $discipline;

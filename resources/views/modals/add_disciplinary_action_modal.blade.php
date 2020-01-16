@@ -52,6 +52,17 @@
               <label id="ajax_add_disciplinary_action-details-error" class="error mt-2 text-danger" for="ajax_add_disciplinary_action-details" hidden></label>
             </div>
 
+            <div class="form-group">
+              <label>Custom Expiry Date</label>
+              <div id="ajax_add_disciplinary_action-custom_expiry" class="input-group date datepicker">
+                <input type="text" class="form-control" id="ajax_add_disciplinary_action-input_custom_expiry">
+                <span class="input-group-addoan input-group-append border-left">
+                  <span class="mdi mdi-calendar input-group-text"></span>
+                </span>
+              </div>
+              <label id="ajax_add_disciplinary_action-input_custom_expiry-error" class="error mt-2 text-danger" for="ajax_add_disciplinary_action-input_custom_expiry" hidden></label>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-danger">Record</button>
@@ -68,6 +79,7 @@
     '#ajax_add_disciplinary_action-input_date' : '#ajax_add_disciplinary_action-input_date-error',
     '#ajax_add_disciplinary_action-input_type' : '#ajax_add_disciplinary_action-input_type-error',
     '#ajax_add_disciplinary_action-details' : '#ajax_add_disciplinary_action-details-error',
+    '#ajax_add_disciplinary_action-input_custom_expiry' : '#ajax_add_disciplinary_action-input_custom_expiry-error',
   };
 
   $( "#ajax_add_disciplinary_action-button" ).click(function() {
@@ -83,12 +95,21 @@
     });
   }
 
+  if ($("#ajax_add_disciplinary_action-input_custom_expiry").length) {
+    $('#ajax_add_disciplinary_action-input_custom_expiry').datepicker({
+      enableOnReadonly: true,
+      todayHighlight: true,
+      autoclose: true
+    });
+  }
+
   $('#ajax_add_disciplinary_action-form').on('submit', function(e) {
     e.preventDefault();
     var issued_to = $('#ajax_add_disciplinary_action-input_issued_to').val();
     var date = $('#ajax_add_disciplinary_action-input_date').val();
     var type = $('#ajax_add_disciplinary_action-input_type').val();
     var details = $('#ajax_add_disciplinary_action-details').val();
+    var custom_expiry_date = $('#ajax_add_disciplinary_action-input_custom_expiry').val();
 
     // this is really crappy but i just can't be asked anymore
     for (var element in elements) {
@@ -102,14 +123,15 @@
     $.ajax({
       type: 'POST',
       url: '{{ url('discipline/submit') }}',
-      data: { issued_to:issued_to, date:date, type:type, details:details },
-      success: function() {
+      data: { issued_to:issued_to, date:date, type:type, details:details, custom_expiry_date:custom_expiry_date },
+      success: function(data) {
+        console.log(data);
         $('#ajax_add_disciplinary_action-cancel').click();
         for (var element in elements) {
           $(element).parent().removeClass('has-danger');
           $(element).removeClass('form-control-danger');
           $(elements[element]).prop('hidden', true);
-          $(element).val('');
+          $(element).val('').change();
           $(elements[element]).empty();
         }
         var toast_heading = "Discriplinary Action Recorded!";
@@ -162,6 +184,14 @@
             case 'details':
               var element = '#ajax_add_disciplinary_action-details';
               var label = '#ajax_add_disciplinary_action-details-error';
+              $(element).parent().addClass('has-danger');
+              $(element).addClass('form-control-danger');
+              $(label).append(errors[key]);
+              $(label).prop('hidden', false);
+            break;
+            case 'custom_expiry_date':
+              var element = '#ajax_add_disciplinary_action-input_custom_expiry';
+              var label = '#ajax_add_disciplinary_action-input_custom_expiry-error';
               $(element).parent().addClass('has-danger');
               $(element).addClass('form-control-danger');
               $(label).append(errors[key]);
