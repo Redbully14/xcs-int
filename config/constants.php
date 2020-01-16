@@ -74,6 +74,7 @@ return [
         'account_settings' => 'Account Settings',
         'user_profile' => 'User Profile',
         'personal_profile' => 'My Profile',
+        'discipline_database' => 'Discipline Database',
     ],
 
     /*
@@ -248,6 +249,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Disciplinary Actions
+    |--------------------------------------------------------------------------
+    |
+    | Here is the configuration for Disciplinary Actions on the website, this
+    | takes global effect for the entire system..
+    |
+    */
+    'disciplinary_actions' => [
+        1 => 'Warning',
+        2 => '10-90',
+        3 => '10-93',
+        4 => 'Re-Certification',
+        5 => 'Suspension',
+        6 => 'Demotion',
+        7 => 'Termination',
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Global IDs
     |--------------------------------------------------------------------------
     |
@@ -257,6 +278,7 @@ return [
     */
     'global_id' => [
         'patrol_log' => 'PL-',
+        'disciplinary_action' => 'DA-',
     ],
 
     /*

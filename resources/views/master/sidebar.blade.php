@@ -62,11 +62,21 @@
       </a>
     </li>
     @endif
+    @if(Auth::user()->level() >= $constants['access_level']['sit'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/discipline">
+        <span class="menu-icon">
+          <i class="mdi mdi-security"></i>
+        </span>
+        <span class="menu-title">Discipline Database</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/member_admin">
         <span class="menu-icon">
-          <i class="mdi mdi-security"></i>
+          <i class="mdi mdi-account-plus"></i>
         </span>
         <span class="menu-title">Member Settings</span>
       </a>

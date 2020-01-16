@@ -69,10 +69,15 @@ Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\
 Route::get('/activity/collection', 'AntelopeActivity@passActivityData')->middleware('level:'.\Config::get('constants.access_level.staff'));
 Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
+// Discipline GET Routes
+Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
+
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
 Route::post('/settings/change_avatar', 'Antelope@setAvatar');
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
+Route::post('/discipline/submit', 'AntelopeDiscipline@submit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance')->middleware('level:'.\Config::get('constants.access_level.staff'));
