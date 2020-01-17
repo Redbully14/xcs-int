@@ -244,7 +244,6 @@ class AntelopeDiscipline extends Controller
         $discipline = Discipline::find($request->route('id'));
         $this->editValidator($request->all())->validate();
 
-
         $discipline->issued_by = $request['issued_by'];
         $discipline->discipline_date = $request['date'];
         $discipline->type = $request['type'];
