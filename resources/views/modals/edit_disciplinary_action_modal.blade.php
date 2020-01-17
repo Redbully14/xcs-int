@@ -107,7 +107,7 @@
                     <h5 class="card-title">Overturn Data</h5>
                     <div class="form-group">
                       <div class="form-check form-check-danger">
-                        <label class="form-check-label"><input type="checkbox" id="ajax_edit_disciplinary_action-input_disputed"> Overturned <i class="input-helper"></i></label>
+                        <label class="form-check-label"><input type="checkbox" id="ajax_edit_disciplinary_action-input_overturned"> Overturned <i class="input-helper"></i></label>
                       </div>
                     </div>
 
@@ -136,7 +136,7 @@
                     <h5 class="card-title">Overturn Data</h5>
                     <div class="form-group">
                       <div class="form-check form-check-danger">
-                        <label class="form-check-label"><input type="checkbox" id="ajax_edit_disciplinary_action-input_disputed" disabled> Overturned <i class="input-helper"></i></label>
+                        <label class="form-check-label"><input type="checkbox" id="ajax_edit_disciplinary_action-input_overturned" disabled> Overturned <i class="input-helper"></i></label>
                       </div>
                     </div>
 
@@ -177,7 +177,7 @@
                     <div class="row">
                       <div class="col-12">
                         <div class="preview-list">
-                           <textarea class="form-control" id="ajax_add_disciplinary_action-details" rows="50" required></textarea>
+                           <textarea class="form-control" id="ajax_edit_disciplinary_action-details" rows="50" required></textarea>
                         </div>
                       </div>
                     </div>
@@ -195,6 +195,16 @@
 </div>
 
 <script type="text/javascript">
+  var elements = {
+    '#ajax_edit_disciplinary_action-input_issued_by' : '#ajax_edit_disciplinary_action-input_issued_by-error',
+    '#ajax_edit_disciplinary_action-input_date' : '#ajax_edit_disciplinary_action-input_date-error',
+    '#ajax_edit_disciplinary_action-input_type' : '#ajax_edit_disciplinary_action-input_type-error',
+    '#ajax_edit_disciplinary_action-custom_expiry' : '#ajax_edit_disciplinary_action-custom_expiry-error',
+    '#ajax_edit_disciplinary_action-input_dispute_date' : '#ajax_edit_disciplinary_action-input_dispute_date-error',
+    '#ajax_edit_disciplinary_action-input_overturn_date' : '#ajax_edit_disciplinary_action-input_overturn_date-error',
+    '#ajax_edit_disciplinary_action-input_overturned_by' : '#ajax_edit_disciplinary_action-input_overturned_by-error',
+  };
+
   if ($("#ajax_edit_disciplinary_action-date").length) {
     $('#ajax_edit_disciplinary_action-date').datepicker({
       enableOnReadonly: true,
@@ -228,8 +238,38 @@
   }
 
   $( "#ajax_edit_disciplinary_action-button" ).click(function() {
-    var id = $(this).val(); // Already supports ID fetching :D
-    $("#ajax_edit_disciplinary_action-modal").modal("toggle");
+    for (var element in elements) {
+      $(element).parent().removeClass('has-danger');
+      $(element).removeClass('form-control-danger');
+      $(elements[element]).prop('hidden', true);
+      $(elements[element]).empty();
+    }
+    var id = $(this).val();
+    $('#ajax_edit_disciplinary_action').val(id).change();
+
+      $.ajax({
+         type: "POST",
+         url: '{{ url('discipline/get_data/') }}/'+id,
+         success: function(data){
+           console.log(data);
+           if(data['issued_to_department_id'] == null) {
+              var issued_to = data['issued_to_name'];
+           } else var issued_to = data['issued_to_name']+' '+data['issued_to_department_id'];
+           $("#ajax_edit_disciplinary_action-display_name").text(issued_to);
+           $("#ajax_edit_disciplinary_action-input_issued_by").val(data['issued_by']).change();
+           $("#ajax_edit_disciplinary_action-input_date").val(data['discipline_date']);
+           $("#ajax_edit_disciplinary_action-input_custom_expiry").val(data['custom_expiry_date']);
+           $("#ajax_edit_disciplinary_action-input_type").val(data['type']).change();
+           $("#ajax_edit_disciplinary_action-details").val(data['details']);
+           $("#ajax_edit_disciplinary_action-input_disputed").prop('checked', data['disputed']);
+           $("#ajax_edit_disciplinary_action-input_dispute_date").val(data['disputed_date']);
+           $("#ajax_edit_disciplinary_action-input_overturned").prop('checked', data['overturned']);
+           $("#ajax_edit_disciplinary_action-input_overturn_date").val(data['overturned_date']);
+           $("#ajax_edit_disciplinary_action-input_overturned_by").val(data['overturned_by']).change();
+         }
+      }).done(function(data) {
+        $("#ajax_edit_disciplinary_action-modal").modal("toggle");
+      });
   });
 </script>
 @endif

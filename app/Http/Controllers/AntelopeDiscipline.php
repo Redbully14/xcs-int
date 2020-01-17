@@ -205,14 +205,6 @@ class AntelopeDiscipline extends Controller
         $discipline->issued_to_department_id = User::find($discipline['user_id'])->department_id;
         $discipline->issued_to_website_id = User::find($discipline['user_id'])->website_id;
 
-        $discipline->issued_by_name = User::find($discipline['issued_by'])->name;
-        $discipline->issued_by_department_id = User::find($discipline['issued_by'])->department_id;
-        $discipline->issued_by_website_id = User::find($discipline['issued_by'])->website_id;
-
-        $discipline->overturned_by_name = User::find($discipline['overturned_by'])->name;
-        $discipline->overturned_by_department_id = User::find($discipline['overturned_by'])->department_id;
-        $discipline->overturned_by_website_id = User::find($discipline['overturned_by'])->website_id;
-
         return $discipline;
     }
 }
