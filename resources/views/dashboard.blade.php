@@ -20,7 +20,7 @@
 	            <p class="mb-0 font-weight-normal d-none d-sm-block">Antelope	 now with a new facelift for enhanced legibility and aesthetics!</p>
 	          </div>
 	          <div class="col-3 col-sm-2 col-xl-2 pl-0 text-center">
-	            <button class="btn btn-outline-light btn-rounded get-started-btn" id="ajax_add_disciplinary_action-button" value="1">This button does not work!</button>
+	            <button class="btn btn-outline-light btn-rounded get-started-btn" id="ajax_edit_disciplinary_action-button" value="8">This button does not work!</button>
 	          </div>
 	        </div>
 	      </div>

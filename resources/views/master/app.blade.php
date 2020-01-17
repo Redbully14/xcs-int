@@ -136,6 +136,10 @@
     if ($(".antelope_global_select_single").length) {
       $(".antelope_global_select_single").select2();
     }
+    $(".antelope_global_select_single").select2({
+        placeholder: "Select an Option...",
+        allowClear: true
+    });
     </script>
   </body>
 </html>
