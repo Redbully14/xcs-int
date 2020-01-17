@@ -79,6 +79,7 @@ Route::post('/settings/change_avatar', 'Antelope@setAvatar');
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/discipline/submit', 'AntelopeDiscipline@submit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/discipline/get_data/{id}', 'AntelopeDiscipline@getDiscipline')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::post('/discipline/edit/{id}', 'AntelopeDiscipline@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance')->middleware('level:'.\Config::get('constants.access_level.staff'));
