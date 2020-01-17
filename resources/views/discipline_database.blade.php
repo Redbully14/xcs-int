@@ -29,6 +29,7 @@
                   <th>Discipline type</th>
                   <th>Discipline date</th>
                   <th>Discipline details</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
             </table>
@@ -68,6 +69,8 @@
           return data;
         };
       } },
+      // dude wtf is going on
+      { data: 'discipline_id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_edit_disciplinary_action-table" value="'+data+'"><i class="mdi mdi-lead-pencil"></i> Edit</button>'; } },
      ],
     });
   });
@@ -77,4 +80,5 @@
 @section('modals')
 @include('modals.show_patrol_log_modal')
 @include('modals.add_disciplinary_action_modal')
+@include('modals.edit_disciplinary_action_modal')
 @endsection

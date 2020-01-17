@@ -2,7 +2,7 @@
 
 @if(Auth::user()->level() >= $constants['access_level']['sit'])
 <!-- Edit a Disciplinary Action - Modal -->
-<!-- Open modal with button (ON SITE) id #ajax_edit_disciplinary_action-button -->
+<!-- Open modal with button (IN TABLE) id #ajax_edit_disciplinary_action-table -->
 
 <div class="modal fade" id="ajax_edit_disciplinary_action-modal" tabindex="-1" role="dialog" aria-labelledby="ajax_edit_disciplinary_action-label" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document" style="padding-left: 100px; padding-right: 100px;">
@@ -20,7 +20,9 @@
               <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h2 class="card-title" id="ajax_edit_disciplinary_action-display_name">ajax_change_me</h2>
+                    <h2 class="card-title text-muted" id="ajax_edit_disciplinary_action-display_id">ajax_change_me</h2>
+                    <h4 class="card-title text-muted" id="ajax_edit_disciplinary_action-display_name">ajax_change_me</h4>
+                    <br>
                     <h5 class="card-title">Disciplinary Data</h5>
 
                     <div class="form-group">
@@ -237,7 +239,8 @@
     });
   }
 
-  $( "#ajax_edit_disciplinary_action-button" ).click(function() {
+  $table = $('#ajax_disciplinary_actions_table_element');
+  $table.on('click', '#ajax_edit_disciplinary_action-table', function () {
     for (var element in elements) {
       $(element).parent().removeClass('has-danger');
       $(element).removeClass('form-control-danger');
@@ -255,6 +258,8 @@
            if(data['issued_to_department_id'] == null) {
               var issued_to = data['issued_to_name'];
            } else var issued_to = data['issued_to_name']+' '+data['issued_to_department_id'];
+           var discipline_id = '{{ $constants['global_id']['disciplinary_action'] }}'+id;
+           $("#ajax_edit_disciplinary_action-display_id").text(discipline_id);
            $("#ajax_edit_disciplinary_action-display_name").text(issued_to);
            $("#ajax_edit_disciplinary_action-input_issued_by").val(data['issued_by']).change();
            $("#ajax_edit_disciplinary_action-input_date").val(data['discipline_date']);

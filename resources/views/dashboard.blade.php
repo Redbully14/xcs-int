@@ -31,5 +31,4 @@
 @endsection
 
 @section('modals')
-@include('modals.edit_disciplinary_action_modal')
 @endsection
