@@ -66,7 +66,7 @@
 
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-danger">Record</button>
+            <button type="submit" class="btn btn-danger">Submit</button>
             <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_add_disciplinary_action-cancel">Cancel</button>
           </div>
       </form>

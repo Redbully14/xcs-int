@@ -11,7 +11,7 @@
   <div class="page-header">
     <h3 class="page-title"> Discipline Database </h3>
     <nav aria-label="breadcrumb">
-      <a class="nav-link btn btn-danger create-new-button" href="#" id="ajax_add_disciplinary_action-button">+ Record Disciplinary Action</a>
+      <a class="nav-link btn btn-danger create-new-button" href="#" id="ajax_add_disciplinary_action-button">+ Submit Disciplinary Action</a>
     </nav>
   </div>
   <div class="card">
