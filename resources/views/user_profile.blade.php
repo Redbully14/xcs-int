@@ -127,8 +127,8 @@
                         <i class="mdi mdi-clock"></i> Activity Information </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="mdi mdi-calendar"></i> Placeholder </a>
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="home" aria-selected="true">
+                        <i class="mdi mdi-alert-outline"></i> Disciplinary Information </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">
@@ -137,7 +137,7 @@
                   </ul>
                 </div>
                 <div class="tab-content">
-                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="info-tab">
                     <div class="media d-block d-sm-flex">
                       <div class="media-body mt-4 mt-sm-0">
                         <div class="row">
@@ -187,7 +187,70 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="activity-tab">
+                    <div class="media d-block d-sm-flex">
+                      <div class="media-body mt-4 mt-sm-0">
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Monthly Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['this_month_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Monthly Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['this_month_logs'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Week Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_week_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Week Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_week_logs'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Month Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_month_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 1 Month Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['one_month_logs'] }} </span>
+                            </p>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Total Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_patrol_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_patrol_logs'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> 2 Month Hours </span>
+                              <span class="float-right text-muted"> {{ $calculations['two_month_hours'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> 2 Month Patrols </span>
+                              <span class="float-right text-muted"> {{ $calculations['two_month_logs'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="activity-tab">
                     <div class="media d-block d-sm-flex">
                       <div class="media-body mt-4 mt-sm-0">
                         <div class="row">

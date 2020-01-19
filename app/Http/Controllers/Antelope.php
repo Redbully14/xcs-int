@@ -114,7 +114,14 @@ class Antelope extends Controller
             'two_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_two_month'),
             'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
             'requirements' => AntelopeCalculate::get_month_requirements($id, 0),
+            'total_active_discipline' => AntelopeCalculate::get_total_active_disciplines($id),
+            'warnings_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 1),
+            '90s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 2),
+            '93s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 3),
+            'patrol_restriction' => AntelopeCalculate::chk_patrol_restriction($id),
         ];
+
+            dd($calculations);
 
         return view('user_profile')->with('user_data', $user_data)
                                    ->with('constants', $constants)

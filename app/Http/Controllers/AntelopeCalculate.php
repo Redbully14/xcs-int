@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
 use App\Activity;
+use App\Discipline;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -301,9 +302,125 @@ class AntelopeCalculate extends Controller
 
 
         return 'not_met';
+    }
 
+     /**
+     * Checks the total amount of disciplines issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return int
+     */
+    public static function get_total_disciplines($id) {
 
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
 
+        foreach($disciplines as $discipline) {
+            $total++;
+        }
 
+        return $total;
+    }
+
+     /**
+     * Checks the CUSTOM amount of disciplines issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function get_custom_disciplines($id, $type) {
+
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            if($discipline->type == $type) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Checks the total amount of ACTIVE disciplines issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return int
+     */
+    public static function get_total_active_disciplines($id) {
+
+        $constants = \Config::get('constants');
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_date = strtotime($discipline->discipline_date);
+            $discipline_type = $discipline->type;
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline_type] >= $today) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Checks the CUSTOM amount of ACTIVE disciplines issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function get_custom_active_disciplines($id, $type) {
+
+        $constants = \Config::get('constants');
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_date = strtotime($discipline->discipline_date);
+            if($discipline->type == $type) {
+                if($discipline_date+$constants['disciplinary_action_active'][$type] >= $today) {
+                    $total++;
+                }
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Get the patrol restriction status issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function chk_patrol_restriction($id) {
+
+        $constants = \Config::get('constants');
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_date = strtotime($discipline->discipline_date);
+            if($discipline->type == 1) {
+                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today) {
+                    $total++;
+                }
+            } else if ($discipline->type == 2) {
+                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today) {
+                    $total++;
+                }
+            }
+        }
+
+        if($total > 0) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
     }
 }
