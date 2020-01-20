@@ -76,6 +76,7 @@ Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTabl
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
 Route::post('/settings/change_avatar', 'Antelope@setAvatar');
+Route::post('/settings/change_timezone', 'Antelope@setTimezone');
 Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/discipline/submit', 'AntelopeDiscipline@submit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
