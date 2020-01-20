@@ -7,15 +7,19 @@ use Illuminate\Contracts\Validation\Rule;
 class TimeValidation implements Rule
 {
     public $secondValue;
+    public $startDate;
+    public $endDate;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($secondValue)
+    public function __construct($secondValue, $startDate, $endDate)
     {
         $this->secondValue = $secondValue;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     /**
@@ -27,7 +31,9 @@ class TimeValidation implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value > $this->secondValue;
+        if( strtotime($this->startDate) == strtotime($this->endDate) ) {
+            return $value > $this->secondValue;
+        } else return true;
     }
 
     /**

@@ -43,11 +43,15 @@ class AntelopeActivity extends Controller
     protected function validator(array $data)
     {
 
+        if ($data['patrol_end_date'] == null) {
+            $data['patrol_end_date'] = $data['patrol_start_date'];
+        };
+
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
-            'patrol_end_date' => ['date', 'nullable'],
+            'patrol_end_date' => ['date', new DateValidation($data['patrol_start_date'])],
             'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string'],
+            'end_time' => ['required', 'string', new TimeValidation($data['start_time'], $data['patrol_start_date'], $data['patrol_end_date'])],
             'type' => ['required', 'string', 'max:30'],
             'details' => ['required', 'string'],
         ]);
