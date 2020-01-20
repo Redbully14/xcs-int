@@ -45,9 +45,9 @@ class AntelopeActivity extends Controller
 
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
-            'patrol_end_date' => ['date', new DateValidation($data['patrol_start_date'])],
+            'patrol_end_date' => ['date', 'nullable'],
             'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string', new TimeValidation($data['start_time'])],
+            'end_time' => ['required', 'string'],
             'type' => ['required', 'string', 'max:30'],
             'details' => ['required', 'string'],
         ]);
@@ -61,9 +61,8 @@ class AntelopeActivity extends Controller
      */
     protected function create(array $data)
     {
-        if ($data['patrol_end_date'] == null) {
-            $data['patrol_end_date'] = $data['patrol_start_date'];
-        };
+
+        $data = $this->convertTimezone($data);
         
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
@@ -91,6 +90,35 @@ class AntelopeActivity extends Controller
     }
 
     /**
+     * Convert the Timezone for the timestamps
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function convertTimezone(array $data)
+    {
+        $patrol_start_date = $data['patrol_start_date'];
+        $start_time = $data['start_time'];
+        $patrol_end_date = $data['patrol_end_date'];
+        $end_time = $data['end_time'];
+
+        $start_date_time = date('Y-m-d H:i:s', strtotime("$patrol_start_date $start_time"));
+        $end_date_time = date('Y-m-d H:i:s', strtotime("$patrol_end_date $end_time"));
+
+        $start_date_time = BaseXCS::convertTimezone(Auth::user()->id, $start_date_time);
+        $end_date_time = BaseXCS::convertTimezone(Auth::user()->id, $end_date_time);
+
+        $data['patrol_start_date'] = date('Y-m-d', strtotime($start_date_time));
+        $data['start_time'] = date('H:i:s', strtotime($start_date_time));
+
+        $data['patrol_end_date'] = date('Y-m-d', strtotime($end_date_time));
+        $data['end_time'] = date('H:i:s', strtotime($end_date_time));
+
+        return $data;
+    }
+
+    /**
      * Handle an activity log submit for the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -98,6 +126,10 @@ class AntelopeActivity extends Controller
      */
     public function submit(Request $request)
     {
+        if ($request->patrol_end_date == null) {
+            $request->patrol_end_date = $request->patrol_start_date;
+        };
+
         $this->validator($request->all())->validate();
 
         $log = $this->create($request->all());

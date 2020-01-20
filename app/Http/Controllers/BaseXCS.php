@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Carbon\Carbon;
 
 class BaseXCS extends Controller
 {
@@ -29,6 +30,17 @@ class BaseXCS extends Controller
         $i = ($duration / 60) % 60;
         $s = $duration % 60;
         return sprintf("%02d:%02d:%02d", $H, $i, $s);
+    }
+
+    /**
+     * Converts an input from local time into system time
+     *
+     * @return void
+     */
+    public static function convertTimezone($user, $timestamp) {
+        $user_timezone = User::find($user)->timezone;
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, $user_timezone);
+        return $date->setTimezone('UTC');
     }
 
     /**
