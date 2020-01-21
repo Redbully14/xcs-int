@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
+use App\Http\Controllers\AntelopeCalculate;
 
 class AntelopeDiscipline extends Controller
 {
@@ -97,6 +98,10 @@ class AntelopeDiscipline extends Controller
 	    ->editColumn('discipline_type', function($row){
 	    			$constants = \Config::get('constants');
 	                return $constants['disciplinary_actions'][$row->discipline_type];})
+        ->addColumn('discipline_status', function($row){
+                    $status = AntelopeCalculate::discipline_status($row->discipline_id);
+                    $constants = \Config::get('constants');
+                    return $constants['disciplinary_action_status'][$status];})
 		->filterColumn('discipline_id', function($query, $keyword) {
 					$constants = \Config::get('constants');
 					$prefix = $constants['global_id']['disciplinary_action'];
@@ -146,6 +151,32 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
+     * Get a validator for an incoming edit discipline request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function editValidator(array $data)
+    {
+
+        $data['overturned'] = $data['overturned'] ? true : false;
+        $data['disputed'] = $data['disputed'] ? true : false;
+
+        return Validator::make($data, [
+            'issued_by' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+            'type' => ['required', 'integer'],
+            'details' => ['required', 'string'],
+            'overturned_by' => ['nullable', 'integer'],
+            'overturned_date' => ['nullable', 'date'],
+            'disputed_date' => ['nullable', 'date'],
+            'disputed' => ['required', 'boolean'],
+            'overturned' => ['required', 'boolean'],
+            'custom_expiry_date' => ['nullable', 'date'],
+        ]);
+    }
+
+    /**
      * Create a new discipline instance after validation
      *
      * @param  array  $data
@@ -190,5 +221,46 @@ class AntelopeDiscipline extends Controller
         $discipline = $this->create($request->all());
 
         return $this->submitted($request, $discipline);
+    }
+
+    /**
+     * Gets specific discipline instance
+     *
+     * @return View
+     */
+    public function getDiscipline($id)
+    {
+        $discipline = Discipline::find($id);
+
+        $discipline->issued_to_name = User::find($discipline['user_id'])->name;
+        $discipline->issued_to_department_id = User::find($discipline['user_id'])->department_id;
+        $discipline->issued_to_website_id = User::find($discipline['user_id'])->website_id;
+
+        return $discipline;
+    }
+
+    /**
+     * Edits specific discipline instance
+     *
+     * @return View
+     */
+    public function edit(Request $request)
+    {
+        $discipline = Discipline::find($request->route('id'));
+        $this->editValidator($request->all())->validate();
+
+        $discipline->issued_by = $request['issued_by'];
+        $discipline->discipline_date = $request['date'];
+        $discipline->type = $request['type'];
+        $discipline->custom_expiry_date = date("Y-m-d", strtotime($request['custom_expiry_date']));
+        $discipline->details = $request['details'];
+        $discipline->overturned = $request['overturned'];
+        $discipline->overturned_date = $request['overturned_date'];
+        $discipline->overturned_by = $request['overturned_by'];
+        $discipline->disputed = $request['disputed'];
+        $discipline->disputed_date = $request['disputed_date'];
+        $discipline->save();
+
+        return;
     }
 }

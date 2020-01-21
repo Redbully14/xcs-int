@@ -100,8 +100,8 @@
                         <i class="mdi mdi-clock"></i> Activity Information </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="mdi mdi-calendar"></i> Placeholder </a>
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="home" aria-selected="true">
+                        <i class="mdi mdi-alert-outline"></i> Disciplinary Information </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#">
@@ -110,7 +110,7 @@
                   </ul>
                 </div>
                 <div class="tab-content">
-                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="info-tab">
                     <div class="media d-block d-sm-flex">
                       <div class="media-body mt-4 mt-sm-0">
                         <div class="row">
@@ -149,7 +149,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Patrol Restriction </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['patrol_restriction'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Website Profile Link </span>
@@ -160,7 +160,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="activity-tab">
                     <div class="media d-block d-sm-flex">
                       <div class="media-body mt-4 mt-sm-0">
                         <div class="row">
@@ -216,6 +216,61 @@
                               <span class="float-left"> 2 Month Patrols </span>
                               <span class="float-right text-muted"> {{ $calculations['two_month_logs'] }} </span>
                             </p>
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="activity-tab">
+                    <div class="media d-block d-sm-flex">
+                      <div class="media-body mt-4 mt-sm-0">
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Active DA </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_active_discipline'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total DA </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_discipline'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Active Warnings </span>
+                              <span class="float-right text-muted"> {{ $calculations['warnings_active_discipline'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total Warnings </span>
+                              <span class="float-right text-muted"> {{ $calculations['warnings_total_discipline'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Active 90s </span>
+                              <span class="float-right text-muted"> {{ $calculations['90s_active_discipline'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total 90s </span>
+                              <span class="float-right text-muted"> {{ $calculations['90s_total_discipline'] }} </span>
+                            </p>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Active 93s </span>
+                              <span class="float-right text-muted"> {{ $calculations['93s_active_discipline'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total 93s </span>
+                              <span class="float-right text-muted"> {{ $calculations['93s_total_discipline'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
                           </div>
                           <div class="col-sm">
                           </div>
