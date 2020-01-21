@@ -87,19 +87,13 @@ class Antelope extends Controller
     }
 
     /**
-     * Constructs a user's profile
+     * Gets all the profile
      *
      * @return View
      */
-    public function getProfile($id)
+    public function getProfileCalculations($id)
     {
-        $constants = \Config::get('constants');
-
-        $user_data = User::find($id);
-        $role = User::find($id)->getRoles();
-
-        // this gonna be a long list...
-        $calculations = [
+        return $calculations = [
             'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
             'last_seen' => AntelopeCalculate::get_last_seen($id),
             'department_status' => AntelopeCalculate::get_department_status($id),
@@ -115,13 +109,31 @@ class Antelope extends Controller
             'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
             'requirements' => AntelopeCalculate::get_month_requirements($id, 0),
             'total_active_discipline' => AntelopeCalculate::get_total_active_disciplines($id),
+            'total_discipline' => AntelopeCalculate::get_total_disciplines($id),
             'warnings_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 1),
+            'warnings_total_discipline' => AntelopeCalculate::get_custom_disciplines($id, 1),
             '90s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 2),
+            '90s_total_discipline' => AntelopeCalculate::get_custom_disciplines($id, 2),
             '93s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 3),
+            '93s_total_discipline' => AntelopeCalculate::get_custom_disciplines($id, 3),
             'patrol_restriction' => AntelopeCalculate::chk_patrol_restriction($id),
         ];
+    }
 
-            dd($calculations);
+    /**
+     * Constructs a user's profile
+     *
+     * @return View
+     */
+    public function getProfile($id)
+    {
+        $constants = \Config::get('constants');
+
+        $user_data = User::find($id);
+        $role = User::find($id)->getRoles();
+
+        // this gonna be a long list...
+        $calculations = self::getProfileCalculations($id);
 
         return view('user_profile')->with('user_data', $user_data)
                                    ->with('constants', $constants)
@@ -149,23 +161,7 @@ class Antelope extends Controller
 
         else {
 
-            // this gonna be a long list...
-            $calculations = [
-                'last_timestamp' => AntelopeCalculate::get_last_timestamp($id),
-                'last_seen' => AntelopeCalculate::get_last_seen($id),
-                'department_status' => AntelopeCalculate::get_department_status($id),
-                'total_patrol_logs' => AntelopeCalculate::get_total_patrol_logs($id),
-                'total_patrol_hours' => AntelopeCalculate::get_total_patrol_hours($id),
-                'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
-                'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
-                'one_week_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_week'),
-                'one_week_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_week'),
-                'one_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_one_month'),
-                'one_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_one_month'),
-                'two_month_logs' => AntelopeCalculate::get_ctime_patrol_logs($id, 'custom_two_month'),
-                'two_month_hours' => AntelopeCalculate::get_ctime_patrol_hours($id, 'custom_two_month'),
-                'requirements' => AntelopeCalculate::get_month_requirements($id, 0),
-            ];
+            $calculations = self::getProfileCalculations($id);
 
             return view('personal_profile')->with('user_data', $user_data)
                                        ->with('constants', $constants)

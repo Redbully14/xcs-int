@@ -176,7 +176,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Patrol Restriction </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted"> {{ $calculations['patrol_restriction'] }} </span>
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> Website Profile Link </span>
@@ -256,32 +256,32 @@
                         <div class="row">
                           <div class="col-sm">
                             <p class="clearfix">
-                              <span class="float-left"> Monthly Hours </span>
-                              <span class="float-right text-muted"> {{ $calculations['this_month_hours'] }} </span>
+                              <span class="float-left"> Active DA </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_active_discipline'] }} </span>
                             </p>
                             <p class="clearfix">
-                              <span class="float-left"> Monthly Patrols </span>
-                              <span class="float-right text-muted"> {{ $calculations['this_month_logs'] }} </span>
-                            </p>
-                          </div>
-                          <div class="col-sm">
-                            <p class="clearfix">
-                              <span class="float-left"> 1 Week Hours </span>
-                              <span class="float-right text-muted"> {{ $calculations['one_week_hours'] }} </span>
-                            </p>
-                            <p class="clearfix">
-                              <span class="float-left"> 1 Week Patrols </span>
-                              <span class="float-right text-muted"> {{ $calculations['one_week_logs'] }} </span>
+                              <span class="float-left"> Total DA </span>
+                              <span class="float-right text-muted"> {{ $calculations['total_discipline'] }} </span>
                             </p>
                           </div>
                           <div class="col-sm">
                             <p class="clearfix">
-                              <span class="float-left"> 1 Month Hours </span>
-                              <span class="float-right text-muted"> {{ $calculations['one_month_hours'] }} </span>
+                              <span class="float-left"> Active Warnings </span>
+                              <span class="float-right text-muted"> {{ $calculations['warnings_active_discipline'] }} </span>
                             </p>
                             <p class="clearfix">
-                              <span class="float-left"> 1 Month Patrols </span>
-                              <span class="float-right text-muted"> {{ $calculations['one_month_logs'] }} </span>
+                              <span class="float-left"> Total Warnings </span>
+                              <span class="float-right text-muted"> {{ $calculations['warnings_total_discipline'] }} </span>
+                            </p>
+                          </div>
+                          <div class="col-sm">
+                            <p class="clearfix">
+                              <span class="float-left"> Active 90s </span>
+                              <span class="float-right text-muted"> {{ $calculations['90s_active_discipline'] }} </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-left"> Total 90s </span>
+                              <span class="float-right text-muted"> {{ $calculations['90s_total_discipline'] }} </span>
                             </p>
                           </div>
                         </div>
@@ -289,23 +289,15 @@
                         <div class="row">
                           <div class="col-sm">
                             <p class="clearfix">
-                              <span class="float-left"> Total Hours </span>
-                              <span class="float-right text-muted"> {{ $calculations['total_patrol_hours'] }} </span>
+                              <span class="float-left"> Active 93s </span>
+                              <span class="float-right text-muted"> {{ $calculations['93s_active_discipline'] }} </span>
                             </p>
                             <p class="clearfix">
-                              <span class="float-left"> Total Patrols </span>
-                              <span class="float-right text-muted"> {{ $calculations['total_patrol_logs'] }} </span>
+                              <span class="float-left"> Total 93s </span>
+                              <span class="float-right text-muted"> {{ $calculations['93s_total_discipline'] }} </span>
                             </p>
                           </div>
                           <div class="col-sm">
-                            <p class="clearfix">
-                              <span class="float-left"> 2 Month Hours </span>
-                              <span class="float-right text-muted"> {{ $calculations['two_month_hours'] }} </span>
-                            </p>
-                            <p class="clearfix">
-                              <span class="float-left"> 2 Month Patrols </span>
-                              <span class="float-right text-muted"> {{ $calculations['two_month_logs'] }} </span>
-                            </p>
                           </div>
                           <div class="col-sm">
                           </div>
