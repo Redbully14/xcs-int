@@ -278,6 +278,13 @@ return [
         7 => 2592000, // 30 days
     ],
 
+    'disciplinary_action_status' => [
+        'active' => 'Active',
+        'overturned' => 'Overturned',
+        'disputed_active' => 'Disputed & Active',
+        'expired' => 'Expired'
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

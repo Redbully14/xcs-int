@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
+use App\Http\Controllers\AntelopeCalculate;
 
 class AntelopeDiscipline extends Controller
 {
@@ -97,6 +98,10 @@ class AntelopeDiscipline extends Controller
 	    ->editColumn('discipline_type', function($row){
 	    			$constants = \Config::get('constants');
 	                return $constants['disciplinary_actions'][$row->discipline_type];})
+        ->addColumn('discipline_status', function($row){
+                    $status = AntelopeCalculate::discipline_status($row->discipline_id);
+                    $constants = \Config::get('constants');
+                    return $constants['disciplinary_action_status'][$status];})
 		->filterColumn('discipline_id', function($query, $keyword) {
 					$constants = \Config::get('constants');
 					$prefix = $constants['global_id']['disciplinary_action'];

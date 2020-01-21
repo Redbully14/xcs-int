@@ -423,4 +423,35 @@ class AntelopeCalculate extends Controller
             return 'No';
         }
     }
+
+     /**
+     * Get the patrol restriction status issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return str
+     */
+    public static function discipline_status($id) {
+
+        $constants = \Config::get('constants');
+        $discipline = Discipline::find($id);
+        $today = strtotime(Carbon::now()->toDateString());
+        $discipline_date = strtotime($discipline->discipline_date);
+
+        if($discipline->overturned) {
+            return 'overturned';
+        }
+
+        if($discipline->disputed) {
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] < $today) {
+                return 'expired';
+            }
+            return 'disputed_active';
+        }
+
+        if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] < $today) {
+            return 'expired';
+        }
+
+        return 'active';
+    }
 }

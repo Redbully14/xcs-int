@@ -23,12 +23,13 @@
             <table id="ajax_disciplinary_actions_table_element" class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Disciplinary ID</th>
+                  <th>ID</th>
                   <th>Issued to</th>
                   <th>Issued by</th>
                   <th>Discipline type</th>
                   <th>Discipline date</th>
                   <th>Discipline details</th>
+                  <th>Disciplinary status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -69,7 +70,7 @@
           return data;
         };
       } },
-      // dude wtf is going on
+      { data: 'discipline_status', name: 'discipline_status', searchable: false },
       { data: 'discipline_id', searchable: false, render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_edit_disciplinary_action-table" value="'+data+'"><i class="mdi mdi-lead-pencil"></i> Edit</button>'; } },
      ],
     });
