@@ -436,19 +436,32 @@ class AntelopeCalculate extends Controller
         $discipline = Discipline::find($id);
         $today = strtotime(Carbon::now()->toDateString());
         $discipline_date = strtotime($discipline->discipline_date);
+        $custom_expiry_date = strtotime($discipline->custom_expiry_date);
 
         if($discipline->overturned) {
             return 'overturned';
         }
 
         if($discipline->disputed) {
-            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] < $today) {
+            if($custom_expiry_date == null) {
+                if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                    return 'expired';
+                }
+            }
+
+            if ($custom_expiry_date <= $today) {
                 return 'expired';
             }
             return 'disputed_active';
         }
 
-        if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] < $today) {
+        if($custom_expiry_date == null) {
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                return 'expired';
+            }
+        }
+
+        if ($custom_expiry_date <= $today) {
             return 'expired';
         }
 
