@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
 use App\Activity;
+use App\Discipline;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -301,9 +302,160 @@ class AntelopeCalculate extends Controller
 
 
         return 'not_met';
+    }
 
+     /**
+     * Checks the total amount of disciplines issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return int
+     */
+    public static function get_total_disciplines($id) {
 
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
 
+        foreach($disciplines as $discipline) {
+            $total++;
+        }
 
+        return $total;
+    }
+
+     /**
+     * Checks the CUSTOM amount of disciplines issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function get_custom_disciplines($id, $type) {
+
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            if($discipline->type == $type) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Checks the total amount of ACTIVE disciplines issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return int
+     */
+    public static function get_total_active_disciplines($id) {
+
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_status = self::discipline_status($discipline->id);
+            if($discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Checks the CUSTOM amount of ACTIVE disciplines issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function get_custom_active_disciplines($id, $type) {
+
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_status = self::discipline_status($discipline->id);
+            if($discipline->type == $type) {
+                if($discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                    $total++;
+                }
+            }
+        }
+
+        return $total;
+    }
+
+     /**
+     * Get the patrol restriction status issued to certain Website ID
+     *
+     * @param $id (int), $type (int)
+     * @return int
+     */
+    public static function chk_patrol_restriction($id) {
+
+        $constants = \Config::get('constants');
+        $disciplines = Discipline::where('user_id', '=', $id)->get();
+        $today = strtotime(Carbon::now()->toDateString());
+        $total = 0;
+
+        foreach($disciplines as $discipline) {
+            $discipline_date = strtotime($discipline->discipline_date);
+            $discipline_status = self::discipline_status($discipline->id);
+            if($discipline->type == 1) {
+                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                    return 'Yes';
+                }
+            } else if ($discipline->type == 2) {
+                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                    return 'Yes';
+                }
+            }
+        }
+        return 'No';
+    }
+
+     /**
+     * Get the patrol restriction status issued to certain Website ID
+     *
+     * @param $id (int)
+     * @return str
+     */
+    public static function discipline_status($id) {
+
+        $constants = \Config::get('constants');
+        $discipline = Discipline::find($id);
+        $today = strtotime(Carbon::now()->toDateString());
+        $discipline_date = strtotime($discipline->discipline_date);
+        $custom_expiry_date = strtotime($discipline->custom_expiry_date);
+
+        if($discipline->overturned) {
+            return 'overturned';
+        }
+
+        if($discipline->disputed) {
+            if($custom_expiry_date == null) {
+                if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                    return 'expired';
+                }
+            }
+
+            if ($custom_expiry_date <= $today) {
+                return 'expired';
+            }
+            return 'disputed_active';
+        }
+
+        if($custom_expiry_date == null) {
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                return 'expired';
+            }
+        }
+
+        if ($custom_expiry_date <= $today) {
+            return 'expired';
+        }
+
+        return 'active';
     }
 }

@@ -39,6 +39,8 @@ return [
         'custom_two_month' => 5356800, // Set two month here (default 62 days)
         'min_requirements_logs' => 4, // 4 logs required
         'min_requirements_hours' => 10800, // 4 hours required
+        'patrol_restriction_90' => 604800, // 1 week
+        'patrol_restriction_93' => 1209600, // 2 weeks
     ],
 
     /*
@@ -264,6 +266,23 @@ return [
         5 => 'Suspension',
         6 => 'Demotion',
         7 => 'Termination',
+    ],
+
+    'disciplinary_action_active' => [
+        1 => 1209600, // 14 days
+        2 => 2592000, // 30 days
+        3 => 5184000, // 60 days
+        4 => 2592000, // 30 days
+        5 => 5184000, // 60 days
+        6 => 2592000, // 30 days
+        7 => 2592000, // 30 days
+    ],
+
+    'disciplinary_action_status' => [
+        'active' => 'Active',
+        'overturned' => 'Overturned',
+        'disputed_active' => 'Disputed & Active',
+        'expired' => 'Expired'
     ],
 
 

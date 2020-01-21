@@ -173,7 +173,7 @@
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
                       <h4 class="card-title mb-1">Disciplinary Synopsis</h4>
-                      <p class="text-success mb-1">Discipline Status</p>
+                      <!--<p class="text-success mb-1">Discipline Status</p>-->
                     </div>
                     <br>
                     <div class="row">
