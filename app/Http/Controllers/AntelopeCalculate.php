@@ -350,15 +350,12 @@ class AntelopeCalculate extends Controller
      */
     public static function get_total_active_disciplines($id) {
 
-        $constants = \Config::get('constants');
         $disciplines = Discipline::where('user_id', '=', $id)->get();
-        $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
 
         foreach($disciplines as $discipline) {
-            $discipline_date = strtotime($discipline->discipline_date);
-            $discipline_type = $discipline->type;
-            if($discipline_date+$constants['disciplinary_action_active'][$discipline_type] >= $today) {
+            $discipline_status = self::discipline_status($discipline->id);
+            if($discipline_status == 'active' or $discipline_status == 'disputed_active') {
                 $total++;
             }
         }
@@ -374,15 +371,13 @@ class AntelopeCalculate extends Controller
      */
     public static function get_custom_active_disciplines($id, $type) {
 
-        $constants = \Config::get('constants');
         $disciplines = Discipline::where('user_id', '=', $id)->get();
-        $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
 
         foreach($disciplines as $discipline) {
-            $discipline_date = strtotime($discipline->discipline_date);
+            $discipline_status = self::discipline_status($discipline->id);
             if($discipline->type == $type) {
-                if($discipline_date+$constants['disciplinary_action_active'][$type] >= $today) {
+                if($discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     $total++;
                 }
             }
@@ -406,22 +401,18 @@ class AntelopeCalculate extends Controller
 
         foreach($disciplines as $discipline) {
             $discipline_date = strtotime($discipline->discipline_date);
+            $discipline_status = self::discipline_status($discipline->id);
             if($discipline->type == 1) {
-                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today) {
-                    $total++;
+                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                    return 'Yes';
                 }
             } else if ($discipline->type == 2) {
-                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today) {
-                    $total++;
+                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                    return 'Yes';
                 }
             }
         }
-
-        if($total > 0) {
-            return 'Yes';
-        } else {
-            return 'No';
-        }
+        return 'No';
     }
 
      /**
