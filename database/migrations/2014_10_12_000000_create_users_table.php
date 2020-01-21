@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('advanced_training')->default(false);
             $table->boolean('requirements_exempt')->default(false);
             $table->string('department_status')->nullable();
+            $table->string('timezone')->default('UTC');
             $table->rememberToken();
             $table->timestamps();
         });

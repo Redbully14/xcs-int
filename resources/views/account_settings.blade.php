@@ -36,7 +36,7 @@
                     <input type="password" class="form-control" id="ajax_change_password-confirm_new_password" placeholder="Password">
                    	<label id="ajax_change_password-confirm_new_password-error" class="error mt-2 text-danger" for="ajax_change_password-confirm_new_password" hidden></label>
                   </div>
-                  <button type="submit" class="btn btn-primary mr-2">Change Password</button>
+                  <button type="submit" class="btn btn-danger mr-2">Change Password</button>
                 </form><hr>
 
                 <h5>Avatar</h5><br>
@@ -51,6 +51,20 @@
                     </select>
                   </div>
                   <button type="submit" class="btn btn-success mr-2">Change Avatar</button>
+                </form><hr>
+
+                <h5>Timezone</h5><br>
+
+                <form id="ajax_change_timezone">
+                  <div class="form-group">
+                    <label>Select your timezone</label>
+                    <select class="antelope_global_select_single" style="width:100%" id="ajax_change_timezone-input">
+                      @foreach (timezone_identifiers_list() as $timezone)
+                      <option value="{{ $timezone }}"{{ $timezone == old('timezone', request()->user()->timezone) ? ' selected' : '' }}>{{ $timezone }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-success mr-2">Change Timezone</button>
                 </form>
 
           </div>
@@ -183,6 +197,31 @@
       error: function(data) {
         var toast_heading = "Avatar Error!";
         var toast_text = "Your avatar could not be changed, contact a member of the CoC with this error!";
+        var toast_icon = "error";
+        var toast_color = "#f2a654";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      }
+    });
+  });
+
+  $('#ajax_change_timezone').on('submit', function(e) {
+    e.preventDefault();
+    var timezone = $('#ajax_change_timezone-input').val();
+
+    $.ajax({
+      type: 'POST',
+      url: '{{ url('settings/change_timezone') }}',
+      data: {timezone:timezone},
+      success: function() {
+        var toast_heading = "Timezone Changed!";
+        var toast_text = "Your timezone has been changed!";
+        var toast_icon = "success";
+        var toast_color = "#f96868";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      },
+      error: function(data) {
+        var toast_heading = "Timezone Error!";
+        var toast_text = "Your timezone could not be changed, contact a member of the CoC with this error!";
         var toast_icon = "error";
         var toast_color = "#f2a654";
         globalToast(toast_heading, toast_text, toast_icon, toast_color);

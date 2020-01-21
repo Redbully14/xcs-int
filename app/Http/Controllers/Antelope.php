@@ -87,6 +87,20 @@ class Antelope extends Controller
     }
 
     /**
+     * Change user avatar.
+     *
+     * @return View
+     */
+    public function setTimezone(Request $request)
+    {
+        $request->validate([
+            'timezone' => ['required', 'string'] // todo: make a rule that will check if it's in constants.
+        ]);
+
+        User::find(auth()->user()->id)->update(['timezone' => $request->timezone]);
+    }
+
+    /**
      * Gets all the profile
      *
      * @return View
