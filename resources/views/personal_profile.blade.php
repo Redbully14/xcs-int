@@ -281,12 +281,34 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Patrol Logs</h4>
+                    <div class="row">
+                      <div class="table-responsive" id="profilePatrolLogsTable">
+                        <table id="profileActivity" class="table table-bordered" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>Patrol Log ID</th>
+                              <th>Patrol Date</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Patrol Duration</th>
+                              <th>Patrol Details</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-@endsection
-
-@section('pluginjs')
 @endsection
