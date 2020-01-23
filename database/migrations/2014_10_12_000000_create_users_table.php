@@ -15,10 +15,19 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('username')->unique();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('rank');
+            $table->integer('website_id');
+            $table->string('department_id')->nullable();
             $table->string('password');
+            $table->boolean('temp_password')->default(true);
+            $table->string('avatar')->default('antelope');
+            $table->boolean('antelope_status')->default(true);
+            $table->boolean('advanced_training')->default(false);
+            $table->boolean('requirements_exempt')->default(false);
+            $table->string('department_status')->nullable();
+            $table->string('timezone')->default('UTC');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'xcs-int'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'development'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Bluora\LaravelGitInfo\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -225,6 +227,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Datatables' => Yajra\Datatables\Datatables::class,
+        'Git' => Bluora\LaravelGitInfo\Facade::class,
 
     ],
 

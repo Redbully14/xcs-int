@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoleAndPermission;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'password', 'name', 'access', 'rank', 'website_id', 'department_id', 'antelope_status', 'temp_password', 'avatar', 'advanced_training', 'requirements_exempt', 'department_status', 'timezone'
     ];
 
     /**
@@ -26,14 +28,5 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }

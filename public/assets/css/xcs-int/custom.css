@@ -1,0 +1,57 @@
+#xcs-header {
+	color: white;
+	text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.select2-container--default .select2-dropdown .select2-search__field {
+  color: black !important;
+}
+
+.rotate-15 {
+  transform: rotate(15deg);
+}
+
+.rotate-n-15 {
+  transform: rotate(-15deg);
+}
+
+#xcs-header-icon {
+  font-size: 2rem;
+  margin-right: 0.3rem!important;
+}
+
+#xcs-header-sub {
+  font-size: 20%;
+}
+
+.content-wrapper
+{   
+  min-height: 100vh;
+}
+
+body, html {
+  background: #000000;
+}
+
+input:disabled, select:disabled, textarea:disabled {
+    color: #ffffff !important;
+    background-color: #2A3038 !important;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single {
+    color: #ffffff !important;
+    background-color: #2A3038 !important;
+}
+
+input, select, textarea{
+    color: #ffffff !important;
+}
+
+textarea:focus, input:focus {
+    color: #ffffff !important ;
+}
