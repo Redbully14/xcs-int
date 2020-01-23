@@ -13,7 +13,7 @@
           </div>
           <div class="profile-name">
             <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</h5>
-            <span>{{ $constants['rank'][Auth::user()->rank] }}</span>
+            <span style="max-width:134px; display: block; white-space: normal;">{{ $constants['rank'][Auth::user()->rank] }}</span>
           </div>
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
