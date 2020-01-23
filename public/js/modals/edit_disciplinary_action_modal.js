@@ -40,7 +40,7 @@ if ($("#ajax_edit_disciplinary_action-overturn_date").length) {
   });
 }
 
-$table = $('#ajax_disciplinary_actions_table_element');
+$table = $($discipline_table);
 $table.on('click', '#ajax_edit_disciplinary_action-table', function () {
   for (var element in elements) {
     $(element).parent().removeClass('has-danger');

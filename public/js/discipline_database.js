@@ -4,6 +4,7 @@ $(function() {
    serverSide: true,
    searching: true,
    ajax: $url,
+   order: [[ 0  , "desc" ]],
    columns: [
     { data: 'discipline_id', name: 'discipline_id', render: function (data, type, row) {
       return  $discipline_id + data;

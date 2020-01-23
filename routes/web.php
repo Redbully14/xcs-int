@@ -72,6 +72,7 @@ Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData')
 // Discipline GET Routes
 Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disciplineData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');

@@ -50,12 +50,12 @@
 <script type="text/javascript">
   var $url = '{{ url('discipline/collection') }}';
   var $discipline_id = '{{ $constants['global_id']['disciplinary_action'] }}';
+  var $discipline_table = "#ajax_disciplinary_actions_table_element";
 </script>
 <script src="/js/discipline_database.js"></script>
 @endsection
 
 @section('modals')
-@include('modals.show_patrol_log_modal')
 @include('modals.add_disciplinary_action_modal')
 @include('modals.edit_disciplinary_action_modal')
 @endsection

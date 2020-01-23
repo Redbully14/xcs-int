@@ -201,5 +201,5 @@
   var $url_edit_disciplinary_action_GET = '{{ url('discipline/get_data/') }}/';
   var $edit_disciplinary_action_constant = '{{ $constants['global_id']['disciplinary_action'] }}';
 </script>
-<script src="js/modals/edit_disciplinary_action_modal.js"></script>
+<script src="/js/modals/edit_disciplinary_action_modal.js"></script>
 @endif

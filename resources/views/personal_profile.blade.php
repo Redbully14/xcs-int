@@ -324,6 +324,5 @@
 @endsection
 
 @section('modals')
-  @include('modals.edit_profile_modal')
   @include('modals.show_patrol_log_modal')
 @endsection
