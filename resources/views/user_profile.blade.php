@@ -341,9 +341,9 @@
   </div>
 @endsection
 
-@section('ajax')
+@section('injectjs')
 <script type="text/javascript">
-  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/';
+  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
   var $user_profile_constant = '{{ $constants['global_id']['patrol_log'] }}';
   var $activity_table = "#ajax_profile_activity-table";
 </script>

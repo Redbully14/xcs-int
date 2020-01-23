@@ -1,4 +1,3 @@
-@if(Auth::user()->level() >= $constants['access_level']['staff'])
 <!-- Open a patrol log - Modal -->
 <!-- Open modal with button id #ajax_view_patrol_log_open -->
 <div class="modal fade" id="ajax_view_patrol_log" tabindex="-1" role="dialog" aria-labelledby="ajax_view_patrol_log" aria-hidden="true">
@@ -68,4 +67,3 @@
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
 </script>
 <script src="/js/modals/show_patrol_log_modal.js"></script>
-@endif

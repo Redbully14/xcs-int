@@ -287,8 +287,8 @@
                   <div class="card-body">
                     <h4 class="card-title">Patrol Logs</h4>
                     <div class="row">
-                      <div class="table-responsive" id="profilePatrolLogsTable">
-                        <table id="profileActivity" class="table table-bordered" style="width:100%">
+                      <div class="table-responsive" id="ajax_profile_activity-div">
+                        <table id="ajax_profile_activity-table" class="table table-bordered" style="width:100%">
                           <thead>
                             <tr>
                               <th>Patrol Log ID</th>
@@ -297,6 +297,7 @@
                               <th>End Time</th>
                               <th>Patrol Duration</th>
                               <th>Patrol Details</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                         </table>
@@ -311,4 +312,18 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('injectjs')
+<script type="text/javascript">
+  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ Auth::user()->id }}';
+  var $user_profile_constant = '{{ $constants['global_id']['patrol_log'] }}';
+  var $activity_table = "#ajax_profile_activity-table";
+</script>
+<script src="/js/personal_profile.js"></script>
+@endsection
+
+@section('modals')
+  @include('modals.edit_profile_modal')
+  @include('modals.show_patrol_log_modal')
 @endsection
