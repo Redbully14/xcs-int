@@ -184,13 +184,17 @@ class AntelopeDiscipline extends Controller
      */
     protected function create(array $data)
     {
+        if($data['custom_expiry_date'] == null) {
+             $custom_expiry_date = null;
+        } else $custom_expiry_date = date("Y-m-d", strtotime($data['custom_expiry_date']));
+        
         $discipline = Discipline::create([
         	'user_id' => $data['issued_to'],
         	'issued_by' => auth()->user()->id,
         	'discipline_date' => date("Y-m-d", strtotime($data['date'])),
         	'type' => $data['type'],
         	'details' => $data['details'],
-            'custom_expiry_date' => date("Y-m-d", strtotime($data['custom_expiry_date'])),
+            'custom_expiry_date' => $custom_expiry_date,
         ]);
 
         return $discipline;

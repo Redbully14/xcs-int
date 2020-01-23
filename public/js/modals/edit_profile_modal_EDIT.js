@@ -23,6 +23,9 @@ $('#ajax_edit_member').on('submit', function(e) {
           $(elements[element]).empty();
         }
         showSuccessToast_EditMember();
+        if ($('#tableElement').length) {
+          $('#tableElement').DataTable().ajax.reload();
+        }
       },
     error: function(data) {
       for (var element in elements) {

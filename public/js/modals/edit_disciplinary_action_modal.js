@@ -108,6 +108,9 @@ $table.on('click', '#ajax_edit_disciplinary_action-table', function () {
           var toast_icon = "success";
           var toast_color = "#f96868";
           globalToast(toast_heading, toast_text, toast_icon, toast_color);
+          if ($($discipline_table).length) {
+            $($discipline_table).DataTable().ajax.reload();
+          }
         },
       error: function(data) {
         for (var element in elements) {

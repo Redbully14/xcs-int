@@ -63,6 +63,9 @@ $('#ajax_add_disciplinary_action-form').on('submit', function(e) {
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      if ($("#ajax_disciplinary_actions_table_element").length) {
+        $('#ajax_disciplinary_actions_table_element').DataTable().ajax.reload();
+      }
     },
     error: function(data) {
       console.log(data);
