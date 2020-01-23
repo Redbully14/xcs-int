@@ -252,13 +252,19 @@ class AntelopeDiscipline extends Controller
         $discipline->issued_by = $request['issued_by'];
         $discipline->discipline_date = $request['date'];
         $discipline->type = $request['type'];
-        $discipline->custom_expiry_date = date("Y-m-d", strtotime($request['custom_expiry_date']));
+        if($request['custom_expiry_date'] != null) {
+            $discipline->custom_expiry_date = date("Y-m-d", strtotime($request['custom_expiry_date']));
+        } else $discipline->custom_expiry_date = null;
         $discipline->details = $request['details'];
         $discipline->overturned = $request['overturned'];
-        $discipline->overturned_date = $request['overturned_date'];
+        if($request['overturned_date'] != null) {
+            $discipline->overturned_date = date("Y-m-d", strtotime($request['overturned_date']));
+        } else $discipline->overturned_date = null;
         $discipline->overturned_by = $request['overturned_by'];
         $discipline->disputed = $request['disputed'];
-        $discipline->disputed_date = $request['disputed_date'];
+        if($request['disputed_date'] != null) {
+            $discipline->disputed_date = date("Y-m-d", strtotime($request['disputed_date']));
+        } else $discipline->disputed_date = null;
         $discipline->save();
 
         return;
