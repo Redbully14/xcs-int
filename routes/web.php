@@ -67,11 +67,12 @@ Route::get('/myprofile', 'Antelope@myProfile');
 // Activty GET Routes
 Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));
 Route::get('/activity/collection', 'AntelopeActivity@passActivityData')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData');
 
 // Discipline GET Routes
 Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disciplineData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
@@ -83,5 +84,5 @@ Route::post('/discipline/get_data/{id}', 'AntelopeDiscipline@getDiscipline')->mi
 Route::post('/discipline/edit/{id}', 'AntelopeDiscipline@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance');
 Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));

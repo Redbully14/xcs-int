@@ -308,6 +308,61 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Patrol Logs</h4>
+                    <div class="row">
+                      <div class="table-responsive" id="ajax_profile_activity-div">
+                        <table id="ajax_profile_activity-table" class="table table-bordered" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>Patrol Log ID</th>
+                              <th>Patrol Date</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Patrol Duration</th>
+                              <th>Patrol Details</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Disciplinary Actions</h4>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="table-responsive" id="ajax_profile_discipline-div">
+                          <table id="ajax_profile_discipline-table" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Issued to</th>
+                                <th>Issued by</th>
+                                <th>Discipline type</th>
+                                <th>Discipline date</th>
+                                <th>Discipline details</th>
+                                <th>Disciplinary status</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -315,9 +370,20 @@
   </div>
 @endsection
 
-@section('pluginjs')
+@section('injectjs')
+<script type="text/javascript">
+  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
+  var $url_user_profile_discipline = '{{ url('discipline/get_profile_discipline/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
+  var $user_profile_constant = '{{ $constants['global_id']['patrol_log'] }}';
+  var $user_profile_constant_discipline = '{{ $constants['global_id']['disciplinary_action'] }}';
+  var $activity_table = "#ajax_profile_activity-table";
+  var $discipline_table = "#ajax_profile_discipline-table";
+</script>
+<script src="/js/user_profile.js"></script>
 @endsection
 
 @section('modals')
   @include('modals.edit_profile_modal')
+  @include('modals.show_patrol_log_modal')
+  @include('modals.edit_disciplinary_action_modal')
 @endsection
