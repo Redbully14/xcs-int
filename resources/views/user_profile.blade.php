@@ -324,6 +324,7 @@
                               <th>End Time</th>
                               <th>Patrol Duration</th>
                               <th>Patrol Details</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                         </table>
@@ -342,28 +343,14 @@
 
 @section('ajax')
 <script type="text/javascript">
-$(function() {
-  $('#ajax_profile_activity-table').DataTable({
-     ordering: true,
-     serverSide: true,
-     searching: false,
-     ajax: '{{ url('activity/get_profile_logs/') }}/'+2,
-     order: [[ 0  , "desc" ]],
-     columns: [
-      { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
-        return  '{{ $constants['global_id']['patrol_log'] }}' + data;
-      } },
-      { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
-      { data: 'start_time', name: 'start_time' },
-      { data: 'end_time', name: 'end_time' },
-      { data: 'patrol_duration', name: 'patrol_duration' },
-      { data: 'details', name: 'details' },
-     ]
-  });
-});
+  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/';
+  var $user_profile_constant = '{{ $constants['global_id']['patrol_log'] }}';
+  var $activity_table = "#ajax_profile_activity-table";
 </script>
+<script src="/js/user_profile.js"></script>
 @endsection
 
 @section('modals')
   @include('modals.edit_profile_modal')
+  @include('modals.show_patrol_log_modal')
 @endsection

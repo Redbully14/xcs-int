@@ -16,27 +16,6 @@ showFailToast_EditSuperAdmin = function() {
   })
 };
 
-getUsersActivity = function(id) {
-$('#profileActivity').DataTable({
-   ordering: true,
-   serverSide: true,
-   searching: true,
-   destroy: true,
-   ajax: $url_getUsersActivity_fn+id,
-   order: [[ 0  , "desc" ]],
-   columns: [
-    { data: 'id', name: 'id', searchable: false, render: function (data, type, row) {
-      return $getUsersActivity_fn_constant + data;
-    } },
-    { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
-    { data: 'start_time', name: 'start_time' },
-    { data: 'end_time', name: 'end_time' },
-    { data: 'patrol_duration', name: 'patrol_duration' },
-    { data: 'details', name: 'details' },
-   ]
-  });
-};
-
 // TODO: Implement case not on member_admin
 // Future self here: what the fuck did I mean by that?
 $table = $('#tableElement');
@@ -49,7 +28,6 @@ $table.on('click', '#ajax_open_modal_edit', function () {
   }
   var isSuperAdmin = false;
   var id = $(this).val();
-  getUsersActivity(id);
   $('#ajax_edit_member_save').val(id).change();
 
     $.ajax({
@@ -98,7 +76,6 @@ $( "#ajax_open_modal_edit_button" ).click(function() {
   }
   var isSuperAdmin = false;
   var id = $(this).val();
-  getUsersActivity(id);
   $('#ajax_edit_member_save').val(id).change();
 
     $.ajax({

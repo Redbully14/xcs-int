@@ -67,5 +67,5 @@
 <script type="text/javascript">
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
 </script>
-<script src="js/modals/show_patrol_log_modal.js"></script>
+<script src="/js/modals/show_patrol_log_modal.js"></script>
 @endif

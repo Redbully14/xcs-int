@@ -205,6 +205,8 @@
     </div>
   </div>
 </div>
+</div>
+</div>
 
 <script type="text/javascript">
   var $url_getUsersActivity_fn = '{{ url('activity/get_profile_logs/') }}/';

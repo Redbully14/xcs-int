@@ -1,4 +1,4 @@
-$table = $('#tableElement');
+$table = $($activity_table);
 $table.on('click', '#ajax_view_patrol_log_open', function () {
 
 var id = $(this).val();
