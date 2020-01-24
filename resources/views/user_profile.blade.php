@@ -372,8 +372,13 @@
 
 @section('injectjs')
 <script type="text/javascript">
+  @if(url('myprofile/') == url()->current())
+  var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ Auth::user()->id }}';
+  var $url_user_profile_discipline = '{{ url('discipline/get_profile_discipline/') }}/{{ Auth::user()->id }}';
+  @else
   var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
   var $url_user_profile_discipline = '{{ url('discipline/get_profile_discipline/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
+  @endif
   var $user_profile_constant = '{{ $constants['global_id']['patrol_log'] }}';
   var $user_profile_constant_discipline = '{{ $constants['global_id']['disciplinary_action'] }}';
   var $activity_table = "#ajax_profile_activity-table";

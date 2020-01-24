@@ -129,6 +129,7 @@ class AntelopeDiscipline extends Controller
 	                	$query->whereRaw($sql, ["%{$keyword}%"]);
 					}
 	                })
+        ->rawColumns(['discipline.details'])
 	    ->toJson();
     }
 
@@ -360,6 +361,7 @@ class AntelopeDiscipline extends Controller
                         $query->whereRaw($sql, ["%{$keyword}%"]);
                     }
                     })
+        ->rawColumns(['discipline.details'])
         ->toJson();
     }
 }
