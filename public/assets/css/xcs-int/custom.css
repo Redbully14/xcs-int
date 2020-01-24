@@ -69,3 +69,8 @@ textarea:focus, input:focus {
 .datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.new.day, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.new.day {
     color: #434a54 !important;
 }
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #ddd;
+  color: #000000 !important;
+}
