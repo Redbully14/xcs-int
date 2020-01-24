@@ -189,6 +189,7 @@ class AntelopeActivity extends Controller
                     return $row->patrol_start_date;
                 }
                 else return $row->patrol_start_date.' - '.$row->patrol_end_date;})
+    ->rawColumns(['details'])
     ->toJson();
     }
 
@@ -258,6 +259,7 @@ class AntelopeActivity extends Controller
 
                         return BaseXCS::convertToDuration($total_duration);
                     };})
+            ->rawColumns(['details'])
             ->toJson();
         } else return 'pwnd hax0r';
     }
