@@ -77,6 +77,7 @@ return [
         'user_profile' => 'User Profile',
         'personal_profile' => 'My Profile',
         'discipline_database' => 'Discipline Database',
+        'superadmin' => 'SuperAdmin',
     ],
 
     /*

@@ -183,4 +183,16 @@ class Antelope extends Controller
                                        ->with('calculations', $calculations);
         }
     }
+
+    /**
+     * Constructs a user's personal profile
+     *
+     * @return View
+     */
+    public function superAdmin()
+    {
+        $constants = \Config::get('constants');
+
+        return view('superadmin')->with('constants', $constants);
+    }
 }

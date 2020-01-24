@@ -61,8 +61,9 @@ Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('leve
 Route::get('/superadmin/help', function () {
     return view('stackpath.superadmin_help');
 })->middleware('level:'.\Config::get('constants.access_level.superadmin'));
-Route::get('/profile/{user}', 'Antelope@getProfile')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::get('/profile/{user}', 'Antelope@getProfile')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 Route::get('/myprofile', 'Antelope@myProfile');
+Route::get('/superadmin', 'Antelope@superAdmin')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
 // Activty GET Routes
 Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));
