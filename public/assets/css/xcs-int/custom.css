@@ -55,3 +55,17 @@ input, select, textarea{
 textarea:focus, input:focus {
     color: #ffffff !important ;
 }
+
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.old.day, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.old.day {
+    color: #434a54 !important;
+}
+
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.day, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.day {
+    font-size: .9375rem !important;
+    padding: .5rem 0 !important;
+    color: #d9dde3 !important;
+}
+
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.new.day, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.new.day {
+    color: #434a54 !important;
+}
