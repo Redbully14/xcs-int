@@ -16,13 +16,18 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <label>Issued To</label><sup class="text-danger">*</sup>
-              <select class="ajax_search_member-class" style="width:100%" id="ajax_add_disciplinary_action-input_issued_to" required>
+			  @if(\Request::is('profile/*'))
+			    <label class="text-danger">Issuing to {{ $user_data['name'] ." ". $user_data['department_id'] }}</label>
+                <input type="hidden" id="ajax_add_disciplinary_action-input_issued_to" value="{{ $user_data['id'] }}" />
+			  @else
+                <label>Issued To</label><sup class="text-danger">*</sup>
+                <select class="ajax_search_member-class" style="width:100%" id="ajax_add_disciplinary_action-input_issued_to" required>
                   <option></option>
-                @foreach($baseXCS::getAllMembers() as $id => $user)
-                  <option value="{{ $id }}">{{ $user }}</option>
-                @endforeach
-              </select>
+                  @foreach($baseXCS::getAllMembers() as $id => $user)
+                    <option value="{{ $id }}">{{ $user }}</option>
+                  @endforeach
+                </select>
+			  @endif
               <label id="ajax_add_disciplinary_action-input_issued_to-error" class="error mt-2 text-danger" for="ajax_add_disciplinary_action-input_issued_to" hidden></label>
             </div>
 

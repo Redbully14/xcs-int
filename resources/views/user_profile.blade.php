@@ -110,6 +110,11 @@
                       <h5 class="mb-0 mr-2 text-muted">{{ $constants['rank'][$user_data['rank']] }}</h5>
                     </div>
                   </div>
+                  @if(Auth::user()->level() >= $constants['access_level']['sit'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['sit']) && $user_data['id'] != Auth::user()->id)
+                  <div>
+				    <button class="btn btn-danger" id="ajax_add_disciplinary_action-button" value="{{ $user_data['id'] }}">Discipline user</button>
+                  </div>
+                  @endif
                   @if(Auth::user()->level() >= $constants['access_level']['staff'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['admin']) && $user_data['id'] != Auth::user()->id)
                   <div>
                     <button class="btn btn-primary" id="ajax_open_modal_edit_button" value="{{ $user_data['id'] }}">Edit Profile</button>
@@ -391,4 +396,5 @@
   @include('modals.edit_profile_modal')
   @include('modals.show_patrol_log_modal')
   @include('modals.edit_disciplinary_action_modal')
+  @include('modals.add_disciplinary_action_modal')
 @endsection
