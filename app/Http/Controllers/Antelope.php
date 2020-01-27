@@ -185,7 +185,7 @@ class Antelope extends Controller
     }
 
     /**
-     * Constructs a user's personal profile
+     * Constructs the SuperAdmin Page
      *
      * @return View
      */
@@ -194,5 +194,31 @@ class Antelope extends Controller
         $constants = \Config::get('constants');
 
         return view('superadmin')->with('constants', $constants);
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superAdminGodmode(Request $request)
+    {
+        auth()->user()->impersonate(User::find($request->id));
+
+        return response()->json([
+          'redirect_to' => route('dashboard')
+        ]); 
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superStopGodmode()
+    {
+        auth()->user()->leaveImpersonation();
+
+        return redirect('superadmin');
     }
 }

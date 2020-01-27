@@ -1,5 +1,7 @@
 <?php $page_name = 'superadmin' ?>
 
+@inject('baseXCS', 'App\Http\Controllers\BaseXCS')
+
 @extends('master.app')
 
 @section('customcss')
@@ -8,35 +10,28 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-      <h3 class="page-title"> Account Settings </h3>
+      <h3 class="page-title"> SuperAdmin </h3>
     </div>
     <div class="row">
       <div class="col-12">
-      	@if( \Session::get('temp_password_required') )
-            <div class="alert alert-warning" role="alert"><i class="mdi mdi-alert-circle"></i> The account currently has a temporary password, you are required to change it in order to use Antelope. </div>
-        @endif
         <div class="card">
           <div class="card-body">
 
-              	<h5>Change Password</h5><br>
+              	<h5>Takeover a User</h5><br>
 
-				<form id="ajax_change_password">
+				        <form id="ajax_superadmin_takeover">
+
                   <div class="form-group">
-                    <label for="ajax_change_password-current_password">Current Password</label>
-                    <input type="password" class="form-control" id="ajax_change_password-current_password" placeholder="Password">
-                    <label id="ajax_change_password-current_password-error" class="error mt-2 text-danger" for="ajax_change_password-current_password" hidden></label>
+                    <label>User</label>
+                    <select class="ajax_search_member-class" style="width:100%" id="ajax_superadmin_takeover-user" required>
+                        <option></option>
+                      @foreach($baseXCS::getAllMembers() as $id => $user)
+                        <option value="{{ $id }}">{{ $user }}</option>
+                      @endforeach
+                    </select>
                   </div>
-                  <div class="form-group">
-                    <label for="ajax_change_password-new_password">New Password</label>
-                    <input type="password" class="form-control" id="ajax_change_password-new_password" placeholder="Password">
-                    <label id="ajax_change_password-new_password-error" class="error mt-2 text-danger" for="ajax_change_password-new_password" hidden></label>
-                  </div>
-                  <div class="form-group">
-                    <label for="ajax_change_password-confirm_new_password">Confirm New Password</label>
-                    <input type="password" class="form-control" id="ajax_change_password-confirm_new_password" placeholder="Password">
-                   	<label id="ajax_change_password-confirm_new_password-error" class="error mt-2 text-danger" for="ajax_change_password-confirm_new_password" hidden></label>
-                  </div>
-                  <button type="submit" class="btn btn-danger mr-2">Change Password</button>
+
+                  <button type="submit" class="btn btn-warning mr-2">Takeover User</button>
                 </form><hr>
           </div>
         </div>
@@ -45,5 +40,10 @@
 </div>
 @endsection
 
-@section('pluginjs')
+@section('injectjs')
+<script type="text/javascript">
+  var $url_superadmin_takeover = '{{ url('superadmin/godmode/') }}';
+  var $url_superadmin_replace = '{{ url('dashboard') }}';
+</script>
+<script src="/js/superadmin.js"></script>
 @endsection

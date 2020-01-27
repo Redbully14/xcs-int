@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasRoleAndPermission;
+    use Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -29,4 +31,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * This should stop all the dirty hackers from being able to takeover other users
+     *
+     * @return bool
+     */
+    public function canImpersonate()
+    {
+        $constants = \Config::get('constants');
+        return $this->level() >= $constants['access_level']['superadmin'];
+    }
 }
