@@ -69,7 +69,8 @@ Route::get('/myprofile', 'Antelope@myProfile');
 Route::get('/superadmin', [
   'as' => 'superadmin',
   'uses' => 'Antelope@superAdmin'
-])->middleware('level:'.\Config::get('constants.access_level.sit'));
+])->middleware('level:'.\Config::get('constants.access_level.superadmin'));
+Route::get('/superadmin/normalmode', 'Antelope@superStopGodmode');
 
 // Activty GET Routes
 Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));

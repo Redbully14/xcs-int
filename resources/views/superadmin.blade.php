@@ -16,9 +16,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-
               	<h5>Takeover a User</h5><br>
-
 				        <form id="ajax_superadmin_takeover">
 
                   <div class="form-group">
@@ -26,7 +24,9 @@
                     <select class="ajax_search_member-class" style="width:100%" id="ajax_superadmin_takeover-user" required>
                         <option></option>
                       @foreach($baseXCS::getAllMembers() as $id => $user)
-                        <option value="{{ $id }}">{{ $user }}</option>
+                        @canBeImpersonated($baseXCS::getUser($id))
+                          <option value="{{ $id }}">{{ $user }}</option>
+                        @endCanBeImpersonated
                       @endforeach
                     </select>
                   </div>

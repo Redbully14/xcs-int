@@ -42,4 +42,15 @@ class User extends Authenticatable
         $constants = \Config::get('constants');
         return $this->level() >= $constants['access_level']['superadmin'];
     }
+
+    /**
+     * This should stop all the superadmins from getting nosy
+     *
+     * @return bool
+     */
+    public function canBeImpersonated()
+    {
+        $constants = \Config::get('constants');
+        return $this->level() != $constants['access_level']['superadmin'];
+    }
 }

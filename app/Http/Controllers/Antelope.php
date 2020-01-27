@@ -219,6 +219,6 @@ class Antelope extends Controller
     {
         auth()->user()->leaveImpersonation();
 
-        return redirect('superadmin');
+        return redirect()->route('superadmin');
     }
 }

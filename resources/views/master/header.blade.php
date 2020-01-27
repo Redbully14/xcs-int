@@ -105,6 +105,19 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
+          @impersonating
+          <a class="dropdown-item preview-item" href="/superadmin/normalmode">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-dark rounded-circle">
+                <i class="mdi mdi-account-arrow-right-outline text-warning"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <p class="preview-subject mb-1">Exit Godmode</p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          @endImpersonating
           <a class="dropdown-item preview-item" href="/logout">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
