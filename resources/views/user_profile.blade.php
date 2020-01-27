@@ -110,11 +110,6 @@
                       <h5 class="mb-0 mr-2 text-muted">{{ $constants['rank'][$user_data['rank']] }}</h5>
                     </div>
                   </div>
-                  @if(Auth::user()->level() >= $constants['access_level']['sit'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['sit']) && $user_data['id'] != Auth::user()->id)
-                  <div>
-				    <button class="btn btn-danger" id="ajax_add_disciplinary_action-button" value="{{ $user_data['id'] }}">Discipline user</button>
-                  </div>
-                  @endif
                   @if(Auth::user()->level() >= $constants['access_level']['staff'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['admin']) && $user_data['id'] != Auth::user()->id)
                   <div>
                     <button class="btn btn-primary" id="ajax_open_modal_edit_button" value="{{ $user_data['id'] }}">Edit Profile</button>
@@ -136,8 +131,8 @@
                         <i class="mdi mdi-alert-outline"></i> Disciplinary Information </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="mdi mdi-attachment"></i> Placeholder </a>
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#tab-4" role="tab" aria-controls="home" aria-selected="true">
+                        <i class="mdi mdi-account-edit"></i> Profile Actions </a>
                     </li>
                   </ul>
                 </div>
@@ -307,6 +302,30 @@
                           <div class="col-sm">
                           </div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="activity-tab">
+                    <div class="media d-block d-sm-flex">
+                      <div class="media-body mt-4 mt-sm-0">
+                        <div class="row text-center">
+                          <div class="col-sm">
+                              <span>
+							    <div>
+							      @if(Auth::user()->level() >= $constants['access_level']['sit'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['sit']) && $user_data['id'] != Auth::user()->id)
+								    <button class="btn btn-danger" id="ajax_add_disciplinary_action-button" value="{{ $user_data['id'] }}"><i class="mdi mdi-gavel"></i> Discipline member </button>
+							      @else
+								    <button class="btn btn-secondary" id="ajax_add_disciplinary_action-button" disabled><i class="mdi mdi-gavel"></i> Discipline member </button>
+								  @endif
+								</div>
+							  </span>
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                        </div>
+                        <br>
                       </div>
                     </div>
                   </div>
