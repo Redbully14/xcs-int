@@ -35,7 +35,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item preview-item" data-toggle="modal" data-target="#ajax_new_patrol_log">
+          <a class="dropdown-item preview-item" data-toggle="modal" data-target="#absence_modal">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="mdi mdi-clock-alert text-primary"></i>
