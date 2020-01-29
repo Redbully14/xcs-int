@@ -13,31 +13,28 @@ use Illuminate\Support\Facades\Auth;
 class AntelopeCalculate extends Controller
 {
 	 /**
-     * Get the last patrol made by user, 
+     * Get the last patrol made by user,
      *
      * @return timestamp
      */
     public static function get_last_timestamp($id) {
 
-		if(null !== Activity::where('user_id', '=', $id)) {
-			$date = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
-			$date = $date['patrol_end_date'];
+        $date = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
+        $time = Activity::orderBy('end_time', 'DESC')->where('user_id', '=', $id)->first();
 
-            $time = Activity::orderBy('end_time', 'DESC')->where('user_id', '=', $id)->first();
+        if (!is_null($date)) {
+            $date = $date['patrol_end_date'];
             $time = $time['end_time'];
-
-            $timestamp = $date.' '.$time;
-		}
-
-		if ($date == null) {
-			$timestamp = 'N/A';
-		}
+            $timestamp = $date . ' ' . $time;
+        } else {
+            $timestamp = 'N/A';
+        }
 
 		return $timestamp;
     }
 
 	 /**
-     * Get the last patrol made by user, 
+     * Get the last patrol made by user,
      *
      * @return human readable time
      */
