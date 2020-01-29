@@ -33,6 +33,8 @@
 
                   <button type="submit" class="btn btn-warning mr-2">Takeover User</button>
                 </form><hr>
+                <br>
+                <a href="/superadmin/icons">Material Design Icons</a>
           </div>
         </div>
       </div>

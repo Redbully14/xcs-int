@@ -197,6 +197,18 @@ class Antelope extends Controller
     }
 
     /**
+     * Constructs the SuperAdmin Page
+     *
+     * @return View
+     */
+    public function superAdminIcons()
+    {
+        $constants = \Config::get('constants');
+
+        return view('developers.superadmin_icons')->with('constants', $constants);
+    }
+
+    /**
      * Godmode into another user
      *
      * @return View
