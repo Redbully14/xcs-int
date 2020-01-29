@@ -251,6 +251,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Leave of Absences
+    |--------------------------------------------------------------------------
+    |
+    | Here is the configuration for Leave of Absences on the website, this
+    | takes global effect for the entire system..
+    |
+    */
+    'absence_status' => [
+        0 => 'Default',
+        1 => 'Disregarded',
+        3 => 'Denied',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Disciplinary Actions
     |--------------------------------------------------------------------------
     |
