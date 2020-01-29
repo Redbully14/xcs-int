@@ -24,7 +24,7 @@
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="row w-100">
-          <div class="content-wrapper full-page-wrapper auth login-2 login-bg">
+          <div class="content-wrapper full-page-wrapper auth login-2 login-bg"  style="background: url('{{$constants['backgrounds']['login']}}'); background-size: cover;">
             <div class="card col-lg-4">
               <div class="card-body px-5 py-5">
                 <h1 class="card-title text-left mb-3" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></h1>

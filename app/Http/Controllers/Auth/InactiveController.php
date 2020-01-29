@@ -26,7 +26,7 @@ class InactiveController extends Controller
      */
     public function inactive()
     {
-        $constants = \Config::get('constants.global');
+        $constants = \Config::get('constants');
 
         return view('auth.inactive')->with('constants', $constants);
 
