@@ -17,7 +17,7 @@
 
             <div class="form-group">
 			  @if(\Request::is('profile/*'))
-			    <label class="text-danger">Issuing to {{ $user_data['name'] ." ". $user_data['department_id'] }}</label>
+			    <label>Issuing to <span class="text-danger font-weight-bold">{{ $user_data['name'] ." ". $user_data['department_id'] }}</span></label>
                 <input type="hidden" id="ajax_add_disciplinary_action-input_issued_to" value="{{ $user_data['id'] }}" />
 			  @else
                 <label>Issued To</label><sup class="text-danger">*</sup>
