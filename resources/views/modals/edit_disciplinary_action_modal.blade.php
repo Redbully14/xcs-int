@@ -191,9 +191,11 @@
             <button type="submit" class="btn btn-success" id="ajax_edit_member_save" value="0">Save</button>
             <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
           </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 </div>
 
 <script type="text/javascript">

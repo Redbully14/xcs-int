@@ -354,4 +354,8 @@ return [
         'new' => 'warning',
         'exempt' => 'info',
     ],
+    'backgrounds' => [
+      'login' => '/assets/images/auth/Login_bg.jpg',
+      'inactive' => '/assets/images/auth/Login_bg.jpg',
+    ],
 ];
