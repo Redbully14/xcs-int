@@ -15,7 +15,7 @@ class CheckTempPass
      */
     public function handle($request, Closure $next)
     {
-        if($request->is('settings/change_password') or $request->is('settings') or $request->is('logout')){
+        if($request->is('settings/change_password') or $request->is('settings') or $request->is('logout') or $request->is('superadmin/normalmode')){
             return $next($request);
         }
 

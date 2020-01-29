@@ -183,4 +183,54 @@ class Antelope extends Controller
                                        ->with('calculations', $calculations);
         }
     }
+
+    /**
+     * Constructs the SuperAdmin Page
+     *
+     * @return View
+     */
+    public function superAdmin()
+    {
+        $constants = \Config::get('constants');
+
+        return view('superadmin')->with('constants', $constants);
+    }
+
+    /**
+     * Constructs the SuperAdmin Page
+     *
+     * @return View
+     */
+    public function superAdminIcons()
+    {
+        $constants = \Config::get('constants');
+
+        return view('developers.superadmin_icons')->with('constants', $constants);
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superAdminGodmode(Request $request)
+    {
+        auth()->user()->impersonate(User::find($request->id));
+
+        return response()->json([
+          'redirect_to' => route('dashboard')
+        ]); 
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superStopGodmode()
+    {
+        auth()->user()->leaveImpersonation();
+
+        return redirect()->route('superadmin');
+    }
 }

@@ -14,6 +14,9 @@
           <div class="profile-name">
             <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</h5>
             <span style="max-width:134px; display: block; white-space: normal;">{{ $constants['rank'][Auth::user()->rank] }}</span>
+            @impersonating
+            <span style="max-width:134px; display: block; white-space: normal;" class="text-warning">Godmode</span>
+            @endImpersonating
           </div>
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -79,6 +82,16 @@
           <i class="mdi mdi-account-plus"></i>
         </span>
         <span class="menu-title">Member Settings</span>
+      </a>
+    </li>
+    @endif
+    @if(Auth::user()->level() >= $constants['access_level']['superadmin'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/superadmin">
+        <span class="menu-icon">
+          <i class="mdi mdi-ghost"></i>
+        </span>
+        <span class="menu-title">SuperAdmin</span>
       </a>
     </li>
     @endif
