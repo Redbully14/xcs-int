@@ -73,18 +73,45 @@ class ApiEndpointController extends Controller
      *
      * @param Request $request
      * @param string $endpoint
+     * @param null $argument
      * @return JsonResponse
      */
-    public function interpret(Request $request, $endpoint)
+    public function interpret(Request $request, $endpoint, $argument = null)
     {
+        $authUser = User::where('api_token', hash('sha256', $request->bearerToken()))->first();
 
-        if (Optional(User::where('api_token', hash('sha256', $request->bearerToken()))->first())->name) {
+        if ($authUser) {
+            $authLevel = $authUser->getRoles()->first()->level;
+
             switch ($endpoint) {
                 case 'info':
                     return (new Api([
                         'totalActivity' => Activity::count(),
                         'totalUsers' => User::count()
                     ]))->response()->setStatusCode(200);
+                    break;
+                case 'users':
+                    if ($authLevel === 8) {
+                        if (!is_null($argument) && is_numeric($argument)) {
+                            $ourUser = User::find($argument);
+
+                            if (!is_null($ourUser)) {
+                                return (new Api($ourUser))->response()->setStatusCode(200);
+                            } else {
+                                return (new ApiError([
+                                    'message' => 'No user with that ID could be found.'
+                                ]))->response()->setStatusCode(404);
+                            }
+                        } else {
+                            return (new ApiError([
+                                'message' => 'Not enough arguments provided, or, provided argument is invalid.'
+                            ]))->response()->setStatusCode(400);
+                        }
+                    } else {
+                        return (new ApiError([
+                            'message' => 'You do not have access to this endpoint.'
+                        ]))->response()->setStatusCode(403);
+                    }
                     break;
                 default:
                     return (new ApiError([

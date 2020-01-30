@@ -26,6 +26,6 @@ class Api extends JsonResource
      */
     public function with($request)
     {
-        return ['status' => 'status'];
+        return ['status' => 'success'];
     }
 }
