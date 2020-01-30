@@ -22,6 +22,8 @@ Route::prefix('v1')->namespace('API')->group(function () {
         return (new \App\Http\Resources\ApiError(['message' => 'No endpoint provided.']))->response()->setStatusCode(400);
     });
 
+    Route::post('/{endpoint}/{argument}/{argument2}', 'ApiEndpointController@interpret')->middleware('throttle');
+
     Route::post('/{endpoint}/{argument}', 'ApiEndpointController@interpret')->middleware('throttle');
 
     Route::post('/{endpoint}', 'ApiEndpointController@interpret')->middleware('throttle');
