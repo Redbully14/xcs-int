@@ -62,6 +62,10 @@ class AntelopeCalculate extends Controller
 
     	$today = strtotime(Carbon::now()->toDateString());
 
+        if(self::absence_status($id) == 'Active') {
+            return 'absent';
+        }
+
     	if($last_timestamp == 'N/A') {
     		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
     			return 'new';

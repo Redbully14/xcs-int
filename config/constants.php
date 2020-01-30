@@ -232,6 +232,7 @@ return [
         'inactive' => 'Inactive',
         'new' => 'New',
         'exempt' => 'Exempt',
+        'absent' => 'LOA',
     ],
 
     /*
@@ -248,6 +249,7 @@ return [
         'inactive' => 'danger',
         'new' => 'warning',
         'exempt' => 'info',
+        'absent' => 'primary',
     ],
 
     /*

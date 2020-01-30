@@ -32,7 +32,7 @@
                   <span class="mdi mdi-calendar input-group-text"></span>
                 </span>
               </div>
-              <label id="absence_modal_start_date-error" class="error mt-2 text-danger" for="absence_modal_start_date" hidden></label>
+              <label id="absence_modal_end_date-error" class="error mt-2 text-danger" for="absence_modal_end_date" hidden></label>
             </div>
 
             <div class="form-group">

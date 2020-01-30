@@ -31,8 +31,8 @@ $('#absence_modal_form').on('submit', function(e) {
         $(element).val('');
         $(elements[element]).empty();
       }
-      var toast_heading = "Patrol Log Submitted!";
-      var toast_text = "The patrol log has been submitted and has been logged into our database.";
+      var toast_heading = "Absence Submitted!";
+      var toast_text = "The absence has been submitted and recorded within the system.";
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
@@ -44,7 +44,7 @@ $('#absence_modal_form').on('submit', function(e) {
         $(elements[element]).prop('hidden', true);
         $(elements[element]).empty();
       }
-      var toast_heading = "Patrol Submission Failed!";
+      var toast_heading = "Absence Submission Failed!";
       var toast_text = "Please double check the fields to ensure everything is correct.";
       var toast_icon = "error";
       var toast_color = "#f2a654";
@@ -53,41 +53,25 @@ $('#absence_modal_form').on('submit', function(e) {
 
       for (var key in errors) {
         switch (key) {
-          case 'patrol_date':
-            var element = '#patrol_start_date';
-            var label = '#patrol-date-error';
+          case 'start_date':
+            var element = '#absence_modal_start_date-input';
+            var label = '#absence_modal_start_date-error';
             $(element).parent().addClass('has-danger');
             $(element).addClass('form-control-danger');
             $(label).append(errors[key]);
             $(label).prop('hidden', false);
           break;
-          case 'patrol_end_date':
-            var element = '#patrol-end-log-date';
-            var label = '#patrol-end-log-date-error';
+          case 'end_date':
+            var element = '#absence_modal_end_date-input';
+            var label = '#absence_modal_end_date-error';
             $(element).parent().addClass('has-danger');
             $(element).addClass('form-control-danger');
             $(label).append(errors[key]);
             $(label).prop('hidden', false);
           break;
-          case 'start_time':
-            var element = '#patrol-start-time';
-            var label = '#patrol-start_time-error';
-            $(element).parent().addClass('has-danger');
-            $(element).addClass('form-control-danger');
-            $(label).append(errors[key]);
-            $(label).prop('hidden', false);
-          break;
-          case 'end_time':
-            var element = '#patrol-end-time';
-            var label = '#patrol-end_time-error';
-            $(element).parent().addClass('has-danger');
-            $(element).addClass('form-control-danger');
-            $(label).append(errors[key]);
-            $(label).prop('hidden', false);
-          break;
-          case 'details':
-            var element = '#patrol-details';
-            var label = '#patrol-details-error';
+          case 'forum_post':
+            var element = '#absence_modal_forum_post';
+            var label = '#absence_modal_forum_post-error';
             $(element).parent().addClass('has-danger');
             $(element).addClass('form-control-danger');
             $(label).append(errors[key]);
