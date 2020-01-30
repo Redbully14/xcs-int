@@ -73,9 +73,9 @@
               <div class="form-group">
                   <label>Select AOP</label>
                   <select class="js-example-basic-multiple" multiple="multiple" id="patrol-aop" style="width:100%">
-                      <option value="BC">Blaine County</option>
-                      <option value="LS">Los Santos</option>
-                      <option value="SW">State Wide</option>
+                      <option value="{{$constants['aops']['BC']}}">Blaine County</option>
+                      <option value="{{$constants['aops']['LS']}}">Los Santos</option>
+                      <option value="{{$constants['aops']['SW']}}">State Wide</option>
                   </select>
               </div>
           </div>

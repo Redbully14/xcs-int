@@ -23,26 +23,9 @@ var id = $(this).val();
         $("#ajax-input-patrol-start-time").val(data['start_time']);
         $("#ajax-input-patrol-end-time").val(data['end_time']);
         $("#ajax-input-patrol-details").val(data['details']);
-        switch (data['patrol_area']) {
-            case '["LS"]':
-                $("#ajax-input-patrol-area").val("Los Santos");
-                break;
-            case '["BC"]':
-                $("#ajax-input-patrol-area").val("Blaine County");
-                break;
-            case '["SW"]':
-                $("#ajax-input-patrol-area").val("State Wide");
-                break;
-            case '["BC","LS"]':
-                $("#ajax-input-patrol-area").val("Blaine County, Los Santos");
-                break;
-            case '["BC","SW"]':
-                $("#ajax-input-patrol-area").val("Blaine County, State Wide");
-                break;
-            case '["LS","SW"]':
-                $("#ajax-input-patrol-area").val("Los Santos, State Wide");
-                break;
-        }
+        var aops = JSON.parse(data['patrol_area']);
+        var aopsWithSpace = aops.join(', ');
+        $("#ajax-input-patrol-area").val(aopsWithSpace);
      }
   }).done(function(data) {});
 });
