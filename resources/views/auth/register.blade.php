@@ -29,27 +29,28 @@
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
                 <h3 class="card-title text-left mb-3">{{ $constants['global']['application_name'] }} First Login</h3>
-                <form>
+                <form id="register">
 
                   <div class="form-group">
                     <label>Select your timezone</label>
-                    <select class="antelope_global_select_single-noclear" style="width:100%" id="ajax_change_timezone-input">
+                    <select class="antelope_global_select_single-noclear" style="width:100%" id="timezone">
                       @foreach (timezone_identifiers_list() as $timezone)
                       <option value="{{ $timezone }}"{{ $timezone == old('timezone', request()->user()->timezone) ? ' selected' : '' }}>{{ $timezone }}</option>
                       @endforeach
                     </select>
+                    <label id="timezone-error" class="error mt-2 text-danger" for="timezone" hidden></label>
                   </div>
 
                   <div class="form-group">
-                    <label for="ajax_change_password-new_password">New Password</label>
-                    <input type="password" class="form-control" id="ajax_change_password-new_password" placeholder="Password">
-                    <label id="ajax_change_password-new_password-error" class="error mt-2 text-danger" for="ajax_change_password-new_password" hidden></label>
+                    <label for="new_password">New Password</label>
+                    <input type="password" class="form-control" id="new_password" placeholder="Password">
+                    <label id="new_password-error" class="error mt-2 text-danger" for="new_password" hidden></label>
                   </div>
 
                   <div class="form-group">
-                    <label for="ajax_change_password-confirm_new_password">Confirm New Password</label>
-                    <input type="password" class="form-control" id="ajax_change_password-confirm_new_password" placeholder="Password">
-                    <label id="ajax_change_password-confirm_new_password-error" class="error mt-2 text-danger" for="ajax_change_password-confirm_new_password" hidden></label>
+                    <label for="confirm_new_password">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirm_new_password" placeholder="Password">
+                    <label id="confirm_new_password-error" class="error mt-2 text-danger" for="confirm_new_password" hidden></label>
                   </div>
                   <hr>
 
@@ -83,6 +84,82 @@
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="/js/app.js"></script>
+    <script type="text/javascript">
+    $('#register').on('submit', function(e) {
+      e.preventDefault();
+      var new_password = $('#new_password').val();
+      var new_confirm_password = $('#confirm_new_password').val();
+      var timezone = $('#timezone').val();
+      var elements = {
+        '#new_password' : '#new_password-error',
+        '#confirm_new_password' : '#current_password-error',
+        '#timezone' : '#timezone-error'
+      };
+
+      for (var element in elements) {
+        $(element).parent().removeClass('has-danger');
+        $(element).removeClass('form-control-danger');
+        $(elements[element]).prop('hidden', true);
+        $(element).val('');
+        $(elements[element]).empty();
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: '{{ url('register/submit') }}',
+        data: {"_token": "{{ csrf_token() }}", new_password:new_password, new_confirm_password:new_confirm_password, timezone:timezone},
+        success: function(data) {
+          for (var element in elements) {
+            $(element).parent().removeClass('has-danger');
+            $(element).removeClass('form-control-danger');
+            $(elements[element]).prop('hidden', true);
+            $(element).val('');
+            $(elements[element]).empty();
+            window.location = data.redirect_to;
+          }
+        },
+        error: function(data) {
+          for (var element in elements) {
+            $(element).parent().removeClass('has-danger');
+            $(element).removeClass('form-control-danger');
+            $(elements[element]).prop('hidden', true);
+            $(element).val('');
+            $(elements[element]).empty();
+          }
+          var errors = data['responseJSON'].errors;
+
+          for (var key in errors) {
+            switch (key) {
+              case 'new_password':
+                var element = '#new_password';
+                var label = '#new_password-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
+              case 'confirm_new_password':
+                var element = '#confirm_new_password';
+                var label = '#confirm_new_password-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
+              case 'timezone':
+                var element = '#timezone';
+                var label = '#timezone-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
+            }
+          }
+        }
+      });
+    });
+    </script>
     <!-- endinject -->
   </body>
 </html>

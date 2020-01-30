@@ -45,83 +45,36 @@ class RegistrationController extends Controller
      */
     public function view()
     {
-        $constants = \Config::get('constants');
-        return view('auth.register')->with('constants', $constants);
-    }
-
-    /**
-     * Compile Edit Modal
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function userdata($user)
-    {
-        $user = User::find($user);
-
-        $user = $user->load('roles');
-
-        return $user;
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator($username, array $data)
-    {
-        $username = $username->username;
-        $data['antelope_status'] = $data['antelope_status'] ? true : false;
-        $data['requirements_exempt'] = $data['requirements_exempt'] ? true : false;
-        $data['advanced_training'] = $data['advanced_training'] ? true : false;
-
-        if($username == $data['username']) {
-            return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'role' => ['required', 'string', 'max:30'],
-                'rank' => ['required', 'string', 'max:30'],
-                'website_id' => ['required', 'integer'],
-                'department_id' => ['string', 'max:30', 'nullable'],
-                'antelope_status' => ['required', 'boolean'],
-                'requirements_exempt' => ['required', 'boolean'],
-                'advanced_training' => ['required', 'boolean'],
-            ]);
-        }
-        else {
-            return Validator::make($data, [
-                'username' => ['required', 'string', 'max:255', 'unique:users'],
-                'name' => ['required', 'string', 'max:255'],
-                'role' => ['required', 'string', 'max:30'],
-                'rank' => ['required', 'string', 'max:30'],
-                'website_id' => ['required', 'integer'],
-                'department_id' => ['string', 'max:30', 'nullable'],
-                'antelope_status' => ['required', 'boolean'],
-                'requirements_exempt' => ['required', 'boolean'],
-                'advanced_training' => ['required', 'boolean'],
-            ]);
+        if(auth()->user()->temp_password) {
+            $constants = \Config::get('constants');
+            return view('auth.register')->with('constants', $constants);
+        } else {
+            return redirect()->route('dashboard');
         }
     }
 
-    public function edit(Request $request)
+    /**
+     * Change the user's password and timezone
+     *
+     * @return void
+     */
+    public function submit(Request $request)
     {
-        $user = User::find($request->route('user'));
-        $this->validator($user, $request->all())->validate();
+        $request->validate([
+            'new_password' => ['required', 'string', 'min:8'],
+            'new_confirm_password' => ['same:new_password'],
+            'timezone' => ['required', 'string'] // todo: make a rule that will check if it's in constants.
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        if(User::find(auth()->user()->id)->get('temp_password')) {
+            User::find(auth()->user()->id)->update(['temp_password' => 0]);
+        }
 
+        User::find(auth()->user()->id)->update(['timezone' => $request->timezone]);
 
-        $user->name = $request['name'];
-        $user->website_id = $request['website_id'];
-        $user->rank = $request['rank'];
-        $user->department_id = $request['department_id'];
-        $user->antelope_status = $request['antelope_status'];
-        $role = Role::where('slug', '=', $request['role'])->first();
-        $user->username = $request['username'];
-        $user->requirements_exempt = $request['requirements_exempt'];
-        $user->advanced_training = $request['advanced_training'];
-        $user->save();
-        $user->roles()->sync($role);
-
-        return;
+        return response()->json([
+          'redirect_to' => route('dashboard')
+        ]); 
     }
 }
