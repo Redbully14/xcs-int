@@ -255,7 +255,7 @@ class AntelopeDiscipline extends Controller
         $this->editValidator($request->all())->validate();
 
         $discipline->issued_by = $request['issued_by'];
-        $discipline->discipline_date = $request['date'];
+        $discipline->discipline_date = date("Y-m-d", strtotime($request['date']));
         $discipline->type = $request['type'];
         if($request['custom_expiry_date'] != null) {
             $discipline->custom_expiry_date = date("Y-m-d", strtotime($request['custom_expiry_date']));
