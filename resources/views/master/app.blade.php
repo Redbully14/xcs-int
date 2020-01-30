@@ -108,6 +108,7 @@
 
     <!-- Global modals for this page-->
     @include('modals.submit_patrol_log_modal')
+    @include('modals.submit_absence_modal')
     <!-- End global modals for this page-->
 
     <!-- Modals for this page-->

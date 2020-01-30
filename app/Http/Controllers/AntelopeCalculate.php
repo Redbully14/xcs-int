@@ -7,37 +7,35 @@ use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
 use App\Activity;
 use App\Discipline;
+use App\Absence;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class AntelopeCalculate extends Controller
 {
 	 /**
-     * Get the last patrol made by user, 
+     * Get the last patrol made by user,
      *
      * @return timestamp
      */
     public static function get_last_timestamp($id) {
 
-		if(null !== Activity::where('user_id', '=', $id)) {
-			$date = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
-			$date = $date['patrol_end_date'];
+        $date = Activity::orderBy('patrol_end_date', 'DESC')->where('user_id', '=', $id)->first();
+        $time = Activity::orderBy('end_time', 'DESC')->where('user_id', '=', $id)->first();
 
-            $time = Activity::orderBy('end_time', 'DESC')->where('user_id', '=', $id)->first();
+        if (!is_null($date)) {
+            $date = $date['patrol_end_date'];
             $time = $time['end_time'];
-
-            $timestamp = $date.' '.$time;
-		}
-
-		if ($date == null) {
-			$timestamp = 'N/A';
-		}
+            $timestamp = $date . ' ' . $time;
+        } else {
+            $timestamp = 'N/A';
+        }
 
 		return $timestamp;
     }
 
 	 /**
-     * Get the last patrol made by user, 
+     * Get the last patrol made by user,
      *
      * @return human readable time
      */
@@ -63,6 +61,10 @@ class AntelopeCalculate extends Controller
     	$last_timestamp = self::get_last_timestamp($id);
 
     	$today = strtotime(Carbon::now()->toDateString());
+
+        if(self::absence_status($id) == 'Active') {
+            return 'absent';
+        }
 
     	if($last_timestamp == 'N/A') {
     		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
@@ -458,5 +460,34 @@ class AntelopeCalculate extends Controller
         }
 
         return 'active';
+    }
+
+     /**
+     * Get the absence status
+     *
+     * @param $id (int)
+     * @return str
+     */
+    public static function absence_status($id) {
+
+        $constants = \Config::get('constants');
+        $absence = Absence::where('user_id', '=', $id);
+        $today = strtotime(Carbon::now()->toDateString());
+
+        if(is_null($absence->latest('end_date')->first())) {
+            return '-';
+        }
+
+        $absence = $absence->latest('end_date')->first();
+        $start_date = strtotime($absence->start_date);
+        $end_date = strtotime($absence->end_date);
+
+        if($absence->status == 0) {
+            if($start_date <= $today) {
+                if($today <= $end_date) {
+                    return 'Active';
+                } else return 'Expired';
+            } else return 'Upcoming - '.date('Y-m-d', $start_date);
+        } else return $constants['absence_status'][$absence->status];
     }
 }

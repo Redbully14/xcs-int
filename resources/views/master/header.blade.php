@@ -20,18 +20,29 @@
     @endif
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown d-none d-lg-block">
-        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit Log</a>
+        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit</a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-          <h6 class="p-3 mb-0">Log Type</h6>
+          <h6 class="p-3 mb-0">Submission Type</h6>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item" data-toggle="modal" data-target="#ajax_new_patrol_log">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
-                <i class="mdi mdi-file-outline text-primary"></i>
+                <i class="mdi mdi-book-plus text-warning"></i>
               </div>
             </div>
             <div class="preview-item-content">
               <p class="preview-subject ellipsis mb-1">Patrol Log</p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item preview-item" data-toggle="modal" data-target="#absence_modal">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-dark rounded-circle">
+                <i class="mdi mdi-clock-alert text-primary"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <p class="preview-subject ellipsis mb-1">Leave of <br>Absence</p>
             </div>
           </a>
         </div>
