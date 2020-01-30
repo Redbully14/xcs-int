@@ -27,21 +27,20 @@ globalToast = function(heading, text, icon, color) {
   }
 })(jQuery);
 
-if ($(".ajax_search_member-class").length) {
-  $(".ajax_search_member-class").select2();
-}
 $(".ajax_search_member-class").select2({
     placeholder: "Search by Website ID, Name or Unit Number",
     allowClear: true
 });
+
 $("#ajax_search_member-click_redirect").on("select2:select", function (e) {
   window.location.replace(e.params.data.id);
 });
 
-if ($(".antelope_global_select_single").length) {
-  $(".antelope_global_select_single").select2();
-}
 $(".antelope_global_select_single").select2({
     placeholder: "Select an Option...",
     allowClear: true
+});
+
+$(".antelope_global_select_single-noclear").select2({
+    placeholder: "Select an Option...",
 });

@@ -24,9 +24,10 @@ Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
 Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
-Route::get('/register', function () {
-    return view('auth.register');
-});
+Route::get('/register', [
+  'as' => 'register',
+  'uses' => 'Auth\RegistrationController@view'
+]);
 Route::get('/inactive', [
 	'as' => 'inactive',
 	'uses' => 'Auth\InactiveController@inactive'
@@ -43,6 +44,7 @@ Route::post('logout', [
   'as' => 'logout',
   'uses' => 'Auth\LoginController@logout'
 ]);
+Route::post('/register/submit', 'Auth\RegistrationController@submit');
 
 // Main GET Routes
 Route::get('/', function () {
