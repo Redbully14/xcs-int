@@ -54,7 +54,10 @@
             <label>Patrol Description</label>
             <textarea class="form-control" id="ajax-input-patrol-details" rows="6" disabled></textarea>
           </div>
-
+            <div class="form-group">
+                <label>Patrol Area</label>
+                <input type="text" class="form-control" id="ajax-input-patrol-area" disabled>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_new_patrol_log_cancel">Close</button>

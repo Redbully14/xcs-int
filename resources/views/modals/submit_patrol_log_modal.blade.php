@@ -65,13 +65,19 @@
               </div>
               <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
             </div>
-
             <div class="form-group">
               <label>Patrol Description (required)</label>
               <textarea class="form-control" id="patrol-details" rows="6"></textarea>
               <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
-
+              <div class="form-group">
+                  <label>Select AOP</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" id="patrol-aop" style="width:100%">
+                      <option value="BC">Blaine County</option>
+                      <option value="LS">Los Santos</option>
+                      <option value="SW">State Wide</option>
+                  </select>
+              </div>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Submit</button>

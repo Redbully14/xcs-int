@@ -54,6 +54,8 @@ class AntelopeActivity extends Controller
             'end_time' => ['required', 'string', new TimeValidation($data['start_time'], $data['patrol_start_date'], $data['patrol_end_date'])],
             'type' => ['required', 'string', 'max:30'],
             'details' => ['required', 'string'],
+            'aop' => ['required', 'array', 'min:1'],
+            'aop.*' => ['required', 'string'],
         ]);
     }
 
@@ -67,7 +69,7 @@ class AntelopeActivity extends Controller
     {
 
         $data = $this->convertTimezone($data);
-        
+
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
@@ -76,6 +78,7 @@ class AntelopeActivity extends Controller
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,
+            'patrol_area' => json_encode($data['aop']),
         ]);
 
         return $log;
@@ -169,6 +172,7 @@ class AntelopeActivity extends Controller
         'activity.start_time',
         'activity.end_time',
         'activity.details',
+        'activity.patrol_area',
         'activity.type',
         'users.name',
         'users.department_id',
@@ -232,6 +236,7 @@ class AntelopeActivity extends Controller
                 'start_time',
                 'end_time',
                 'details',
+                'patrol_area',
                 'type',
             ])->where('user_id', '=', $id);
 
