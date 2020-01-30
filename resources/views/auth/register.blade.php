@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="/assets/images/xcs-info/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/xcs-int/{{ $constants['global']['application_favicon'] }}" />
   </head>
   <body>
     <div class="container-scroller">
@@ -52,16 +52,33 @@
                     <input type="password" class="form-control" id="confirm_new_password" placeholder="Password">
                     <label id="confirm_new_password-error" class="error mt-2 text-danger" for="confirm_new_password" hidden></label>
                   </div>
-                  <hr>
+
+                  <div class="mb-4">
+                    <label>Policy Agreements</label>
+                    <div class="form-check form-check-warning">
+                      <label class="form-check-label text-muted">
+                        <input type="checkbox" class="form-check-input" required> By checking this box you confirm that you have read the Civilian SOP. </label>
+                    </div>
+                    <div class="form-check form-check-warning">
+                      <label class="form-check-label text-muted">
+                        <input type="checkbox" class="form-check-input" required> By checking this box you confirm that you have read the DoJ Community Rules and Regulations. </label>
+                    </div>
+                    <div class="form-check form-check-warning">
+                      <label class="form-check-label text-muted">
+                        <input type="checkbox" class="form-check-input" required> By checking this box you confirm that you have read the Civilian Weapon, Vehicle & Animal Structure. </label>
+                    </div>
+                  </div>
 
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn">Continue</button>
                   </div>
 
                   <div class="d-flex">
-                    <button class="btn btn-warning col mr-2">
+                    @impersonating
+                    <button class="btn btn-warning col mr-2" onclick="window.location.href = '{{ url('superadmin/normalmode') }}';" formnovalidate>
                       <i class="mdi mdi-account-arrow-right-outline"></i> Exit Godmode </button>
-                    <button class="btn btn-google col mr-2">
+                    @endImpersonating
+                    <button class="btn btn-google col mr-2" onclick="window.location.href = '{{ url('logout') }}';" formnovalidate>
                       <i class="mdi mdi-logout"></i> Logout </button>
                   </div>
 
@@ -161,5 +178,10 @@
     });
     </script>
     <!-- endinject -->
+    <script src="/assets/js/off-canvas.js"></script>
+    <script src="/assets/js/hoverable-collapse.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/assets/js/todolist.js"></script>
   </body>
 </html>
