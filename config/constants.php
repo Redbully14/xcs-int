@@ -41,6 +41,7 @@ return [
         'min_requirements_hours' => 10800, // 4 hours required
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
+        'recent_loa' => 604800, // 1 week
     ],
 
     /*

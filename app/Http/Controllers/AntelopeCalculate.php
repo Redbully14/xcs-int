@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
 use App\Activity;
 use App\Discipline;
+use App\Absence;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -455,5 +456,34 @@ class AntelopeCalculate extends Controller
         }
 
         return 'active';
+    }
+
+     /**
+     * Get the absence status
+     *
+     * @param $id (int)
+     * @return str
+     */
+    public static function absence_status($id) {
+
+        $constants = \Config::get('constants');
+        $absence = Absence::where('user_id', '=', $id);
+        $today = strtotime(Carbon::now()->toDateString());
+
+        if(is_null($absence->latest('end_date')->first())) {
+            return '-';
+        }
+
+        $absence = $absence->latest('end_date')->first();
+        $start_date = strtotime($absence->start_date);
+        $end_date = strtotime($absence->end_date);
+
+        if($absence->status == 0) {
+            if($start_date <= $today) {
+                if($today <= $end_date) {
+                    return 'Active';
+                } else return 'Expired';
+            } else return 'Upcoming - '.date('Y-m-d', $start_date);
+        } else return $constants['absence_status'][$absence->status];
     }
 }
