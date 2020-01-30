@@ -71,12 +71,13 @@
               <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
               <div class="form-group">
-                  <label>Select AOP</label>
-                  <select class="js-example-basic-multiple" multiple="multiple" id="patrol-aop" style="width:100%">
+                  <label>Select Patrol Area</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" id="patrol-area" style="width:100%">
                       @foreach($constants['patrol_area'] as $patrol_area => $value)
                           <option value="{{$value}}">{{$value}}</option>
                       @endforeach
                   </select>
+                  <label id="patrol-area-error" class="error mt-2 text-danger" for="patrol-area" hidden></label>
               </div>
           </div>
           <div class="modal-footer">
