@@ -131,6 +131,7 @@ class Antelope extends Controller
             '93s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 3),
             '93s_total_discipline' => AntelopeCalculate::get_custom_disciplines($id, 3),
             'patrol_restriction' => AntelopeCalculate::chk_patrol_restriction($id),
+            'absence_status' => AntelopeCalculate::absence_status($id),
         ];
     }
 

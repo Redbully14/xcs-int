@@ -128,7 +128,7 @@
                             </p>
                             <p class="clearfix">
                               <span class="float-left"> LOA Status </span>
-                              <span class="float-right text-muted"> - </span>
+                              <span class="float-right text-muted">{{ $calculations['absence_status'] }}</span>
                             </p>
                           </div>
                           <div class="col-sm">

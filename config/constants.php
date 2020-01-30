@@ -41,6 +41,7 @@ return [
         'min_requirements_hours' => 10800, // 4 hours required
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
+        'recent_loa' => 604800, // 1 week
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
         'inactive' => 'Inactive',
         'new' => 'New',
         'exempt' => 'Exempt',
+        'absent' => 'LOA',
     ],
 
     /*
@@ -248,6 +250,22 @@ return [
         'inactive' => 'danger',
         'new' => 'warning',
         'exempt' => 'info',
+        'absent' => 'primary',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Leave of Absences
+    |--------------------------------------------------------------------------
+    |
+    | Here is the configuration for Leave of Absences on the website, this
+    | takes global effect for the entire system..
+    |
+    */
+    'absence_status' => [
+        0 => 'Default',
+        1 => 'Disregarded',
+        3 => 'Denied',
     ],
 
     /*

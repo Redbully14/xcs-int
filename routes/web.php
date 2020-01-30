@@ -96,3 +96,7 @@ Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')-
 Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance');
 Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
 Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
+Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
+
+// IMPORTANT IMPORTANT IMPORTANT: Holy shit remove this before production or everyone will be able to create tokens
+Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
