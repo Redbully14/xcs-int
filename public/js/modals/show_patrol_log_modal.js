@@ -23,9 +23,9 @@ var id = $(this).val();
         $("#ajax-input-patrol-start-time").val(data['start_time']);
         $("#ajax-input-patrol-end-time").val(data['end_time']);
         $("#ajax-input-patrol-details").val(data['details']);
-        var aops = JSON.parse(data['patrol_area']);
-        var aopsWithSpace = aops.join(', ');
-        $("#ajax-input-patrol-area").val(aopsWithSpace);
+        var patrol_area = JSON.parse(data['patrol_area']);
+        var patrol_area_with_space = patrol_area.join(', ');
+        $("#ajax-input-patrol-area").val(patrol_area_with_space);
      }
   }).done(function(data) {});
 });

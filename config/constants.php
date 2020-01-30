@@ -376,9 +376,8 @@ return [
       'login' => '/assets/images/auth/Login_bg.jpg',
       'inactive' => '/assets/images/auth/Login_bg.jpg',
     ],
-    'aops' => [
+    'patrol_area' => [
         'BC' => 'Blaine County',
         'LS' => 'Los Santos',
-        'SW' => 'State Wide',
     ]
 ];

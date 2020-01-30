@@ -73,9 +73,9 @@
               <div class="form-group">
                   <label>Select AOP</label>
                   <select class="js-example-basic-multiple" multiple="multiple" id="patrol-aop" style="width:100%">
-                      <option value="{{$constants['aops']['BC']}}">Blaine County</option>
-                      <option value="{{$constants['aops']['LS']}}">Los Santos</option>
-                      <option value="{{$constants['aops']['SW']}}">State Wide</option>
+                      @foreach($constants['patrol_area'] as $patrol_area => $value)
+                          <option value="{{$value}}">{{$value}}</option>
+                      @endforeach
                   </select>
               </div>
           </div>
