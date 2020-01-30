@@ -103,10 +103,6 @@
                       <a class="nav-link" id="home-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="home" aria-selected="true">
                         <i class="mdi mdi-alert-outline"></i> Disciplinary Information </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <i class="mdi mdi-attachment"></i> Placeholder </a>
-                    </li>
                   </ul>
                 </div>
                 <div class="tab-content">
