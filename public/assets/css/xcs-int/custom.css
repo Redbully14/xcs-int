@@ -30,7 +30,7 @@
 }
 
 .content-wrapper
-{   
+{
   min-height: 100vh;
 }
 
@@ -73,4 +73,10 @@ textarea:focus, input:focus {
 .select2-container--default .select2-results__option[aria-selected=true] {
   background-color: #ddd;
   color: #000000 !important;
+}
+
+.swal-content__input,
+.swal-content__input:active,
+.swal-content__input:focus{
+    color: black !important;
 }

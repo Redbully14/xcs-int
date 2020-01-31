@@ -113,4 +113,19 @@ class EditProfileController extends Controller
 
         return;
     }
+
+    public function editpassword(Request $request)
+    {
+        $user = User::find($request->route('user'));
+
+        $request->validate([
+            'new_password' => ['required', 'string', 'min:8']
+        ]);
+
+        $user->password = Hash::make($request->new_password);
+        $user->temp_password = 1;
+        $user->save();
+
+        return;
+    }
 }
