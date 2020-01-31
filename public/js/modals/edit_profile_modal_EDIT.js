@@ -112,8 +112,8 @@ function changePasswordPopup() {
         modalNode.attr('tabindex', '-1');
         modalNode.removeClass('js-swal-fixed');
 
-        if(newPassword.length < 4) {
-            return swal("Password too short! Temporary passwords need to be at least 3 characters long.", {
+        if(newPassword.length < 7) {
+            return swal("Password too short! Temporary passwords need to be at least 8 characters long.", {
                 icon: "error"
             });
         }
