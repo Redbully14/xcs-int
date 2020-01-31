@@ -65,13 +65,20 @@
               </div>
               <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
             </div>
-
             <div class="form-group">
               <label>Patrol Description (required)</label>
               <textarea class="form-control" id="patrol-details" rows="6"></textarea>
               <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
-
+              <div class="form-group">
+                  <label>Select Patrol Area</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" id="patrol-area" style="width:100%">
+                      @foreach($constants['patrol_area'] as $patrol_area => $value)
+                          <option value="{{$value}}">{{$value}}</option>
+                      @endforeach
+                  </select>
+                  <label id="patrol-area-error" class="error mt-2 text-danger" for="patrol-area" hidden></label>
+              </div>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Submit</button>

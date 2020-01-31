@@ -6,6 +6,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   var start_time = $('#patrol-start-time-input').val();
   var end_time = $('#patrol-end-time-input').val();
   var details = $('#patrol-details').val();
+  //aop is an ARRAY
+  var patrol_area = $('#patrol-area').val();
   var elements = {
     '#patrol_start_date' : '#patrol-date-error',
     '#patrol-start-time-input' : '#patrol-start_time-error',
@@ -14,7 +16,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     '#patrol-start-time' : '#patrol-start_time-error',
     '#patrol-end-time' : '#patrol-end_time-error',
     '#patrol-details' : '#patrol-details-error',
-    '#patrol-end-log-date' : '#patrol-end-log-date-error'
+    '#patrol-end-log-date' : '#patrol-end-log-date-error',
+    '#patrol-area' : '#patrol-area-error'
   };
 
   // this is really crappy but i just can't be asked anymore
@@ -29,7 +32,7 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   $.ajax({
     type: 'POST',
     url: $url_submit_patrol_log,
-    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details},
+    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details, patrol_area:patrol_area},
     success: function() {
       $('#ajax_new_patrol_log_cancel').click();
       for (var element in elements) {
@@ -100,6 +103,14 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
             $(element).addClass('form-control-danger');
             $(label).append(errors[key]);
             $(label).prop('hidden', false);
+          break;
+          case 'patrol_area':
+                var element = '#patrol-area';
+                var label = '#patrol-area-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
           break;
         }
       }
