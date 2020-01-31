@@ -24,9 +24,10 @@ Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
 Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
-Route::get('/register', function () {
-    return view('auth.register');
-});
+Route::get('/register', [
+  'as' => 'register',
+  'uses' => 'Auth\RegistrationController@view'
+]);
 Route::get('/inactive', [
 	'as' => 'inactive',
 	'uses' => 'Auth\InactiveController@inactive'
@@ -43,12 +44,16 @@ Route::post('logout', [
   'as' => 'logout',
   'uses' => 'Auth\LoginController@logout'
 ]);
+Route::post('/register/submit', 'Auth\RegistrationController@submit');
 
 // Main GET Routes
 Route::get('/', function () {
     return redirect('/dashboard');
 });
-Route::get('/dashboard', 'Antelope@dashboard');
+Route::get('/dashboard', [
+  'as' => 'dashboard',
+  'uses' => 'Antelope@dashboard'
+]);
 Route::get('/xcsinfo', function () {
     return view('stackpath.welcome');
 });
@@ -63,6 +68,12 @@ Route::get('/superadmin/help', function () {
 })->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 Route::get('/profile/{user}', 'Antelope@getProfile')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::get('/myprofile', 'Antelope@myProfile');
+Route::get('/superadmin', [
+  'as' => 'superadmin',
+  'uses' => 'Antelope@superAdmin'
+])->middleware('level:'.\Config::get('constants.access_level.superadmin'));
+Route::get('/superadmin/normalmode', 'Antelope@superStopGodmode');
+Route::get('/superadmin/icons', 'Antelope@superAdminIcons')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 
 // Activty GET Routes
 Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));
@@ -84,5 +95,11 @@ Route::post('/discipline/get_data/{id}', 'AntelopeDiscipline@getDiscipline')->mi
 Route::post('/discipline/edit/{id}', 'AntelopeDiscipline@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::post('/member/edit/edit_user_password/{user}', 'Auth\EditProfileController@editpassword')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance');
 Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
+Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
+Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
+
+// IMPORTANT IMPORTANT IMPORTANT: Holy shit remove this before production or everyone will be able to create tokens
+Route::get('/api/gimme', 'Api\ApiTokenController@gimme');

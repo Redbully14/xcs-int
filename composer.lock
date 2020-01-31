@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69c37cee308234d3dac7cc45aa2e2a79",
+    "content-hash": "37916cc52b068143512bf01e4e5ff03f",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -834,6 +834,71 @@
                 "roles"
             ],
             "time": "2019-12-18T00:31:36+00:00"
+        },
+        {
+            "name": "lab404/laravel-impersonate",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/404labfr/laravel-impersonate.git",
+                "reference": "7c4d5345a76aedf58d38fc986ec933b10685909a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/404labfr/laravel-impersonate/zipball/7c4d5345a76aedf58d38fc986ec933b10685909a",
+                "reference": "7c4d5345a76aedf58d38fc986ec933b10685909a",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.8.* | ^6.0",
+                "php": ">=7.1.3"
+            },
+            "require-dev": {
+                "orchestra/database": "^3.8 | ^4.0",
+                "orchestra/testbench": "^3.8 | ^4.0",
+                "phpunit/phpunit": "^7.5 | ^8.0",
+                "symfony/http-foundation": ">=4.3.8",
+                "symfony/mime": ">=4.3.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lab404\\Impersonate\\ImpersonateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lab404\\Impersonate\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "404lab",
+                    "email": "web@404lab.fr"
+                }
+            ],
+            "description": "Laravel Impersonate is a plugin that allows to you to authenticate as your users.",
+            "keywords": [
+                "auth",
+                "impersonate",
+                "impersonation",
+                "laravel",
+                "laravel-package",
+                "laravel-plugin",
+                "package",
+                "plugin",
+                "user"
+            ],
+            "time": "2020-01-02T15:27:10+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3593,6 +3658,55 @@
                 "laravel"
             ],
             "time": "2019-12-17T03:30:56+00:00"
+        },
+        {
+            "name": "ybr-nx/laravel-mariadb",
+            "version": "1.0.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ybr-nx/laravel-mariadb.git",
+                "reference": "1dd893432237e28d5d43d1de110be925602dd37d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ybr-nx/laravel-mariadb/zipball/1dd893432237e28d5d43d1de110be925602dd37d",
+                "reference": "1dd893432237e28d5d43d1de110be925602dd37d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "YbrNX\\MariaDB\\MariaDBServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "YbrNX\\MariaDB\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "EUPL-1.2"
+            ],
+            "authors": [
+                {
+                    "name": "Ingmar Aasoja",
+                    "email": "ingmar@aasoja.ee"
+                }
+            ],
+            "description": "Add MariaDB JSON select support to Laravel",
+            "keywords": [
+                "database",
+                "json",
+                "laravel",
+                "mariadb"
+            ],
+            "time": "2019-09-11T05:18:47+00:00"
         }
     ],
     "packages-dev": [

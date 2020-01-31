@@ -69,6 +69,17 @@ class BaseXCS extends Controller
     }
 
     /**
+     * Convert ID to model User
+     *
+     * @return User
+     */
+    public static function getUser($id) {
+        $user = User::find($id);
+
+        return $user;
+    }
+
+    /**
      * Get all members
      *
      * @return searchable string (000 - User N. Civ-0)

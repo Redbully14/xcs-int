@@ -163,6 +163,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Bluora\LaravelGitInfo\ServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
+        YbrNX\MariaDB\MariaDBServiceProvider::class,
 
         /*
          * Package Service Providers...

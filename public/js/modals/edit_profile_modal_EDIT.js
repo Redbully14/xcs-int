@@ -69,3 +69,67 @@ $('#ajax_edit_member').on('submit', function(e) {
   }
   });
 });
+
+function changePasswordPopup() {
+    let modalNode = $('div[tabindex*="-1"]')
+    if (!modalNode) return;
+
+    modalNode.removeAttr('tabindex');
+    modalNode.addClass('js-swal-fixed');
+
+    swal({
+        title: 'Are you sure?',
+        text: "The password you enter here will be a temporary password, one that you can provide to the user to use to sign in. After they have used this password, they will be forced to set a new password before being allowed to continue.",
+        icon: 'warning',
+        content: {
+          element: "input",
+          attributes: {
+            placeholder: "Type a new password here",
+            type: "text",
+            class: 'form-control'
+          },
+        },
+        buttons: {
+          confirm: {
+            text: "Change Password",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true
+          },
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          }
+        }
+    }).then(newPassword => {
+        let modalNode = $('.js-swal-fixed')
+        if (!modalNode) return;
+
+        modalNode.attr('tabindex', '-1');
+        modalNode.removeClass('js-swal-fixed');
+
+        if(newPassword.length < 7) {
+            return swal("Password too short! Temporary passwords need to be at least 8 characters long.", {
+                icon: "error"
+            });
+        }
+
+        swal.close();
+
+        $.ajax({
+            type: 'POST',
+            url: $url_edit_profile_password_modal_POST + $('#ajax_edit_member_save').val(),
+            data: {new_password: newPassword},
+            success: function() {
+                showSuccessToast_EditMember();
+                if ($('#tableElement').length) {
+                    $('#tableElement').DataTable().ajax.reload();
+                }
+            },
+        });
+    })
+}

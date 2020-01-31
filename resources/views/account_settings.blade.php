@@ -12,9 +12,6 @@
     </div>
     <div class="row">
       <div class="col-12">
-      	@if( \Session::get('temp_password_required') )
-            <div class="alert alert-warning" role="alert"><i class="mdi mdi-alert-circle"></i> The account currently has a temporary password, you are required to change it in order to use Antelope. </div>
-        @endif
         <div class="card">
           <div class="card-body">
 
@@ -58,7 +55,7 @@
                 <form id="ajax_change_timezone">
                   <div class="form-group">
                     <label>Select your timezone</label>
-                    <select class="antelope_global_select_single" style="width:100%" id="ajax_change_timezone-input">
+                    <select class="antelope_global_select_single-noclear" style="width:100%" id="ajax_change_timezone-input">
                       @foreach (timezone_identifiers_list() as $timezone)
                       <option value="{{ $timezone }}"{{ $timezone == old('timezone', request()->user()->timezone) ? ' selected' : '' }}>{{ $timezone }}</option>
                       @endforeach

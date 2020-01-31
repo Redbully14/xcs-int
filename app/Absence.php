@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Absence extends Model
 {
-	protected $table = 'activity';
+	protected $table = 'absence';
 
     /**
      * The attributes that are mass assignable.
@@ -14,6 +14,6 @@ class Activity extends Model
      * @var array
      */
     protected $fillable = [
-        'patrol_start_date', 'patrol_end_date', 'start_time', 'end_time', 'details', 'priorities','patrol_area', 'type', 'user_id'
+        'user_id', 'start_date', 'end_date', 'forum_post', 'status',
     ];
 }

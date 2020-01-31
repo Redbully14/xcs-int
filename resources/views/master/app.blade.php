@@ -86,6 +86,7 @@
     <script src="/assets/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
     <script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/assets/vendors/sweetalert/sweetalert.min.js"></script>
     @yield('pluginjs')
     <!-- endinject -->
 
@@ -108,6 +109,7 @@
 
     <!-- Global modals for this page-->
     @include('modals.submit_patrol_log_modal')
+    @include('modals.submit_absence_modal')
     <!-- End global modals for this page-->
 
     <!-- Modals for this page-->

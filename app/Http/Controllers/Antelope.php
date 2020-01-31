@@ -131,6 +131,7 @@ class Antelope extends Controller
             '93s_active_discipline' => AntelopeCalculate::get_custom_active_disciplines($id, 3),
             '93s_total_discipline' => AntelopeCalculate::get_custom_disciplines($id, 3),
             'patrol_restriction' => AntelopeCalculate::chk_patrol_restriction($id),
+            'absence_status' => AntelopeCalculate::absence_status($id),
         ];
     }
 
@@ -182,5 +183,55 @@ class Antelope extends Controller
                                        ->with('role', $role)
                                        ->with('calculations', $calculations);
         }
+    }
+
+    /**
+     * Constructs the SuperAdmin Page
+     *
+     * @return View
+     */
+    public function superAdmin()
+    {
+        $constants = \Config::get('constants');
+
+        return view('superadmin')->with('constants', $constants);
+    }
+
+    /**
+     * Constructs the SuperAdmin Page
+     *
+     * @return View
+     */
+    public function superAdminIcons()
+    {
+        $constants = \Config::get('constants');
+
+        return view('developers.superadmin_icons')->with('constants', $constants);
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superAdminGodmode(Request $request)
+    {
+        auth()->user()->impersonate(User::find($request->id));
+
+        return response()->json([
+          'redirect_to' => route('dashboard')
+        ]); 
+    }
+
+    /**
+     * Godmode into another user
+     *
+     * @return View
+     */
+    public function superStopGodmode()
+    {
+        auth()->user()->leaveImpersonation();
+
+        return redirect()->route('superadmin');
     }
 }
