@@ -231,6 +231,7 @@
 @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
 <script type="text/javascript">
   var $url_edit_profile_modal_POST = '{{ url('member/edit/edit_user/') }}/';
+  var $url_edit_profile_password_modal_POST = '{{ url('member/edit/edit_user_password/') }}/';
 </script>
 <script src="/assets/vendors/sweetalert/sweetalert.min.js"></script>
 <script src="/js/modals/edit_profile_modal_EDIT.js"></script>
