@@ -22,6 +22,7 @@ class CreateActivityTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->longText('details');
+            $table->integer('priorities')->default(0);
             $table->json('patrol_area');
             $table->char('type', 20);
             $table->timestamps();

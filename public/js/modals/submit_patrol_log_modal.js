@@ -6,8 +6,11 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   var start_time = $('#patrol-start-time-input').val();
   var end_time = $('#patrol-end-time-input').val();
   var details = $('#patrol-details').val();
-  //aop is an ARRAY
   var patrol_area = $('#patrol-area').val();
+  var patrol_priorities = $('#patrol-priorities').val();
+  if(patrol_priorities < 0){
+      patrol_priorities = patrol_priorities * -1;
+  }
   var elements = {
     '#patrol_start_date' : '#patrol-date-error',
     '#patrol-start-time-input' : '#patrol-start_time-error',
@@ -17,7 +20,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     '#patrol-end-time' : '#patrol-end_time-error',
     '#patrol-details' : '#patrol-details-error',
     '#patrol-end-log-date' : '#patrol-end-log-date-error',
-    '#patrol-area' : '#patrol-area-error'
+    '#patrol-area' : '#patrol-area-error',
+    '#patrol-priorities' : '#patrol-priorities-error'
   };
 
   // this is really crappy but i just can't be asked anymore
@@ -32,7 +36,7 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   $.ajax({
     type: 'POST',
     url: $url_submit_patrol_log,
-    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details, patrol_area:patrol_area},
+    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details, patrol_area:patrol_area, patrol_priorities:patrol_priorities},
     success: function() {
       $('#ajax_new_patrol_log_cancel').click();
       for (var element in elements) {
@@ -107,6 +111,14 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
           case 'patrol_area':
                 var element = '#patrol-area';
                 var label = '#patrol-area-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+          break;
+          case 'patrol_priorities':
+                var element = '#patrol-priorities2';
+                var label = '#patrol-priorities-error';
                 $(element).parent().addClass('has-danger');
                 $(element).addClass('form-control-danger');
                 $(label).append(errors[key]);
