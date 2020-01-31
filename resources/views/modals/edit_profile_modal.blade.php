@@ -188,6 +188,18 @@
                     </div>
                     @endif
 
+                    @if(Auth::user()->level() >= $constants['access_level']['admin'])
+                    <div class="form-group">
+                      <label>Antelope Password</label>
+                      <button type="button" class="form-control btn btn-outline-warning btn-fw" onclick="changePasswordPopup()">Change User Password</button>
+                    </div>
+                    @else
+                    <div class="form-group" hidden>
+                      <label hidden>Antelope Username</label>
+                      <input type="text" class="form-control p_input" id="profile-username-field" name="username" autocomplete="username" autofocus value="ajax-profile-display-input-username" disabled hidden>
+                    </div>
+                    @endif
+
                   </div>
                 </div>
               </div>
@@ -220,6 +232,7 @@
 <script type="text/javascript">
   var $url_edit_profile_modal_POST = '{{ url('member/edit/edit_user/') }}/';
 </script>
+<script src="/assets/vendors/sweetalert/sweetalert.min.js"></script>
 <script src="/js/modals/edit_profile_modal_EDIT.js"></script>
 @endif
 
