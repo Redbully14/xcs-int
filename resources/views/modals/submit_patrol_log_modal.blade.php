@@ -71,7 +71,23 @@
               <textarea class="form-control" id="patrol-details" rows="6"></textarea>
               <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
-
+              <div class="form-group">
+                  <label>How many priorities did you do? (required)</label>
+                  <div class="input-group" id="patrol-priorities2" data-target-input="nearest">
+                      <input type="text" class="form-control" id="patrol-priorities"/>
+                      <div class="input-group-addon input-group-append"><i class=" mdi mdi-apple-keyboard-caps input-group-text"></i></div>
+                  </div>
+                  <label id="patrol-priorities-error" class="error mt-2 text-danger" for="patrol-priorities" hidden></label>
+              </div>
+              <div class="form-group">
+                  <label>Select Patrol Area (required)</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" id="patrol-area" style="width:100%">
+                      @foreach($constants['patrol_area'] as $patrol_area => $value)
+                          <option value="{{$value}}">{{$value}}</option>
+                      @endforeach
+                  </select>
+                  <label id="patrol-area-error" class="error mt-2 text-danger" for="patrol-area" hidden></label>
+              </div>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Submit</button>

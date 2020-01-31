@@ -54,6 +54,9 @@ class AntelopeActivity extends Controller
             'end_time' => ['required', 'string', new TimeValidation($data['start_time'], $data['patrol_start_date'], $data['patrol_end_date'])],
             'type' => ['required', 'string', 'max:30'],
             'details' => ['required', 'string'],
+            'patrol_area' => ['required', 'array', 'min:1'],
+            'patrol_area.*' => ['required', 'string'],
+            'patrol_priorities' => ['required', 'integer'],
         ]);
     }
 
@@ -76,6 +79,8 @@ class AntelopeActivity extends Controller
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,
+            'patrol_area' => json_encode($data['patrol_area']),
+            'priorities' => $data['patrol_priorities'],
         ]);
 
         return $log;
@@ -169,6 +174,8 @@ class AntelopeActivity extends Controller
         'activity.start_time',
         'activity.end_time',
         'activity.details',
+        'activity.patrol_area',
+        'activity.priorities',
         'activity.type',
         'users.name',
         'users.department_id',
@@ -232,6 +239,8 @@ class AntelopeActivity extends Controller
                 'start_time',
                 'end_time',
                 'details',
+                'patrol_area',
+                'priorities',
                 'type',
             ])->where('user_id', '=', $id);
 
