@@ -74,6 +74,7 @@ return [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
+        'absence_database' => 'Absence Database',
         'account_settings' => 'Account Settings',
         'user_profile' => 'User Profile',
         'personal_profile' => 'My Profile',
@@ -372,6 +373,7 @@ return [
         'new' => 'warning',
         'exempt' => 'info',
     ],
+    
     'backgrounds' => [
       'login' => '/assets/images/auth/Login_bg.jpg',
       'inactive' => '/assets/images/auth/Login_bg.jpg',

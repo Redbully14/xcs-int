@@ -93,4 +93,16 @@ class AntelopeAbsence extends Controller
 
         return $this->submitted($request, $absence);
     }
+
+    /**
+     * Gets all activity in database
+     *
+     * @return View
+     */
+    public function view()
+    {
+        $constants = \Config::get('constants');
+
+        return view('absence_database')->with('constants', $constants);
+    }
 }

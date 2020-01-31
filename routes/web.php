@@ -85,6 +85,9 @@ Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level
 Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disciplineData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
+// Absence GET Routes
+Route::get('/absence', 'AntelopeAbsence@view')->middleware('level:'.\Config::get('constants.access_level.staff'));
+
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
 Route::post('/settings/change_avatar', 'Antelope@setAvatar');
