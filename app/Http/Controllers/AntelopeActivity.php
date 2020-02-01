@@ -43,9 +43,19 @@ class AntelopeActivity extends Controller
     protected function validator(array $data)
     {
 
-        if ($data['patrol_end_date'] == null) {
+        if (is_null($data['patrol_end_date'])) {
             $data['patrol_end_date'] = $data['patrol_start_date'];
-        };
+        }
+
+        // this does fuck all??? always returns as '["false", null]'
+        //if (is_null($data['flag'])) {
+            $data['flag'] = "jeff";
+        //}
+
+        //if (is_null($data['flag_reason']) || $data['flag_reason'] === "") {
+            $data['flag_reason'] = "None";
+        //}
+
 
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
@@ -57,6 +67,8 @@ class AntelopeActivity extends Controller
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
             'patrol_priorities' => ['required', 'integer'],
+            //'flag' => ['required', 'integer'],
+            //'flag_reason' => ['string']
         ]);
     }
 
@@ -68,7 +80,6 @@ class AntelopeActivity extends Controller
      */
     protected function create(array $data)
     {
-
         $data = $this->convertTimezone($data);
 
         $log = Activity::create([
@@ -81,6 +92,7 @@ class AntelopeActivity extends Controller
             'user_id' => Auth::user()->id,
             'patrol_area' => json_encode($data['patrol_area']),
             'priorities' => $data['patrol_priorities'],
+            'flag' => json_encode([$data['flag'], $data['flag_reason']])
         ]);
 
         return $log;
@@ -135,10 +147,6 @@ class AntelopeActivity extends Controller
      */
     public function submit(Request $request)
     {
-        if ($request->patrol_end_date == null) {
-            $request->patrol_end_date = $request->patrol_start_date;
-        };
-
         $this->validator($request->all())->validate();
 
         $log = $this->create($request->all());
