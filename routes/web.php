@@ -97,6 +97,7 @@ Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata
 Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::post('/member/edit/edit_user_password/{user}', 'Auth\EditProfileController@editpassword')->middleware('level:'.\Config::get('constants.access_level.admin'));
 Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance');
+Route::post('/activity/get_flag_data/{user}', 'AntelopeActivity@passActivityFlagInstance');
 Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
 Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));

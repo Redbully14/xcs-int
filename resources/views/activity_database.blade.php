@@ -56,4 +56,5 @@
 
 @section('modals')
 @include('modals.show_patrol_log_modal')
+@include('modals.edit_flags_modal')
 @endsection

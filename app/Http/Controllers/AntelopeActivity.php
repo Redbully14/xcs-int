@@ -255,6 +255,22 @@ class AntelopeActivity extends Controller
         } else return 'noob hax0r';
     }
 
+    /**
+     * Gets specific activity flag instance
+     *
+     * @return View
+     * @throws \Exception
+     */
+    public function passActivityFlagInstance($id)
+    {
+        $constants = \Config::get('constants');
+        if(Auth::user()->level() >= $constants['access_level']['staff'] or Auth::user()->id == Activity::find($id)->user_id) {
+            $log = Activity::find($id);
+
+            return $log->flag;
+        } else return 'noob hax0r';
+    }
+
 
     /**
      * Gets a specific users' activity

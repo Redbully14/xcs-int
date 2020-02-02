@@ -38,7 +38,7 @@ $(function() {
             return 'No';
         }
     }},
-    { data: 'id', render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'"><i class="mdi mdi-eye"></i> View</button>'; }}
+    { data: 'id', render: function(data, type, row) { return '<button class="btn btn-outline-primary" id="ajax_view_patrol_log_open" value="'+data+'"><i class="mdi mdi-eye"></i> View</button><br><br><button class="btn btn-outline-warning" id="ajax_edit_flags_open" value="'+data+'"><i class="mdi mdi-alarm-light-outline"></i> Flags</brbutton>'; }}
    ],
     "createdRow": function( row, data, dataIndex ) {
        var flag = JSON.parse(data.flag.replace(/&quot;/g,'"'));
