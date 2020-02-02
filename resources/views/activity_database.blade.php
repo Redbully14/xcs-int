@@ -26,7 +26,9 @@
                   <th>Patrol Date</th>
                   <th>Start Time</th>
                   <th>End Time</th>
+                  <th>Total Time</th>
                   <th>Patrol Details</th>
+                  <th>Flagged</th>
                   <th>Actions</th>
                 </tr>
               </thead>

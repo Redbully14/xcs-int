@@ -51,9 +51,15 @@
           </div>
 
           <div class="form-group">
+            <label>Total Patrol Time</label>
+            <input type="text" class="form-control" id="ajax-input-patrol-total-time" disabled>
+          </div>
+
+          <div class="form-group">
             <label>Patrol Description</label>
             <textarea class="form-control" id="ajax-input-patrol-details" rows="6" disabled></textarea>
           </div>
+
             <div class="form-group">
                 <label>Patrol Area</label>
                 <input type="text" class="form-control" id="ajax-input-patrol-area" disabled>
@@ -61,6 +67,15 @@
             <div class="form-group">
                 <label>Patrol Priorities</label>
                 <input type="text" class="form-control" id="ajax-input-patrol-priorities" disabled/>
+            </div>
+
+            <div class="form-group">
+                <h5>Flags</h5>
+                <label>Self Flag: <span id="ajax-span-self-flag"></span></label>
+                <textarea class="form-control" id="ajax-textarea-self-flag" rows="6" placeholder="No details." disabled></textarea>
+                <br>
+                <label>Automatic Flag: <span id="ajax-span-auto-flag"></span></label>
+                <textarea class="form-control" id="ajax-textarea-auto-flag" rows="6" placeholder="No details." disabled></textarea>
             </div>
 
         </div>

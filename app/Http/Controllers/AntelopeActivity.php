@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -74,8 +75,9 @@ class AntelopeActivity extends Controller
     /**
      * Create a new log instance after validation
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
+     * @throws \Exception
      */
     protected function create(array $data)
     {
@@ -91,17 +93,31 @@ class AntelopeActivity extends Controller
             $data['flag_reason'] = "";
         }
 
+        $start = new DateTime($data['patrol_start_date'] . 'T' . $data['start_time']);
+        $end = new DateTime($data['patrol_end_date'] . 'T' . $data['end_time']);
+        $diff = $end->diff($start);
+        $hours = $diff->h;
+        $hours = $hours + ($diff->days * 24);
+        $auto_flag = false;
+        $auto_flag_reason = "";
+
+        if ($hours >= 12) {
+            $auto_flag = true;
+            $auto_flag_reason = "Patrol is 12+ hours in length.";
+        }
+
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
+            'total_time' => $hours,
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,
             'patrol_area' => json_encode($data['patrol_area']),
             'priorities' => $data['patrol_priorities'],
-            'flag' => json_encode([$data['flag'], $data['flag_reason']])
+            'flag' => json_encode([[$data['flag'], $auto_flag, false], [$data['flag_reason'], $auto_flag_reason, ""]])
         ]);
 
         return $log;
@@ -190,10 +206,12 @@ class AntelopeActivity extends Controller
         'activity.patrol_end_date',
         'activity.start_time',
         'activity.end_time',
+        'activity.total_time',
         'activity.details',
         'activity.patrol_area',
         'activity.priorities',
         'activity.type',
+        'activity.flag',
         'users.name',
         'users.department_id',
         'users.website_id'
@@ -221,6 +239,7 @@ class AntelopeActivity extends Controller
      * Gets specific activity instance
      *
      * @return View
+     * @throws \Exception
      */
     public function passActivityInstance($id)
     {
