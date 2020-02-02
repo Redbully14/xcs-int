@@ -11,6 +11,7 @@
         </button>
       </div>
         <form id="ajax_submit_patrol_log" autocomplete="off">
+          @csrf
           <div class="modal-body">
 
             <div class="form-group">

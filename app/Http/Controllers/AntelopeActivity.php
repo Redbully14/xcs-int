@@ -42,20 +42,19 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-
         if (is_null($data['patrol_end_date'])) {
             $data['patrol_end_date'] = $data['patrol_start_date'];
         }
 
-        // this does fuck all??? always returns as '["false", null]'
-        //if (is_null($data['flag'])) {
-            $data['flag'] = "jeff";
-        //}
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
 
-        //if (is_null($data['flag_reason']) || $data['flag_reason'] === "") {
-            $data['flag_reason'] = "None";
-        //}
-
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
 
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
@@ -67,8 +66,8 @@ class AntelopeActivity extends Controller
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
             'patrol_priorities' => ['required', 'integer'],
-            //'flag' => ['required', 'integer'],
-            //'flag_reason' => ['string']
+            'flag' => ['required', 'boolean'],
+            'flag_reason' => ['string']
         ]);
     }
 
@@ -81,6 +80,16 @@ class AntelopeActivity extends Controller
     protected function create(array $data)
     {
         $data = $this->convertTimezone($data);
+
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
+
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
 
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
