@@ -128,6 +128,7 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
       }
     }
   });
+    $('#patrol-area').empty();
 });
 
 (function($) {
