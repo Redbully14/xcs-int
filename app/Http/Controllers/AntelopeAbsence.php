@@ -143,4 +143,16 @@ class AntelopeAbsence extends Controller
         ->rawColumns(['forum_post'])
         ->toJson();
     }
+
+    /**
+     * Generates all absences in a table that has the status as unreviewed
+     *
+     * @return DataTable
+     */
+    public function approveAbsence($id)
+    {
+        $absence = Absence::find($id);
+        $absence->status = 1;
+        $absence->save();
+    }
 }

@@ -44,6 +44,8 @@
 <script text="text/javascript">
   var $url = "{{ url('/absence/datatable/0') }}";
   var $absence_id = "{{ $constants['global_id']['absence'] }}";
+  var $url_absence_btn_approve = "{{ url('/absence/approve/') }}/";
+  var $url_absence_btn_block = "{{ url('/absence/block/') }}/";
 </script>
 <script src="/js/absence_database.js"></script>
 @endsection
