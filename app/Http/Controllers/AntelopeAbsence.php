@@ -155,4 +155,28 @@ class AntelopeAbsence extends Controller
         $absence->status = 1;
         $absence->save();
     }
+
+    /**
+     * Generates all absences in a table that has the status as unreviewed
+     *
+     * @return DataTable
+     */
+    public function archiveAbsence($id)
+    {
+        $absence = Absence::find($id);
+        $absence->status = 2;
+        $absence->save();
+    }
+
+    /**
+     * Generates all absences in a table that has the status as unreviewed
+     *
+     * @return DataTable
+     */
+    public function queueAbsence($id)
+    {
+        $absence = Absence::find($id);
+        $absence->status = 0;
+        $absence->save();
+    }
 }

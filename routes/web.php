@@ -104,6 +104,8 @@ Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.
 Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
 Route::post('/absence/approve/{id}', 'AntelopeAbsence@approveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::post('/absence/archive/{id}', 'AntelopeAbsence@archiveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::post('/absence/queue/{id}', 'AntelopeAbsence@queueAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
 
 // IMPORTANT IMPORTANT IMPORTANT: Holy shit remove this before production or everyone will be able to create tokens
 Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
