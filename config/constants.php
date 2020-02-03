@@ -264,9 +264,9 @@ return [
     |
     */
     'absence_status' => [
-        0 => 'Default',
-        1 => 'Disregarded',
-        3 => 'Denied',
+        0 => 'Pending Review',
+        1 => 'Active',
+        2 => 'Archived',
     ],
 
     /*
