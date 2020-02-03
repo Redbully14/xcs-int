@@ -17,7 +17,7 @@ $(function() {
    ],
     "createdRow": function( row, data, dataIndex ) {
        if(new Date(data['end_date']) < new Date()) {
-          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+          $(row).css('background-color', 'rgba(91, 59, 0, 0.5)');
        }
     }
   });
@@ -40,7 +40,7 @@ $(function() {
    ],
     "createdRow": function( row, data, dataIndex ) {
        if(new Date(data['end_date']) < new Date()) {
-          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+          $(row).css('background-color', 'rgba(91, 59, 0, 0.5)');
        }
     }
   });
