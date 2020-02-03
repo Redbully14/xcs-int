@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Http\Controllers\BaseXCS;
+use App\Http\Controllers\AntelopeCalculate;
 
 class AntelopeAbsence extends Controller
 {
@@ -136,10 +137,16 @@ class AntelopeAbsence extends Controller
                     }
                     else return $row->name.' '.$row->department_id;})
         ->addColumn('start_end_date', function($row){
+                    $start_date = strtotime($row->start_date);
+                    $end_date = strtotime($row->end_date);
+
+                    $duration = $end_date - $start_date;
+                    $duration = BaseXCS::convertToDays($duration);
+
                     if ( $row->start_date == null or $row->end_date == $row->start_date ) {
                         return $row->start_date;
                     }
-                    else return $row->start_date.' - '.$row->end_date;})
+                    else return $row->start_date.' - '.$row->end_date.' ['.$duration.' day(s)]';})
         ->rawColumns(['forum_post'])
         ->toJson();
     }
