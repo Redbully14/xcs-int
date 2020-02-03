@@ -12153,8 +12153,11 @@ a.close.disabled {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  padding-right: 0 !important;
   outline: 0; }
-
+.fixpaddingright{
+    padding-right: 0 !important;
+}
 .modal-dialog {
   position: relative;
   width: auto;
