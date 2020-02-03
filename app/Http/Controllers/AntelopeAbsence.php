@@ -145,9 +145,9 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Generates all absences in a table that has the status as unreviewed
+     * Changes a status of an absence to approved
      *
-     * @return DataTable
+     * @return void
      */
     public function approveAbsence($id)
     {
@@ -157,7 +157,7 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Generates all absences in a table that has the status as unreviewed
+     * Changes a status of an absence to archived
      *
      * @return DataTable
      */
@@ -169,7 +169,7 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Generates all absences in a table that has the status as unreviewed
+     * Changes a status of an absence to unreviewed
      *
      * @return DataTable
      */

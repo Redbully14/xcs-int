@@ -12,9 +12,14 @@ $(function() {
     { data: 'name_department_id', name: 'name_department_id' },
     { data: 'website_id', name: 'website_id' },
     { data: 'start_end_date', name: 'start_end_date' },
-    { data: 'forum_post', name: 'forum_post' },
+    { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
     { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
    ],
+    "createdRow": function( row, data, dataIndex ) {
+       if(new Date(data['end_date']) < new Date()) {
+          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+       }
+    }
   });
 
   $('#ajax_absence_database_A-table').DataTable({
@@ -30,9 +35,14 @@ $(function() {
     { data: 'name_department_id', name: 'name_department_id' },
     { data: 'website_id', name: 'website_id' },
     { data: 'start_end_date', name: 'start_end_date' },
-    { data: 'forum_post', name: 'forum_post' },
+    { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
     { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button> <button class="btn btn-social-icon btn-warning" id="absence_btn_archive" value="'+data+'"><i class="mdi mdi-archive"></i></button>'; } }
    ],
+    "createdRow": function( row, data, dataIndex ) {
+       if(new Date(data['end_date']) < new Date()) {
+          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+       }
+    }
   });
 });
 
@@ -50,6 +60,7 @@ awaiting_review_table.on('click', '#absence_btn_approve', function () {
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      refreshTables();
     }
   })
 });
@@ -80,6 +91,7 @@ function archiveAbsence(id) {
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      refreshTables();
     },
   });
 }
@@ -94,8 +106,14 @@ function queueAbsence(id) {
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      refreshTables();
     },
   });
+}
+
+function refreshTables() {
+  $('#ajax_absence_database_AR-table').DataTable().ajax.reload();
+  $('#ajax_absence_database_A-table').DataTable().ajax.reload();
 }
 
 function archivePopup(id) {
