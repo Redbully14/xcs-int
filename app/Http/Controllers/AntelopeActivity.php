@@ -93,6 +93,7 @@ class AntelopeActivity extends Controller
             $data['flag_reason'] = "";
         }
 
+        $now = new DateTime();
         $start = new DateTime($data['patrol_start_date'] . 'T' . $data['start_time']);
         $end = new DateTime($data['patrol_end_date'] . 'T' . $data['end_time']);
         $diff = $end->diff($start);
@@ -106,6 +107,15 @@ class AntelopeActivity extends Controller
             $auto_flag_reason = "Patrol is 12+ hours in length.";
         }
 
+        if ($start > $now) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol is in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol is in the future.";
+            }
+        }
+
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
@@ -117,7 +127,7 @@ class AntelopeActivity extends Controller
             'user_id' => Auth::user()->id,
             'patrol_area' => json_encode($data['patrol_area']),
             'priorities' => $data['patrol_priorities'],
-            'flag' => json_encode([[$data['flag'], $auto_flag, false], [$data['flag_reason'], $auto_flag_reason, ""]])
+            'flag' => json_encode([[$data['flag'], $auto_flag, false], [$data['flag_reason'], $auto_flag_reason, ["", ""]]])
         ]);
 
         return $log;

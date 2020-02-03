@@ -37,7 +37,7 @@
 
                 <div class="form-group">
                     <div class="form-check form-check-info">
-                        <label class="form-check-label"><input type="checkbox" id="resolve-auto-flag"> Mark Auto Flag Resolved</label>
+                        <label class="form-check-label"><input type="checkbox" id="resolve-auto-flag"> Mark Automatic Flag Resolved</label>
                         <label id="resolve-auto-flag-error" class="error mt-2 text-danger" for="resolve-auto-flag" hidden></label>
                     </div>
                     <textarea id="resolve-auto-flag-details" class="form-control" style="display: none" rows="6" placeholder="Enter an optional note here..."></textarea>
