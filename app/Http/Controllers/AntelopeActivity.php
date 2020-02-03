@@ -266,6 +266,42 @@ class AntelopeActivity extends Controller
     }
 
     /**
+     * Gets specific activity instance
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function editActivityFlagInstance(Request $request)
+    {
+        $constants = \Config::get('constants');
+        if(Auth::user()->level() >= $constants['access_level']['staff']) {
+            $log = Activity::find($request->route('id'));
+
+            $temp_array = [];
+            $temp_array['self_resolve_reason'] = $request->self_resolve_reason;
+            $temp_array['auto_resolve_reason'] = $request->auto_resolve_reason;
+
+            if (is_null($temp_array['self_resolve_reason'])) {
+                $temp_array['self_resolve_reason'] = "No details.";
+            }
+            if (is_null($temp_array['auto_resolve_reason'])) {
+                $temp_array['auto_resolve_reason'] = "No details.";
+            }
+
+            Validator::make($temp_array, [
+                'self_resolve_reason' => ['required', 'string'],
+                'auto_resolve_reason' => ['required', 'string']
+            ]);
+
+            $oldFlag = json_decode($log->flag);
+            $log->flag = json_encode([[$oldFlag[0][0], $oldFlag[0][1], true],[$oldFlag[1][0], $oldFlag[1][1], [$temp_array['self_resolve_reason'], $temp_array['auto_resolve_reason']]]]);
+            $log->save();
+
+            return;
+        } else return 'noob hax0r';
+    }
+
+    /**
      * Gets specific activity flag instance
      *
      * @return View

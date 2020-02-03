@@ -1,7 +1,7 @@
 $table = $($activity_table);
 $table.on('click', '#ajax_edit_flags_open', function () {
-
     var id = $(this).val();
+    $('#save_flags').val(id).change();
 
     $.ajax({
         type: "POST",
@@ -38,6 +38,25 @@ $table.on('click', '#ajax_edit_flags_open', function () {
             } else {
                 $("#save_flags").prop('disabled', true);
             }
+
+            if (flags[0][2]) {
+                $("#save_flags").prop('disabled', true);
+                $("#resolve-self-flag").prop('checked', true).prop('disabled', true);
+                $("#resolve-auto-flag").prop('checked', true).prop('disabled', true);
+                if (flags[1][2][0] === "No details.") {
+                    $('#resolve-self-flag-details').attr('placeholder', flags[1][2][0]).attr('rows', 1).show().prop('disabled', true).val("");
+                } else {
+                    $('#resolve-self-flag-details').val(flags[1][2][0]).attr('rows', 6).show().prop('disabled', true);
+                }
+                if (flags[1][2][1] === "No details.") {
+                    $('#resolve-auto-flag-details').attr('placeholder', flags[1][2][1]).attr('rows', 1).show().prop('disabled', true).val("");
+                } else {
+                    $('#resolve-auto-flag-details').val(flags[1][2][1]).attr('rows', 6).show().prop('disabled', true);
+                }
+            } else {
+                $('#resolve-self-flag-details').val("");
+                $('#resolve-auto-flag-details').val("");
+            }
         }
     }).done(function(data) {});
 });
@@ -62,72 +81,49 @@ $(document).on('click', 'input[id="resolve-auto-flag"]', function() {
 
 $('#ajax_edit_flags').on('submit', function(e) {
     e.preventDefault();
-    var id = $('#ajax_edit_member_save').val();
-    var name = $('#profile-name-field').val();
-    var website_id = $('#profile-website-id-field').val();
-    var department_id = $('#profile-department-id-field').val();
-    var rank = $('#profile-rank-field').val();
-    var antelope_status = $("#profile-active-field").prop("checked") ? 1 : 0;
-    var username = $('#profile-username-field').val();
-    var role = $('#profile-role-field').val();
-    var advanced_training = $("#profile-training-field").prop("checked") ? 1 : 0;
-    var requirements_exempt = $("#profile-exempt-field").prop("checked") ? 1 : 0;
+    var id = $('#save_flags').val();
+    var self_resolve_reason = $('#resolve-self-flag-details').val();
+    var auto_resolve_reason = $('#resolve-auto-flag-details').val();
 
     $.ajax({
         type: 'POST',
-        url: $url_edit_profile_modal_POST + id,
-        data: {name:name, website_id:website_id, department_id:department_id, rank:rank, antelope_status:antelope_status, username:username, role:role, advanced_training:advanced_training, requirements_exempt:requirements_exempt},
+        url: $url_edit_flags_POST + id,
+        data: {self_resolve_reason: self_resolve_reason, auto_resolve_reason: auto_resolve_reason},
         success: function() {
-            for (var element in elements) {
-                $(element).parent().removeClass('has-danger');
-                $(element).removeClass('form-control-danger');
-                $(elements[element]).prop('hidden', true);
-                $(elements[element]).empty();
-            }
-            showSuccessToast_EditMember();
+            $('#ajax_edit_flags_cancel').click();
+            showSuccessToast_EditFlag();
             if ($('#tableElement').length) {
                 $('#tableElement').DataTable().ajax.reload();
             }
         },
         error: function(data) {
-            for (var element in elements) {
-                $(element).parent().removeClass('has-danger');
-                $(element).removeClass('form-control-danger');
-                $(elements[element]).prop('hidden', true);
-                $(elements[element]).empty();
-            }
-            showFailToast_EditMember();
+            showFailToast_EditFlag();
             var errors = data['responseJSON'].errors;
             console.log(errors);
-
-            for (var key in errors) {
-                switch (key) {
-                    case 'name':
-                        var element = '#profile-name-field';
-                        var label = '#edit-name-error';
-                        $(element).parent().addClass('has-danger');
-                        $(element).addClass('form-control-danger');
-                        $(label).append(errors[key]);
-                        $(label).prop('hidden', false);
-                        break;
-                    case 'website_id':
-                        var element = '#profile-website-id-field';
-                        var label = '#edit-website_id-error';
-                        $(element).parent().addClass('has-danger');
-                        $(element).addClass('form-control-danger');
-                        $(label).append(errors[key]);
-                        $(label).prop('hidden', false);
-                        break;
-                    case 'username':
-                        var element = '#profile-username-field';
-                        var label = '#edit-username-error';
-                        $(element).parent().addClass('has-danger');
-                        $(element).addClass('form-control-danger');
-                        $(label).append(errors[key]);
-                        $(label).prop('hidden', false);
-                        break;
-                }
-            }
         }
     });
 });
+
+showSuccessToast_EditFlag = function() {
+    'use strict';
+    $.toast({
+        heading: 'Flags Updated!',
+        text: 'This patrol log has been updated and the new data has been sent to the database!',
+        showHideTransition: 'slide',
+        icon: 'success',
+        loaderBg: '#f96868',
+        position: 'top-right'
+    })
+};
+
+showFailToast_EditFlag = function() {
+    'use strict';
+    $.toast({
+        heading: 'Flags Update Failed!',
+        text: 'Flags update failed, this is likely due to an internal error. Please report this issue.',
+        showHideTransition: 'slide',
+        icon: 'error',
+        loaderBg: '#f2a654',
+        position: 'top-right'
+    })
+};
