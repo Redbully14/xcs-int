@@ -87,6 +87,7 @@ Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disc
 
 // Absence GET Routes
 Route::get('/absence', 'AntelopeAbsence@view')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::get('/absence/datatable/{status}', 'AntelopeAbsence@passAbsenceDataTable')->middleware('level:'.\Config::get('constants.access_level.staff'));
 
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');

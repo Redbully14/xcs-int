@@ -318,6 +318,7 @@ return [
     'global_id' => [
         'patrol_log' => 'PL-',
         'disciplinary_action' => 'DA-',
+        'absence' => 'LOA-'
     ],
 
     /*

@@ -16,8 +16,8 @@
       <h4 class="card-title">Absences Awaiting Review</h4>
       <div class="row">
         <div class="col-12">
-          <div class="table-responsive" id="ajax_absence_database-div">
-            <table id="ajax_absence_database-table" class="table table-bordered">
+          <div class="table-responsive" id="ajax_absence_database_AR-div">
+            <table id="ajax_absence_database_AR-table" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Absence ID</th>
@@ -42,10 +42,11 @@
 
 @section('injectjs')
 <script text="text/javascript">
+  var $url = "{{ url('/absence/datatable/0') }}";
+  var $absence_id = "{{ $constants['global_id']['absence'] }}";
 </script>
 <script src="/js/absence_database.js"></script>
 @endsection
 
 @section('modals')
-@include('modals.show_patrol_log_modal')
 @endsection

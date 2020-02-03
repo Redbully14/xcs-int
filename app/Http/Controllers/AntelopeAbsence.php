@@ -105,4 +105,42 @@ class AntelopeAbsence extends Controller
 
         return view('absence_database')->with('constants', $constants);
     }
+
+    /**
+     * Generates all absences in a table that has the status as unreviewed
+     *
+     * @return DataTable
+     */
+    public function passAbsenceDataTable($status)
+    {
+        $query = Absence::query()
+        ->select([
+            'absence.id',
+            'absence.user_id',
+            'absence.start_date',
+            'absence.end_date',
+            'absence.forum_post',
+            'absence.status',
+            'users.name',
+            'users.department_id',
+            'users.website_id'
+        ])
+        ->join('users', function($join) {
+            $join->on('absence.user_id', '=', 'users.id');
+        })->where('absence.status', '=', $status);
+
+        return datatables($query)
+        ->addColumn('name_department_id', function($row){
+                    if ( $row->department_id == null ) {
+                        return $row->name;
+                    }
+                    else return $row->name.' '.$row->department_id;})
+        ->addColumn('start_end_date', function($row){
+                    if ( $row->start_date == null or $row->end_date == $row->start_date ) {
+                        return $row->start_date;
+                    }
+                    else return $row->start_date.' - '.$row->end_date;})
+        ->rawColumns(['forum_post'])
+        ->toJson();
+    }
 }
