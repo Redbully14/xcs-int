@@ -4,7 +4,7 @@ $(function() {
      ordering: true,
      serverSide: true,
      searching: false,
-     order: [[ 0  , "asc" ]],
+     order: [[ 0  , "desc" ]],
      ajax: $url_absence_archive,
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
