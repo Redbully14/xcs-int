@@ -42,6 +42,7 @@ return [
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
         'recent_loa' => 604800, // 1 week
+        'absence_admin_approval' => 2592000, // 1 month (30 days)
     ],
 
     /*

@@ -107,6 +107,18 @@ class AntelopeAbsence extends Controller
         return view('absence_database')->with('constants', $constants);
     }
 
+     /**
+     * Gets all activity in database
+     *
+     * @return View
+     */
+    public function archive()
+    {
+        $constants = \Config::get('constants');
+
+        return view('absence_database_archive')->with('constants', $constants);
+    }
+
     /**
      * Generates all absences in a table that has the status as unreviewed
      *
@@ -146,7 +158,16 @@ class AntelopeAbsence extends Controller
                     if ( $row->start_date == null or $row->end_date == $row->start_date ) {
                         return $row->start_date;
                     }
-                    else return $row->start_date.' - '.$row->end_date.' ['.$duration.' day(s)]';})
+                    else return $row->start_date.' - '.$row->end_date.' ['.$duration.' days]';})
+        ->addColumn('admin_approval', function($row) {
+                    $constants = \Config::get('constants');
+                    $start_date = strtotime($row->start_date);
+                    $end_date = strtotime($row->end_date);
+                    $duration = $end_date - $start_date;
+
+                    if($duration >= $constants['calculation']['absence_admin_approval']) {
+                        return true;
+                    } else return false;})
         ->rawColumns(['forum_post'])
         ->toJson();
     }

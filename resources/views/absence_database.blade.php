@@ -10,6 +10,11 @@
 <div class="content-wrapper">
   <div class="page-header">
     <h3 class="page-title"> Absence Database </h3>
+    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+    <nav aria-label="breadcrumb">
+      <a class="nav-link btn btn-warning create-new-button" href="/absence/archive">Access Archive</a>
+    </nav>
+    @endif
   </div>
   <div class="card">
     <div class="card-body">

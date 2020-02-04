@@ -1,63 +1,86 @@
 $(function() {
-  $('#ajax_absence_database_AR-table').DataTable({
-   ordering: true,
-   serverSide: true,
-   searching: false,
-   order: [[ 0  , "desc" ]],
-   ajax: $url_absence_awaiting_approval,
-   columns: [
-    { data: 'id', name: 'id', render: function (data, type, row) {
-      return  $absence_id + data;
-    } },
-    { data: 'name_department_id', name: 'name_department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
-        if(new Date(row['end_date']) < new Date()) {
-          return '<span class="text-danger">'+data+'</span>';
-        } else return data;   
-      } 
-    },
-    { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
-    { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
-   ],
-    "createdRow": function( row, data, dataIndex ) {
-       if(new Date(data['end_date']) < new Date()) {
-          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
-       }
-    }
-  });
+  if($('#ajax_absence_database_archive-table').length) {
+    $('#ajax_absence_database_archive-table').DataTable({
+     ordering: true,
+     serverSide: true,
+     searching: false,
+     order: [[ 0  , "asc" ]],
+     ajax: $url_absence_archive,
+     columns: [
+      { data: 'id', name: 'id', render: function (data, type, row) {
+        return  $absence_id + data;
+      } },
+      { data: 'name_department_id', name: 'name_department_id' },
+      { data: 'website_id', name: 'website_id' },
+      { data: 'start_end_date', name: 'start_end_date' },
+      { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button>'; } }
+     ]
+    });
+  } else {
+    $('#ajax_absence_database_AR-table').DataTable({
+     ordering: true,
+     serverSide: true,
+     searching: false,
+     order: [[ 0  , "asc" ]],
+     ajax: $url_absence_awaiting_approval,
+     columns: [
+      { data: 'id', name: 'id', render: function (data, type, row) {
+        return  $absence_id + data;
+      } },
+      { data: 'name_department_id', name: 'name_department_id' },
+      { data: 'website_id', name: 'website_id' },
+      { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
+          if(new Date(row['end_date']) < new Date()) {
+            return '<span class="text-danger">'+data+'</span>';
+          } else return data;   
+        } 
+      },
+      { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
+     ],
+      "createdRow": function( row, data, dataIndex ) {
+         if(data['admin_approval']) {
+          $(row).css('background-color', 'rgba(91, 59, 0, 0.5)');
+         } else if(new Date(data['end_date']) < new Date()) {
+            $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+         }
+      }
+    });
 
-  $('#ajax_absence_database_A-table').DataTable({
-   ordering: true,
-   serverSide: true,
-   searching: false,
-   order: [[ 0  , "desc" ]],
-   ajax: $url_absence_active,
-   columns: [
-    { data: 'id', name: 'id', render: function (data, type, row) {
-      return  $absence_id + data;
-    } },
-    { data: 'name_department_id', name: 'name_department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
-        if(new Date(row['end_date']) < new Date()) {
-          return '<span class="text-danger">'+data+'</span>';
-        } else return data;   
-      } 
-    },
-    { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
-    { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button> <button class="btn btn-social-icon btn-warning" id="absence_btn_archive" value="'+data+'"><i class="mdi mdi-archive"></i></button>'; } }
-   ],
-    "createdRow": function( row, data, dataIndex ) {
-       if(new Date(data['end_date']) < new Date()) {
-          $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
-       }
-    }
-  });
+    $('#ajax_absence_database_A-table').DataTable({
+     ordering: true,
+     serverSide: true,
+     searching: false,
+     order: [[ 0  , "asc" ]],
+     ajax: $url_absence_active,
+     columns: [
+      { data: 'id', name: 'id', render: function (data, type, row) {
+        return  $absence_id + data;
+      } },
+      { data: 'name_department_id', name: 'name_department_id' },
+      { data: 'website_id', name: 'website_id' },
+      { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
+          if(new Date(row['end_date']) < new Date()) {
+            return '<span class="text-danger">'+data+'</span>';
+          } else return data;   
+        } 
+      },
+      { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button> <button class="btn btn-social-icon btn-warning" id="absence_btn_archive" value="'+data+'"><i class="mdi mdi-archive"></i></button>'; } }
+     ],
+      "createdRow": function( row, data, dataIndex ) {
+         if(new Date(data['end_date']) < new Date()) {
+            $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
+         }
+      }
+    });
+  }
 });
 
 var awaiting_review_table = $('#ajax_absence_database_AR-table');
 var active_table = $('#ajax_absence_database_A-table');
+var archived_table = $('#ajax_absence_database_archive-table');
 
 awaiting_review_table.on('click', '#absence_btn_approve', function () {
   var id = $(this).val();
@@ -84,6 +107,11 @@ awaiting_review_table.on('click', '#absence_btn_block', function () {
 active_table.on('click', '#absence_btn_archive', function () {
   var id = $(this).val();
   archivePopup(id);
+});
+
+archived_table.on('click', '#absence_btn_backtoqueue', function () {
+  var id = $(this).val();
+  queuePopup(id);
 });
 
 active_table.on('click', '#absence_btn_backtoqueue', function () {
@@ -122,8 +150,13 @@ function queueAbsence(id) {
 }
 
 function refreshTables() {
-  $('#ajax_absence_database_AR-table').DataTable().ajax.reload();
-  $('#ajax_absence_database_A-table').DataTable().ajax.reload();
+  if($('#ajax_absence_database_archive-table').length) {
+    $('#ajax_absence_database_archive-table').DataTable().ajax.reload();
+  }
+  else {
+    $('#ajax_absence_database_AR-table').DataTable().ajax.reload();
+    $('#ajax_absence_database_A-table').DataTable().ajax.reload();
+  }
 }
 
 function archivePopup(id) {
