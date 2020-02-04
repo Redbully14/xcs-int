@@ -155,10 +155,17 @@ class AntelopeAbsence extends Controller
                     $duration = $end_date - $start_date;
                     $duration = BaseXCS::convertToDays($duration);
 
-                    if ( $row->start_date == null or $row->end_date == $row->start_date ) {
-                        return $row->start_date;
+                    if ( $row->end_date == $row->start_date ) {
+
+                        if(strtotime(Carbon::now()->toDateString()) > $end_date) {
+                            return $row->start_date.' [OVERDUE]';
+                        } else return $row->start_date;
                     }
-                    else return $row->start_date.' - '.$row->end_date.' ['.$duration.' days]';})
+                    else {
+                        if(strtotime(Carbon::now()->toDateString()) > $end_date) {
+                            return $row->start_date.' - '.$row->end_date.' [OVERDUE]';
+                        } else return $row->start_date.' - '.$row->end_date.' ['.$duration.' days]';
+                    }})
         ->addColumn('admin_approval', function($row) {
                     $constants = \Config::get('constants');
                     $start_date = strtotime($row->start_date);

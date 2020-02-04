@@ -8,7 +8,10 @@ $(function() {
      ajax: $url_absence_archive,
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
-        return  $absence_id + data;
+        if(row['admin_approval']) {
+          return  $absence_id + 'A-' + data;
+        }
+        return $absence_id + data;
       } },
       { data: 'name_department_id', name: 'name_department_id' },
       { data: 'website_id', name: 'website_id' },
@@ -26,7 +29,10 @@ $(function() {
      ajax: $url_absence_awaiting_approval,
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
-        return  $absence_id + data;
+        if(row['admin_approval']) {
+          return '<span class="text-warning">' + $absence_id + 'A-' + data + '</span>';
+        }
+        return $absence_id + data;
       } },
       { data: 'name_department_id', name: 'name_department_id' },
       { data: 'website_id', name: 'website_id' },
@@ -56,7 +62,10 @@ $(function() {
      ajax: $url_absence_active,
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
-        return  $absence_id + data;
+        if(row['admin_approval']) {
+          return  $absence_id + 'A-' + data;
+        }
+        return $absence_id + data;
       } },
       { data: 'name_department_id', name: 'name_department_id' },
       { data: 'website_id', name: 'website_id' },
