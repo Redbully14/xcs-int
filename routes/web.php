@@ -85,6 +85,11 @@ Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level
 Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
 Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disciplineData')->middleware('level:'.\Config::get('constants.access_level.sit'));
 
+// Absence GET Routes
+Route::get('/absence', 'AntelopeAbsence@view')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::get('/absence/archive', 'AntelopeAbsence@archive')->middleware('level:'.\Config::get('constants.access_level.seniorstaff'));
+Route::get('/absence/datatable/{status}', 'AntelopeAbsence@passAbsenceDataTable')->middleware('level:'.\Config::get('constants.access_level.staff'));
+
 // POST routes
 Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
 Route::post('/settings/change_avatar', 'Antelope@setAvatar');
@@ -100,6 +105,9 @@ Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance'
 Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
 Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
+Route::post('/absence/approve/{id}', 'AntelopeAbsence@approveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::post('/absence/archive/{id}', 'AntelopeAbsence@archiveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
+Route::post('/absence/queue/{id}', 'AntelopeAbsence@queueAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
 
 // IMPORTANT IMPORTANT IMPORTANT: Holy shit remove this before production or everyone will be able to create tokens
 Route::get('/api/gimme', 'Api\ApiTokenController@gimme');

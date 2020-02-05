@@ -33,6 +33,19 @@ class BaseXCS extends Controller
     }
 
     /**
+     * Converts seconds into days
+     *
+     * @return H:i:s
+     */
+    public static function convertToDays($duration) {
+        $d = floor($duration / 86400);
+        $H = floor($duration / 3600);
+        $i = ($duration / 60) % 60;
+        $s = $duration % 60;
+        return $d;
+    }
+
+    /**
      * Converts an input from local time into system time
      *
      * @return void
