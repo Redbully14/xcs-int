@@ -14,7 +14,7 @@ class AddFlagToActivityTable extends Migration
     public function up()
     {
         Schema::table('activity', function (Blueprint $table) {
-            $table->json('flag')->after('type')->default('[[false,false,false],["","",["",""]]]');
+            $table->json('flag')->after('type');
         });
     }
 

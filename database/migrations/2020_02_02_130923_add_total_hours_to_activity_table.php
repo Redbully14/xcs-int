@@ -14,7 +14,7 @@ class AddTotalHoursToActivityTable extends Migration
     public function up()
     {
         Schema::table('activity', function (Blueprint $table) {
-            $table->integer('total_time')->after('end_time');
+            $table->string('total_time')->after('end_time');
         });
     }
 

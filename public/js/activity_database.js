@@ -14,7 +14,7 @@ $(function() {
     { data: 'patrol_start_end_date', name: 'patrol_start_end_date' },
     { data: 'start_time', name: 'start_time' },
     { data: 'end_time', name: 'end_time' },
-    { data: 'total_time', render: function (data, type, row) {return data + ' hours'}},
+    { data: 'total_time', name: 'total_time' },
     { data: 'details', name: 'details', render: function (data, type, row) {
       var allowedLength = 35;
       if (data.length >= allowedLength) {

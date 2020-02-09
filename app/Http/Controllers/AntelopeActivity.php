@@ -93,7 +93,8 @@ class AntelopeActivity extends Controller
             $data['flag_reason'] = "";
         }
 
-        $now = new DateTime();
+        $now = Carbon::now(User::find(Auth::user()->id)->timezone)->tz('UTC');
+        $anHour = $now->addHour();
         $start = new DateTime($data['patrol_start_date'] . 'T' . $data['start_time']);
         $end = new DateTime($data['patrol_end_date'] . 'T' . $data['end_time']);
         $diff = $end->diff($start);
@@ -107,12 +108,21 @@ class AntelopeActivity extends Controller
             $auto_flag_reason = "Patrol is 12+ hours in length.";
         }
 
-        if ($start > $now) {
+        if ($start > $anHour) {
             $auto_flag = true;
             if ($auto_flag_reason === "") {
-                $auto_flag_reason = "Patrol is in the future.";
+                $auto_flag_reason = "Patrol starts in the future.";
             } else {
-                $auto_flag_reason = $auto_flag_reason . " Patrol is in the future.";
+                $auto_flag_reason = $auto_flag_reason . " Patrol starts in the future.";
+            }
+        }
+
+        if ($end > $anHour) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol ends in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol ends in the future.";
             }
         }
 
@@ -121,7 +131,7 @@ class AntelopeActivity extends Controller
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
-            'total_time' => $hours,
+            'total_time' => $hours . " hours",
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,

@@ -91,39 +91,25 @@ $('#ajax_edit_flags').on('submit', function(e) {
         data: {self_resolve_reason: self_resolve_reason, auto_resolve_reason: auto_resolve_reason},
         success: function() {
             $('#ajax_edit_flags_cancel').click();
-            showSuccessToast_EditFlag();
+            var toast_heading = "Flags Updated!";
+            var toast_text = "This patrol log has been updated and the new data has been sent to the database!";
+            var toast_icon = "success";
+            var toast_color = "#43f93d";
+            globalToast(toast_heading, toast_text, toast_icon, toast_color);
+
             if ($('#tableElement').length) {
                 $('#tableElement').DataTable().ajax.reload();
             }
         },
         error: function(data) {
-            showFailToast_EditFlag();
+            var toast_heading = "Flags Update Failed!";
+            var toast_text = "Flags update failed, this is likely due to an internal error. Please report this issue.";
+            var toast_icon = "error";
+            var toast_color = "#f2a654";
+            globalToast(toast_heading, toast_text, toast_icon, toast_color);
+
             var errors = data['responseJSON'].errors;
             console.log(errors);
         }
     });
 });
-
-showSuccessToast_EditFlag = function() {
-    'use strict';
-    $.toast({
-        heading: 'Flags Updated!',
-        text: 'This patrol log has been updated and the new data has been sent to the database!',
-        showHideTransition: 'slide',
-        icon: 'success',
-        loaderBg: '#f96868',
-        position: 'top-right'
-    })
-};
-
-showFailToast_EditFlag = function() {
-    'use strict';
-    $.toast({
-        heading: 'Flags Update Failed!',
-        text: 'Flags update failed, this is likely due to an internal error. Please report this issue.',
-        showHideTransition: 'slide',
-        icon: 'error',
-        loaderBg: '#f2a654',
-        position: 'top-right'
-    })
-};
