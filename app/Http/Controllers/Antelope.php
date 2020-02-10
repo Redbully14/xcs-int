@@ -205,7 +205,7 @@ class Antelope extends Controller
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
 
-        if(auth()->user()->level() >= $constants['access_level']['sit']) {
+        if(auth()->user()->level() >= $this->constants['access_level']['sit']) {
             return self::getProfile($id);
         }
 
