@@ -167,12 +167,12 @@ class AntelopeAbsence extends Controller
                     if ( $row->end_date == $row->start_date ) {
 
                         if(strtotime(Carbon::now()->toDateString()) > $end_date) {
-                            return $row->start_date.' [OVERDUE]';
+                            return $row->start_date;
                         } else return $row->start_date;
                     }
                     else {
                         if(strtotime(Carbon::now()->toDateString()) > $end_date) {
-                            return $row->start_date.' - '.$row->end_date.' [OVERDUE]';
+                            return $row->start_date.' - '.$row->end_date;
                         } else return $row->start_date.' - '.$row->end_date.' ['.$duration.' days]';
                     }})
         ->addColumn('admin_approval', function($row) {

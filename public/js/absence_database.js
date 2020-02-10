@@ -38,13 +38,16 @@ $(function() {
       { data: 'website_id', name: 'website_id' },
       { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
           if(new Date(row['end_date']) < new Date()) {
-            return '<span class="text-danger">'+data+'</span>';
+            return '<span class="text-danger">'+data+'</span> <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-custom-class="tooltip-danger" data-container="body" data-placement="right" style="margin-left:2px;" title="This LOA is overdue and requires .">?</div>';
           } else return data;   
         } 
       },
       { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
       { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
      ],
+      drawCallback: function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      },
       "createdRow": function( row, data, dataIndex ) {
          if(data['admin_approval']) {
           $(row).css('background-color', 'rgba(91, 59, 0, 0.5)');
