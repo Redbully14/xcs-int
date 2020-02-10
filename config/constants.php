@@ -378,9 +378,11 @@ return [
     ],
     
     'backgrounds' => [
-      'login' => '/assets/images/auth/Login_bg.jpg',
-      'inactive' => '/assets/images/auth/Login_bg.jpg',
+      'login' => '/assets/images/auth/civ_backdrop.png',
+      'inactive' => '/assets/images/auth/civ_backdrop.png',
+      'registration' => '/assets/images/auth/civ_backdrop.png',
     ],
+    
     'patrol_area' => [
         'BC' => 'Blaine County',
         'LS' => 'Los Santos',
