@@ -24,10 +24,16 @@ class AntelopeAbsence extends Controller
     |
     */
 
+    public $constants = \Config::get('constants');
+
     /**
-     * Create a new controller instance.
+     * Executes before running the main controllers
      *
+     * @author Oliver G.
+     * @param
      * @return void
+     * @access Auth
+     * @version 1.0.0
      */
     public function __construct()
     {
@@ -35,10 +41,12 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Get a validator for an incoming log request.
+     * Validates request before running main function
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @version 1.0.0
      */
     protected function validator(array $data)
     {
@@ -50,10 +58,12 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Create a new log instance after validation
+     * Inserts and creates a new absence for the database
      *
-     * @param  array  $data
-     * @return \App\User
+     * @author Oliver G.
+     * @param Array $data
+     * @return App\Absence
+     * @version 1.0.0
      */
     protected function create(array $data)
     {
@@ -69,11 +79,13 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * The activity log has been registered
+     * Executes after an absence is created
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Request $request
+     * @param Request $log
+     * @return void
+     * @version 1.0.0
      */
     protected function submitted(Request $request, $log)
     {
@@ -81,10 +93,13 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Handle an activity log submit for the application.
+     * Submits a new Absence Request for an insert into the database
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @author Oliver G.
+     * @param Request $request
+     * @return Function submitted($request, $absence)
+     * @access Member
+     * @version 1.0.0
      */
     public function submit(Request $request)
     {
@@ -105,33 +120,39 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Gets all activity in database
+     * Backend controller for the absence_database module
      *
+     * @author Oliver G.
      * @return View
+     * @access Staff
+     * @version 1.0.0
      */
     public function view()
     {
-        $constants = \Config::get('constants');
-
-        return view('absence_database')->with('constants', $constants);
-    }
-
-     /**
-     * Gets all activity in database
-     *
-     * @return View
-     */
-    public function archive()
-    {
-        $constants = \Config::get('constants');
-
-        return view('absence_database_archive')->with('constants', $constants);
+        return view('absence_database')->with('constants', $this->constants);
     }
 
     /**
-     * Generates all absences in a table that has the status as unreviewed
+     * Backend sub-controller for the absence_database->archive module
      *
-     * @return DataTable
+     * @author Oliver G.
+     * @return View
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    public function archive()
+    {
+        return view('absence_database_archive')->with('constants', $this->constants);
+    }
+
+    /**
+     * Constructs a DataTable for the absence table
+     *
+     * @author Oliver G.
+     * @return Datatables
+     * @param var $status
+     * @access Staff
+     * @version 1.0.0
      */
     public function passAbsenceDataTable($status)
     {
@@ -176,12 +197,11 @@ class AntelopeAbsence extends Controller
                         } else return $row->start_date.' - '.$row->end_date.' ['.$duration.' days]';
                     }})
         ->addColumn('admin_approval', function($row) {
-                    $constants = \Config::get('constants');
                     $start_date = strtotime($row->start_date);
                     $end_date = strtotime($row->end_date);
                     $duration = $end_date - $start_date;
 
-                    if($duration >= $constants['calculation']['absence_admin_approval']) {
+                    if($duration >= $this->constants['calculation']['absence_admin_approval']) {
                         return true;
                     } else return false;})
         ->rawColumns(['forum_post'])
@@ -189,9 +209,13 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Changes a status of an absence to approved
+     * Finds an Absence in the database and approves it
      *
+     * @author Oliver G.
      * @return void
+     * @param var $id
+     * @access Staff
+     * @version 1.0.0
      */
     public function approveAbsence($id)
     {
@@ -201,9 +225,13 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Changes a status of an absence to archived
+     * Finds an Absence in the database and archives it
      *
-     * @return DataTable
+     * @author Oliver G.
+     * @return void
+     * @param var $id
+     * @access Staff
+     * @version 1.0.0
      */
     public function archiveAbsence($id)
     {
@@ -213,9 +241,13 @@ class AntelopeAbsence extends Controller
     }
 
     /**
-     * Changes a status of an absence to unreviewed
+     * Finds an Absence in the database and queues
      *
-     * @return DataTable
+     * @author Oliver G.
+     * @return void
+     * @param var $id
+     * @access Staff
+     * @version 1.0.0
      */
     public function queueAbsence($id)
     {
