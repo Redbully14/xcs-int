@@ -32,7 +32,7 @@ class TimeValidation implements Rule
     public function passes($attribute, $value)
     {
         if( strtotime($this->startDate) == strtotime($this->endDate) ) {
-            return $value > $this->secondValue;
+            return strtotime($value) > strtotime($this->secondValue);
         } else return true;
     }
 

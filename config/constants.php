@@ -42,6 +42,7 @@ return [
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
         'recent_loa' => 604800, // 1 week
+        'absence_admin_approval' => 2592000, // 1 month (30 days)
     ],
 
     /*
@@ -74,6 +75,7 @@ return [
         'dashboard' => 'Dashboard',
         'member_admin' => 'Member Settings',
         'activity_database' => 'Activity Database',
+        'absence_database' => 'Absence Database',
         'account_settings' => 'Account Settings',
         'user_profile' => 'User Profile',
         'personal_profile' => 'My Profile',
@@ -263,9 +265,9 @@ return [
     |
     */
     'absence_status' => [
-        0 => 'Default',
-        1 => 'Disregarded',
-        3 => 'Denied',
+        0 => 'Pending Review',
+        1 => 'Active',
+        2 => 'Archived',
     ],
 
     /*
@@ -317,6 +319,7 @@ return [
     'global_id' => [
         'patrol_log' => 'PL-',
         'disciplinary_action' => 'DA-',
+        'absence' => 'LOA-'
     ],
 
     /*
@@ -372,6 +375,7 @@ return [
         'new' => 'warning',
         'exempt' => 'info',
     ],
+    
     'backgrounds' => [
       'login' => '/assets/images/auth/Login_bg.jpg',
       'inactive' => '/assets/images/auth/Login_bg.jpg',

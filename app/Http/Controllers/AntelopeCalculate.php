@@ -482,7 +482,7 @@ class AntelopeCalculate extends Controller
         $start_date = strtotime($absence->start_date);
         $end_date = strtotime($absence->end_date);
 
-        if($absence->status == 0) {
+        if($absence->status == 1) {
             if($start_date <= $today) {
                 if($today <= $end_date) {
                     return 'Active';

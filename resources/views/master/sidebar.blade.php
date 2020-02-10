@@ -75,6 +75,16 @@
       </a>
     </li>
     @endif
+    @if(Auth::user()->level() >= $constants['access_level']['staff'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/absence">
+        <span class="menu-icon">
+          <i class="mdi mdi-clock"></i>
+        </span>
+        <span class="menu-title">Absence Database</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/member_admin">
