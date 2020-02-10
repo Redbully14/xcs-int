@@ -24,7 +24,7 @@ class AntelopeAbsence extends Controller
     |
     */
 
-    public $constants = \Config::get('constants');
+    public $constants;
 
     /**
      * Executes before running the main controllers
@@ -38,6 +38,7 @@ class AntelopeAbsence extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
@@ -46,6 +47,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @param Array $data
      * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeAbsence
      * @version 1.0.0
      */
     protected function validator(array $data)
@@ -63,6 +65,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @param Array $data
      * @return App\Absence
+     * @category AntelopeAbsence
      * @version 1.0.0
      */
     protected function create(array $data)
@@ -85,6 +88,7 @@ class AntelopeAbsence extends Controller
      * @param Request $request
      * @param Request $log
      * @return void
+     * @category AntelopeAbsence
      * @version 1.0.0
      */
     protected function submitted(Request $request, $log)
@@ -98,6 +102,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @param Request $request
      * @return Function submitted($request, $absence)
+     * @category AntelopeAbsence
      * @access Member
      * @version 1.0.0
      */
@@ -124,6 +129,7 @@ class AntelopeAbsence extends Controller
      *
      * @author Oliver G.
      * @return View
+     * @category AntelopeAbsence
      * @access Staff
      * @version 1.0.0
      */
@@ -137,6 +143,7 @@ class AntelopeAbsence extends Controller
      *
      * @author Oliver G.
      * @return View
+     * @category AntelopeAbsence
      * @access Senior Staff
      * @version 1.0.0
      */
@@ -151,6 +158,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @return Datatables
      * @param var $status
+     * @category AntelopeAbsence
      * @access Staff
      * @version 1.0.0
      */
@@ -214,6 +222,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @return void
      * @param var $id
+     * @category AntelopeAbsence
      * @access Staff
      * @version 1.0.0
      */
@@ -230,6 +239,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @return void
      * @param var $id
+     * @category AntelopeAbsence
      * @access Staff
      * @version 1.0.0
      */
@@ -246,6 +256,7 @@ class AntelopeAbsence extends Controller
      * @author Oliver G.
      * @return void
      * @param var $id
+     * @category AntelopeAbsence
      * @access Staff
      * @version 1.0.0
      */

@@ -21,7 +21,7 @@ class Antelope extends Controller
     |
     */
 
-    public $constants = \Config::get('constants');
+    public $constants;
 
     /**
      * Executes before running the main controllers
@@ -35,6 +35,7 @@ class Antelope extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
