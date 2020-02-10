@@ -102,10 +102,11 @@ class AntelopeActivity extends Controller
         $hours = $hours + ($diff->days * 24);
         $auto_flag = false;
         $auto_flag_reason = "";
+        $constants = \Config::get('constants');
 
-        if ($hours >= 12) {
+        if ($hours >= $constants['soft_patrol_hour_limit']) {
             $auto_flag = true;
-            $auto_flag_reason = "Patrol is 12+ hours in length.";
+            $auto_flag_reason = "Patrol is " . $constants['soft_patrol_hour_limit'] . "+ hours in length.";
         }
 
         if ($start > $anHour) {
