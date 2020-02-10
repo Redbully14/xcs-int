@@ -43,13 +43,13 @@
 
                   <div class="form-group">
                     <label for="new_password">New Password</label>
-                    <input type="password" class="form-control" id="new_password" placeholder="Password">
+                    <input type="password" class="form-control" id="new_password" placeholder="Password" autocomplete="off">
                     <label id="new_password-error" class="error mt-2 text-danger" for="new_password" hidden></label>
                   </div>
 
                   <div class="form-group">
                     <label for="confirm_new_password">Confirm New Password</label>
-                    <input type="password" class="form-control" id="confirm_new_password" placeholder="Password">
+                    <input type="password" class="form-control" id="confirm_new_password" placeholder="Password" autocomplete="off">
                     <label id="confirm_new_password-error" class="error mt-2 text-danger" for="confirm_new_password" hidden></label>
                   </div>
 
@@ -78,7 +78,7 @@
                     <button class="btn btn-warning col mr-2" onclick="window.location.href = '{{ url('superadmin/normalmode') }}';" formnovalidate>
                       <i class="mdi mdi-account-arrow-right-outline"></i> Exit Godmode </button>
                     @endImpersonating
-                    <button class="btn btn-google col mr-2" onclick="window.location.href = '{{ url('logout') }}';" formnovalidate>
+                    <button class="btn btn-google col" onclick="window.location.href = '{{ url('logout') }}';" formnovalidate>
                       <i class="mdi mdi-logout"></i> Logout </button>
                   </div>
 

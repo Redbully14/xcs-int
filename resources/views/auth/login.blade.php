@@ -39,12 +39,12 @@
 
                   <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control p_input" id="username" name="username" required autofocus>
+                    <input type="text" class="form-control p_input" id="username" name="username" autocomplete="off" required autofocus>
                   </div>
 
                   <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control p_input" id="password" name="password" required>
+                    <input type="password" class="form-control p_input" id="password" name="password" autocomplete="off" required>
                   </div>
 
                   <div class="form-group d-flex align-items-center justify-content-between">
