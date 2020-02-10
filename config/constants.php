@@ -208,11 +208,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Patrol Types
+    | Patrol Constants
     |--------------------------------------------------------------------------
     |
-    | Types of patrols that civilians are able to choose from, all these patrols
-    | are logged on specific endpoints on the system.
+    | Constants for use in patrol logs.
     |
     */
     'patrol_type' => [
@@ -220,6 +219,8 @@ return [
         'subdivisional' => 'Business Patrol',
         'fto' => 'Field Training',
     ],
+
+    'soft_patrol_hour_limit' => 12, // hours
 
     /*
     |--------------------------------------------------------------------------

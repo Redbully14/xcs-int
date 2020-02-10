@@ -11,6 +11,9 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   if(patrol_priorities < 0){
       patrol_priorities = patrol_priorities * -1;
   }
+  var flag_patrol_log = $('#flag-patrol-log').is(":checked");
+  var reason_for_flag = $('#reason-for-flag').val();
+
   var elements = {
     '#patrol_start_date' : '#patrol-date-error',
     '#patrol-start-time-input' : '#patrol-start_time-error',
@@ -21,7 +24,9 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     '#patrol-details' : '#patrol-details-error',
     '#patrol-end-log-date' : '#patrol-end-log-date-error',
     '#patrol-area' : '#patrol-area-error',
-    '#patrol-priorities' : '#patrol-priorities-error'
+    '#patrol-priorities' : '#patrol-priorities-error',
+    '#flag-patrol-log' : '#flag-patrol-log-error',
+    '#reason-for-flag' : '#reason-for-flag-error'
   };
 
   // this is really crappy but i just can't be asked anymore
@@ -32,11 +37,10 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     $(elements[element]).empty();
   }
 
-
   $.ajax({
     type: 'POST',
     url: $url_submit_patrol_log,
-    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details, patrol_area:patrol_area, patrol_priorities:patrol_priorities},
+    data: {type:type, patrol_start_date:patrol_start_date, patrol_end_date:patrol_end_date, start_time:start_time, end_time:end_time, details:details, patrol_area:patrol_area, patrol_priorities:patrol_priorities, flag:flag_patrol_log, flag_reason:reason_for_flag},
     success: function() {
       $('#ajax_new_patrol_log_cancel').click();
       for (var element in elements) {
@@ -168,3 +172,12 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     });
   }
 })(jQuery);
+
+$(document).on('click', 'input[id="flag-patrol-log"]', function() {
+    let area = $('#reason-for-flag');
+    if (this.checked) {
+        area.show();
+    } else {
+        area.hide();
+    }
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -42,10 +43,19 @@ class AntelopeActivity extends Controller
      */
     protected function validator(array $data)
     {
-
-        if ($data['patrol_end_date'] == null) {
+        if (is_null($data['patrol_end_date'])) {
             $data['patrol_end_date'] = $data['patrol_start_date'];
-        };
+        }
+
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
+
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
 
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
@@ -57,30 +67,78 @@ class AntelopeActivity extends Controller
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
             'patrol_priorities' => ['required', 'integer'],
+            'flag' => ['required', 'boolean'],
+            'flag_reason' => ['string']
         ]);
     }
 
     /**
      * Create a new log instance after validation
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
+     * @throws \Exception
      */
     protected function create(array $data)
     {
-
         $data = $this->convertTimezone($data);
+
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
+
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
+
+        $now = Carbon::now(User::find(Auth::user()->id)->timezone)->tz('UTC');
+        $anHour = $now->addHour();
+        $start = new DateTime($data['patrol_start_date'] . 'T' . $data['start_time']);
+        $end = new DateTime($data['patrol_end_date'] . 'T' . $data['end_time']);
+        $diff = $end->diff($start);
+        $hours = $diff->h;
+        $hours = $hours + ($diff->days * 24);
+        $auto_flag = false;
+        $auto_flag_reason = "";
+        $constants = \Config::get('constants');
+
+        if ($hours >= $constants['soft_patrol_hour_limit']) {
+            $auto_flag = true;
+            $auto_flag_reason = "Patrol is " . $constants['soft_patrol_hour_limit'] . "+ hours in length.";
+        }
+
+        if ($start > $anHour) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol starts in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol starts in the future.";
+            }
+        }
+
+        if ($end > $anHour) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol ends in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol ends in the future.";
+            }
+        }
 
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
+            'total_time' => $hours . " hours",
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,
             'patrol_area' => json_encode($data['patrol_area']),
             'priorities' => $data['patrol_priorities'],
+            'flag' => json_encode([[$data['flag'], $auto_flag, false], [$data['flag_reason'], $auto_flag_reason, ["", ""]]])
         ]);
 
         return $log;
@@ -135,10 +193,6 @@ class AntelopeActivity extends Controller
      */
     public function submit(Request $request)
     {
-        if ($request->patrol_end_date == null) {
-            $request->patrol_end_date = $request->patrol_start_date;
-        };
-
         $this->validator($request->all())->validate();
 
         $log = $this->create($request->all());
@@ -173,10 +227,12 @@ class AntelopeActivity extends Controller
         'activity.patrol_end_date',
         'activity.start_time',
         'activity.end_time',
+        'activity.total_time',
         'activity.details',
         'activity.patrol_area',
         'activity.priorities',
         'activity.type',
+        'activity.flag',
         'users.name',
         'users.department_id',
         'users.website_id'
@@ -204,6 +260,7 @@ class AntelopeActivity extends Controller
      * Gets specific activity instance
      *
      * @return View
+     * @throws \Exception
      */
     public function passActivityInstance($id)
     {
@@ -216,6 +273,58 @@ class AntelopeActivity extends Controller
             $log->website_id = User::find($log['user_id'])->website_id;
 
             return $log;
+        } else return 'noob hax0r';
+    }
+
+    /**
+     * Gets specific activity instance
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function editActivityFlagInstance(Request $request)
+    {
+        $constants = \Config::get('constants');
+        if(Auth::user()->level() >= $constants['access_level']['staff']) {
+            $log = Activity::find($request->route('id'));
+
+            $temp_array = [];
+            $temp_array['self_resolve_reason'] = $request->self_resolve_reason;
+            $temp_array['auto_resolve_reason'] = $request->auto_resolve_reason;
+
+            if (is_null($temp_array['self_resolve_reason'])) {
+                $temp_array['self_resolve_reason'] = "No details.";
+            }
+            if (is_null($temp_array['auto_resolve_reason'])) {
+                $temp_array['auto_resolve_reason'] = "No details.";
+            }
+
+            Validator::make($temp_array, [
+                'self_resolve_reason' => ['required', 'string'],
+                'auto_resolve_reason' => ['required', 'string']
+            ]);
+
+            $oldFlag = json_decode($log->flag);
+            $log->flag = json_encode([[$oldFlag[0][0], $oldFlag[0][1], true],[$oldFlag[1][0], $oldFlag[1][1], [$temp_array['self_resolve_reason'], $temp_array['auto_resolve_reason']]]]);
+            $log->save();
+
+            return;
+        } else return 'noob hax0r';
+    }
+
+    /**
+     * Gets specific activity flag instance
+     *
+     * @return View
+     * @throws \Exception
+     */
+    public function passActivityFlagInstance($id)
+    {
+        $constants = \Config::get('constants');
+        if(Auth::user()->level() >= $constants['access_level']['staff'] or Auth::user()->id == Activity::find($id)->user_id) {
+            $log = Activity::find($id);
+
+            return $log->flag;
         } else return 'noob hax0r';
     }
 
