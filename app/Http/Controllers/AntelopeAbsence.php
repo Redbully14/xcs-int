@@ -45,7 +45,7 @@ class AntelopeAbsence extends Controller
         return Validator::make($data, [
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date', new DateValidation($data['start_date'])],
-            'forum_post' => ['required', 'string'],
+            'forum_post' => ['required', 'url'],
         ]);
     }
 
@@ -57,7 +57,7 @@ class AntelopeAbsence extends Controller
      */
     protected function create(array $data)
     {
-        
+
         $absence = Absence::create([
             'start_date' => date("Y-m-d", strtotime($data['start_date'])),
             'end_date' => date("Y-m-d", strtotime($data['end_date'])),
@@ -88,6 +88,15 @@ class AntelopeAbsence extends Controller
      */
     public function submit(Request $request)
     {
+        $url = $request['forum_post'];
+        if (strpos($url, 'dojrp.com/forums/topic') !== false) {
+            $url = explode('-', $url);
+            $url = $url[0] . '-loa';
+            $request['forum_post'] = $url;
+        } else {
+            $request['forum_post'] = null;
+        }
+
         $this->validator($request->all())->validate();
 
         $absence = $this->create($request->all());
