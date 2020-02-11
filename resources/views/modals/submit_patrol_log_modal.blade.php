@@ -90,7 +90,7 @@
               <div class="form-group">
                   <label>Flag this Patrol Log?</label>
                   <div class="form-check form-check-info">
-                      <label class="form-check-label"><input type="checkbox" id="flag-patrol-log"> Flag Patrol Log <i class="input-helper"></i><i class="input-helper"></i> <div class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="right" style="margin-left:2px; padding: 2px;" title="By flagging your Patrol Log, you are indicating to staff that you would like your Patrol Log reviewed.">?</div></label>
+                      <label class="form-check-label"><input type="checkbox" id="flag-patrol-log"> Flag Patrol Log <i class="input-helper"></i><i class="input-helper"></i> <div class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" style="margin-left:2px;" title="By flagging your Patrol Log, you are indicating to staff that you would like your Patrol Log reviewed.">?</div></label>
                       <label id="flag-patrol-log-error" class="error mt-2 text-danger" for="flag-patrol-log" hidden></label>
                   </div>
                   <textarea id="reason-for-flag" class="form-control" style="display: none" rows="6" placeholder="Enter your reason for wanting to Flag this Patrol Log."></textarea>
