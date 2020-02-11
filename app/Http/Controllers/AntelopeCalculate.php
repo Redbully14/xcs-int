@@ -13,10 +13,38 @@ use Illuminate\Support\Facades\Auth;
 
 class AntelopeCalculate extends Controller
 {
-	 /**
-     * Get the last patrol made by user,
+    /*
+    |--------------------------------------------------------------------------
+    | Antelope Activity Controller
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    static $constants;
+
+    /**
+     * Executes before running the main controllers
      *
-     * @return timestamp
+     * @author Oliver G.
+     * @param
+     * @return void
+     * @access Auth
+     * @version 1.0.0
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        self::$constants = \Config::get('constants');
+    }
+
+    /**
+     * Gets the last patrol timestamp of the last activity log within the database
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return var $timestamp
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_last_timestamp($id) {
 
@@ -34,10 +62,14 @@ class AntelopeCalculate extends Controller
 		return $timestamp;
     }
 
-	 /**
-     * Get the last patrol made by user,
+    /**
+     * Generates a human-readable value of the last timestamp value
      *
-     * @return human readable time
+     * @author Oliver G.
+     * @param var $id
+     * @return Carbon
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_last_seen($id) {
 
@@ -49,14 +81,16 @@ class AntelopeCalculate extends Controller
 		return Carbon::createFromTimeStamp(strtotime($timestamp))->diffForHumans();
     }
 
-	 /**
-     * Get the user's department status.
+    /**
+     * Gets the member's department status depending on their patrol log and when their account was created
      *
+     * @author Oliver G.
+     * @param var $id
      * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_department_status($id) {
-
-    	$constants = \Config::get('constants');
 
     	$last_timestamp = self::get_last_timestamp($id);
 
@@ -67,24 +101,28 @@ class AntelopeCalculate extends Controller
         }
 
     	if($last_timestamp == 'N/A') {
-    		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
+    		if(!strtotime(User::find($id)->created_at)+self::$constants['calculation']['account_is_new'] < $today ) {
     			return 'new';
     		}
     	}
 
     	$last_timestamp = strtotime($last_timestamp);
 
-    	if($last_timestamp+$constants['calculation']['time_to_inactive'] < $today ) {
+    	if($last_timestamp+self::$constants['calculation']['time_to_inactive'] < $today ) {
     		return 'inactive';
     	}
 
     	return 'active';
     }
 
-     /**
-     * Get the total amount of patrol logs in database
+    /**
+     * Gets a total amount of activity logs connected to a user_id
      *
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @return var $patrols
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_total_patrol_logs($id) {
 
@@ -98,10 +136,14 @@ class AntelopeCalculate extends Controller
         return $patrols;
     }
 
-     /**
-     * Get the total amount of patrol hours in database
+    /**
+     * Gets a total amount of activity hours connected to a user_id
      *
-     * @return H:i:s
+     * @author Oliver G.
+     * @param var $id
+     * @return var $total_duration
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_total_patrol_hours($id) {
 
@@ -126,10 +168,16 @@ class AntelopeCalculate extends Controller
         return BaseXCS::convertToDuration($total_duration);
     }
 
-     /**
-     * Get the total amount of patrol logs in database (in a month)
+    /**
+     * Gets a certain amount of activity LOGS submitted in a selected month connected to a user_id
+     * This calculation is made by deducting $calmonth from the current month
      *
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @param var $calmonth
+     * @return var $count
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_month_patrol_logs($id, $calmonth) {
 
@@ -161,10 +209,16 @@ class AntelopeCalculate extends Controller
         return $count;
     }
 
-     /**
-     * Get the total amount of patrol hours in database (in a month)
+    /**
+     * Gets a certain amount of activity HOURS submitted in a selected month connected to a user_id
+     * This calculation is made by deducting $calmonth from the current month
      *
-     * @return H:i:s
+     * @author Oliver G.
+     * @param var $id
+     * @param var $calmonth
+     * @return var $total_duration
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_month_patrol_hours($id, $calmonth) {
 
@@ -203,20 +257,27 @@ class AntelopeCalculate extends Controller
         return BaseXCS::convertToDuration($total_duration);
     }
 
-     /**
-     * Get the total amount of patrol logs in database (custom time entry)
+    /**
+     * Gets a certain amount of activity LOGS submitted in a selected timeframe connected to a user_id
+     * This calculation is made by checking how many days ago via variable $time you wish to search
+     * for patrol logs, make sure you input the $time value within seconds 
+     * (example: if $time = 30 days ago then it fetches all patrol logs within 30 days)
      *
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @param var $time
+     * @return var $count
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_ctime_patrol_logs($id, $time) {
 
-        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $count = 0;
 
         if(is_string($time)) {
-            $time = $constants['calculation'][$time];
+            $time = self::$constants['calculation'][$time];
         }
 
         foreach($patrols as $patrol) {
@@ -232,20 +293,27 @@ class AntelopeCalculate extends Controller
         return $count;
     }
 
-     /**
-     * Get the total amount of patrol hours in database (custom time entry)
+    /**
+     * Gets a certain amount of activity HOURS submitted in a selected timeframe connected to a user_id
+     * This calculation is made by checking how many days ago via variable $time you wish to search
+     * for patrol logs, make sure you input the $time value within seconds
+     * (example: if $time = 30 days ago then it fetches all patrol logs within 30 days)
      *
-     * @return H:i:s
+     * @author Oliver G.
+     * @param var $id
+     * @param var $time
+     * @return var $total_duration
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_ctime_patrol_hours($id, $time) {
 
-        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total_duration = 0;
 
         if(is_string($time)) {
-            $time = $constants['calculation'][$time];
+            $time = self::$constants['calculation'][$time];
         }
 
         foreach($patrols as $patrol) {
@@ -268,14 +336,19 @@ class AntelopeCalculate extends Controller
         return BaseXCS::convertToDuration($total_duration);
     }
 
-     /**
-     * Checks if a person meets requirements (month entry)
+    /**
+     * Checks if a person has met their monthly requirements for a selected month
+     * This calculation is made by deducting $calmonth from the current month
      *
+     * @author Oliver G.
+     * @param var $id
+     * @param var $calmonth
      * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_month_requirements($id, $calmonth) {
 
-        $constants = \Config::get('constants');
         $check_month = date('m') - $calmonth;
         $check_year = date('Y');
         $patrols = self::get_month_patrol_logs($id, $calmonth);
@@ -290,7 +363,7 @@ class AntelopeCalculate extends Controller
             $check_month = date('m');
         }
 
-        if ($patrols >= $constants['calculation']['min_requirements_logs'] && $hours >= $constants['calculation']['min_requirements_hours']) {
+        if ($patrols >= self::$constants['calculation']['min_requirements_logs'] && $hours >= self::$constants['calculation']['min_requirements_hours']) {
             return 'met';
         }
 
@@ -306,11 +379,14 @@ class AntelopeCalculate extends Controller
         return 'not_met';
     }
 
-     /**
-     * Checks the total amount of disciplines issued to certain Website ID
+    /**
+     * Gets a total amount of discipline logs connected to a user_id
      *
-     * @param $id (int)
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_total_disciplines($id) {
 
@@ -324,11 +400,15 @@ class AntelopeCalculate extends Controller
         return $total;
     }
 
-     /**
-     * Checks the CUSTOM amount of disciplines issued to certain Website ID
+    /**
+     * Gets total amount of discipline logs connected to a user_id that also match the type
      *
-     * @param $id (int), $type (int)
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @param var $type
+     * @return var $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_custom_disciplines($id, $type) {
 
@@ -344,11 +424,14 @@ class AntelopeCalculate extends Controller
         return $total;
     }
 
-     /**
-     * Checks the total amount of ACTIVE disciplines issued to certain Website ID
+    /**
+     * Gets total amount of discipline logs connected to a user_id that are currently active
      *
-     * @param $id (int)
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @return var $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_total_active_disciplines($id) {
 
@@ -365,11 +448,16 @@ class AntelopeCalculate extends Controller
         return $total;
     }
 
-     /**
-     * Checks the CUSTOM amount of ACTIVE disciplines issued to certain Website ID
+    /**
+     * Gets total amount of discipline logs connected to a user_id that also match the type
+     * AND are currently active
      *
-     * @param $id (int), $type (int)
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @param var $type
+     * @return var $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function get_custom_active_disciplines($id, $type) {
 
@@ -388,15 +476,17 @@ class AntelopeCalculate extends Controller
         return $total;
     }
 
-     /**
-     * Get the patrol restriction status issued to certain Website ID
+    /**
+     * Checks if a user_id has an active patrol restriction
      *
-     * @param $id (int), $type (int)
-     * @return int
+     * @author Oliver G.
+     * @param var $id
+     * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function chk_patrol_restriction($id) {
 
-        $constants = \Config::get('constants');
         $disciplines = Discipline::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
@@ -405,11 +495,11 @@ class AntelopeCalculate extends Controller
             $discipline_date = strtotime($discipline->discipline_date);
             $discipline_status = self::discipline_status($discipline->id);
             if($discipline->type == 1) {
-                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+self::$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             } else if ($discipline->type == 2) {
-                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+self::$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             }
@@ -417,15 +507,17 @@ class AntelopeCalculate extends Controller
         return 'No';
     }
 
-     /**
-     * Get the patrol restriction status issued to certain Website ID
+    /**
+     * Calulcates and fetches the discipline status by checking the discipline_id
      *
-     * @param $id (int)
-     * @return str
+     * @author Oliver G.
+     * @param var $id
+     * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function discipline_status($id) {
 
-        $constants = \Config::get('constants');
         $discipline = Discipline::find($id);
         $today = strtotime(Carbon::now()->toDateString());
         $discipline_date = strtotime($discipline->discipline_date);
@@ -438,7 +530,7 @@ class AntelopeCalculate extends Controller
 
         if($discipline->disputed) {
             if($custom_expiry_nulled == null) {
-                if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                     return 'expired';
                 }
             }
@@ -450,7 +542,7 @@ class AntelopeCalculate extends Controller
         }
 
         if($custom_expiry_nulled == null) {
-            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+            if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                 return 'expired';
             }
         }
@@ -462,15 +554,17 @@ class AntelopeCalculate extends Controller
         return 'active';
     }
 
-     /**
-     * Get the absence status
+    /**
+     * Calulcates and fetches the absence status by checking the user_id
      *
-     * @param $id (int)
-     * @return str
+     * @author Oliver G.
+     * @param var $id
+     * @return string
+     * @category AntelopeCalculate
+     * @version 1.0.0
      */
     public static function absence_status($id) {
 
-        $constants = \Config::get('constants');
         $absence = Absence::where('user_id', '=', $id);
         $today = strtotime(Carbon::now()->toDateString());
 
@@ -488,6 +582,6 @@ class AntelopeCalculate extends Controller
                     return 'Active';
                 } else return 'Expired';
             } else return 'Upcoming - '.date('Y-m-d', $start_date);
-        } else return $constants['absence_status'][$absence->status];
+        } else return self::$constants['absence_status'][$absence->status];
     }
 }

@@ -17,99 +17,866 @@ Route::get('/', function () {
 });
 */
 
-// IMPORTANT IMPORTANT IMPORTANT: Fucking delete this once Antelope goes live otherwise there will be 5000 olivers in the database
+/*
+|--------------------------------------------------------------------------
+| REMOVE THESE FOLLOWING ROUTES BEFORE THE APPLICATION GOES INTO PRODUCTION
+|--------------------------------------------------------------------------
+|
+*/
 Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
+Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
 
-// Authentication Routes
-Route::get('logout', 'Auth\LoginController@logout', function () {
-    return abort(404);
-});
-Route::get('/register', [
-  'as' => 'register',
-  'uses' => 'Auth\RegistrationController@view'
-]);
-Route::get('/inactive', [
-	'as' => 'inactive',
-	'uses' => 'Auth\InactiveController@inactive'
-]);
-Route::get('login', [
-  'as' => 'login',
-  'uses' => 'Auth\LoginController@showLoginForm'
-]);
-Route::post('login', [
-  'as' => '',
-  'uses' => 'Auth\LoginController@login'
-]);
-Route::post('logout', [
-  'as' => 'logout',
-  'uses' => 'Auth\LoginController@logout'
-]);
-Route::post('/register/submit', 'Auth\RegistrationController@submit');
+/*
+|--------------------------------------------------------------------------
+| Main Website Routes
+|--------------------------------------------------------------------------
+|
+*/
 
-// Main GET Routes
-Route::get('/', function () {
-    return redirect('/dashboard');
-});
+/**
+ * Webdomain: /dashboard
+ *
+ * @author Oliver G.
+ * @package GET
+ * @category BaseRoutes
+ * @version 1.0.0
+ */
 Route::get('/dashboard', [
   'as' => 'dashboard',
   'uses' => 'Antelope@dashboard'
 ]);
-Route::get('/xcsinfo', function () {
-    return view('stackpath.welcome');
+
+Route::get('/', function () {
+    return redirect('/dashboard');
 });
-Route::get('/settings', [
-  'as' => 'settings',
-  'uses' => 'Antelope@accountSettings'
+
+/**
+ * Webdomain: /profile/{user}
+ *
+ * @author Oliver G.
+ * @package GET
+ * @category BaseRoutes
+ * @access SIT
+ * @version 1.0.0
+ */
+Route::get('/profile/{user}', [
+  'as' => 'profile',
+  'uses' => 'Antelope@getProfile'
+])->middleware('level:'.\Config::get('constants.access_level.sit'));
+
+/**
+ * Webdomain: /myprofile
+ *
+ * @author Oliver G.
+ * @package GET
+ * @category BaseRoutes
+ * @version 1.0.0
+ */
+Route::get('/myprofile', [
+  'as' => 'myprofile',
+  'uses' => 'Antelope@myProfile'
 ]);
-Route::get('/member_admin', 'Antelope@memberAdmin')->middleware('level:'.\Config::get('constants.access_level.admin'));
-Route::get('/member_admin/get_users', 'Antelope@passUserData')->middleware('level:'.\Config::get('constants.access_level.admin'));
-Route::get('/superadmin/help', function () {
-    return view('stackpath.superadmin_help');
-})->middleware('level:'.\Config::get('constants.access_level.superadmin'));
-Route::get('/profile/{user}', 'Antelope@getProfile')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::get('/myprofile', 'Antelope@myProfile');
-Route::get('/superadmin', [
-  'as' => 'superadmin',
-  'uses' => 'Antelope@superAdmin'
-])->middleware('level:'.\Config::get('constants.access_level.superadmin'));
-Route::get('/superadmin/normalmode', 'Antelope@superStopGodmode');
-Route::get('/superadmin/icons', 'Antelope@superAdminIcons')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
 
-// Activty GET Routes
-Route::get('/activity', 'AntelopeActivity@constructPage')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::get('/activity/collection', 'AntelopeActivity@passActivityData')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::get('/activity/get_profile_logs/{user}', 'AntelopeActivity@activityData');
+/*
+|--------------------------------------------------------------------------
+| Route Groups
+|--------------------------------------------------------------------------
+|
+*/
 
-// Discipline GET Routes
-Route::get('/discipline', 'AntelopeDiscipline@constructPage')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::get('/discipline/collection', 'AntelopeDiscipline@constructDisciplineTable')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::get('/discipline/get_profile_discipline/{user}', 'AntelopeDiscipline@disciplineData')->middleware('level:'.\Config::get('constants.access_level.sit'));
+Route::prefix('settings')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: settings
+  | Category Name: SettingsRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
 
-// Absence GET Routes
-Route::get('/absence', 'AntelopeAbsence@view')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::get('/absence/archive', 'AntelopeAbsence@archive')->middleware('level:'.\Config::get('constants.access_level.seniorstaff'));
-Route::get('/absence/datatable/{status}', 'AntelopeAbsence@passAbsenceDataTable')->middleware('level:'.\Config::get('constants.access_level.staff'));
+  /**
+   * Webdomain: /settings
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/', [
+    'as' => 'settings',
+    'uses' => 'Antelope@accountSettings'
+  ]);
 
-// POST routes
-Route::post('/settings/change_password', 'Auth\ChangePasswordController@store');
-Route::post('/settings/change_avatar', 'Antelope@setAvatar');
-Route::post('/settings/change_timezone', 'Antelope@setTimezone');
-Route::post('/member_admin/new', 'Auth\NewMemberController@register')->middleware('level:'.\Config::get('constants.access_level.admin'));
-Route::post('/discipline/submit', 'AntelopeDiscipline@submit')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/discipline/get_data/{id}', 'AntelopeDiscipline@getDiscipline')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/discipline/edit/{id}', 'AntelopeDiscipline@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/member/edit/get_data/{user}', 'Auth\EditProfileController@userdata')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/member/edit/edit_user/{user}', 'Auth\EditProfileController@edit')->middleware('level:'.\Config::get('constants.access_level.sit'));
-Route::post('/member/edit/edit_user_password/{user}', 'Auth\EditProfileController@editpassword')->middleware('level:'.\Config::get('constants.access_level.admin'));
-Route::post('/activity/get_data/{user}', 'AntelopeActivity@passActivityInstance');
-Route::post('/activity/get_flag_data/{user}', 'AntelopeActivity@passActivityFlagInstance');
-Route::post('/activity/edit_flag_data/{id}', 'AntelopeActivity@editActivityFlagInstance')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::post('/activity/submit', 'AntelopeActivity@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
-Route::post('/superadmin/godmode', 'Antelope@superAdminGodmode')->middleware('level:'.\Config::get('constants.access_level.superadmin'));
-Route::post('/absence/submit', 'AntelopeAbsence@submit')->middleware('level:'.\Config::get('constants.access_level.member'));
-Route::post('/absence/approve/{id}', 'AntelopeAbsence@approveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::post('/absence/archive/{id}', 'AntelopeAbsence@archiveAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
-Route::post('/absence/queue/{id}', 'AntelopeAbsence@queueAbsence')->middleware('level:'.\Config::get('constants.access_level.staff'));
+  /**
+   * Webdomain: /settings/change_password
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::post('/change_password', [
+    'as' => 'settings.change_password',
+    'uses' => 'Auth\ChangePasswordController@store'
+  ]);
 
-// IMPORTANT IMPORTANT IMPORTANT: Holy shit remove this before production or everyone will be able to create tokens
-Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
+  /**
+   * Webdomain: /settings/change_avatar
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::post('/change_avatar', [
+    'as' => 'settings.change_avatar',
+    'uses' => 'Antelope@setAvatar'
+  ]);
+
+  /**
+   * Webdomain: /settings/change_timezone
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::post('/change_timezone', [
+    'as' => 'settings.change_timezone',
+    'uses' => 'Antelope@setTimezone'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End SettingsRoutes x
+  |--------------------------------------------------------------------------
+  */
+
+});
+
+Route::namespace('Auth')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Authentication Routes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /logout
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::get('logout', 'LoginController@logout', function () {
+      return abort(404);
+  });
+
+  /**
+   * Webdomain: /register
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::get('/register', [
+    'as' => 'register',
+    'uses' => 'RegistrationController@view'
+  ]);
+
+  Route::post('/register/submit', [
+    'uses' => 'RegistrationController@submit'
+  ]);
+
+  /**
+   * Webdomain: /inactive
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::get('/inactive', [
+    'as' => 'inactive',
+    'uses' => 'InactiveController@inactive'
+  ]);
+
+  /**
+   * Webdomain: /login
+   *
+   * @author Oliver G.
+   * @package GET/POST
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::get('login', [
+    'as' => 'login',
+    'uses' => 'LoginController@showLoginForm'
+  ]);
+
+  Route::post('login', [
+    'uses' => 'LoginController@login'
+  ]);
+
+  /**
+   * Webdomain: /logout
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::post('logout', [
+    'as' => 'logout',
+    'uses' => 'LoginController@logout'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End AuthenticationRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('member')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: member
+  | Category Name: MemberRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category MemberRoutes
+   * @access SIT
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.sit'))->group(function () {
+
+    /**
+     * Webdomain: /member/edit/get_data/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::post('/edit/get_data/{user}', [
+      'as' => 'member.edit.get_data',
+      'uses' => 'Auth\EditProfileController@userdata'
+    ]);
+
+    /**
+     * Webdomain: /member/edit/edit_user/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::post('/edit/edit_user/{user}', [
+      'as' => 'member.edit.edit_user',
+      'uses' => 'Auth\EditProfileController@edit'
+    ]);
+
+  });
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category MemberRoutes
+   * @access Admin
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.admin'))->group(function () {
+
+    /**
+     * Webdomain: /member/edit/edit_user_password/{user}
+     *
+     * @author Christopher M.
+     * @package POST
+     * @category MemberRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/edit/edit_user_password/{user}', [
+      'as' => 'member.edit.edit_user_password',
+      'uses' => 'Auth\EditProfileController@editpassword'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End MemberRoutes x
+  |--------------------------------------------------------------------------
+  */
+
+});
+
+Route::prefix('member_admin')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: member_admin
+  | Category Name: MemberAdminRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category MemberAdminRoutes
+   * @access Admin
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.admin'))->group(function () {
+
+    /**
+     * Webdomain: /member_admin
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'member_admin',
+      'uses' => 'Antelope@memberAdmin'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/get_users
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/get_users', [
+      'as' => 'member_admin.get_users',
+      'uses' => 'Antelope@passUserData'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/new
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/new', [
+      'as' => 'member_admin.new',
+      'uses' => 'Auth\NewMemberController@register'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End MemberAdminRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('superadmin')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: superadmin
+  | Category Name: SuperAdminRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /superadmin/normalmode
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category SuperAdminRoutes
+   * @version 1.0.0
+   * @access Public
+   */
+  Route::get('/normalmode', [
+    'as' => 'superadmin.normalmode',
+    'uses' => 'Antelope@superStopGodmode'
+  ]);
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category SuperAdminRoutes
+   * @access SuperAdmin
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.superadmin'))->group(function () {
+
+    /**
+     * Webdomain: /superadmin
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'superadmin',
+      'uses' => 'Antelope@superAdmin'
+    ]);
+
+    /**
+     * Webdomain: /superadmin/help
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::get('/help', function () {
+      return view('stackpath.superadmin_help');
+    });
+
+    /**
+     * Webdomain: /superadmin/icons
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::get('/icons', [
+      'as' => 'superadmin.icons',
+      'uses' => 'Antelope@superAdminIcons'
+    ]);
+
+    /**
+     * Webdomain: /superadmin/icons
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::post('/godmode', [
+      'as' => 'superadmin.godmode',
+      'uses' => 'Antelope@superAdminGodmode'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End SuperAdminRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('activity')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: activity
+  | Category Name: ActivityRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /activity/get_profile_logs/{user}
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category ActivityRoutes
+   * @access Public
+   * @version 1.0.0
+   */
+  Route::get('/get_profile_logs/{user}', [
+    'as' => 'activity.get_profile_logs',
+    'uses' => 'AntelopeActivity@activityData'
+  ]);
+
+  /**
+   * Webdomain: /activity/get_data/{user}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category ActivityRoutes
+   * @access Public
+   * @version 1.0.0
+   */
+  Route::post('/get_data/{user}', [
+    'as' => 'activity.get_data',
+    'uses' => 'AntelopeActivity@passActivityInstance'
+  ]);
+
+  /**
+   * Webdomain: /activity/get_flag_data/{user}
+   *
+   * @author Christopher M.
+   * @package POST
+   * @category ActivityRoutes
+   * @access Public
+   * @version 1.0.0
+   */
+  Route::get('/get_flag_data/{user}', [
+    'as' => 'activity.get_flag_data',
+    'uses' => 'AntelopeActivity@passActivityFlagInstance'
+  ]);
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category ActivityRoutes
+   * @access Member
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.member'))->group(function () {
+
+    /**
+     * Webdomain: /activity/submit
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category ActivityRoutes
+     * @access Member
+     * @version 1.0.0
+     */
+    Route::post('/submit', [
+      'as' => 'activity.submit',
+      'uses' => 'AntelopeActivity@submit'
+    ]);
+
+  });
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category ActivityRoutes
+   * @access Staff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.staff'))->group(function () {
+
+    /**
+     * Webdomain: /activity
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category ActivityRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'activity',
+      'uses' => 'AntelopeActivity@constructPage'
+    ]);
+
+    /**
+     * Webdomain: /activity/collection
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category ActivityRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::get('/collection', [
+      'as' => 'activity.collection',
+      'uses' => 'AntelopeActivity@passActivityData'
+    ]);
+
+    /**
+     * Webdomain: /activity/edit_flag_data/{id}
+     *
+     * @author Christopher M.
+     * @package POST
+     * @category ActivityRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit_flag_data/{id}', [
+      'as' => 'activity.edit_flag_data',
+      'uses' => 'AntelopeActivity@editActivityFlagInstance'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End ActivityRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('discipline')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: discipline
+  | Category Name: DisciplineRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category DisciplineRoutes
+   * @access SIT
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.sit'))->group(function () {
+
+    /**
+     * Webdomain: /discipline
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'discipline',
+      'uses' => 'AntelopeDiscipline@constructPage'
+    ]);
+
+    /**
+     * Webdomain: /discipline/collection
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::get('/collection', [
+      'as' => 'discipline.collection',
+      'uses' => 'AntelopeDiscipline@constructDisciplineTable'
+    ]);
+
+    /**
+     * Webdomain: /discipline/get_profile_discipline/{user}
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::get('/get_profile_discipline/{user}', [
+      'as' => 'discipline.get_profile_discipline',
+      'uses' => 'AntelopeDiscipline@constructDisciplineTable'
+    ]);
+
+    /**
+     * Webdomain: /discipline/submit
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::post('/submit', [
+      'as' => 'discipline.submit',
+      'uses' => 'AntelopeDiscipline@submit'
+    ]);
+
+    /**
+     * Webdomain: /discipline/get_data/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::post('/get_data/{user}', [
+      'as' => 'discipline.get_data',
+      'uses' => 'AntelopeDiscipline@getDiscipline'
+    ]);
+
+    /**
+     * Webdomain: /discipline/edit/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category DisciplineRoutes
+     * @access SIT
+     * @version 1.0.0
+     */
+    Route::post('/edit/{id}', [
+      'as' => 'discipline.edit',
+      'uses' => 'AntelopeDiscipline@edit'
+    ]);
+
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End DisciplineRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('absence')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: absence
+  | Category Name: AbsenceRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category AbsenceRoutes
+   * @access Staff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.sit'))->group(function () {
+
+    /**
+     * Webdomain: /absence
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AbsenceRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'absence',
+      'uses' => 'AntelopeAbsence@view'
+    ]);
+
+    /**
+     * Webdomain: /absence/datatable/{status}
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AbsenceRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::get('/datatable/{status}', [
+      'as' => 'absence.datatable',
+      'uses' => 'AntelopeAbsence@passAbsenceDataTable'
+    ]);
+
+    /**
+     * Webdomain: /absence/approve/{id}
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AbsenceRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::post('/approve/{id}', [
+      'as' => 'absence.approve',
+      'uses' => 'AntelopeAbsence@approveAbsence'
+    ]);
+
+    /**
+     * Webdomain: /absence/archive/{id}
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AbsenceRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::post('/archive/{id}', [
+      'as' => 'absence.archive',
+      'uses' => 'AntelopeAbsence@archiveAbsence'
+    ]);
+
+    /**
+     * Webdomain: /absence/queue/{id}
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category QueueAbsence
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::post('/queue/{id}', [
+      'as' => 'absence.queue',
+      'uses' => 'AntelopeAbsence@queueAbsence'
+    ]);
+
+  });
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category AbsenceRoutes
+   * @access SeniorStaff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.sit'))->group(function () {
+
+    /**
+     * Webdomain: /absence/archive
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category BaseRoutes
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    Route::get('/archive', [
+      'as' => 'absence.archive',
+      'uses' => 'AntelopeAbsence@archive'
+    ]);
+
+  });
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category AbsenceRoutes
+   * @access Member
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.member'))->group(function () {
+
+    /**
+     * Webdomain: /absence/submit
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category BaseRoutes
+     * @access Member
+     * @version 1.0.0
+     */
+    Route::post('/submit', [
+      'as' => 'absence.submit',
+      'uses' => 'AntelopeAbsence@submit'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End AbsenceRoutes x
+  |--------------------------------------------------------------------------
+  */
+});

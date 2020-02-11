@@ -80,3 +80,7 @@ textarea:focus, input:focus {
 .swal-content__input:focus{
     color: black !important;
 }
+
+.tooltip {
+    z-index: 100000000 !important; 
+}

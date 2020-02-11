@@ -25,21 +25,31 @@ class AntelopeActivity extends Controller
     |
     */
 
+    public $constants;
+
     /**
-     * Create a new controller instance.
+     * Executes before running the main controllers
      *
+     * @author Oliver G.
+     * @param
      * @return void
+     * @access Auth
+     * @version 1.0.0
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
-     * Get a validator for an incoming log request.
+     * Validates request before running main function
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function validator(array $data)
     {
@@ -73,11 +83,13 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Create a new log instance after validation
+     * Inserts and creates a new activity for the database
      *
-     * @param array $data
-     * @return \App\User
-     * @throws \Exception
+     * @author Oliver G.
+     * @param Array $data
+     * @return App\Activity
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function create(array $data)
     {
@@ -102,11 +114,10 @@ class AntelopeActivity extends Controller
         $hours = $hours + ($diff->days * 24);
         $auto_flag = false;
         $auto_flag_reason = "";
-        $constants = \Config::get('constants');
 
-        if ($hours >= $constants['soft_patrol_hour_limit']) {
+        if ($hours >= $this->constants['soft_patrol_hour_limit']) {
             $auto_flag = true;
-            $auto_flag_reason = "Patrol is " . $constants['soft_patrol_hour_limit'] . "+ hours in length.";
+            $auto_flag_reason = "Patrol is " . $this->constants['soft_patrol_hour_limit'] . "+ hours in length.";
         }
 
         if ($start > $anHour) {
@@ -145,11 +156,14 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * The activity log has been registered
+     * Executes after an activity is created
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Request $request
+     * @param Request $log
+     * @return void
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function submitted(Request $request, $log)
     {
@@ -157,11 +171,13 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Convert the Timezone for the timestamps
+     * Converts the activity log's time to the system's time
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Array $data
+     * @return var $data
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function convertTimezone(array $data)
     {
@@ -186,10 +202,14 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Handle an activity log submit for the application.
+     * Submits a new Activity Request for an insert into the database
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @author Oliver G.
+     * @param Request $request
+     * @return Function submitted($request, $log)
+     * @category AntelopeActivity
+     * @access Member
+     * @version 1.0.0
      */
     public function submit(Request $request)
     {
@@ -201,21 +221,27 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Construct Activity Page
+     * Backend controller for the absence_database module
      *
+     * @author Oliver G.
      * @return View
+     * @access Staff
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     public function constructPage()
     {
-        $constants = \Config::get('constants');
-
-        return view('activity_database')->with('constants', $constants);
+        return view('activity_database')->with('constants', $this->constants);
     }
 
     /**
-     * Gets all activity in database
+     * Constructs a DataTable for the activity table
      *
-     * @return View
+     * @author Oliver G.
+     * @return Datatables
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
      */
     public function passActivityData()
     {
@@ -257,15 +283,18 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Gets specific activity instance
+     * Passes a singular instance for the activity table
      *
-     * @return View
-     * @throws \Exception
+     * @author Oliver G.
+     * @param var $id
+     * @return App\Activity
+     * @category AntelopeActivity
+     * @access SIT
+     * @version 1.0.0
      */
     public function passActivityInstance($id)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
             $log = Activity::find($id);
 
             $log->user_name = User::find($log['user_id'])->name;
@@ -277,15 +306,18 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Gets specific activity instance
+     * Edits a specific activity log's flags in the controller
      *
+     * @author Christopher M.
      * @param Request $request
      * @return void
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
      */
     public function editActivityFlagInstance(Request $request)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['staff']) {
+        if(Auth::user()->level() >= $this->constants['access_level']['staff']) {
             $log = Activity::find($request->route('id'));
 
             $temp_array = [];
@@ -313,15 +345,18 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Gets specific activity flag instance
+     * Passes a singular flag instance for the activity table
      *
-     * @return View
-     * @throws \Exception
+     * @author Christopher M.
+     * @param var $id
+     * @return var $log->flag
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
      */
     public function passActivityFlagInstance($id)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['staff'] or Auth::user()->id == Activity::find($id)->user_id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['staff'] or Auth::user()->id == Activity::find($id)->user_id) {
             $log = Activity::find($id);
 
             return $log->flag;
@@ -330,15 +365,18 @@ class AntelopeActivity extends Controller
 
 
     /**
-     * Gets a specific users' activity
+     * Constructs a DataTable on a specific user for the activity table
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param var $id
+     * @return Datatables
+     * @category AntelopeActivity
+     * @access SIT
+     * @version 1.0.0
      */
     protected function activityData($id)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['sit'] or Auth::user()->id == $id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id) {
             $query = Activity::query()
             ->select([
                 'id',
