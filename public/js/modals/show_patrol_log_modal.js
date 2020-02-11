@@ -15,6 +15,7 @@ var id = $(this).val();
         $("#ajax_view_patrol_log").modal("toggle");
         $("#ajax-patrol-log-by").empty();
         $("#ajax-patrol-log-by").append(uniqueunitnumber);
+        $("#ajax_submit_edit_patrol_log-button").val(id);
         $("#ajax-patrol-website-id").empty();
         $("#ajax-patrol-website-id").append(data['website_id']);
         $("#ajax-input-patrol-log-type").val(data['type']).change();

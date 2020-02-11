@@ -221,6 +221,55 @@ class AntelopeActivity extends Controller
     }
 
     /**
+     * Validates an edit request before running main function
+     *
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeActivity
+     * @version 1.0.0
+     */
+    protected function edit_validator(array $data)
+    {
+
+        return Validator::make($data, [
+            'type' => ['required', 'string'],
+            'patrol_start_date' => ['required', 'date'],
+            'patrol_end_date' => ['nullable', 'date'],
+            'start_time' => ['required', 'string'],
+            'end_time' => ['required', 'string'],
+            'details' => ['required', 'string'],
+        ]);
+    }
+
+    /**
+     * Edits an already established activity log
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category AntelopeActivity
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    public function edit(Request $request)
+    {
+        $log = Activity::find($request->route('id'));
+
+        $this->edit_validator($request->all())->validate();
+
+        $log->type = $request['type'];
+        $log->patrol_start_date = $request['patrol_start_date'];
+        $log->patrol_end_date = $request['patrol_end_date'];
+        $log->start_time = $request['start_time'];
+        $log->end_time = $request['end_time'];
+        $log->details = $request['details'];
+        $log->save();
+
+        return;
+    }
+
+    /**
      * Backend controller for the absence_database module
      *
      * @author Oliver G.
