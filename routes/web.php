@@ -532,7 +532,7 @@ Route::prefix('activity')->group(function () {
    * @access Public
    * @version 1.0.0
    */
-  Route::get('/get_flag_data/{user}', [
+  Route::post('/get_flag_data/{user}', [
     'as' => 'activity.get_flag_data',
     'uses' => 'AntelopeActivity@passActivityFlagInstance'
   ]);
