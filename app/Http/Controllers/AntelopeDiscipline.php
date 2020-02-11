@@ -23,32 +23,45 @@ class AntelopeDiscipline extends Controller
     |
     */
 
+    public $constants;
+
     /**
-     * Create a new controller instance.
+     * Executes before running the main controllers
      *
+     * @author Oliver G.
+     * @param
      * @return void
+     * @access Auth
+     * @version 1.0.0
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
-     * Construct Discipline Page
+     * Backend controller for the discipline_database module
      *
+     * @author Oliver G.
      * @return View
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     public function constructPage()
     {
-        $constants = \Config::get('constants');
-
-        return view('discipline_database')->with('constants', $constants);
+        return view('discipline_database')->with('constants', $this->constants);
     }
 
     /**
-     * Construct Discipline Table
+     * Constructs a DataTable for the discipline table
      *
-     * @return View
+     * @author Oliver G.
+     * @return Datatables
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     public function constructDisciplineTable()
     {
@@ -96,19 +109,16 @@ class AntelopeDiscipline extends Controller
 	                }
 	                else return $row->overturned_by_name.' '.$row->overturned_by_department_id;})
 	    ->editColumn('discipline_type', function($row){
-	    			$constants = \Config::get('constants');
-	                return $constants['disciplinary_actions'][$row->discipline_type];})
+	                return $this->constants['disciplinary_actions'][$row->discipline_type];})
         ->addColumn('discipline_status', function($row){
                     $status = AntelopeCalculate::discipline_status($row->discipline_id);
-                    $constants = \Config::get('constants');
-                    return $constants['disciplinary_action_status'][$status];})
+                    return $this->constants['disciplinary_action_status'][$status];})
 		->filterColumn('discipline_id', function($query, $keyword) {
-					$constants = \Config::get('constants');
-					$prefix = $constants['global_id']['disciplinary_action'];
+					$prefix = $this->constants['global_id']['disciplinary_action'];
 					if (substr($keyword, 0, strlen($prefix)) == $prefix) {
 					    $keyword = substr($keyword, strlen($prefix));
 					}
-					$sql = "REPLACE(discipline.id, '".$constants['global_id']['disciplinary_action']."', '')  like ?";
+					$sql = "REPLACE(discipline.id, '".$this->constants['global_id']['disciplinary_action']."', '')  like ?";
 	                $query->whereRaw($sql, ["%{$keyword}%"]);
 	               	})
 		->filterColumn('issued_to', function($query, $keyword) {
@@ -134,10 +144,13 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Get a validator for an incoming discipline request.
+     * Validates request before running main function
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeDiscipline
+     * @version 1.0.0
      */
     protected function validator(array $data)
     {
@@ -152,10 +165,13 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Get a validator for an incoming edit discipline request.
+     * Validates an edit request before running main function
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeDiscipline
+     * @version 1.0.0
      */
     protected function editValidator(array $data)
     {
@@ -178,10 +194,13 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Create a new discipline instance after validation
+     * Inserts and creates a new discipline for the database
      *
-     * @param  array  $data
-     * @return \App\User
+     * @author Oliver G.
+     * @param Array $data
+     * @return App\Discipline
+     * @category AntelopeDiscipline
+     * @version 1.0.0
      */
     protected function create(array $data)
     {
@@ -202,11 +221,14 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * The discipline log has been registered
+     * Executes after a discipline is created
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Request $request
+     * @param Request $log
+     * @return void
+     * @category AntelopeDiscipline
+     * @version 1.0.0
      */
     protected function submitted(Request $request, $discipline)
     {
@@ -214,10 +236,14 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Handle an discipline submit for the application.
+     * Submits a new Discipline Request for an insert into the database
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @author Oliver G.
+     * @param Request $request
+     * @return Function submitted($request, $discipline)
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     public function submit(Request $request)
     {
@@ -229,9 +255,14 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Gets specific discipline instance
+     * Fetches a specific discipline instance via the discipline ID
      *
-     * @return View
+     * @author Oliver G.
+     * @param var $id
+     * @return var $discipline
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     public function getDiscipline($id)
     {
@@ -245,9 +276,14 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Edits specific discipline instance
+     * Edits an already established discipline
      *
-     * @return View
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     public function edit(Request $request)
     {
@@ -276,14 +312,17 @@ class AntelopeDiscipline extends Controller
     }
 
     /**
-     * Gets a specific users' discipline
+     * Constructs a DataTable for a specific user's discipline table
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param var $id
+     * @return Datatables
+     * @category AntelopeDiscipline
+     * @access SIT
+     * @version 1.0.0
      */
     protected function disciplineData($id)
     {
-        $constants = \Config::get('constants');
         $query = Discipline::query()
         ->leftJoin('users as t1', 'discipline.user_id', '=', 't1.id')
         ->leftJoin('users as t2', 'discipline.issued_by', '=', 't2.id')
@@ -328,19 +367,16 @@ class AntelopeDiscipline extends Controller
                     }
                     else return $row->overturned_by_name.' '.$row->overturned_by_department_id;})
         ->editColumn('discipline_type', function($row){
-                    $constants = \Config::get('constants');
-                    return $constants['disciplinary_actions'][$row->discipline_type];})
+                    return $this->constants['disciplinary_actions'][$row->discipline_type];})
         ->addColumn('discipline_status', function($row){
                     $status = AntelopeCalculate::discipline_status($row->discipline_id);
-                    $constants = \Config::get('constants');
-                    return $constants['disciplinary_action_status'][$status];})
+                    return $this->constants['disciplinary_action_status'][$status];})
         ->filterColumn('discipline_id', function($query, $keyword) {
-                    $constants = \Config::get('constants');
-                    $prefix = $constants['global_id']['disciplinary_action'];
+                    $prefix = $this->constants['global_id']['disciplinary_action'];
                     if (substr($keyword, 0, strlen($prefix)) == $prefix) {
                         $keyword = substr($keyword, strlen($prefix));
                     }
-                    $sql = "REPLACE(discipline.id, '".$constants['global_id']['disciplinary_action']."', '')  like ?";
+                    $sql = "REPLACE(discipline.id, '".$this->constants['global_id']['disciplinary_action']."', '')  like ?";
                     $query->whereRaw($sql, ["%{$keyword}%"]);
                     })
         ->filterColumn('issued_to', function($query, $keyword) {

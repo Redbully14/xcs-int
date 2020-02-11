@@ -1,4 +1,55 @@
 <?php
+/*
+|------------------------------------------------------------------------------------
+|                           BASEXCS MAIN WEBSITE INFO
+|------------------------------------------------------------------------------------
+|
+| FRAMEWORK NAME: XCS-int
+| FRAMEWORK AUTHOR: Oliver G.
+| FRAMEWORK CONTACT EMAIL: Redbully14urh@gmail.com
+|------------------------------------------------------------------------------------
+|                           BASEXCS APPLICATION INFO
+|------------------------------------------------------------------------------------
+| 
+| APPLICATION NAME: AntelopePHP
+| APPLICATION AUTHOR: Oliver G.
+| APPLICATION CONTACT EMAIL: Redbully14urh@gmail.com
+| APPLICATION WEBSITE: /
+| APPLICATION GITHUB: https://github.com/Redbully14/xcs-int
+| APPLICATION SUBSIDIARIES: + AntelopePHP Base
+|                           + 
+|                           + 
+|                           + 
+| 
+| CREATED FOR: Department of Justice Roleplay Community (www.dojrp.com)
+| 
+|-----------------------------------------------------------------------------------
+|                           BASEXCS LICENSE INFO
+|-----------------------------------------------------------------------------------
+| 
+|    MIT License
+|
+|    Copyright (c) 2020 XCS-int
+|
+|    Permission is hereby granted, free of charge, to any person obtaining a copy
+|    of this software and associated documentation files (the "Software"), to deal
+|    in the Software without restriction, including without limitation the rights
+|    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+|    copies of the Software, and to permit persons to whom the Software is
+|    furnished to do so, subject to the following conditions:
+|
+|    The above copyright notice and this permission notice shall be included in all
+|    copies or substantial portions of the Software.
+|
+|    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+|    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+|    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+|    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+|    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+|    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+|    SOFTWARE.
+|
+*/
 
 namespace App\Http\Controllers;
 
@@ -9,21 +60,36 @@ use Carbon\Carbon;
 
 class BaseXCS extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | BaseXCS Main Website Controller
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    static $constants;
+
     /**
-     * Show the welcome view for XCS
+     * Executes before running the main controllers
      *
-     * @return View
+     * @author Oliver G.
+     * @param
+     * @return void
+     * @version 1.0.0
      */
-    public function xcsInfo()
-    {   
-    	$constants = \Config::get('constants');
-        return view('welcome')->with('constants', $constants);
+    public function __construct()
+    {
+        self::$constants = \Config::get('constants');
     }
 
     /**
-     * Converts seconds into duration
+     * Converts seconds into a H:i:s format duration
      *
-     * @return H:i:s
+     * @author Oliver G.
+     * @param var $duration
+     * @return string
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function convertToDuration($duration) {
         $H = floor($duration / 3600);
@@ -35,20 +101,26 @@ class BaseXCS extends Controller
     /**
      * Converts seconds into days
      *
-     * @return H:i:s
+     * @author Oliver G.
+     * @param var $duration
+     * @return string
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function convertToDays($duration) {
         $d = floor($duration / 86400);
-        $H = floor($duration / 3600);
-        $i = ($duration / 60) % 60;
-        $s = $duration % 60;
         return $d;
     }
 
     /**
-     * Converts an input from local time into system time
+     * Converts a timezone into UTC
      *
-     * @return void
+     * @author Oliver G.
+     * @param var $user
+     * @param var $timestamp
+     * @return var $date
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function convertTimezone($user, $timestamp) {
         $user_timezone = User::find($user)->timezone;
@@ -57,34 +129,41 @@ class BaseXCS extends Controller
     }
 
     /**
-     * Attempt to convert an avatar
+     * Attempts to convert an avatar by checking if it exists in the system
      *
-     * @param $type = either 1 (name) or 2 (file)
-     * @return string
+     * @author Oliver G.
+     * @param var $avatar
+     * @param var $type
+     * @return var $avatar
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function convertAvatar($avatar, $type) {
-        $constants = \Config::get('constants');
 
         if($type == 1) {
             try {
-                $avatar = $constants['avatars'][$avatar];
+                $avatar = self::$constants['avatars'][$avatar];
             } catch(\Exception $e) {
-                $avatar = $constants['avatars']['antelope'];
+                $avatar = self::$constants['avatars']['antelope'];
             }
         } else if ($type == 2) {
             try {
-                $avatar = $constants['avatar_filename'][$avatar];
+                $avatar = self::$constants['avatar_filename'][$avatar];
             } catch(\Exception $e) {
-                $avatar = $constants['avatar_filename']['antelope'];
+                $avatar = self::$constants['avatar_filename']['antelope'];
             }
         }
         return $avatar;
     }
 
     /**
-     * Convert ID to model User
+     * Gets a certain user and returns App\User
      *
-     * @return User
+     * @author Oliver G.
+     * @param var $id
+     * @return var $user
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function getUser($id) {
         $user = User::find($id);
@@ -93,9 +172,12 @@ class BaseXCS extends Controller
     }
 
     /**
-     * Get all members
+     * Gets all the member and returs a searchable url link in array
      *
-     * @return searchable string (000 - User N. Civ-0)
+     * @author Oliver G.
+     * @return array $members_array
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function getAllMembersSearchable() {
         $users = User::all();
@@ -119,9 +201,12 @@ class BaseXCS extends Controller
     }
 
     /**
-     * Get all members
+     * Gets all the members and returrns them in a array
      *
-     * @return int
+     * @author Oliver G.
+     * @return array $member_array
+     * @category BaseXCS
+     * @version 1.0.0
      */
     public static function getAllMembers() {
         $users = User::all();
