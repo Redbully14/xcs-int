@@ -84,6 +84,8 @@ $('#ajax_edit_flags').on('submit', function(e) {
     var id = $('#save_flags').val();
     var self_resolve_reason = $('#resolve-self-flag-details').val();
     var auto_resolve_reason = $('#resolve-auto-flag-details').val();
+    $('#resolve-self-flag-details').hide();
+    $('#resolve-auto-flag-details').hide();
 
     $.ajax({
         type: 'POST',
