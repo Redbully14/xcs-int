@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Datatables;
 use App\User;
+use App\Feedback;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class Antelope extends Controller
 {
@@ -48,7 +51,14 @@ class Antelope extends Controller
      */
     public function dashboard()
     {
-    	return view('dashboard')->with('constants', $this->constants);
+        $feedback = Feedback::where('user_id', '=', Auth::user()->id)->get();
+
+        if ($feedback->first() == null) {
+            $feedback = false;
+        } else $feedback = true;
+
+        return view('dashboard')->with('constants', $this->constants)
+                                ->with('feedback', $feedback);
     }
 
     /**
@@ -281,5 +291,32 @@ class Antelope extends Controller
         auth()->user()->leaveImpersonation();
 
         return redirect()->route('superadmin');
+    }
+
+    /**
+     * Controls the submit function of the feedback form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function feedbackSubmit(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'score' => ['required', 'integer'],
+            'feedback' => ['nullable', 'string']
+        ]);
+
+        Feedback::create([
+            'user_id' => Auth::user()->id,
+            'score' => $data['score'],
+            'feedback' => $data['feedback'],
+        ]);
+        
+        return;
     }
 }

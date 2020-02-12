@@ -10,12 +10,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ $constants['global']['application_name'] }} :: {{ $constants['pages'][$page_name] }}</title>
 
-    <!-- plugins:css -->
+    <!-- Global Plugin CSS -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-
-    <!-- Global Plugin CSS -->
+    <link rel="stylesheet" href="/assets/vendors/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
     <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
@@ -26,15 +24,16 @@
     <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/assets/vendors/jquery-bar-rating/bars-square.css">
 
     <!-- Plugin css for this page -->
     @yield('customcss')
     <!-- inject:css -->
-    <link href="/assets/vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
+    <link rel="stylesheet" href="/assets/css/xcs-int/elements.css">
     <!-- endinject -->
 
     <!-- Layout styles -->
-    <link rel="stylesheet" href="/assets/css/xcs-int/custom.css">
     <link rel="stylesheet" href="/assets/css/modern-vertical/style.css">
     <!-- End layout styles -->
 
@@ -87,6 +86,7 @@
     <script src="/assets/vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
     <script src="/assets/vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
     @yield('pluginjs')
     <!-- endinject -->
 

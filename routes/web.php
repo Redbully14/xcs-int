@@ -77,6 +77,19 @@ Route::get('/myprofile', [
   'uses' => 'Antelope@myProfile'
 ]);
 
+/**
+ * Webdomain: /myprofile
+ *
+ * @author Oliver G.
+ * @package POST
+ * @category BaseRoutes
+ * @version 1.0.0
+ */
+Route::post('/feedback/', [
+  'as' => 'feedback',
+  'uses' => 'Antelope@feedbackSubmit'
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Route Groups

@@ -61,6 +61,47 @@ globalToast = function(heading, text, icon, color) {
   });
 })(jQuery);
 
+(function($) {
+  'use strict';
+
+  $(function() {
+    function ratingEnable() {
+
+      $('#antelope-square').barrating('show', {
+        theme: 'bars-square',
+        showValues: true,
+        showSelectedRating: false
+      });
+
+    }
+
+    function ratingDisable() {
+      $('select').barrating('destroy');
+    }
+
+    $('.rating-enable').click(function(event) {
+      event.preventDefault();
+
+      ratingEnable();
+
+      $(this).addClass('deactivated');
+      $('.rating-disable').removeClass('deactivated');
+    });
+
+    $('.rating-disable').click(function(event) {
+      event.preventDefault();
+
+      ratingDisable();
+
+      $(this).addClass('deactivated');
+      $('.rating-enable').removeClass('deactivated');
+    });
+
+    ratingEnable();
+  });
+
+})(jQuery);
+
 $(".ajax_search_member-class").select2({
     placeholder: "Search by Website ID, Name or Unit Number",
     allowClear: true
