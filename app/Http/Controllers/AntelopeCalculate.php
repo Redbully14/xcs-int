@@ -20,23 +20,6 @@ class AntelopeCalculate extends Controller
     |
     */
 
-    static $constants;
-
-    /**
-     * Executes before running the main controllers
-     *
-     * @author Oliver G.
-     * @param
-     * @return void
-     * @access Auth
-     * @version 1.0.0
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        self::$constants = \Config::get('constants');
-    }
-
     /**
      * Gets the last patrol timestamp of the last activity log within the database
      *
@@ -92,6 +75,8 @@ class AntelopeCalculate extends Controller
      */
     public static function get_department_status($id) {
 
+        $constants = \Config::get('constants');
+
     	$last_timestamp = self::get_last_timestamp($id);
 
     	$today = strtotime(Carbon::now()->toDateString());
@@ -101,14 +86,14 @@ class AntelopeCalculate extends Controller
         }
 
     	if($last_timestamp == 'N/A') {
-    		if(!strtotime(User::find($id)->created_at)+self::$constants['calculation']['account_is_new'] < $today ) {
+    		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
     			return 'new';
     		}
     	}
 
     	$last_timestamp = strtotime($last_timestamp);
 
-    	if($last_timestamp+self::$constants['calculation']['time_to_inactive'] < $today ) {
+    	if($last_timestamp+$constants['calculation']['time_to_inactive'] < $today ) {
     		return 'inactive';
     	}
 
@@ -272,12 +257,13 @@ class AntelopeCalculate extends Controller
      */
     public static function get_ctime_patrol_logs($id, $time) {
 
+        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $count = 0;
 
         if(is_string($time)) {
-            $time = self::$constants['calculation'][$time];
+            $time = $constants['calculation'][$time];
         }
 
         foreach($patrols as $patrol) {
@@ -308,12 +294,13 @@ class AntelopeCalculate extends Controller
      */
     public static function get_ctime_patrol_hours($id, $time) {
 
+        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total_duration = 0;
 
         if(is_string($time)) {
-            $time = self::$constants['calculation'][$time];
+            $time = $constants['calculation'][$time];
         }
 
         foreach($patrols as $patrol) {
@@ -349,6 +336,7 @@ class AntelopeCalculate extends Controller
      */
     public static function get_month_requirements($id, $calmonth) {
 
+        $constants = \Config::get('constants');
         $check_month = date('m') - $calmonth;
         $check_year = date('Y');
         $patrols = self::get_month_patrol_logs($id, $calmonth);
@@ -363,7 +351,7 @@ class AntelopeCalculate extends Controller
             $check_month = date('m');
         }
 
-        if ($patrols >= self::$constants['calculation']['min_requirements_logs'] && $hours >= self::$constants['calculation']['min_requirements_hours']) {
+        if ($patrols >= $constants['calculation']['min_requirements_logs'] && $hours >= $constants['calculation']['min_requirements_hours']) {
             return 'met';
         }
 
@@ -487,6 +475,7 @@ class AntelopeCalculate extends Controller
      */
     public static function chk_patrol_restriction($id) {
 
+        $constants = \Config::get('constants');
         $disciplines = Discipline::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
@@ -495,11 +484,11 @@ class AntelopeCalculate extends Controller
             $discipline_date = strtotime($discipline->discipline_date);
             $discipline_status = self::discipline_status($discipline->id);
             if($discipline->type == 1) {
-                if($discipline_date+self::$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             } else if ($discipline->type == 2) {
-                if($discipline_date+self::$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             }
@@ -518,6 +507,7 @@ class AntelopeCalculate extends Controller
      */
     public static function discipline_status($id) {
 
+        $constants = \Config::get('constants');
         $discipline = Discipline::find($id);
         $today = strtotime(Carbon::now()->toDateString());
         $discipline_date = strtotime($discipline->discipline_date);
@@ -530,7 +520,7 @@ class AntelopeCalculate extends Controller
 
         if($discipline->disputed) {
             if($custom_expiry_nulled == null) {
-                if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                     return 'expired';
                 }
             }
@@ -542,7 +532,7 @@ class AntelopeCalculate extends Controller
         }
 
         if($custom_expiry_nulled == null) {
-            if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                 return 'expired';
             }
         }
@@ -565,6 +555,7 @@ class AntelopeCalculate extends Controller
      */
     public static function absence_status($id) {
 
+        $constants = \Config::get('constants');
         $absence = Absence::where('user_id', '=', $id);
         $today = strtotime(Carbon::now()->toDateString());
 
@@ -582,6 +573,57 @@ class AntelopeCalculate extends Controller
                     return 'Active';
                 } else return 'Expired';
             } else return 'Upcoming - '.date('Y-m-d', $start_date);
-        } else return self::$constants['absence_status'][$absence->status];
+        } else return $constants['absence_status'][$absence->status];
+    }
+
+    /**
+     * Calulcates and fetches the amount of patrol logs and hours needed to meet requirements
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return /
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function amount_to_requirements($id) {
+        
+        $constants = \Config::get('constants');
+        $data = [
+            'logs' => 0,
+            'hours' => 0,
+        ];
+
+        if(self::get_month_requirements($id, 0) == 'met' or self::get_month_requirements($id, 0) == 'exempt') {
+            return $data;
+        }
+
+        $caldata = [
+            'logs' => self::get_month_patrol_logs($id, 0),
+            'hours' => self::get_month_patrol_hours($id, 0),
+        ];
+
+        // Getting rid of the N/A and - values here if no patrol logs
+        if ($caldata['logs'] == 'N/A') {
+            $caldata['logs'] = 0;
+        }
+
+        if ($caldata['hours'] == '-') {
+            $caldata['hours'] = 0;
+        }
+
+        $data['logs'] = $constants['calculation']['min_requirements_logs'] - $caldata['logs'];
+        $data['hours'] = $constants['calculation']['min_requirements_hours'] - BaseXCS::durationToSeconds($caldata['hours']);
+        $data['hours'] = (int)floor($data['hours'] / 3600);
+        
+
+        if($data['logs'] < 0) {
+            $data['logs'] = 0;
+        }
+
+        if($data['hours'] < 0) {
+            $data['hours'] = 0;
+        }
+
+        return $data;
     }
 }

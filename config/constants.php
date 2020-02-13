@@ -38,7 +38,7 @@ return [
         'custom_one_month' => 2678400, // Set one month here (default 31 days)
         'custom_two_month' => 5356800, // Set two month here (default 62 days)
         'min_requirements_logs' => 4, // 4 logs required
-        'min_requirements_hours' => 10800, // 4 hours required
+        'min_requirements_hours' => 14400, // 4 hours required
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
         'recent_loa' => 604800, // 1 week

@@ -51,11 +51,40 @@ class Antelope extends Controller
      */
     public function dashboard()
     {
+        $id = Auth::user()->id;
+
+        // Feedback System
         $feedback = Feedback::where('user_id', '=', Auth::user()->id)->get();
 
         if ($feedback->first() == null) {
             $feedback = false;
         } else $feedback = true;
+
+        // To disable feedbacks, uncomment this line:
+        //$feedback = true;
+
+        if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
+
+        } else {
+            $dashboard_elements = [
+                'hours_requirements' => [
+                    'title' => 'Hours Required'
+                ],
+                'logs_requirements' => [
+                    'title' => 'Logs Required'
+                ],
+            ];
+
+            $dashboard_calculations = [
+                'requirements' => AntelopeCalculate::amount_to_requirements($id),
+                'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
+                'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
+            ];
+
+            if($dashboard_calculations['this_month_hours'] == '-') {
+                $dashboard_calculations['this_month_hours'] = 'N/A';
+            }
+        }
 
         return view('dashboard')->with('constants', $this->constants)
                                 ->with('feedback', $feedback);
