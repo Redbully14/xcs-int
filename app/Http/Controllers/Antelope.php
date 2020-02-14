@@ -82,7 +82,7 @@ class Antelope extends Controller
         }
 
         if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
-            $dashboard_calculations['requirements'] = AntelopeCalculate::amount_to_requirements($id);
+            $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
         }
 
         return view('dashboard')->with('constants', $this->constants)

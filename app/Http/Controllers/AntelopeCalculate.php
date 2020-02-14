@@ -581,7 +581,7 @@ class AntelopeCalculate extends Controller
      *
      * @author Oliver G.
      * @param var $id
-     * @return /
+     * @return var $data
      * @category AntelopeCalculate
      * @version 1.0.0
      */
@@ -637,5 +637,26 @@ class AntelopeCalculate extends Controller
         }
 
         return $data;
+    }
+
+    /**
+     * Calulcates and fetches the absences with the in_queue status
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return int $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function absences_needing_approval($id) {
+
+        $absences = Absence::where('status', '=', 0)->get();
+        $total = 0;
+
+        foreach($absences as $absence) {
+            $total++;
+        }
+
+        return $total;
     }
 }
