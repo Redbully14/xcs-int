@@ -360,7 +360,21 @@ class Antelope extends Controller
      */
     public function adminSettings_view()
     {
-        return view('settings_admin')->with('constants', $this->constants);
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $array[$count]["id"] = $quicklink->id;
+            $count++;
+        }
+
+        return view('settings_admin')->with('constants', $this->constants)
+                                     ->with('quicklinks', $array);
     }
 
     /**
@@ -389,6 +403,37 @@ class Antelope extends Controller
             'type' => 'quicklink',
             'metadata' => $data,
         ]);
+        
+        return;
+    }
+
+    /**
+     * Controls the manage function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_manageQuickLink(Request $request)
+    {
+        $data = ($request->all());
+        $data = $data['data'];
+
+        foreach($data as $key) {
+            Validator::make($key, [
+                0 => ['required', 'string'],
+                1 => ['required', 'string'],
+                2 => ['required', 'url'],
+                3 => ['required', 'integer'],
+            ]);
+
+            $id = $key[3];
+            $key = json_encode([$key[0], $key[1], $key[2]]);
+
+            Settings::find($id)->update(['metadata' => $key]);
+        }
         
         return;
     }

@@ -380,6 +380,20 @@ Route::prefix('admin')->group(function () {
       'uses' => 'Antelope@adminSettings_addQuickLink'
     ]);
 
+    /**
+     * Webdomain: /admin/quicklink/manage
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/quicklink/manage', [
+      'as' => 'admin.quicklink.manage',
+      'uses' => 'Antelope@adminSettings_manageQuickLink'
+    ]);
+
   });
 
   /*
