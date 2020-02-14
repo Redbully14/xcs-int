@@ -63,31 +63,31 @@ class Antelope extends Controller
         // To disable feedbacks, uncomment this line:
         //$feedback = true;
 
-        if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
+        $dashboard_calculations = [];
 
-        } else {
-            $dashboard_elements = [
-                'hours_requirements' => [
-                    'title' => 'Hours Required'
-                ],
-                'logs_requirements' => [
-                    'title' => 'Logs Required'
-                ],
-            ];
+        if(auth()->user()->exempt_requirements == false) {
 
-            $dashboard_calculations = [
-                'requirements' => AntelopeCalculate::amount_to_requirements($id),
-                'this_month_logs' => AntelopeCalculate::get_month_patrol_logs($id, 0),
-                'this_month_hours' => AntelopeCalculate::get_month_patrol_hours($id, 0),
-            ];
-
+            $dashboard_calculations['requirements'] = AntelopeCalculate::amount_to_requirements($id);
+            $dashboard_calculations['this_month_logs'] = AntelopeCalculate::get_month_patrol_logs($id, 0);
+            $dashboard_calculations['this_month_hours'] = AntelopeCalculate::get_month_patrol_hours($id, 0);
+            
             if($dashboard_calculations['this_month_hours'] == '-') {
-                $dashboard_calculations['this_month_hours'] = 'N/A';
+                $dashboard_calculations['this_month_logs'] = 0;
+                $dashboard_calculations['this_month_hours'] = 0;
+            } else {
+                $dashboard_calculations['this_month_hours'] = BaseXCS::durationToSeconds($dashboard_calculations['this_month_hours']);
+                $dashboard_calculations['this_month_hours'] = (int)floor($dashboard_calculations['this_month_hours'] / 3600);
             }
+
+        }
+
+        if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
+            $dashboard_calculations['requirements'] = AntelopeCalculate::amount_to_requirements($id);
         }
 
         return view('dashboard')->with('constants', $this->constants)
-                                ->with('feedback', $feedback);
+                                ->with('feedback', $feedback)
+                                ->with('calculations', $dashboard_calculations);
     }
 
     /**

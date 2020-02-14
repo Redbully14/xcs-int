@@ -591,9 +591,13 @@ class AntelopeCalculate extends Controller
         $data = [
             'logs' => 0,
             'hours' => 0,
+            'hours_met' => false,
+            'logs_met' => false
         ];
 
         if(self::get_month_requirements($id, 0) == 'met' or self::get_month_requirements($id, 0) == 'exempt') {
+            $data['hours_met'] = true;
+            $data['logs_met'] = true;
             return $data;
         }
 
@@ -601,6 +605,14 @@ class AntelopeCalculate extends Controller
             'logs' => self::get_month_patrol_logs($id, 0),
             'hours' => self::get_month_patrol_hours($id, 0),
         ];
+
+        if(BaseXCS::durationToSeconds($caldata['hours']) >= $constants['calculation']['min_requirements_hours']) {
+            $data['hours_met'] = true;
+        }
+
+        if($caldata['logs'] >= $constants['calculation']['min_requirements_logs']) {
+            $data['logs_met'] = true;
+        }
 
         // Getting rid of the N/A and - values here if no patrol logs
         if ($caldata['logs'] == 'N/A') {
@@ -613,7 +625,7 @@ class AntelopeCalculate extends Controller
 
         $data['logs'] = $constants['calculation']['min_requirements_logs'] - $caldata['logs'];
         $data['hours'] = $constants['calculation']['min_requirements_hours'] - BaseXCS::durationToSeconds($caldata['hours']);
-        $data['hours'] = (int)floor($data['hours'] / 3600);
+        $data['hours'] = (int)ceil($data['hours'] / 3600);
         
 
         if($data['logs'] < 0) {
