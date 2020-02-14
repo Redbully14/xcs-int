@@ -238,33 +238,21 @@
 	          <div class="col-12">
 	            <div class="preview-list">
 
+	              @foreach($quicklinks as $quicklink)
 	              <div class="preview-item border-bottom">
 	                <div class="preview-thumbnail">
-	                  <div class="preview-icon bg-primary">
-	                    <i class="mdi mdi-file-document"></i>
+	                  <div class="preview-icon bg-{{ $constants['quicklink_types'][$quicklink[0]]['color'] }}">
+	                    <i class="{{ $constants['quicklink_types'][$quicklink[0]]['icon'] }}"></i>
 	                  </div>
 	                </div>
 	                <div class="preview-item-content d-sm-flex flex-grow">
 	                  <div class="flex-grow">
-	                    <h6 class="preview-subject">Documentation Link</h6>
-	                    <a class="mb-0" href="https://www.bootstrapdash.com/demo/corona/jquery/template/modern-vertical/pages/forms/basic_elements.html">https://www.bootstrapdash.com/demo/corona/jquery/template/modern-vertical/pages/forms/basic_elements.html</a>
+	                    <h6 class="preview-subject">{{ $quicklink[1] }}</h6>
+	                    <a class="mb-0" href="{{ $quicklink[2] }}">{{ $quicklink[2] }}</a>
 	                  </div>
 	                </div>
 	              </div>
-
-	              <div class="preview-item border-bottom">
-	                <div class="preview-thumbnail">
-	                  <div class="preview-icon bg-danger">
-	                    <i class="mdi mdi-email-open"></i>
-	                  </div>
-	                </div>
-	                <div class="preview-item-content d-sm-flex flex-grow">
-	                  <div class="flex-grow">
-	                    <h6 class="preview-subject">Policy Link</h6>
-	                    <a class="mb-0" href="https://www.bootstrapdash.com/demo/corona/jquery/template/modern-vertical/pages/forms/basic_elements.html">https://www.bootstrapdash.com/demo/corona/jquery/template/modern-vertical/pages/forms/basic_elements.html</a>
-	                  </div>
-	                </div>
-	              </div>
+	              @endforeach
 
 	            </div>
 	          </div>

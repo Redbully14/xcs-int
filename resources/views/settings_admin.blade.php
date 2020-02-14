@@ -26,7 +26,7 @@
                       <label for="admin_manage_quicklink-type-{{ $quicklink['id'] }}">Type</label>
                       <select class="antelope_global_select_single-noclear-nosearch" style="width:100%" id="admin_manage_quicklink-type-{{ $quicklink['id'] }}" required>
                         @foreach($constants['quicklink_types'] as $item => $value)
-                          <option value="{{ $item }}" {{ $item == $quicklink[0] ? ' selected' : '' }}>{{ $value }}</option>
+                          <option value="{{ $item }}" {{ $item == $quicklink[0] ? ' selected' : '' }}>{{ $value['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -60,7 +60,7 @@
       <div class="card">
         <div class="card-body">
 
-              <h5>Adding Quicklinks</h5><br>
+              <h5 class="text-success">Adding Quicklinks</h5><br>
 
               <form id="admin_add_quicklink">
                 <div class="row">
@@ -69,7 +69,7 @@
                       <label for="admin_add_quicklink-type">Type</label>
                       <select class="antelope_global_select_single-noclear-nosearch" style="width:100%" id="admin_add_quicklink-type" required>
                         @foreach($constants['quicklink_types'] as $item => $value)
-                          <option value="{{ $item }}">{{ $value }}</option>
+                          <option value="{{ $item }}">{{ $value['name'] }}</option>
                         @endforeach
                       </select>
                     </div>

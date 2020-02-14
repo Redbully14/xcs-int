@@ -10,7 +10,7 @@ $('#admin_add_quicklink').on('submit', function(e) {
     data: {type:type, title:title, link:link},
     success: function() {
       var toast_heading = "Quick Link Added!";
-      var toast_text = "The Quick Link has been added and is now publicly visible!";
+      var toast_text = "The Quick Link has been added and is now publicly visible! Please refresh the page to edit it!";
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);

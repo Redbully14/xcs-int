@@ -86,9 +86,22 @@ class Antelope extends Controller
             $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
         }
 
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $count++;
+        }
+
         return view('dashboard')->with('constants', $this->constants)
                                 ->with('feedback', $feedback)
-                                ->with('calculations', $dashboard_calculations);
+                                ->with('calculations', $dashboard_calculations)
+                                ->with('quicklinks', $array);
     }
 
     /**

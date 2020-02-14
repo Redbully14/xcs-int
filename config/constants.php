@@ -390,7 +390,15 @@ return [
     ],
 
     'quicklink_types' => [
-        'document' => 'Documentation Link',
-        'policy' => 'Policy Link',
+        'document' => [
+            'name' => 'Document Link',
+            'icon' => 'mdi mdi-file-document',
+            'color' => 'primary',
+        ],
+        'policy' => [
+            'name' => 'Policy Link',
+            'icon' => 'mdi mdi-file-lock',
+            'color' => 'danger',
+        ],
     ],
 ];
