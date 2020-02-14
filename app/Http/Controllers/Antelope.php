@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Datatables;
 use App\User;
 use App\Feedback;
+use App\Settings;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -344,6 +345,49 @@ class Antelope extends Controller
             'user_id' => Auth::user()->id,
             'score' => $data['score'],
             'feedback' => $data['feedback'],
+        ]);
+        
+        return;
+    }
+
+    /**
+     * Backend controller for the settings_admin module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_view()
+    {
+        return view('settings_admin')->with('constants', $this->constants);
+    }
+
+    /**
+     * Controls the submit function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_addQuickLink(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'type' => ['required', 'string'],
+            'title' => ['required', 'string'],
+            'link' => ['required', 'url'],
+        ]);
+
+        $data = json_encode([$data['type'], $data['title'], $data['link']]);
+
+        Settings::create([
+            'user_id' => Auth::user()->id,
+            'type' => 'quicklink',
+            'metadata' => $data,
         ]);
         
         return;

@@ -119,3 +119,8 @@ $(".antelope_global_select_single").select2({
 $(".antelope_global_select_single-noclear").select2({
     placeholder: "Select an Option...",
 });
+
+$(".antelope_global_select_single-noclear-nosearch").select2({
+    placeholder: "Select an Option...",
+    minimumResultsForSearch: -1,
+});

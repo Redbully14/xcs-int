@@ -96,6 +96,7 @@
       </a>
       <div class="collapse" id="sidebar-administration">
         <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/settings">Admin Settings</a></li>
           <li class="nav-item"> <a class="nav-link" href="/member_admin">Member Settings</a></li>
         </ul>
       </div>

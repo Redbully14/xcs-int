@@ -81,6 +81,7 @@ return [
         'personal_profile' => 'My Profile',
         'discipline_database' => 'Discipline Database',
         'superadmin' => 'SuperAdmin',
+        'settings_admin' => 'Administrator Settings',
     ],
 
     /*
@@ -386,5 +387,10 @@ return [
     'patrol_area' => [
         'BC' => 'Blaine County',
         'LS' => 'Los Santos',
-    ]
+    ],
+
+    'quicklink_types' => [
+        'document' => 'Documentation Link',
+        'policy' => 'Policy Link',
+    ],
 ];

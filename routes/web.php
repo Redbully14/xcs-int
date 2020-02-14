@@ -334,6 +334,61 @@ Route::prefix('member')->group(function () {
 
 });
 
+Route::prefix('admin')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: admin
+  | Category Name: AdminRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category AdminRoutes
+   * @access Admin
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.admin'))->group(function () {
+
+    /**
+     * Webdomain: /admin/settings
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/settings', [
+      'as' => 'admin.settings',
+      'uses' => 'Antelope@adminSettings_view'
+    ]);
+
+    /**
+     * Webdomain: /admin/quicklink/add
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/quicklink/add', [
+      'as' => 'admin.quicklink.add',
+      'uses' => 'Antelope@adminSettings_addQuickLink'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End AdminRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
 Route::prefix('member_admin')->group(function () {
   /*
   |--------------------------------------------------------------------------
