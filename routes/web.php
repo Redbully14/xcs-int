@@ -240,6 +240,36 @@ Route::namespace('Auth')->group(function () {
   */
 });
 
+Route::prefix('public')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: public
+  | Category Name: PublicRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /public/roster
+   *
+   * @author Oliver G.
+   * @package GET/POST
+   * @category AuthenticationRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster', [
+    'as' => 'public.roster',
+    'uses' => 'AntelopePublic@publicRoster_view'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End PublicRoutes x
+  |--------------------------------------------------------------------------
+  */
+
+});
+
 Route::prefix('member')->group(function () {
   /*
   |--------------------------------------------------------------------------

@@ -81,6 +81,7 @@ return [
         'personal_profile' => 'My Profile',
         'discipline_database' => 'Discipline Database',
         'superadmin' => 'SuperAdmin',
+        'public_roster' => 'Public Roster',
     ],
 
     /*
