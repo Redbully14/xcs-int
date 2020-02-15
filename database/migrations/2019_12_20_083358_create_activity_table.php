@@ -21,10 +21,12 @@ class CreateActivityTable extends Migration
             $table->date('patrol_end_date')->nullable();
             $table->time('start_time');
             $table->time('end_time');
+            $table->string('total_time');
             $table->longText('details');
             $table->integer('priorities')->default(0);
             $table->json('patrol_area');
             $table->char('type', 20);
+            $table->json('flag');
             $table->timestamps();
         });
     }
