@@ -20,8 +20,6 @@ class AntelopeCalculate extends Controller
     |
     */
 
-    static $constants;
-
     /**
      * Executes before running the main controllers
      *
@@ -34,7 +32,6 @@ class AntelopeCalculate extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        self::$constants = \Config::get('constants');
     }
 
     /**
@@ -93,7 +90,7 @@ class AntelopeCalculate extends Controller
     public static function get_department_status($id) {
 
     	$last_timestamp = self::get_last_timestamp($id);
-
+        $constants = \Config::get('constants');
     	$today = strtotime(Carbon::now()->toDateString());
 
         if(self::absence_status($id) == 'Active') {
@@ -101,14 +98,14 @@ class AntelopeCalculate extends Controller
         }
 
     	if($last_timestamp == 'N/A') {
-    		if(!strtotime(User::find($id)->created_at)+self::$constants['calculation']['account_is_new'] < $today ) {
+    		if(!strtotime(User::find($id)->created_at)+$constants['calculation']['account_is_new'] < $today ) {
     			return 'new';
     		}
     	}
 
     	$last_timestamp = strtotime($last_timestamp);
 
-    	if($last_timestamp+self::$constants['calculation']['time_to_inactive'] < $today ) {
+    	if($last_timestamp+$constants['calculation']['time_to_inactive'] < $today ) {
     		return 'inactive';
     	}
 
@@ -128,6 +125,10 @@ class AntelopeCalculate extends Controller
 
         $patrols = Activity::where('user_id', '=', $id)->get();
         $patrols = $patrols->count();
+
+        if(User::find($id)->requirements_exempt) {
+            return '-';
+        }
 
         if ($patrols == 0) {
             return 'N/A';
@@ -149,6 +150,10 @@ class AntelopeCalculate extends Controller
 
         $patrols = Activity::where('user_id', '=', $id)->get();
         $total_duration = 0;
+
+        if(User::find($id)->requirements_exempt) {
+            return '-';
+        }
 
         foreach($patrols as $patrol) {
             $start_date_time = date('Y-m-d H:i:s', strtotime("$patrol->patrol_start_date $patrol->start_time"));
@@ -194,6 +199,10 @@ class AntelopeCalculate extends Controller
             $check_month = date('m');
         }
 
+        if(User::find($id)->requirements_exempt) {
+            return '-';
+        }
+
         foreach($patrols as $patrol) {
             $patrol_month = date('m', strtotime($patrol->patrol_end_date));
             $patrol_year = date('Y', strtotime($patrol->patrol_end_date));
@@ -233,6 +242,10 @@ class AntelopeCalculate extends Controller
             $check_month = 12 + $check_month; // Because it's a negative int this gets negated anyways
         } else {
             $check_month = date('m');
+        }
+
+        if(User::find($id)->requirements_exempt) {
+            return '-';
         }
 
         foreach($patrols as $patrol) {
@@ -275,9 +288,13 @@ class AntelopeCalculate extends Controller
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $count = 0;
-
+        $constants = \Config::get('constants');
         if(is_string($time)) {
-            $time = self::$constants['calculation'][$time];
+            $time = $constants['calculation'][$time];
+        }
+
+        if(User::find($id)->requirements_exempt) {
+            return '-';
         }
 
         foreach($patrols as $patrol) {
@@ -311,9 +328,13 @@ class AntelopeCalculate extends Controller
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total_duration = 0;
-
+        $constants = \Config::get('constants');
         if(is_string($time)) {
-            $time = self::$constants['calculation'][$time];
+            $time = $constants['calculation'][$time];
+        }
+
+        if(User::find($id)->requirements_exempt) {
+            return '-';
         }
 
         foreach($patrols as $patrol) {
@@ -355,6 +376,7 @@ class AntelopeCalculate extends Controller
         $hours = strtotime(self::get_month_patrol_hours($id, $calmonth));
         $member_month = date('m', strtotime(User::find($id)->created_at));
         $member_year = date('Y', strtotime(User::find($id)->created_at));
+        $constants = \Config::get('constants');
 
         if($check_month <= 0) {
             $check_year = $check_year - 1;
@@ -363,12 +385,15 @@ class AntelopeCalculate extends Controller
             $check_month = date('m');
         }
 
-        if ($patrols >= self::$constants['calculation']['min_requirements_logs'] && $hours >= self::$constants['calculation']['min_requirements_hours']) {
+        if ($patrols >= $constants['calculation']['min_requirements_logs'] && $hours >= $constants['calculation']['min_requirements_hours']) {
             return 'met';
         }
 
         if (User::find($id)->requirements_exempt) {
-            return 'exempt';
+            if(Auth::user() && Auth::user()->requirements_exempt) {
+                return 'exempt';
+            }
+            return 'met';
         }
 
         if($member_month == $check_month && $member_year == $check_year) {
@@ -490,16 +515,16 @@ class AntelopeCalculate extends Controller
         $disciplines = Discipline::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
-
+        $constants = \Config::get('constants');
         foreach($disciplines as $discipline) {
             $discipline_date = strtotime($discipline->discipline_date);
             $discipline_status = self::discipline_status($discipline->id);
             if($discipline->type == 1) {
-                if($discipline_date+self::$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+$constants['calculation']['patrol_restriction_90'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             } else if ($discipline->type == 2) {
-                if($discipline_date+self::$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
+                if($discipline_date+$constants['calculation']['patrol_restriction_93'] >= $today && $discipline_status == 'active' or $discipline_status == 'disputed_active') {
                     return 'Yes';
                 }
             }
@@ -523,14 +548,14 @@ class AntelopeCalculate extends Controller
         $discipline_date = strtotime($discipline->discipline_date);
         $custom_expiry_date = strtotime($discipline->custom_expiry_date);
         $custom_expiry_nulled = $discipline->custom_expiry_date;
-
+        $constants = \Config::get('constants');
         if($discipline->overturned) {
             return 'overturned';
         }
 
         if($discipline->disputed) {
             if($custom_expiry_nulled == null) {
-                if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+                if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                     return 'expired';
                 }
             }
@@ -542,7 +567,7 @@ class AntelopeCalculate extends Controller
         }
 
         if($custom_expiry_nulled == null) {
-            if($discipline_date+self::$constants['disciplinary_action_active'][$discipline->type] <= $today) {
+            if($discipline_date+$constants['disciplinary_action_active'][$discipline->type] <= $today) {
                 return 'expired';
             }
         }
@@ -567,7 +592,7 @@ class AntelopeCalculate extends Controller
 
         $absence = Absence::where('user_id', '=', $id);
         $today = strtotime(Carbon::now()->toDateString());
-
+        $constants = \Config::get('constants');
         if(is_null($absence->latest('end_date')->first())) {
             return '-';
         }
@@ -582,6 +607,6 @@ class AntelopeCalculate extends Controller
                     return 'Active';
                 } else return 'Expired';
             } else return 'Upcoming - '.date('Y-m-d', $start_date);
-        } else return self::$constants['absence_status'][$absence->status];
+        } else return $constants['absence_status'][$absence->status];
     }
 }

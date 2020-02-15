@@ -45,12 +45,23 @@
       </div>
     </li>
     <li class="nav-item nav-category">
-      <span class="nav-link">Navigation</span>
+      <span class="nav-link">Public Access</span>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/public/roster">
+        <span class="menu-icon">
+          <i class="mdi mdi-collage text-white"></i>
+        </span>
+        <span class="menu-title">Public Roster</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">
+      <span class="nav-link">Private Access</span>
     </li>
     <li class="nav-item menu-items">
       <a class="nav-link" href="/dashboard">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i>
+          <i class="mdi mdi-speedometer text-primary"></i>
         </span>
         <span class="menu-title">Dashboard</span>
       </a>
@@ -59,7 +70,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/activity">
         <span class="menu-icon">
-          <i class="mdi mdi-database"></i>
+          <i class="mdi mdi-database text-warning"></i>
         </span>
         <span class="menu-title">Activity Database</span>
       </a>
@@ -69,7 +80,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/discipline">
         <span class="menu-icon">
-          <i class="mdi mdi-security"></i>
+          <i class="mdi mdi-security text-danger"></i>
         </span>
         <span class="menu-title">Discipline Database</span>
       </a>
@@ -79,7 +90,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/absence">
         <span class="menu-icon">
-          <i class="mdi mdi-clock"></i>
+          <i class="mdi mdi-clock text-primary"></i>
         </span>
         <span class="menu-title">Absence Database</span>
       </a>
@@ -89,7 +100,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/member_admin">
         <span class="menu-icon">
-          <i class="mdi mdi-account-plus"></i>
+          <i class="mdi mdi-account-plus text-success"></i>
         </span>
         <span class="menu-title">Member Settings</span>
       </a>
@@ -99,7 +110,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/superadmin">
         <span class="menu-icon">
-          <i class="mdi mdi-ghost"></i>
+          <i class="mdi mdi-ghost text-info"></i>
         </span>
         <span class="menu-title">SuperAdmin</span>
       </a>

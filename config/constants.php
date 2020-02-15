@@ -81,6 +81,7 @@ return [
         'personal_profile' => 'My Profile',
         'discipline_database' => 'Discipline Database',
         'superadmin' => 'SuperAdmin',
+        'public_roster' => 'Public Roster',
     ],
 
     /*
@@ -204,6 +205,67 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
+        'media_four' => 'Civilian Media IV',
+        'media_three' => 'Civilian Media III',
+        'media_two' => 'Civilian Media II',
+        'media_one' => 'Civilian Media I',
+        'other_admin' => 'DoJ Administration',
+        'ia' => 'Internal Affairs',
+    ],
+
+    'rank_groups' => [
+
+        'admin' => [
+            'director',
+            'deputy_director',
+            'chief_of_staff',
+            'deputy_chief_of_staff',
+            'secretary_of_staff',
+        ],
+
+        'senior_staff' => [
+            'manager',
+            'assistant_manager',
+        ],
+
+        'staff' => [
+            'senior_supervisor',
+            'supervisor',
+            'assistant_supervisor',
+        ],
+
+        'sit' => [
+            'senior_advisor',
+            'advisor',
+        ],
+
+        'senior_member' => [
+            'intern',
+            'senior_civilian',
+        ],
+
+        'member' => [
+            'civilian3',
+            'civilian2',
+            'civilian1',
+        ],
+
+        'probationary_member' => [
+            'probationary_civilian',
+        ],
+
+        'reserve' => [
+            'reserve_senior',
+            'reserve_civilian',
+            'reserve_probationary',
+        ],
+
+        'media' => [
+            'media_four',
+            'media_three',
+            'media_two',
+            'media_one',
+        ],
     ],
 
     /*
