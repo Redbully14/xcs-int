@@ -275,6 +275,45 @@ Route::prefix('public')->group(function () {
     'uses' => 'AntelopePublic@publicRoster_datatables_admins'
   ]);
 
+  /**
+   * Webdomain: /public/roster/seniorstaff
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/seniorstaff', [
+    'as' => 'public.roster.seniorstaff',
+    'uses' => 'AntelopePublic@publicRoster_datatables_seniorstaff'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/staff
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/staff', [
+    'as' => 'public.roster.staff',
+    'uses' => 'AntelopePublic@publicRoster_datatables_staff'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/staffintraining
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/staffintraining', [
+    'as' => 'public.roster.staffintraining',
+    'uses' => 'AntelopePublic@publicRoster_datatables_staffintraining'
+  ]);
+
   /*
   |--------------------------------------------------------------------------
   | x End PublicRoutes x

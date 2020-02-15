@@ -9,13 +9,92 @@
 	</div>
 	<br>
 	<br>
+
 	<div class="row">
-		<h3>Department Administration</h1>
+		<h2>Department Chain of Command</h2>
+	</div>
+	<div class="row">
+		<h3>Department Administration</h3>
 	</div>
 	<div class="row">
 		<div class="col-12">
           <div class="table-responsive">
             <table id="public_roster-admins" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unit Number</th>
+                  <th>Website ID</th>
+                  <th>Rank</th>
+                  <th>Status</th>
+                  <th>Monthly Hours</th>
+                  <th>Monthly Logs</th>
+                  <th>Advanced Training</th>
+                  <th>Requirements</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+	</div>
+
+	<div class="row">
+		<h3>Department Senior Staff</h1>
+	</div>
+	<div class="row">
+		<div class="col-12">
+          <div class="table-responsive">
+            <table id="public_roster-seniorstaff" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unit Number</th>
+                  <th>Website ID</th>
+                  <th>Rank</th>
+                  <th>Status</th>
+                  <th>Monthly Hours</th>
+                  <th>Monthly Logs</th>
+                  <th>Advanced Training</th>
+                  <th>Requirements</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+	</div>
+
+	<div class="row">
+		<h3>Department Staff</h1>
+	</div>
+	<div class="row">
+		<div class="col-12">
+          <div class="table-responsive">
+            <table id="public_roster-staff" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unit Number</th>
+                  <th>Website ID</th>
+                  <th>Rank</th>
+                  <th>Status</th>
+                  <th>Monthly Hours</th>
+                  <th>Monthly Logs</th>
+                  <th>Advanced Training</th>
+                  <th>Requirements</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+	</div>
+
+	<div class="row">
+		<h3>Department Staff in Training</h1>
+	</div>
+	<div class="row">
+		<div class="col-12">
+          <div class="table-responsive">
+            <table id="public_roster-staffintraining" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -39,7 +118,9 @@
 @section('injectjs')
 <script text="text/javascript">
   var $url_admins = '{{ url('public/roster/admins') }}';
-  var $activity_table = "#public_roster-admins";
+  var $url_senior_staff = '{{ url('public/roster/seniorstaff') }}';
+  var $url_staff = '{{ url('public/roster/staff') }}';
+  var $url_staff_in_training = '{{ url('public/roster/staffintraining') }}';
 </script>
 <script src="/js/public/public_roster.js"></script>
 @endsection
