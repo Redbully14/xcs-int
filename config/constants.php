@@ -205,6 +205,35 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
+        'other_admin' => 'DoJ Administration',
+        'ia' => 'Internal Affairs',
+    ],
+
+    'rank_groups' => [
+
+        'admin' => [
+            'director',
+            'deputy_director',
+            'chief_of_staff',
+            'deputy_chief_of_staff',
+            'secretary_of_staff',
+        ],
+
+        'senior_staff' => [
+            'manager',
+            'assistant_manager',
+        ],
+
+        'staff' => [
+            'senior_supervisor',
+            'supervisor',
+            'assistant_supervisor',
+        ],
+
+        'sit' => [
+            'senior_advisor',
+            'advisor',
+        ],
     ],
 
     /*

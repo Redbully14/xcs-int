@@ -253,13 +253,26 @@ Route::prefix('public')->group(function () {
    * Webdomain: /public/roster
    *
    * @author Oliver G.
-   * @package GET/POST
-   * @category AuthenticationRoutes
+   * @package GET
+   * @category PublicRoutes
    * @version 1.0.0
    */
   Route::get('roster', [
     'as' => 'public.roster',
     'uses' => 'AntelopePublic@publicRoster_view'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/admins
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/admins', [
+    'as' => 'public.roster.admins',
+    'uses' => 'AntelopePublic@publicRoster_datatables_admins'
   ]);
 
   /*
