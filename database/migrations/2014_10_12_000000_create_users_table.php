@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->boolean('requirements_exempt')->default(false);
             $table->string('department_status')->nullable();
             $table->string('timezone')->default('UTC');
-            $table->string('api_token', 80)->after('password')
+            $table->string('api_token', 80)
                 ->unique()
                 ->nullable()
                 ->default(null);
