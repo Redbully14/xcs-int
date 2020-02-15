@@ -314,6 +314,72 @@ Route::prefix('public')->group(function () {
     'uses' => 'AntelopePublic@publicRoster_datatables_staffintraining'
   ]);
 
+  /**
+   * Webdomain: /public/roster/seniormember
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/seniormember', [
+    'as' => 'public.roster.seniormember',
+    'uses' => 'AntelopePublic@publicRoster_datatables_seniormember'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/member
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/member', [
+    'as' => 'public.roster.member',
+    'uses' => 'AntelopePublic@publicRoster_datatables_member'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/probationarymember
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/probationarymember', [
+    'as' => 'public.roster.probationarymember',
+    'uses' => 'AntelopePublic@publicRoster_datatables_probationarymember'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/reserve
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/reserve', [
+    'as' => 'public.roster.reserve',
+    'uses' => 'AntelopePublic@publicRoster_datatables_reserve'
+  ]);
+
+  /**
+   * Webdomain: /public/roster/media
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category PublicRoutes
+   * @version 1.0.0
+   */
+  Route::get('roster/media', [
+    'as' => 'public.roster.reserve',
+    'uses' => 'AntelopePublic@publicRoster_datatables_media'
+  ]);
+
+
   /*
   |--------------------------------------------------------------------------
   | x End PublicRoutes x

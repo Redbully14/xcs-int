@@ -205,6 +205,10 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
+        'media_four' => 'Civilian Media IV',
+        'media_three' => 'Civilian Media III',
+        'media_two' => 'Civilian Media II',
+        'media_one' => 'Civilian Media I',
         'other_admin' => 'DoJ Administration',
         'ia' => 'Internal Affairs',
     ],
@@ -233,6 +237,34 @@ return [
         'sit' => [
             'senior_advisor',
             'advisor',
+        ],
+
+        'senior_member' => [
+            'intern',
+            'senior_civilian',
+        ],
+
+        'member' => [
+            'civilian3',
+            'civilian2',
+            'civilian1',
+        ],
+
+        'probationary_member' => [
+            'probationary_civilian',
+        ],
+
+        'reserve' => [
+            'reserve_senior',
+            'reserve_civilian',
+            'reserve_probationary',
+        ],
+
+        'media' => [
+            'media_four',
+            'media_three',
+            'media_two',
+            'media_one',
         ],
     ],
 

@@ -390,7 +390,7 @@ class AntelopeCalculate extends Controller
         }
 
         if (User::find($id)->requirements_exempt) {
-            if(Auth::user()->requirements_exempt) {
+            if(Auth::user() && Auth::user()->requirements_exempt) {
                 return 'exempt';
             }
             return 'met';

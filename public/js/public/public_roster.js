@@ -99,4 +99,129 @@ $(function() {
     },
     "bInfo" : false,
   });
+
+  $('#public_roster-seniormembers').DataTable({
+   ordering: false,
+   serverSide: true,
+   searching: false,
+   paging: false,
+   order: [[ 0  , "desc" ]],
+   ajax: $url_senior_member,
+   columns: [
+    { data: 'name', name: 'name' },
+    { data: 'department_id', name: 'department_id' },
+    { data: 'website_id', name: 'website_id' },
+    { data: 'rank', name: 'rank' },
+    { data: 'status', name: 'status' },
+    { data: 'monthly_hours', name: 'monthly_hours' },
+    { data: 'monthly_logs', name: 'monthly_logs' },
+    { data: 'advanced_training', name: 'advanced_training' },
+    { data: 'requirements', name: 'requirements' },
+   ],
+    "createdRow": function( row, data, dataIndex ) {
+       $(row).css('background-color', 'rgba(1, 53, 70, 1.0)');
+       $(row).css('color', 'white');
+    },
+    "bInfo" : false,
+  });
+
+  $('#public_roster-members').DataTable({
+   ordering: false,
+   serverSide: true,
+   searching: false,
+   paging: false,
+   order: [[ 0  , "desc" ]],
+   ajax: $url_member,
+   columns: [
+    { data: 'name', name: 'name' },
+    { data: 'department_id', name: 'department_id' },
+    { data: 'website_id', name: 'website_id' },
+    { data: 'rank', name: 'rank' },
+    { data: 'status', name: 'status' },
+    { data: 'monthly_hours', name: 'monthly_hours' },
+    { data: 'monthly_logs', name: 'monthly_logs' },
+    { data: 'advanced_training', name: 'advanced_training' },
+    { data: 'requirements', name: 'requirements' },
+   ],
+    "createdRow": function( row, data, dataIndex ) {
+       $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
+       $(row).css('color', 'white');
+    },
+    "bInfo" : false,
+  });
+
+  $('#public_roster-probationarymembers').DataTable({
+   ordering: false,
+   serverSide: true,
+   searching: false,
+   paging: false,
+   order: [[ 0  , "desc" ]],
+   ajax: $url_probationary_member,
+   columns: [
+    { data: 'name', name: 'name' },
+    { data: 'department_id', name: 'department_id' },
+    { data: 'website_id', name: 'website_id' },
+    { data: 'rank', name: 'rank' },
+    { data: 'status', name: 'status' },
+    { data: 'monthly_hours', name: 'monthly_hours' },
+    { data: 'monthly_logs', name: 'monthly_logs' },
+    { data: 'advanced_training', name: 'advanced_training' },
+    { data: 'requirements', name: 'requirements' },
+   ],
+    "createdRow": function( row, data, dataIndex ) {
+       $(row).css('background-color', 'rgba(1, 70, 53, 1.0)');
+       $(row).css('color', 'white');
+    },
+    "bInfo" : false,
+  });
+
+  $('#public_roster-reserves').DataTable({
+   ordering: false,
+   serverSide: true,
+   searching: false,
+   paging: false,
+   order: [[ 0  , "desc" ]],
+   ajax: $url_reserve,
+   columns: [
+    { data: 'name', name: 'name' },
+    { data: 'department_id', name: 'department_id' },
+    { data: 'website_id', name: 'website_id' },
+    { data: 'rank', name: 'rank' },
+    { data: 'status', name: 'status' },
+    { data: 'monthly_hours', name: 'monthly_hours' },
+    { data: 'monthly_logs', name: 'monthly_logs' },
+    { data: 'advanced_training', name: 'advanced_training' },
+    { data: 'requirements', name: 'requirements' },
+   ],
+    "createdRow": function( row, data, dataIndex ) {
+       $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
+       $(row).css('color', 'white');
+    },
+    "bInfo" : false,
+  });
+
+  $('#public_roster-media').DataTable({
+   ordering: false,
+   serverSide: true,
+   searching: false,
+   paging: false,
+   order: [[ 0  , "desc" ]],
+   ajax: $url_media,
+   columns: [
+    { data: 'name', name: 'name' },
+    { data: 'department_id', name: 'department_id' },
+    { data: 'website_id', name: 'website_id' },
+    { data: 'rank', name: 'rank' },
+    { data: 'status', name: 'status' },
+    { data: 'monthly_hours', name: 'monthly_hours' },
+    { data: 'monthly_logs', name: 'monthly_logs' },
+    { data: 'advanced_training', name: 'advanced_training' },
+    { data: 'requirements', name: 'requirements' },
+   ],
+    "createdRow": function( row, data, dataIndex ) {
+       $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
+       $(row).css('color', 'white');
+    },
+    "bInfo" : false,
+  });
 });
