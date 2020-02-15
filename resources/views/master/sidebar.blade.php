@@ -98,12 +98,19 @@
     @endif
     @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
-      <a class="nav-link" href="/member_admin">
+      <a class="nav-link" data-toggle="collapse" href="#sidebar-administration" aria-expanded="false" aria-controls="sidebar-administration">
         <span class="menu-icon">
-          <i class="mdi mdi-account-plus text-success"></i>
+          <i class="mdi mdi-tie"></i>
         </span>
-        <span class="menu-title">Member Settings</span>
+        <span class="menu-title">Administration</span>
+        <i class="menu-arrow"></i>
       </a>
+      <div class="collapse" id="sidebar-administration">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/settings">Admin Settings</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/member_admin">Member Settings</a></li>
+        </ul>
+      </div>
     </li>
     @endif
     @if(Auth::user()->level() >= $constants['access_level']['superadmin'])

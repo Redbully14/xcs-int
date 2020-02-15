@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Datatables;
 use App\User;
+use App\Feedback;
+use App\Settings;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class Antelope extends Controller
 {
@@ -48,7 +52,56 @@ class Antelope extends Controller
      */
     public function dashboard()
     {
-    	return view('dashboard')->with('constants', $this->constants);
+        $id = Auth::user()->id;
+
+        // Feedback System
+        $feedback = Feedback::where('user_id', '=', Auth::user()->id)->get();
+
+        if ($feedback->first() == null) {
+            $feedback = false;
+        } else $feedback = true;
+
+        // To disable feedbacks, uncomment this line:
+        //$feedback = true;
+
+        $dashboard_calculations = [];
+
+        if(auth()->user()->exempt_requirements == false) {
+
+            $dashboard_calculations['requirements'] = AntelopeCalculate::amount_to_requirements($id);
+            $dashboard_calculations['this_month_logs'] = AntelopeCalculate::get_month_patrol_logs($id, 0);
+            $dashboard_calculations['this_month_hours'] = AntelopeCalculate::get_month_patrol_hours($id, 0);
+            
+            if($dashboard_calculations['this_month_hours'] == '-') {
+                $dashboard_calculations['this_month_logs'] = 0;
+                $dashboard_calculations['this_month_hours'] = 0;
+            } else {
+                $dashboard_calculations['this_month_hours'] = BaseXCS::durationToSeconds($dashboard_calculations['this_month_hours']);
+                $dashboard_calculations['this_month_hours'] = (int)floor($dashboard_calculations['this_month_hours'] / 3600);
+            }
+
+        }
+
+        if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
+            $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
+        }
+
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $count++;
+        }
+
+        return view('dashboard')->with('constants', $this->constants)
+                                ->with('feedback', $feedback)
+                                ->with('calculations', $dashboard_calculations)
+                                ->with('quicklinks', $array);
     }
 
     /**
@@ -281,5 +334,120 @@ class Antelope extends Controller
         auth()->user()->leaveImpersonation();
 
         return redirect()->route('superadmin');
+    }
+
+    /**
+     * Controls the submit function of the feedback form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function feedbackSubmit(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'score' => ['required', 'integer'],
+            'feedback' => ['nullable', 'string']
+        ]);
+
+        Feedback::create([
+            'user_id' => Auth::user()->id,
+            'score' => $data['score'],
+            'feedback' => $data['feedback'],
+        ]);
+        
+        return;
+    }
+
+    /**
+     * Backend controller for the settings_admin module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_view()
+    {
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $array[$count]["id"] = $quicklink->id;
+            $count++;
+        }
+
+        return view('settings_admin')->with('constants', $this->constants)
+                                     ->with('quicklinks', $array);
+    }
+
+    /**
+     * Controls the submit function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_addQuickLink(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'type' => ['required', 'string'],
+            'title' => ['required', 'string'],
+            'link' => ['required', 'url'],
+        ]);
+
+        $data = json_encode([$data['type'], $data['title'], $data['link']]);
+
+        Settings::create([
+            'user_id' => Auth::user()->id,
+            'type' => 'quicklink',
+            'metadata' => $data,
+        ]);
+        
+        return;
+    }
+
+    /**
+     * Controls the manage function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_manageQuickLink(Request $request)
+    {
+        $data = ($request->all());
+        $data = $data['data'];
+
+        foreach($data as $key) {
+            Validator::make($key, [
+                0 => ['required', 'string'],
+                1 => ['required', 'string'],
+                2 => ['required', 'url'],
+                3 => ['required', 'integer'],
+            ]);
+
+            $id = $key[3];
+            $key = json_encode([$key[0], $key[1], $key[2]]);
+
+            Settings::find($id)->update(['metadata' => $key]);
+        }
+        
+        return;
     }
 }

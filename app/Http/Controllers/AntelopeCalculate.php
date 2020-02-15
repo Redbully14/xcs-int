@@ -21,20 +21,6 @@ class AntelopeCalculate extends Controller
     */
 
     /**
-     * Executes before running the main controllers
-     *
-     * @author Oliver G.
-     * @param
-     * @return void
-     * @access Auth
-     * @version 1.0.0
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Gets the last patrol timestamp of the last activity log within the database
      *
      * @author Oliver G.
@@ -88,6 +74,8 @@ class AntelopeCalculate extends Controller
      * @version 1.0.0
      */
     public static function get_department_status($id) {
+
+        $constants = \Config::get('constants');
 
     	$last_timestamp = self::get_last_timestamp($id);
         $constants = \Config::get('constants');
@@ -285,6 +273,7 @@ class AntelopeCalculate extends Controller
      */
     public static function get_ctime_patrol_logs($id, $time) {
 
+        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $count = 0;
@@ -325,6 +314,7 @@ class AntelopeCalculate extends Controller
      */
     public static function get_ctime_patrol_hours($id, $time) {
 
+        $constants = \Config::get('constants');
         $patrols = Activity::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total_duration = 0;
@@ -370,6 +360,7 @@ class AntelopeCalculate extends Controller
      */
     public static function get_month_requirements($id, $calmonth) {
 
+        $constants = \Config::get('constants');
         $check_month = date('m') - $calmonth;
         $check_year = date('Y');
         $patrols = self::get_month_patrol_logs($id, $calmonth);
@@ -512,6 +503,7 @@ class AntelopeCalculate extends Controller
      */
     public static function chk_patrol_restriction($id) {
 
+        $constants = \Config::get('constants');
         $disciplines = Discipline::where('user_id', '=', $id)->get();
         $today = strtotime(Carbon::now()->toDateString());
         $total = 0;
@@ -543,6 +535,7 @@ class AntelopeCalculate extends Controller
      */
     public static function discipline_status($id) {
 
+        $constants = \Config::get('constants');
         $discipline = Discipline::find($id);
         $today = strtotime(Carbon::now()->toDateString());
         $discipline_date = strtotime($discipline->discipline_date);
@@ -590,6 +583,7 @@ class AntelopeCalculate extends Controller
      */
     public static function absence_status($id) {
 
+        $constants = \Config::get('constants');
         $absence = Absence::where('user_id', '=', $id);
         $today = strtotime(Carbon::now()->toDateString());
         $constants = \Config::get('constants');
@@ -608,5 +602,89 @@ class AntelopeCalculate extends Controller
                 } else return 'Expired';
             } else return 'Upcoming - '.date('Y-m-d', $start_date);
         } else return $constants['absence_status'][$absence->status];
+    }
+
+    /**
+     * Calulcates and fetches the amount of patrol logs and hours needed to meet requirements
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return var $data
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function amount_to_requirements($id) {
+        
+        $constants = \Config::get('constants');
+        $data = [
+            'logs' => 0,
+            'hours' => 0,
+            'hours_met' => false,
+            'logs_met' => false
+        ];
+
+        if(self::get_month_requirements($id, 0) == 'met' or self::get_month_requirements($id, 0) == 'exempt') {
+            $data['hours_met'] = true;
+            $data['logs_met'] = true;
+            return $data;
+        }
+
+        $caldata = [
+            'logs' => self::get_month_patrol_logs($id, 0),
+            'hours' => self::get_month_patrol_hours($id, 0),
+        ];
+
+        if(BaseXCS::durationToSeconds($caldata['hours']) >= $constants['calculation']['min_requirements_hours']) {
+            $data['hours_met'] = true;
+        }
+
+        if($caldata['logs'] >= $constants['calculation']['min_requirements_logs']) {
+            $data['logs_met'] = true;
+        }
+
+        // Getting rid of the N/A and - values here if no patrol logs
+        if ($caldata['logs'] == 'N/A') {
+            $caldata['logs'] = 0;
+        }
+
+        if ($caldata['hours'] == '-') {
+            $caldata['hours'] = 0;
+        }
+
+        $data['logs'] = $constants['calculation']['min_requirements_logs'] - $caldata['logs'];
+        $data['hours'] = $constants['calculation']['min_requirements_hours'] - BaseXCS::durationToSeconds($caldata['hours']);
+        $data['hours'] = (int)ceil($data['hours'] / 3600);
+        
+
+        if($data['logs'] < 0) {
+            $data['logs'] = 0;
+        }
+
+        if($data['hours'] < 0) {
+            $data['hours'] = 0;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Calulcates and fetches the absences with the in_queue status
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return int $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function absences_needing_approval($id) {
+
+        $absences = Absence::where('status', '=', 0)->get();
+        $total = 0;
+
+        foreach($absences as $absence) {
+            $total++;
+        }
+
+        return $total;
     }
 }

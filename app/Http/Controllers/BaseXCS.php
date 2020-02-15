@@ -113,6 +113,21 @@ class BaseXCS extends Controller
     }
 
     /**
+     * Converts duration to seconds
+     *
+     * @author Oliver G.
+     * @param var $duration
+     * @return string
+     * @category BaseXCS
+     * @version 1.0.0
+     */
+    public static function durationToSeconds($duration) {
+        sscanf($duration, "%d:%d:%d", $hours, $minutes, $seconds);
+        $time_seconds = isset($hours) ? $hours * 3600 + $minutes * 60 + $seconds : $minutes * 60 + $seconds;
+        return $time_seconds;
+    }
+
+    /**
      * Converts a timezone into UTC
      *
      * @author Oliver G.
