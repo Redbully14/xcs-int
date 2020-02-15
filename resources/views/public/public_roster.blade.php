@@ -3,6 +3,12 @@
 @extends('public.layouts.app')
 
 @section('content')
+<style>
+table {
+  table-layout: fixed !important;
+  word-wrap: break-word !important;
+}
+</style>
 <div class="content-wrapper">
 	<div class="row">
 		<h1>Public Roster - {{ $constants['department']['department_name'] }}</h1>
@@ -36,7 +42,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Department Senior Staff</h1>
@@ -61,7 +67,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Department Staff</h1>
@@ -86,7 +92,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Department Staff in Training</h1>
@@ -111,7 +117,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<br>
 	<div class="row">
@@ -140,7 +146,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Members</h1>
@@ -165,7 +171,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Probationary Members</h1>
@@ -190,7 +196,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<br>
 	<div class="row">
@@ -219,7 +225,7 @@
             </table>
           </div>
         </div>
-	</div>
+	</div><hr>
 
 	<div class="row">
 		<h3>Media</h1>
