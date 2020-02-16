@@ -8,6 +8,8 @@ var elements = [
   '#ajax-input-patrol-start-time',
   '#ajax-input-patrol-end-time',
   '#ajax-input-patrol-details',
+  '#ajax-input-patrol-area',
+  '#ajax-input-patrol-priorities',
 ];
 
 for (var element in elements) {
