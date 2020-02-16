@@ -41,9 +41,7 @@ var id = $(this).val();
          $("#ajax-input-patrol-total-time").val(data['total_time'] + ' hours');
         $("#ajax-input-patrol-details").val(data['details']);
         var patrol_area = JSON.parse(data['patrol_area']);
-        for(var area in patrol_area) {
-          $('#ajax-input-patrol-area').val(patrol_area);
-        }
+        $('#ajax-input-patrol-area').val(patrol_area);
         $('#ajax-input-patrol-area').trigger('change');
         $("#ajax-input-patrol-priorities").val(data['priorities']);
         var flags = JSON.parse(data['flag']);
