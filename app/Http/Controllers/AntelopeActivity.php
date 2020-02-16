@@ -239,6 +239,9 @@ class AntelopeActivity extends Controller
             'start_time' => ['required', 'string'],
             'end_time' => ['required', 'string'],
             'details' => ['required', 'string'],
+            'patrol_area' => ['required', 'array', 'min:1'],
+            'patrol_area.*' => ['required', 'string'],
+            'patrol_priorities' => ['required', 'integer'],
         ]);
     }
 
@@ -264,6 +267,8 @@ class AntelopeActivity extends Controller
         $log->start_time = $request['start_time'];
         $log->end_time = $request['end_time'];
         $log->details = $request['details'];
+        $log->patrol_area = $request['patrol_area'];
+        $log->priorities = $request['patrol_priorities'];
         $log->save();
 
         return;

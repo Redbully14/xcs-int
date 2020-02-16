@@ -1,6 +1,21 @@
 $table = $($activity_table);
 $table.on('click', '#ajax_view_patrol_log_open', function () {
 
+var elements = [
+  '#ajax-input-patrol-log-type',
+  '#ajax-input-patrol-log-start-date',
+  '#ajax-input-patrol-log-end-date',
+  '#ajax-input-patrol-start-time',
+  '#ajax-input-patrol-end-time',
+  '#ajax-input-patrol-details',
+];
+
+for (var element in elements) {
+  $(elements[element]).prop("disabled", true); // Element(s) are now disabled again.
+}
+$('#ajax_edit_patrol_log-button').prop('hidden', false);
+$('#ajax_submit_edit_patrol_log-button').prop('hidden', true);
+
 var id = $(this).val();
 
   $.ajax({
@@ -26,8 +41,10 @@ var id = $(this).val();
          $("#ajax-input-patrol-total-time").val(data['total_time'] + ' hours');
         $("#ajax-input-patrol-details").val(data['details']);
         var patrol_area = JSON.parse(data['patrol_area']);
-        var patrol_area_with_space = patrol_area.join(', ');
-        $("#ajax-input-patrol-area").val(patrol_area_with_space);
+        for(var area in patrol_area) {
+          $('#ajax-input-patrol-area').val(patrol_area);
+        }
+        $('#ajax-input-patrol-area').trigger('change');
         $("#ajax-input-patrol-priorities").val(data['priorities']);
         var flags = JSON.parse(data['flag']);
         if (flags[0][0]) {

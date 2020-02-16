@@ -35,27 +35,54 @@
 
             <div class="form-group">
               <label>Patrol Start Date</label>
-              <input type="text" class="form-control" id="ajax-input-patrol-log-start-date" disabled>
+              <div id="patrol_start_date_datepicker" class="input-group date datepicker">
+                <input type="text" class="form-control" id="ajax-input-patrol-log-start-date" disabled>
+                <span class="input-group-addoan input-group-append border-left">
+                  <span class="mdi mdi-calendar input-group-text"></span>
+                </span>
+              </div>
+              <label id="patrol-date-error" class="error mt-2 text-danger" for="ajax-input-patrol-log-start-date" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Patrol End Date</label>
-              <input type="text" class="form-control" id="ajax-input-patrol-log-end-date" disabled>
+              <div id="patrol_end_date_datepicker" class="input-group date datepicker">
+                <input type="text" class="form-control" id="ajax-input-patrol-log-end-date" disabled>
+                <span class="input-group-addoan input-group-append border-left">
+                  <span class="mdi mdi-calendar input-group-text"></span>
+                </span>
+              </div>
+              <label id="patrol-end-log-date-error" class="error mt-2 text-danger" for="patrol-log-date" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Patrol Start Time</label>
-              <input type="text" class="form-control" id="ajax-input-patrol-start-time" disabled>
+              <div class="input-group date" id="patrol-start-time-input" data-target-input="nearest">
+                <div class="input-group" data-target="#ajax-input-patrol-start-time" data-toggle="datetimepicker">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-input-patrol-start-time" id="ajax-input-patrol-start-time" disabled>
+                  <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
+                </div>
+              </div>
+              <label id="patrol-start_time-error" class="error mt-2 text-danger" for="patrol-start-time" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Patrol End Time</label>
-              <input type="text" class="form-control" id="ajax-input-patrol-end-time" disabled>
+              <div class="input-group date" id="patrol-end-time-input" data-target-input="nearest">
+                <div class="input-group" data-target="#ajax-input-patrol-end-time" data-toggle="datetimepicker">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-input-patrol-end-time" id="ajax-input-patrol-end-time" disabled>
+                  <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
+                </div>
+              </div>
+              <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Total Patrol Time</label>
-              <input type="text" class="form-control" id="ajax-input-patrol-total-time" disabled>
+              <div class="input-group">
+                <input type="text" class="form-control" id="ajax-input-patrol-total-time" disabled>
+                <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
+              </div>
             </div>
 
             <div class="form-group">
@@ -65,11 +92,18 @@
 
               <div class="form-group">
                   <label>Patrol Area</label>
-                  <input type="text" class="form-control" id="ajax-input-patrol-area" disabled>
+                  <select class="js-example-basic-multiple" multiple="multiple" id="ajax-input-patrol-area" style="width:100%" disabled>
+                      @foreach($constants['patrol_area'] as $patrol_area => $value)
+                        <option value="{{$value}}">{{$value}}</option>
+                      @endforeach
+                </select>
               </div>
               <div class="form-group">
                   <label>Patrol Priorities</label>
-                  <input type="text" class="form-control" id="ajax-input-patrol-priorities" disabled/>
+                  <div class="input-group" id="patrol-priorities2" data-target-input="nearest">
+                    <input type="number" class="form-control" id="ajax-input-patrol-priorities" disabled>
+                    <div class="input-group-addon input-group-append"><i class=" mdi mdi-apple-keyboard-caps input-group-text"></i></div>
+                  </div>
               </div>
 
               <div class="form-group">
