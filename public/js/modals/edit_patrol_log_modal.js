@@ -29,13 +29,13 @@ $("#ajax_edit_patrol_log-button").click(function(e){
 
   (function($) {
     'use strict';
-    if ($("#patrol-start-time-input").length) {
-      $('#patrol-start-time-input').datetimepicker({
-        format: 'HH:mm'
+    if ($("#ajax-patrol-start-time").length) {
+      $('#ajax-patrol-start-time').datetimepicker({
+        format: 'LT'
       });
     }
-    if ($("#patrol-end-time-input").length) {
-      $('#patrol-end-time-input').datetimepicker({
+    if ($("#ajax-patrol-end-time").length) {
+      $('#ajax-patrol-end-time').datetimepicker({
         format: 'LT'
       });
     }

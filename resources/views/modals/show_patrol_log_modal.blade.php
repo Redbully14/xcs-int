@@ -57,9 +57,9 @@
 
             <div class="form-group">
               <label>Patrol Start Time</label>
-              <div class="input-group date" id="patrol-start-time-input" data-target-input="nearest">
-                <div class="input-group" data-target="#ajax-input-patrol-start-time" data-toggle="datetimepicker">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-input-patrol-start-time" id="ajax-input-patrol-start-time" disabled>
+              <div class="input-group date" id="ajax-patrol-start-time" data-target-input="nearest">
+                <div class="input-group" data-target="#ajax-patrol-start-time" data-toggle="datetimepicker">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-patrol-start-time" id="ajax-input-patrol-start-time" disabled>
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
               </div>
@@ -68,9 +68,9 @@
 
             <div class="form-group">
               <label>Patrol End Time</label>
-              <div class="input-group date" id="patrol-end-time-input" data-target-input="nearest">
-                <div class="input-group" data-target="#ajax-input-patrol-end-time" data-toggle="datetimepicker">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-input-patrol-end-time" id="ajax-input-patrol-end-time" disabled>
+              <div class="input-group date" id="ajax-patrol-end-time" data-target-input="nearest">
+                <div class="input-group" data-target="#ajax-patrol-end-time" data-toggle="datetimepicker">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#ajax-patrol-end-time" id="ajax-input-patrol-end-time" disabled>
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
               </div>
