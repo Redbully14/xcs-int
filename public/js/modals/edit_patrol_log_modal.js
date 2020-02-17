@@ -31,12 +31,12 @@ $("#ajax_edit_patrol_log-button").click(function(e){
     'use strict';
     if ($("#ajax-patrol-start-time").length) {
       $('#ajax-patrol-start-time').datetimepicker({
-        format: 'LT'
+        format: 'HH:mm'
       });
     }
     if ($("#ajax-patrol-end-time").length) {
       $('#ajax-patrol-end-time').datetimepicker({
-        format: 'LT'
+        format: 'HH:mm'
       });
     }
     if ($("#ajax-input-patrol-log-start-date").length) {
@@ -71,6 +71,22 @@ $('#ajax_edit_patrol_log').on('submit', function(e) {
   var patrol_area = $('#ajax-input-patrol-area').val();
   var patrol_priorities = $('#ajax-input-patrol-priorities').val();
 
+  var errormessages = {
+    '#ajax-input-patrol-log-start-date' : '#ajax-input-patrol-log-start-date-error',
+    '#ajax-input-patrol-start-time' : '#ajax-input-patrol-start-time-error',
+    '#ajax-input-patrol-end-time' : '#ajax-input-patrol-end-time-error',
+    '#ajax-input-patrol-details' : '#ajax-input-patrol-details-error',
+    '#ajax-input-patrol-log-end-date' : '#ajax-input-patrol-log-end-date-error',
+    '#ajax-input-patrol-area' : '#ajax-input-patrol-area-error',
+    '#ajax-input-patrol-priorities' : '#ajax-input-patrol-priorities-error',
+  };
+  for (var error in errormessages) {
+    $(error).parent().removeClass('has-danger');
+    $(error).removeClass('form-control-danger');
+    $(errormessages[error]).prop('hidden', true);
+    $(errormessages[error]).empty();
+  }
+
   $.ajax({
     type: 'POST',
     url: $url_edit_patrol_log+id,
@@ -95,7 +111,67 @@ $('#ajax_edit_patrol_log').on('submit', function(e) {
       var toast_color = "#f2a654";
       globalToast(toast_heading, toast_text, toast_icon, toast_color)
       var errors = data['responseJSON'].errors;
-      console.log(errors);
+
+      for (var key in errors) {
+        switch (key) {
+          case 'patrol_date':
+            var element = '#ajax-input-patrol-log-start-date';
+            var label = '#ajax-input-patrol-log-start-date-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'patrol_end_date':
+            var element = '#ajax-input-patrol-log-end-date';
+            var label = '#ajax-input-patrol-log-end-date-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'start_time':
+            var element = '#ajax-input-patrol-start-time';
+            var label = '#ajax-input-patrol-start-time-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'end_time':
+            var element = '#ajax-input-patrol-end-time';
+            var label = '#ajax-input-patrol-end-time-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'details':
+            var element = '#ajax-input-patrol-details';
+            var label = '#ajax-input-patrol-details-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'patrol_area':
+            var element = '#ajax-input-patrol-area';
+            var label = '#ajax-input-patrol-area-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+          case 'patrol_priorities':
+            var element = '#ajax-input-patrol-priorities';
+            var label = '#ajax-input-patrol-priorities-error';
+            $(element).parent().addClass('has-danger');
+            $(element).addClass('form-control-danger');
+            $(label).append(errors[key]);
+            $(label).prop('hidden', false);
+          break;
+        }
+      }
     }
   });
 });

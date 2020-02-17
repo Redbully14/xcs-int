@@ -40,7 +40,7 @@ var id = $(this).val();
         $("#ajax-input-patrol-log-end-date").val(data['patrol_end_date']);
         $("#ajax-input-patrol-start-time").val(data['start_time']);
         $("#ajax-input-patrol-end-time").val(data['end_time']);
-         $("#ajax-input-patrol-total-time").val(data['total_time'] + ' hours');
+         $("#ajax-input-patrol-total-time").val(data['total_time']);
         $("#ajax-input-patrol-details").val(data['details']);
         var patrol_area = JSON.parse(data['patrol_area']);
         $('#ajax-input-patrol-area').val(patrol_area);
@@ -61,6 +61,8 @@ var id = $(this).val();
              $("#ajax-span-auto-flag").html('No').css('color', '');
              $("#ajax-textarea-auto-flag").val(flags[1][1]).attr('rows', 1);
          }
+        $('.select2-search__field').css('width', '0');
+        $('.select2-selection').css('background-color', '#2A3038');
      }
   }).done(function(data) {});
 });

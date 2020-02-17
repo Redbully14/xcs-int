@@ -41,7 +41,7 @@
                   <span class="mdi mdi-calendar input-group-text"></span>
                 </span>
               </div>
-              <label id="patrol-date-error" class="error mt-2 text-danger" for="ajax-input-patrol-log-start-date" hidden></label>
+              <label id="ajax-input-patrol-log-start-date-error" class="error mt-2 text-danger" for="ajax-input-patrol-log-start-date" hidden></label>
             </div>
 
             <div class="form-group">
@@ -52,7 +52,7 @@
                   <span class="mdi mdi-calendar input-group-text"></span>
                 </span>
               </div>
-              <label id="patrol-end-log-date-error" class="error mt-2 text-danger" for="patrol-log-date" hidden></label>
+              <label id="ajax-input-patrol-log-end-date-error" class="error mt-2 text-danger" for="ajax-input-patrol-log-end-date" hidden></label>
             </div>
 
             <div class="form-group">
@@ -63,7 +63,7 @@
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
               </div>
-              <label id="patrol-start_time-error" class="error mt-2 text-danger" for="patrol-start-time" hidden></label>
+              <label id="ajax-input-patrol-start-time-error" class="error mt-2 text-danger" for="ajax-input-patrol-start-time" hidden></label>
             </div>
 
             <div class="form-group">
@@ -74,7 +74,7 @@
                   <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                 </div>
               </div>
-              <label id="patrol-end_time-error" class="error mt-2 text-danger" for="patrol-end-time" hidden></label>
+              <label id="ajax-input-patrol-end-time-error" class="error mt-2 text-danger" for="ajax-input-patrol-end-time" hidden></label>
             </div>
 
             <div class="form-group">
@@ -88,6 +88,8 @@
             <div class="form-group">
               <label>Patrol Description</label>
               <textarea class="form-control" id="ajax-input-patrol-details" rows="6" disabled></textarea>
+              <label id="ajax-input-patrol-details-error" class="error mt-2 text-danger" for="ajax-input-patrol-details" hidden></label>
+
             </div>
 
               <div class="form-group">
@@ -97,13 +99,16 @@
                         <option value="{{$value}}">{{$value}}</option>
                       @endforeach
                 </select>
+                <label id="ajax-input-patrol-area-error" class="error mt-2 text-danger" for="ajax-input-patrol-area" hidden></label>
               </div>
+              
               <div class="form-group">
                   <label>Patrol Priorities</label>
-                  <div class="input-group" id="patrol-priorities2" data-target-input="nearest">
+                  <div class="input-group" id="ajax-input-patrol-priorities2" data-target-input="nearest">
                     <input type="number" class="form-control" id="ajax-input-patrol-priorities" disabled>
                     <div class="input-group-addon input-group-append"><i class=" mdi mdi-apple-keyboard-caps input-group-text"></i></div>
                   </div>
+                  <label id="ajax-input-patrol-priorities-error" class="error mt-2 text-danger" for="ajax-input-patrol-priorities" hidden></label>
               </div>
 
               <div class="form-group">
@@ -129,6 +134,10 @@
   </div>
 </div>
 
+<style>
+.select2-search__field {width: 0 !important;}
+.select2-selection {background-color:#2A3038 !important;}
+</style>
 <script type="text/javascript">
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
   @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])

@@ -235,9 +235,9 @@ class AntelopeActivity extends Controller
         return Validator::make($data, [
             'type' => ['required', 'string'],
             'patrol_start_date' => ['required', 'date'],
-            'patrol_end_date' => ['nullable', 'date'],
+            'patrol_end_date' => ['nullable', 'date', new DateValidation($data['patrol_start_date'])],
             'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string'],
+            'end_time' => ['required', 'string', new TimeValidation($data['start_time'], $data['patrol_start_date'], $data['patrol_end_date'])],
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
@@ -261,11 +261,18 @@ class AntelopeActivity extends Controller
 
         $this->edit_validator($request->all())->validate();
 
+        $start = new DateTime($request['patrol_start_date'] . 'T' . $request['start_time']);
+        $end = new DateTime($request['patrol_end_date'] . 'T' . $request['end_time']);
+        $diff = $end->diff($start);
+        $hours = $diff->h;
+        $hours = $hours + ($diff->days * 24);
+
         $log->type = $request['type'];
         $log->patrol_start_date = $request['patrol_start_date'];
         $log->patrol_end_date = $request['patrol_end_date'];
         $log->start_time = $request['start_time'];
         $log->end_time = $request['end_time'];
+        $log->total_time = $hours . " hours";
         $log->details = $request['details'];
         $log->patrol_area = $request['patrol_area'];
         $log->priorities = $request['patrol_priorities'];
