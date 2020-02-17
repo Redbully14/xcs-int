@@ -26,10 +26,11 @@ Once that is finished create a .env file in the root directory of the applicatio
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:FGwRL2VvWImG3kPyO4coNAwZ9Kmf9tl7gkiL9fTotwA=
-APP_DEBUG=true
+APP_DEBUG=false
 APP_URL=http://localhost
 
 LOG_CHANNEL=stack
+LOG_DISCORD_WEBHOOK_URL=https://discordapp.com/api/webhooks/abcd/1234
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -86,7 +87,7 @@ Finally, start the development server:
 $ php artisan serve
 ```
 
-# (Optional) Logging in, the easy way:
+### (Optional) Logging in, the easy way:
 
 Because the users table is empty, there is no way to actually log into the application, therefor, without seeding the database, there is an alternative that is already made in the system that will automatically plant two users into your application, both with superadmin access.
 

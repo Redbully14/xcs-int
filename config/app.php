@@ -161,14 +161,15 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
+        /*
+         * Package Service Providers...
+         */
         Yajra\Datatables\DatatablesServiceProvider::class,
         Bluora\LaravelGitInfo\ServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         YbrNX\MariaDB\MariaDBServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
+        MarvinLabs\DiscordLogger\ServiceProvider::class,
 
         /*
          * Application Service Providers...
