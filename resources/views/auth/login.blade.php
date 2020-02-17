@@ -23,7 +23,7 @@
   <body>
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
-        <div class="row w-100">
+        <div class="row w-100" style="margin-left: 0px">
           <div class="content-wrapper full-page-wrapper auth login-2 login-bg"  style="background: url('{{$constants['backgrounds']['login']}}'); background-size: cover;">
             <div class="card col-lg-4">
               <div class="card-body px-5 py-5">
