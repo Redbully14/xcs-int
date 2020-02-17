@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ApiEndpointController extends Controller
 {
@@ -58,6 +59,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     } else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -83,6 +85,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     } else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -111,6 +114,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     }   else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -136,6 +140,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     } else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -165,6 +170,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     }   else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -194,6 +200,7 @@ class ApiEndpointController extends Controller
                             ]))->response()->setStatusCode(400);
                         }
                     }   else {
+                        Log::critical('User with IP of ' . $request->ip() . ' (' . $authUser->website_id . '/' . $authUser->id . ') attempted to access a SIT+ Api end-point.');
                         return (new ApiError([
                             'message' => 'You do not have access to this endpoint.'
                         ]))->response()->setStatusCode(403);
@@ -207,6 +214,7 @@ class ApiEndpointController extends Controller
                     ]))->response()->setStatusCode(404);
             }
         } else {
+            Log::critical('User with IP of ' . $request->ip() . ' attempted to access an Api end-point without a valid API token.');
             return (new ApiError([
                 'message' => 'Invalid Api token provided.'
             ]))->response()->setStatusCode(401);
