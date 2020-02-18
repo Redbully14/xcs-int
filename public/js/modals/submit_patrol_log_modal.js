@@ -8,9 +8,6 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   var details = $('#patrol-details').val();
   var patrol_area = $('#patrol-area').val();
   var patrol_priorities = $('#patrol-priorities').val();
-  if(patrol_priorities < 0){
-      patrol_priorities = patrol_priorities * -1;
-  }
   var flag_patrol_log = $('#flag-patrol-log').is(":checked");
   var reason_for_flag = $('#reason-for-flag').val();
 
@@ -132,7 +129,6 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
       }
     }
   });
-    $('#patrol-area').empty();
 });
 
 (function($) {

@@ -845,6 +845,31 @@ Route::prefix('activity')->group(function () {
 
   });
 
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category ActivityRoutes
+   * @access SeniorStaff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.seniorstaff'))->group(function () {
+
+    /**
+     * Webdomain: /activity/edit/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category ActivityRoutes
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    Route::post('/edit/{id}', [
+      'as' => 'activity.edit',
+      'uses' => 'AntelopeActivity@edit'
+    ]);
+
+  });
+
   /*
   |--------------------------------------------------------------------------
   | x End ActivityRoutes x
