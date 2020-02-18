@@ -1,27 +1,31 @@
 $(function() {
+
+  var columnsArray = [
+    { data: 'name', name: 'name', width: "150px", className: 'text-wrap' },
+    { data: 'department_id', name: 'department_id', width: "80px", className: 'text-wrap' },
+    { data: 'website_id', name: 'website_id', width: "60px", className: 'text-wrap' },
+    { data: 'rank', name: 'rank', width: "190px", className: 'text-wrap' },
+    { data: 'status', name: 'status', width: "55px", className: 'text-wrap' },
+    { data: 'monthly_hours', name: 'monthly_hours', width: "70px", className: 'text-wrap' },
+    { data: 'monthly_logs', name: 'monthly_logs', width: "60px", className: 'text-wrap' },
+    { data: 'advanced_training', name: 'advanced_training', width: "70px", className: 'text-wrap' },
+    { data: 'requirements', name: 'requirements' },
+   ];
+
   $('#public_roster-admins').DataTable({
+   "autoWidth": false,
    ordering: false,
    serverSide: true,
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_admins,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
-    "createdRow": function( row, data, dataIndex ) {
-       $(row).css('background-color', 'rgb(1, 1, 70, 1.0)');
-       $(row).css('color', 'white');
-    },
-    "bInfo" : false,
+   columns: columnsArray,
+   "createdRow": function( row, data, dataIndex ) {
+     $(row).css('background-color', 'rgba(70, 1, 1, 1.0)');
+     $(row).css('color', 'white');
+   },
+   "bInfo" : false,
   });
 
   $('#public_roster-seniorstaff').DataTable({
@@ -31,19 +35,9 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_senior_staff,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
-       $(row).css('background-color', 'rgba(72, 1, 1, 1.0)');
+       $(row).css('background-color', 'rgba(70, 36, 1, 1.0)');
        $(row).css('color', 'white');
     },
     "bInfo" : false,
@@ -56,17 +50,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_staff,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(70, 53, 1, 1.0)');
        $(row).css('color', 'white');
@@ -82,17 +66,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_staff_in_training,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 70, 70, 1.0)');
        $(row).css('color', 'white');
@@ -107,17 +81,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_senior_member,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 53, 70, 1.0)');
        $(row).css('color', 'white');
@@ -132,17 +96,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_member,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
        $(row).css('color', 'white');
@@ -157,17 +111,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_probationary_member,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 70, 53, 1.0)');
        $(row).css('color', 'white');
@@ -182,17 +126,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_reserve,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
        $(row).css('color', 'white');
@@ -207,17 +141,7 @@ $(function() {
    paging: false,
    order: [[ 0  , "desc" ]],
    ajax: $url_media,
-   columns: [
-    { data: 'name', name: 'name' },
-    { data: 'department_id', name: 'department_id' },
-    { data: 'website_id', name: 'website_id' },
-    { data: 'rank', name: 'rank' },
-    { data: 'status', name: 'status' },
-    { data: 'monthly_hours', name: 'monthly_hours' },
-    { data: 'monthly_logs', name: 'monthly_logs' },
-    { data: 'advanced_training', name: 'advanced_training' },
-    { data: 'requirements', name: 'requirements' },
-   ],
+   columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
        $(row).css('color', 'white');

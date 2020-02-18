@@ -66,6 +66,16 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() <= $constants['access_level']['member'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/myprofile">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-card-details text-success"></i>
+        </span>
+        <span class="menu-title">Personal Profile</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() >= $constants['access_level']['staff'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/activity">
@@ -100,7 +110,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" data-toggle="collapse" href="#sidebar-administration" aria-expanded="false" aria-controls="sidebar-administration">
         <span class="menu-icon">
-          <i class="mdi mdi-tie"></i>
+          <i class="mdi mdi-tie text-success"></i>
         </span>
         <span class="menu-title">Administration</span>
         <i class="menu-arrow"></i>

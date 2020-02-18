@@ -8,10 +8,13 @@
 
 @section('content')
 <div class="content-wrapper">
+<div class="alert alert-fill-warning" role="alert">
+  <i class="mdi mdi-worker"></i> This module is currently disabled by the AntelopePHP Development Team.
+</div>
   <div class="page-header">
     <h3 class="page-title"> Discipline Database </h3>
     <nav aria-label="breadcrumb">
-      <a class="nav-link btn btn-danger create-new-button" href="#" id="ajax_add_disciplinary_action-button">+ Submit Disciplinary Action</a>
+      <button class="nav-link btn btn-danger create-new-button" href="#" id="ajax_add_disciplinary_action-button" disabled>+ Submit Disciplinary Action</button>
     </nav>
   </div>
   <div class="card">
