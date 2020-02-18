@@ -27,6 +27,81 @@ globalToast = function(heading, text, icon, color) {
   }
 })(jQuery);
 
+(function($) {
+  'use strict';
+
+  $(function() {
+    /* Code for attribute data-custom-class for adding custom class to tooltip */
+    if (typeof $.fn.tooltip.Constructor === 'undefined') {
+      throw new Error('Bootstrap Tooltip must be included first!');
+    }
+
+    var Tooltip = $.fn.tooltip.Constructor;
+
+    // add customClass option to Bootstrap Tooltip
+    $.extend(Tooltip.Default, {
+      customClass: ''
+    });
+
+    var _show = Tooltip.prototype.show;
+
+    Tooltip.prototype.show = function() {
+
+      // invoke parent method
+      _show.apply(this, Array.prototype.slice.apply(arguments));
+
+      if (this.config.customClass) {
+        var tip = this.getTipElement();
+        $(tip).addClass(this.config.customClass);
+      }
+
+    };
+    $('[data-toggle="tooltip"]').tooltip();
+
+  });
+})(jQuery);
+
+(function($) {
+  'use strict';
+
+  $(function() {
+    function ratingEnable() {
+
+      $('#antelope-square').barrating('show', {
+        theme: 'bars-square',
+        showValues: true,
+        showSelectedRating: false
+      });
+
+    }
+
+    function ratingDisable() {
+      $('select').barrating('destroy');
+    }
+
+    $('.rating-enable').click(function(event) {
+      event.preventDefault();
+
+      ratingEnable();
+
+      $(this).addClass('deactivated');
+      $('.rating-disable').removeClass('deactivated');
+    });
+
+    $('.rating-disable').click(function(event) {
+      event.preventDefault();
+
+      ratingDisable();
+
+      $(this).addClass('deactivated');
+      $('.rating-enable').removeClass('deactivated');
+    });
+
+    ratingEnable();
+  });
+
+})(jQuery);
+
 $(".ajax_search_member-class").select2({
     placeholder: "Search by Website ID, Name or Unit Number",
     allowClear: true
@@ -43,4 +118,9 @@ $(".antelope_global_select_single").select2({
 
 $(".antelope_global_select_single-noclear").select2({
     placeholder: "Select an Option...",
+});
+
+$(".antelope_global_select_single-noclear-nosearch").select2({
+    placeholder: "Select an Option...",
+    minimumResultsForSearch: -1,
 });

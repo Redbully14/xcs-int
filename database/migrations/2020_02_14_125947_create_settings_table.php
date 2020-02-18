@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivityTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,12 @@ class CreateActivityTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('patrol_start_date');
-            $table->date('patrol_end_date')->nullable();
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->string('total_time');
-            $table->longText('details');
-            $table->integer('priorities')->default(0);
-            $table->json('patrol_area');
-            $table->char('type', 20);
-            $table->json('flag');
+            $table->string('type');
+            $table->json('metadata');
             $table->timestamps();
         });
     }
@@ -38,6 +30,6 @@ class CreateActivityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity');
+        Schema::dropIfExists('settings');
     }
 }

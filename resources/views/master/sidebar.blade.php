@@ -45,21 +45,42 @@
       </div>
     </li>
     <li class="nav-item nav-category">
-      <span class="nav-link">Navigation</span>
+      <span class="nav-link">Public Access</span>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/public/roster">
+        <span class="menu-icon">
+          <i class="mdi mdi-collage text-white"></i>
+        </span>
+        <span class="menu-title">Public Roster</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">
+      <span class="nav-link">Private Access</span>
     </li>
     <li class="nav-item menu-items">
       <a class="nav-link" href="/dashboard">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i>
+          <i class="mdi mdi-speedometer text-primary"></i>
         </span>
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() <= $constants['access_level']['member'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/myprofile">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-card-details text-success"></i>
+        </span>
+        <span class="menu-title">Personal Profile</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() >= $constants['access_level']['staff'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/activity">
         <span class="menu-icon">
-          <i class="mdi mdi-database"></i>
+          <i class="mdi mdi-database text-warning"></i>
         </span>
         <span class="menu-title">Activity Database</span>
       </a>
@@ -69,7 +90,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/discipline">
         <span class="menu-icon">
-          <i class="mdi mdi-security"></i>
+          <i class="mdi mdi-security text-danger"></i>
         </span>
         <span class="menu-title">Discipline Database</span>
       </a>
@@ -79,7 +100,7 @@
     <li class="nav-item menu-items">
       <a class="nav-link" href="/absence">
         <span class="menu-icon">
-          <i class="mdi mdi-clock"></i>
+          <i class="mdi mdi-clock text-primary"></i>
         </span>
         <span class="menu-title">Absence Database</span>
       </a>
@@ -87,19 +108,26 @@
     @endif
     @if(Auth::user()->level() >= $constants['access_level']['admin'])
     <li class="nav-item menu-items">
-      <a class="nav-link" href="/member_admin">
+      <a class="nav-link" data-toggle="collapse" href="#sidebar-administration" aria-expanded="false" aria-controls="sidebar-administration">
         <span class="menu-icon">
-          <i class="mdi mdi-account-plus"></i>
+          <i class="mdi mdi-tie text-success"></i>
         </span>
-        <span class="menu-title">Member Settings</span>
+        <span class="menu-title">Administration</span>
+        <i class="menu-arrow"></i>
       </a>
+      <div class="collapse" id="sidebar-administration">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/settings">Admin Settings</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/member_admin">Member Settings</a></li>
+        </ul>
+      </div>
     </li>
     @endif
     @if(Auth::user()->level() >= $constants['access_level']['superadmin'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/superadmin">
         <span class="menu-icon">
-          <i class="mdi mdi-ghost"></i>
+          <i class="mdi mdi-ghost text-info"></i>
         </span>
         <span class="menu-title">SuperAdmin</span>
       </a>

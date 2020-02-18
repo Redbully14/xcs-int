@@ -7,51 +7,124 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Datatables;
 use App\User;
+use App\Feedback;
+use App\Settings;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class Antelope extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Antelope Main Controller
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    public $constants;
+
     /**
-     * Create a new controller instance.
+     * Executes before running the main controllers
      *
+     * @author Oliver G.
+     * @param
      * @return void
+     * @access Auth
+     * @version 1.0.0
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
-     * Connects a person to the main dashboard
+     * Backend controller for the dashboard module
      *
+     * @author Oliver G.
      * @return View
+     * @category Antelope
+     * @version 1.0.0
      */
     public function dashboard()
     {
-    	$constants = \Config::get('constants');
+        $id = Auth::user()->id;
 
-    	return view('dashboard')->with('constants', $constants);
+        // Feedback System
+        $feedback = Feedback::where('user_id', '=', Auth::user()->id)->get();
+
+        if ($feedback->first() == null) {
+            $feedback = false;
+        } else $feedback = true;
+
+        // To disable feedbacks, uncomment this line:
+        //$feedback = true;
+
+        $dashboard_calculations = [];
+
+        if(auth()->user()->exempt_requirements == false) {
+
+            $dashboard_calculations['requirements'] = AntelopeCalculate::amount_to_requirements($id);
+            $dashboard_calculations['this_month_logs'] = AntelopeCalculate::get_month_patrol_logs($id, 0);
+            $dashboard_calculations['this_month_hours'] = AntelopeCalculate::get_month_patrol_hours($id, 0);
+            
+            if($dashboard_calculations['this_month_hours'] == '-') {
+                $dashboard_calculations['this_month_logs'] = 0;
+                $dashboard_calculations['this_month_hours'] = 0;
+            } else {
+                $dashboard_calculations['this_month_hours'] = BaseXCS::durationToSeconds($dashboard_calculations['this_month_hours']);
+                $dashboard_calculations['this_month_hours'] = (int)floor($dashboard_calculations['this_month_hours'] / 3600);
+            }
+
+        }
+
+        if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
+            $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
+        }
+
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $count++;
+        }
+
+        return view('dashboard')->with('constants', $this->constants)
+                                ->with('feedback', $feedback)
+                                ->with('calculations', $dashboard_calculations)
+                                ->with('quicklinks', $array);
     }
 
     /**
-     * Gives a person access to the member administration
+     * Backend controller for the member_admin module
      *
+     * @author Oliver G.
      * @return View
+     * @category Antelope
+     * @version 1.0.0
      */
     public function memberAdmin()
     {
-        $constants = \Config::get('constants');
-
-        return view('member_admin')->with('constants', $constants);
+        return view('member_admin')->with('constants', $this->constants);
     }
 
     /**
-     * Gets all users in database
+     * Constructs the users table
      *
-     * @return View
+     * @author Oliver G.
+     * @return Datatables
+     * @category Antelope
+     * @access Admin
+     * @version 1.0.0
      */
     public function passUserData()
     {
@@ -59,26 +132,29 @@ class Antelope extends Controller
     }
 
     /**
-     * Returns and generates the account settings view.
+     * Backend controller for the account_settings module
      *
+     * @author Oliver G.
      * @return View
+     * @category Antelope
+     * @version 1.0.0
      */
     public function accountSettings()
     {
-        $constants = \Config::get('constants');
-
-        return view('account_settings')->with('constants', $constants);
+        return view('account_settings')->with('constants', $this->constants);
     }
 
     /**
-     * Change user avatar.
+     * Updates a user's avatar upon request
      *
-     * @return View
+     * @author Oliver G.
+     * @return void
+     * @param Request
+     * @category Antelope
+     * @version 1.0.0
      */
     public function setAvatar(Request $request)
     {
-        $constants = \Config::get('constants');
-
         $request->validate([
             'avatar' => ['required', 'string'] // todo: make a rule that will check if it's in constants.
         ]);
@@ -87,9 +163,13 @@ class Antelope extends Controller
     }
 
     /**
-     * Change user avatar.
+     * Sets a user's timezone upon request
      *
-     * @return View
+     * @author Oliver G.
+     * @return void
+     * @param Request
+     * @category Antelope
+     * @version 1.0.0
      */
     public function setTimezone(Request $request)
     {
@@ -101,9 +181,13 @@ class Antelope extends Controller
     }
 
     /**
-     * Gets all the profile
+     * Calculates all the essential profile calculations to construct and return the data to the user
      *
-     * @return View
+     * @author Oliver G.
+     * @return variable ($calculations)
+     * @param $id (user id)
+     * @category Antelope
+     * @version 1.0.0
      */
     public function getProfileCalculations($id)
     {
@@ -136,14 +220,17 @@ class Antelope extends Controller
     }
 
     /**
-     * Constructs a user's profile
+     * Backend controller for the user_profile module
      *
+     * @author Oliver G.
      * @return View
+     * @param $id (user id)
+     * @category Antelope
+     * @access SIT
+     * @version 1.0.0
      */
     public function getProfile($id)
     {
-        $constants = \Config::get('constants');
-
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
 
@@ -151,26 +238,27 @@ class Antelope extends Controller
         $calculations = self::getProfileCalculations($id);
 
         return view('user_profile')->with('user_data', $user_data)
-                                   ->with('constants', $constants)
+                                   ->with('constants', $this->constants)
                                    ->with('role', $role)
                                    ->with('calculations', $calculations);
     }
 
     /**
-     * Constructs a user's personal profile
+     * Backend controller for the personal_profile module
      *
-     * @return View
+     * @author Oliver G.
+     * @return void
+     * @param $id (user id)
+     * @category Antelope
+     * @version 1.0.0
      */
     public function myProfile()
     {
-        $constants = \Config::get('constants');
-
-
         $id = auth()->user()->id;
         $user_data = User::find($id);
         $role = User::find($id)->getRoles();
 
-        if(auth()->user()->level() >= $constants['access_level']['sit']) {
+        if(auth()->user()->level() >= $this->constants['access_level']['sit']) {
             return self::getProfile($id);
         }
 
@@ -179,40 +267,49 @@ class Antelope extends Controller
             $calculations = self::getProfileCalculations($id);
 
             return view('personal_profile')->with('user_data', $user_data)
-                                       ->with('constants', $constants)
+                                       ->with('constants', $this->constants)
                                        ->with('role', $role)
                                        ->with('calculations', $calculations);
         }
     }
 
     /**
-     * Constructs the SuperAdmin Page
+     * Backend controller for the superadmin module
      *
+     * @author Oliver G.
      * @return View
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
      */
     public function superAdmin()
     {
-        $constants = \Config::get('constants');
-
-        return view('superadmin')->with('constants', $constants);
+        return view('superadmin')->with('constants', $this->constants);
     }
 
     /**
-     * Constructs the SuperAdmin Page
+     * Backend sub-controller for the superadmin->icons module
      *
+     * @author Oliver G.
      * @return View
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
      */
     public function superAdminIcons()
     {
-        $constants = \Config::get('constants');
-
-        return view('developers.superadmin_icons')->with('constants', $constants);
+        return view('developers.superadmin_icons')->with('constants', $this->constants);
     }
 
     /**
-     * Godmode into another user
+     * Enter and godmode into an active user's profile
      *
-     * @return View
+     * @author Oliver G.
+     * @return json
+     * @param Request
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
      */
     public function superAdminGodmode(Request $request)
     {
@@ -224,14 +321,133 @@ class Antelope extends Controller
     }
 
     /**
-     * Godmode into another user
+     * Exit godmode whilst actively impersonating another user
      *
-     * @return View
+     * @author Oliver G.
+     * @return redirect
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
      */
     public function superStopGodmode()
     {
         auth()->user()->leaveImpersonation();
 
         return redirect()->route('superadmin');
+    }
+
+    /**
+     * Controls the submit function of the feedback form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function feedbackSubmit(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'score' => ['required', 'integer'],
+            'feedback' => ['nullable', 'string']
+        ]);
+
+        Feedback::create([
+            'user_id' => Auth::user()->id,
+            'score' => $data['score'],
+            'feedback' => $data['feedback'],
+        ]);
+        
+        return;
+    }
+
+    /**
+     * Backend controller for the settings_admin module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_view()
+    {
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $array[$count]["id"] = $quicklink->id;
+            $count++;
+        }
+
+        return view('settings_admin')->with('constants', $this->constants)
+                                     ->with('quicklinks', $array);
+    }
+
+    /**
+     * Controls the submit function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_addQuickLink(Request $request)
+    {
+        $data = ($request->all());
+
+        Validator::make($data, [
+            'type' => ['required', 'string'],
+            'title' => ['required', 'string'],
+            'link' => ['required', 'url'],
+        ]);
+
+        $data = json_encode([$data['type'], $data['title'], $data['link']]);
+
+        Settings::create([
+            'user_id' => Auth::user()->id,
+            'type' => 'quicklink',
+            'metadata' => $data,
+        ]);
+        
+        return;
+    }
+
+    /**
+     * Controls the manage function of the Quicklink form
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_manageQuickLink(Request $request)
+    {
+        $data = ($request->all());
+        $data = $data['data'];
+
+        foreach($data as $key) {
+            Validator::make($key, [
+                0 => ['required', 'string'],
+                1 => ['required', 'string'],
+                2 => ['required', 'url'],
+                3 => ['required', 'integer'],
+            ]);
+
+            $id = $key[3];
+            $key = json_encode([$key[0], $key[1], $key[2]]);
+
+            Settings::find($id)->update(['metadata' => $key]);
+        }
+        
+        return;
     }
 }

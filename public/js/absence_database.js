@@ -30,7 +30,7 @@ $(function() {
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
-          return '<span class="text-warning">' + $absence_id + 'A-' + data + '</span>';
+          return '<span class="text-warning">' + $absence_id + 'A-' + data + '</span> <div class="badge badge-pill badge-warning" data-toggle="tooltip" data-custom-class="tooltip-warning" data-container="body" data-placement="right" style="margin-left:2px;" title="The duration of this LOA is over 30 days and requires Admin Approval.">?</div>';
         }
         return $absence_id + data;
       } },
@@ -38,13 +38,16 @@ $(function() {
       { data: 'website_id', name: 'website_id' },
       { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
           if(new Date(row['end_date']) < new Date()) {
-            return '<span class="text-danger">'+data+'</span>';
+            return '<span class="text-danger">'+data+'</span> <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-custom-class="tooltip-danger" data-container="body" data-placement="right" style="margin-left:2px;" title="This LOA is overdue, this means that the end date has been passed.">?</div>';
           } else return data;   
         } 
       },
       { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
       { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
      ],
+      drawCallback: function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      },
       "createdRow": function( row, data, dataIndex ) {
          if(data['admin_approval']) {
           $(row).css('background-color', 'rgba(91, 59, 0, 0.5)');
@@ -71,7 +74,7 @@ $(function() {
       { data: 'website_id', name: 'website_id' },
       { data: 'start_end_date', name: 'start_end_date', render: function(data, type, row) { 
           if(new Date(row['end_date']) < new Date()) {
-            return '<span class="text-danger">'+data+'</span>';
+            return '<span class="text-danger">'+data+'</span> <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-custom-class="tooltip-danger" data-container="body" data-placement="right" style="margin-left:2px;" title="This LOA is overdue, this means that the end date has been passed.">?</div>';
           } else return data;   
         } 
       },
@@ -82,7 +85,10 @@ $(function() {
          if(new Date(data['end_date']) < new Date()) {
             $(row).css('background-color', 'rgba(72, 1, 1, 0.5)');
          }
-      }
+      },
+      drawCallback: function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      },
     });
   }
 });

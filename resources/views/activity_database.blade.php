@@ -26,7 +26,9 @@
                   <th>Patrol Date</th>
                   <th>Start Time</th>
                   <th>End Time</th>
+                  <th>Total Time</th>
                   <th>Patrol Details</th>
+                  <th>Flagged</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -54,4 +56,5 @@
 
 @section('modals')
 @include('modals.show_patrol_log_modal')
+@include('modals.edit_flags_modal')
 @endsection

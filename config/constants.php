@@ -38,7 +38,7 @@ return [
         'custom_one_month' => 2678400, // Set one month here (default 31 days)
         'custom_two_month' => 5356800, // Set two month here (default 62 days)
         'min_requirements_logs' => 4, // 4 logs required
-        'min_requirements_hours' => 10800, // 4 hours required
+        'min_requirements_hours' => 14400, // 4 hours required
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
         'recent_loa' => 604800, // 1 week
@@ -81,6 +81,8 @@ return [
         'personal_profile' => 'My Profile',
         'discipline_database' => 'Discipline Database',
         'superadmin' => 'SuperAdmin',
+        'settings_admin' => 'Administrator Settings',
+        'public_roster' => 'Public Roster',
     ],
 
     /*
@@ -204,15 +206,75 @@ return [
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
+        'media_four' => 'Civilian Media IV',
+        'media_three' => 'Civilian Media III',
+        'media_two' => 'Civilian Media II',
+        'media_one' => 'Civilian Media I',
+        'other_admin' => 'DoJ Administration',
+        'ia' => 'Internal Affairs',
+    ],
+
+    'rank_groups' => [
+
+        'admin' => [
+            'director',
+            'deputy_director',
+            'chief_of_staff',
+            'deputy_chief_of_staff',
+            'secretary_of_staff',
+        ],
+
+        'senior_staff' => [
+            'manager',
+            'assistant_manager',
+        ],
+
+        'staff' => [
+            'senior_supervisor',
+            'supervisor',
+            'assistant_supervisor',
+        ],
+
+        'sit' => [
+            'senior_advisor',
+            'advisor',
+        ],
+
+        'senior_member' => [
+            'intern',
+            'senior_civilian',
+        ],
+
+        'member' => [
+            'civilian3',
+            'civilian2',
+            'civilian1',
+        ],
+
+        'probationary_member' => [
+            'probationary_civilian',
+        ],
+
+        'reserve' => [
+            'reserve_senior',
+            'reserve_civilian',
+            'reserve_probationary',
+        ],
+
+        'media' => [
+            'media_four',
+            'media_three',
+            'media_two',
+            'media_one',
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Patrol Types
+    | Patrol Constants
     |--------------------------------------------------------------------------
     |
-    | Types of patrols that civilians are able to choose from, all these patrols
-    | are logged on specific endpoints on the system.
+    | Constants for use in patrol logs.
     |
     */
     'patrol_type' => [
@@ -220,6 +282,8 @@ return [
         'subdivisional' => 'Business Patrol',
         'fto' => 'Field Training',
     ],
+
+    'soft_patrol_hour_limit' => 12, // hours
 
     /*
     |--------------------------------------------------------------------------
@@ -377,11 +441,26 @@ return [
     ],
     
     'backgrounds' => [
-      'login' => '/assets/images/auth/Login_bg.jpg',
-      'inactive' => '/assets/images/auth/Login_bg.jpg',
+      'login' => '/assets/images/auth/civ_backdrop.png',
+      'inactive' => '/assets/images/auth/civ_backdrop.png',
+      'registration' => '/assets/images/auth/civ_backdrop.png',
     ],
+    
     'patrol_area' => [
         'BC' => 'Blaine County',
         'LS' => 'Los Santos',
-    ]
+    ],
+
+    'quicklink_types' => [
+        'document' => [
+            'name' => 'Document Link',
+            'icon' => 'mdi mdi-file-document',
+            'color' => 'primary',
+        ],
+        'policy' => [
+            'name' => 'Policy Link',
+            'icon' => 'mdi mdi-file-lock',
+            'color' => 'danger',
+        ],
+    ],
 ];

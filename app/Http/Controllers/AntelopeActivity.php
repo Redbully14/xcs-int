@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -24,28 +25,47 @@ class AntelopeActivity extends Controller
     |
     */
 
+    public $constants;
+
     /**
-     * Create a new controller instance.
+     * Executes before running the main controllers
      *
+     * @author Oliver G.
+     * @param
      * @return void
+     * @access Auth
+     * @version 1.0.0
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
-     * Get a validator for an incoming log request.
+     * Validates request before running main function
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function validator(array $data)
     {
-
-        if ($data['patrol_end_date'] == null) {
+        if (is_null($data['patrol_end_date'])) {
             $data['patrol_end_date'] = $data['patrol_start_date'];
-        };
+        }
+
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
+
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
 
         return Validator::make($data, [
             'patrol_start_date' => ['required', 'date'],
@@ -56,42 +76,94 @@ class AntelopeActivity extends Controller
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
-            'patrol_priorities' => ['required', 'integer'],
+            'patrol_priorities' => ['required', 'integer', 'min:0'],
+            'flag' => ['required', 'boolean'],
+            'flag_reason' => ['string']
         ]);
     }
 
     /**
-     * Create a new log instance after validation
+     * Inserts and creates a new activity for the database
      *
-     * @param  array  $data
-     * @return \App\User
+     * @author Oliver G.
+     * @param Array $data
+     * @return App\Activity
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function create(array $data)
     {
-
         $data = $this->convertTimezone($data);
+
+        if ($data['flag'] === "true") {
+            $data['flag'] = true;
+        } else if ($data['flag'] === "false") {
+            $data['flag'] = false;
+        }
+
+        if (is_null($data['flag_reason'])) {
+            $data['flag_reason'] = "";
+        }
+
+        $now = Carbon::now(User::find(Auth::user()->id)->timezone)->tz('UTC');
+        $anHour = $now->addHour();
+        $start = new DateTime($data['patrol_start_date'] . 'T' . $data['start_time']);
+        $end = new DateTime($data['patrol_end_date'] . 'T' . $data['end_time']);
+        $diff = $end->diff($start);
+        $hours = $diff->h;
+        $hours = $hours + ($diff->days * 24);
+        $auto_flag = false;
+        $auto_flag_reason = "";
+
+        if ($hours >= $this->constants['soft_patrol_hour_limit']) {
+            $auto_flag = true;
+            $auto_flag_reason = "Patrol is " . $this->constants['soft_patrol_hour_limit'] . "+ hours in length.";
+        }
+
+        if ($start > $anHour) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol starts in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol starts in the future.";
+            }
+        }
+
+        if ($end > $anHour) {
+            $auto_flag = true;
+            if ($auto_flag_reason === "") {
+                $auto_flag_reason = "Patrol ends in the future.";
+            } else {
+                $auto_flag_reason = $auto_flag_reason . " Patrol ends in the future.";
+            }
+        }
 
         $log = Activity::create([
             'patrol_start_date' => date("Y-m-d", strtotime($data['patrol_start_date'])),
             'patrol_end_date' => date("Y-m-d", strtotime($data['patrol_end_date'])),
             'start_time' => date("H:i:s", strtotime($data['start_time'])),
             'end_time' => date("H:i:s", strtotime($data['end_time'])),
+            'total_time' => $hours . " hours",
             'type' => $data['type'],
             'details' => $data['details'],
             'user_id' => Auth::user()->id,
             'patrol_area' => json_encode($data['patrol_area']),
             'priorities' => $data['patrol_priorities'],
+            'flag' => json_encode([[$data['flag'], $auto_flag, false], [$data['flag_reason'], $auto_flag_reason, ["", ""]]])
         ]);
 
         return $log;
     }
 
     /**
-     * The activity log has been registered
+     * Executes after an activity is created
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Request $request
+     * @param Request $log
+     * @return void
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function submitted(Request $request, $log)
     {
@@ -99,11 +171,13 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Convert the Timezone for the timestamps
+     * Converts the activity log's time to the system's time
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @author Oliver G.
+     * @param Array $data
+     * @return var $data
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
     protected function convertTimezone(array $data)
     {
@@ -128,17 +202,17 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Handle an activity log submit for the application.
+     * Submits a new Activity Request for an insert into the database
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @author Oliver G.
+     * @param Request $request
+     * @return Function submitted($request, $log)
+     * @category AntelopeActivity
+     * @access Member
+     * @version 1.0.0
      */
     public function submit(Request $request)
     {
-        if ($request->patrol_end_date == null) {
-            $request->patrol_end_date = $request->patrol_start_date;
-        };
-
         $this->validator($request->all())->validate();
 
         $log = $this->create($request->all());
@@ -147,21 +221,88 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Construct Activity Page
+     * Validates an edit request before running main function
      *
-     * @return View
+     * @author Oliver G.
+     * @param Array $data
+     * @return Illuminate\Support\Facades\Validator
+     * @category AntelopeActivity
+     * @version 1.0.0
      */
-    public function constructPage()
+    protected function edit_validator(array $data)
     {
-        $constants = \Config::get('constants');
 
-        return view('activity_database')->with('constants', $constants);
+        return Validator::make($data, [
+            'type' => ['required', 'string'],
+            'patrol_start_date' => ['required', 'date'],
+            'patrol_end_date' => ['nullable', 'date', new DateValidation($data['patrol_start_date'])],
+            'start_time' => ['required', 'string'],
+            'end_time' => ['required', 'string', new TimeValidation($data['start_time'], $data['patrol_start_date'], $data['patrol_end_date'])],
+            'details' => ['required', 'string'],
+            'patrol_area' => ['required', 'array', 'min:1'],
+            'patrol_area.*' => ['required', 'string'],
+            'patrol_priorities' => ['required', 'integer', 'min:0'],
+        ]);
     }
 
     /**
-     * Gets all activity in database
+     * Edits an already established activity log
      *
+     * @author Oliver G.
+     * @param Request $request
+     * @return void
+     * @category AntelopeActivity
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    public function edit(Request $request)
+    {
+        $log = Activity::find($request->route('id'));
+
+        $this->edit_validator($request->all())->validate();
+
+        $start = new DateTime($request['patrol_start_date'] . 'T' . $request['start_time']);
+        $end = new DateTime($request['patrol_end_date'] . 'T' . $request['end_time']);
+        $diff = $end->diff($start);
+        $hours = $diff->h;
+        $hours = $hours + ($diff->days * 24);
+
+        $log->type = $request['type'];
+        $log->patrol_start_date = $request['patrol_start_date'];
+        $log->patrol_end_date = $request['patrol_end_date'];
+        $log->start_time = $request['start_time'];
+        $log->end_time = $request['end_time'];
+        $log->total_time = $hours . " hours";
+        $log->details = $request['details'];
+        $log->patrol_area = $request['patrol_area'];
+        $log->priorities = $request['patrol_priorities'];
+        $log->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for the absence_database module
+     *
+     * @author Oliver G.
      * @return View
+     * @access Staff
+     * @category AntelopeActivity
+     * @version 1.0.0
+     */
+    public function constructPage()
+    {
+        return view('activity_database')->with('constants', $this->constants);
+    }
+
+    /**
+     * Constructs a DataTable for the activity table
+     *
+     * @author Oliver G.
+     * @return Datatables
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
      */
     public function passActivityData()
     {
@@ -173,10 +314,12 @@ class AntelopeActivity extends Controller
         'activity.patrol_end_date',
         'activity.start_time',
         'activity.end_time',
+        'activity.total_time',
         'activity.details',
         'activity.patrol_area',
         'activity.priorities',
         'activity.type',
+        'activity.flag',
         'users.name',
         'users.department_id',
         'users.website_id'
@@ -201,14 +344,18 @@ class AntelopeActivity extends Controller
     }
 
     /**
-     * Gets specific activity instance
+     * Passes a singular instance for the activity table
      *
-     * @return View
+     * @author Oliver G.
+     * @param var $id
+     * @return App\Activity
+     * @category AntelopeActivity
+     * @access SIT
+     * @version 1.0.0
      */
     public function passActivityInstance($id)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
             $log = Activity::find($id);
 
             $log->user_name = User::find($log['user_id'])->name;
@@ -219,17 +366,78 @@ class AntelopeActivity extends Controller
         } else return 'noob hax0r';
     }
 
+    /**
+     * Edits a specific activity log's flags in the controller
+     *
+     * @author Christopher M.
+     * @param Request $request
+     * @return void
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
+     */
+    public function editActivityFlagInstance(Request $request)
+    {
+        if(Auth::user()->level() >= $this->constants['access_level']['staff']) {
+            $log = Activity::find($request->route('id'));
+
+            $temp_array = [];
+            $temp_array['self_resolve_reason'] = $request->self_resolve_reason;
+            $temp_array['auto_resolve_reason'] = $request->auto_resolve_reason;
+
+            if (is_null($temp_array['self_resolve_reason'])) {
+                $temp_array['self_resolve_reason'] = "No details.";
+            }
+            if (is_null($temp_array['auto_resolve_reason'])) {
+                $temp_array['auto_resolve_reason'] = "No details.";
+            }
+
+            Validator::make($temp_array, [
+                'self_resolve_reason' => ['required', 'string'],
+                'auto_resolve_reason' => ['required', 'string']
+            ]);
+
+            $oldFlag = json_decode($log->flag);
+            $log->flag = json_encode([[$oldFlag[0][0], $oldFlag[0][1], true],[$oldFlag[1][0], $oldFlag[1][1], [$temp_array['self_resolve_reason'], $temp_array['auto_resolve_reason']]]]);
+            $log->save();
+
+            return;
+        } else return 'noob hax0r';
+    }
 
     /**
-     * Gets a specific users' activity
+     * Passes a singular flag instance for the activity table
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @author Christopher M.
+     * @param var $id
+     * @return var $log->flag
+     * @category AntelopeActivity
+     * @access Staff
+     * @version 1.0.0
+     */
+    public function passActivityFlagInstance($id)
+    {
+        if(Auth::user()->level() >= $this->constants['access_level']['staff'] or Auth::user()->id == Activity::find($id)->user_id) {
+            $log = Activity::find($id);
+
+            return $log->flag;
+        } else return 'noob hax0r';
+    }
+
+
+    /**
+     * Constructs a DataTable on a specific user for the activity table
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return Datatables
+     * @category AntelopeActivity
+     * @access SIT
+     * @version 1.0.0
      */
     protected function activityData($id)
     {
-        $constants = \Config::get('constants');
-        if(Auth::user()->level() >= $constants['access_level']['sit'] or Auth::user()->id == $id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id) {
             $query = Activity::query()
             ->select([
                 'id',
