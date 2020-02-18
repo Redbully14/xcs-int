@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'discord'],
+            'channels' => ['daily', 'discord', 'database'],
             'ignore_exceptions' => false,
         ],
 
@@ -59,6 +59,24 @@ return [
             'via'    => MarvinLabs\DiscordLogger\Logger::class,
             'level'  => 'debug',
             'url'    => env('LOG_DISCORD_WEBHOOK_URL'),
+        ],
+
+        'database' => [
+            'driver' => 'custom',
+            'via' => danielme85\LaravelLogToDB\LogToDbHandler::class,
+            'level' => env('APP_LOG_LEVEL', 'debug'),
+            'name' => 'My DB Log',
+            'connection' => 'default',
+            'collection' => 'log',
+            'detailed' => true,
+            'queue' => false,
+            'queue_name' => '',
+            'queue_connection' => '',
+            'max_records' => false,
+            'max_hours' => false,
+            'processors' => [
+                  //Monolog\Processor\HostnameProcessor::class
+             ]
         ],
 
     ],

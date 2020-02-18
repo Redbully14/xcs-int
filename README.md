@@ -31,6 +31,14 @@ APP_URL=http://localhost
 
 LOG_CHANNEL=stack
 LOG_DISCORD_WEBHOOK_URL=https://discordapp.com/api/webhooks/abcd/1234
+LOG_DB_CONNECTION='default'
+LOG_DB_DETAILED=false
+LOG_DB_MAX=100
+LOG_DB_QUEUE=false
+LOG_DB_QUEUE_NAME='logToDBQueue'
+LOG_DB_QUEUE_CONNECTION='default'
+LOG_DB_MAX_COUNT=false
+LOG_DB_MAX_HOURS=false
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1

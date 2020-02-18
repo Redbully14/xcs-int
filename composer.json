@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "danielme85/laravel-log-to-db": "^2.1",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "hnhdigital-os/laravel-git-info": "^1.0",
