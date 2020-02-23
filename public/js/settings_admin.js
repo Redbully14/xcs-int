@@ -14,6 +14,22 @@ $('#admin_add_quicklink').on('submit', function(e) {
       var toast_icon = "success";
       var toast_color = "#f96868";
       globalToast(toast_heading, toast_text, toast_icon, toast_color);
+
+      $.ajax({
+        method: "POST",
+        url: $url_get_quicklink,
+        success: function (response) {
+            $('#admin_manage_quicklink').replaceWith(response);
+        },
+        error: function(data) {
+          var toast_heading = "Error!";
+          var toast_text = "good job you broke it somehow, oof";
+          var toast_icon = "error";
+          var toast_color = "#f2a654";
+          console.log(data);
+          globalToast(toast_heading, toast_text, toast_icon, toast_color);
+        }
+      });
     },
     error: function(data) {
       var toast_heading = "Error!";

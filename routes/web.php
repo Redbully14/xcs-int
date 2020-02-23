@@ -544,6 +544,20 @@ Route::prefix('admin')->group(function () {
 
   });
 
+    /**
+     * Webdomain: /admin/quicklink/gen
+     *
+     * @author Christopher M.
+     * @package POST
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/quicklink/gen', [
+        'as' => 'admin.quicklink.gen',
+        'uses' => 'Antelope@adminSettings_genQuickLink'
+    ]);
+
   /*
   |--------------------------------------------------------------------------
   | x End AdminRoutes x

@@ -9,6 +9,7 @@ use Datatables;
 use App\User;
 use App\Feedback;
 use App\Settings;
+use Illuminate\Support\Facades\View;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -447,7 +448,36 @@ class Antelope extends Controller
 
             Settings::find($id)->update(['metadata' => $key]);
         }
-        
+
         return;
+    }
+
+    /**
+     * Generates the quicklinks in the Admin settings
+     *
+     * @author Christopher M.
+     * @return View
+     * @category Antelope
+     * @version 1.0.0
+     */
+    public function adminSettings_genQuickLink()
+    {
+        $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+        $quicklinks = json_decode($quicklinks);
+        $array = [];
+
+        $count = 0;
+
+        foreach($quicklinks as $quicklink) {
+            $array[$count] = json_decode($quicklink->metadata);
+            $array[$count]["id"] = $quicklink->id;
+            $count++;
+        }
+
+        return View::make("settings_admin_quicklinks", [
+            'constants' => $this->constants,
+            'quicklinks' => $array
+        ]);
     }
 }
