@@ -184,6 +184,7 @@ return [
     |
     | Rank Constants are the names of the Chain of Command ranks in the
     | community that are also reflected through the website.
+    | Do not change the 'probationary_civilian' key otherwise it will break stuff!
     |
     */
     'rank' => [

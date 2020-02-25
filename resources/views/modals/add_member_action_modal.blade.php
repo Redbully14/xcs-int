@@ -13,33 +13,33 @@
           <div class="modal-body">
 
             <div class="form-group">
-              <label>Name (required)</label>
-              <input type="text" class="form-control p_input" require id="name" name="name" autocomplete="name" autofocus>
+              <label>Name</label><sup class="text-danger">*</sup>
+              <input type="text" class="form-control p_input" require id="name" name="name" placeholder="John D." autocomplete="off" autofocus>
               <label id="add-name-error" class="error mt-2 text-danger" for="name" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Username (required)</label>
-              <input type="text" class="form-control p_input" require id="username" name="username" autocomplete="username" >
+              <label>Username</label><sup class="text-danger">*</sup>
+              <input type="text" class="form-control p_input" require id="username" name="username" placeholder="civjohnd" autocomplete="off" >
               <label id="add-username-error" class="error mt-2 text-danger" for="username" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Temporary Password (required, minimum 8 characters)</label>
-              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="new-password">
+              <label>Temporary Password</label><sup class="text-danger">*</sup>
+              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="off" placeholder="********">
               <label id="add-password-error" class="error mt-2 text-danger" for="password" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>Website ID (required)</label>
-              <input type="text" class="form-control p_input" require id="website_id" name="website_id">
-              <label id="add-website_id-error" class="error mt-2 text-danger" for="website_id" hidden></label>
+              <label>{{ $constants['department']['department_callsign'] }}</label>
+              <input type="text" class="form-control p_input" require id="department_id" name="department_id" placeholder="Civ-412">
+              <label id="add-department_id-error" class="error mt-2 text-danger" for="department_id" hidden></label>
             </div>
 
             <div class="form-group">
-              <label>{{ $constants['department']['department_callsign'] }} (optional)</label>
-              <input type="text" class="form-control p_input" require id="department_id" name="department_id">
-              <label id="add-department_id-error" class="error mt-2 text-danger" for="department_id" hidden></label>
+              <label>Website ID</label><sup class="text-danger">*</sup>
+              <input type="text" class="form-control p_input" require id="website_id" name="website_id" placeholder="519" autocomplete="off">
+              <label id="add-website_id-error" class="error mt-2 text-danger" for="website_id" hidden></label>
             </div>
 
             <div class="form-group">
@@ -47,7 +47,7 @@
               <select class="js-example-basic-single" style="width:100%" id="role" name="role">
                 @foreach($constants['role'] as $item => $value)
                   @if (!$loop->first)
-                  <option value="{{ $item }}">{{ $value }}</option>
+                  <option value="{{ $item }}" {{ $item == 'member' ? ' selected' : '' }}>{{ $value }}</option>
                   @endif
                 @endforeach
               </select>
@@ -57,7 +57,7 @@
               <label>Rank</label>
               <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
                 @foreach($constants['rank'] as $rank => $value)
-                  <option value="{{ $rank }}">{{ $value }}</option>
+                  <option value="{{ $rank }}" {{ $rank == 'probationary_civilian' ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
               </select>
             </div>

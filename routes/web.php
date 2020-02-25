@@ -50,6 +50,11 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+Route::get('/getusername', [
+  'as' => 'getusername',
+  'uses' => 'BaseXCS@generateUsername'
+]);
+
 /**
  * Webdomain: /profile/{user}
  *

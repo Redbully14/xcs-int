@@ -244,4 +244,22 @@ class BaseXCS extends Controller
 
         return $members_array;
     }
+
+    /**
+     * Generates a random user login number
+     *
+     * @author Oliver G.
+     * @return int
+     * @category BaseXCS
+     * @version 1.0.0
+     */
+    public static function generateUsername() {
+        $username = mt_rand(10000000, 99999999);
+
+        if(User::where('username', $username)->exists()) {
+            return self::generateUsername();
+        }
+
+        return $username;
+    }
 }
