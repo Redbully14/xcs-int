@@ -38,14 +38,14 @@ php artisan cache:clear
 # php artisan auth:clear
 
 # Clear and cache routes
-echo "🗑️ Clearing routes and resetting route cache..."
-php artisan route:clear
-php artisan route:cache
+# echo "🗑️ Clearing routes and resetting route cache..."
+# php artisan route:clear
+# php artisan route:cache
 
 # Clear and cache config
-echo "🗑️ Clearing configuration and resetting config cache...\e[0m"
-php artisan config:clear
-php artisan config:cache
+# echo "🗑️ Clearing configuration and resetting config cache...\e[0m"
+# php artisan config:clear
+# php artisan config:cache
 
 # Turn off maintenance mode
 echo "👷 Turning off maintenance mode..."
