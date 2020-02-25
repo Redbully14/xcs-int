@@ -57,6 +57,13 @@ $('#add_member_clipboard').on('click', function(e) {
             memberCreatedSwal(data);
             $('#cancelAddMember').click();
           },
+          error: function() {
+            var toast_heading = "User Adding Failed!";
+            var toast_text = "Ensure you are copying the entire row when adding the user!";
+            var toast_icon = "error";
+            var toast_color = "#f2a654";
+            globalToast(toast_heading, toast_text, toast_icon, toast_color);
+          }
       });
 
   })
