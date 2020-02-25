@@ -64,6 +64,7 @@
 
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="add_member_clipboard">From Clipboard</button>
             <button type="submit" class="btn btn-success">Add</button>
             <button type="button" class="btn btn-light" data-dismiss="modal" id="cancelAddMember">Cancel</button>
           </div>
@@ -72,7 +73,9 @@
   </div>
 </div>
 <script type="text/javascript">
+ var $url_clipboard_url = '{{ url('member_admin/clipboard') }}';
  var $url_add_member_modal = '{{ url('member_admin/new') }}';
+ var $base_url = '{{ url('/') }}'
 </script>
 <script src="/js/modals/add_member_action_modal.js"></script>
 @endif
