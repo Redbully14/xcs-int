@@ -13,11 +13,13 @@ return [
     */
 
     'global' => [
-        'framework_name' => 'xcs_int',
-        'application_name' => 'Antelope',
-        'application_subname' => 'PHP',
-        'application_version' => 'canary',
-        'application_footer' => 'Department of Justice RP',
+        // ENV CONFIG:
+        'framework_name' => env('FRAMEWORK_NAME', 'Laravel'),
+        'application_name' => env('APP_NAME', 'Antelope'),
+        'application_subname' => env('APP_SUBNAME', 'PHP'),
+//      'application_version' => 'canary',
+        'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
+        // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',
         'application_favicon' => 'favicon.png',
     ],
@@ -55,11 +57,11 @@ return [
     |
     */
     'department' => [
-        'department_name' => 'Civilian Operations',
-        'department_short_name' => 'Civilians',
-        'department_unit_name' => 'Civilian',
-        'department_callsign' => 'Civilian Number',
-        'department_director' => 'Ryan S. Civ-1',
+        'department_name' => env('DEPARTMENT_NAME', 'Civilian Operations'),
+        'department_short_name' => env('DEPARTMENT_SHORT_NAME', 'Civilians'),
+        'department_unit_name' => env('DEPARTMENT_UNIT_NAME', 'Civilian'),
+        'department_callsign' => env('DEPARTMENT_CALLSIGN', 'Civilian Number'),
+        'department_director' => env('DEPARTMENT_DIRECTOR', 'Ryan S. Civ-1'),
     ],
 
     /*
