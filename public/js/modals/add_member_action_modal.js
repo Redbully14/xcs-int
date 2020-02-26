@@ -98,6 +98,29 @@ memberCreatedSwal = function(data) {
   })
 };
 
+$('#add_generate_username').on('click', function(e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'GET',
+    url: $url_generate_username,
+    success: function(data) {
+      $('#username').val(data);
+    },
+  });
+});
+
+$('#add_generate_password').on('click', function(e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'GET',
+    url: $url_generate_password,
+    success: function(data) {
+      $('#password').val(data);
+    },
+  });
+});
+
+
 $('#ajax_add_member').on('submit', function(e) {
   e.preventDefault();
   var name = $('#name').val();

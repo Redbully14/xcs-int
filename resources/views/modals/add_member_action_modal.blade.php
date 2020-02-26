@@ -20,13 +20,23 @@
 
             <div class="form-group">
               <label>Username</label><sup class="text-danger">*</sup>
-              <input type="text" class="form-control p_input" require id="username" name="username" placeholder="civjohnd" autocomplete="off" >
+              <div class="input-group" data-target-input="nearest">
+                <input type="text" class="form-control p_input" require id="username" name="username" placeholder="civjohnd" autocomplete="off" >
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-secondary" type="button" id="add_generate_username"><i class="mdi mdi-reload"></i></button>
+                </div>
+              </div>
               <label id="add-username-error" class="error mt-2 text-danger" for="username" hidden></label>
             </div>
 
             <div class="form-group">
               <label>Temporary Password</label><sup class="text-danger">*</sup>
-              <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="off" placeholder="********">
+              <div class="input-group" data-target-input="nearest">
+                <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="off" placeholder="********">
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-secondary" type="button" id="add_generate_password"><i class="mdi mdi-reload"></i></button>
+                </div>
+              </div>
               <label id="add-password-error" class="error mt-2 text-danger" for="password" hidden></label>
             </div>
 
@@ -75,6 +85,8 @@
 <script type="text/javascript">
  var $url_clipboard_url = '{{ url('member_admin/clipboard') }}';
  var $url_add_member_modal = '{{ url('member_admin/new') }}';
+ var $url_generate_username = '{{ url('admin/getusername') }}';
+ var $url_generate_password = '{{ url('admin/getpassword') }}';
  var $base_url = '{{ url('/') }}'
 </script>
 <script src="/js/modals/add_member_action_modal.js"></script>

@@ -556,6 +556,20 @@ Route::prefix('admin')->group(function () {
       'uses' => 'BaseXCS@generateUsername'
     ]);
 
+    /**
+     * Webdomain: /admin/getpassworrd
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/getpassword', [
+      'as' => 'getpassword',
+      'uses' => 'BaseXCS@randomPassword'
+    ]);
+
   });
 
   /*
