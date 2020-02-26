@@ -84,6 +84,7 @@ class Antelope extends Controller
 
         if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
             $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
+            $dashboard_calculations['invalidated_logs'] = AntelopeCalculate::activity_flagged($id);
         }
 
         $quicklinks = Settings::where('type', '=', 'quicklink')->get();

@@ -142,16 +142,16 @@
       <div class="col-sm-4 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h5>Placeholder</h5>
+            <h5>Activity Logs</h5>
             <div class="row">
               <div class="col-8 col-sm-12 col-xl-8 my-auto">
                 <div class="d-flex d-sm-block d-md-flex align-items-center">
-                  <h2 class="mb-0">0</h2>
+                  <h2 class="mb-0">{{ $calculations['invalidated_logs'] }}</h2>
                 </div>
-                <h6 class="text-muted font-weight-normal">placeholder</h6>
+                <h6 class="text-muted font-weight-normal">Pending review</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                <i class="icon-lg mdi mdi-book text-danger ml-auto"></i>
               </div>
             </div>
           </div>
@@ -248,7 +248,7 @@
 	                <div class="preview-item-content d-sm-flex flex-grow">
 	                  <div class="flex-grow">
 	                    <h6 class="preview-subject">{{ $quicklink[1] }}</h6>
-	                    <a class="mb-0" href="{{ $quicklink[2] }}">{{ $quicklink[2] }}</a>
+	                    <a class="mb-0" href="{{ $quicklink[2] }}">Click here to view</a>
 	                  </div>
 	                </div>
 	              </div>

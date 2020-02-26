@@ -675,13 +675,39 @@ class AntelopeCalculate extends Controller
      * @category AntelopeCalculate
      * @version 1.0.0
      */
-    public static function absences_needing_approval($id) {
+    public static function absences_needing_approval() {
 
         $absences = Absence::where('status', '=', 0)->get();
         $total = 0;
 
         foreach($absences as $absence) {
             $total++;
+        }
+
+        return $total;
+    }
+
+
+    /**
+     * Calculates and fetches the amount of patrol logs that are flagged and are not resolved
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @return int $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function activity_flagged() {
+
+        $activity = Activity::where('flag', '!=', null)->get();
+        $total = 0;
+
+        foreach($activity as $log) {
+            $log = json_decode($log['flag']);
+            $log = $log[0];
+            if(($log[0] or $log[1]) and ($log[2] == false)) {
+                $total++;
+            }
         }
 
         return $total;

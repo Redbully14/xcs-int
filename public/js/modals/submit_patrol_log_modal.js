@@ -33,6 +33,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     $(elements[element]).prop('hidden', true);
     $(elements[element]).empty();
   }
+  // Specifically empties the AOP select
+    $('#patrol-area').val(null).trigger('change');
 
   $.ajax({
     type: 'POST',
