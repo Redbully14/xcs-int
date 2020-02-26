@@ -201,11 +201,12 @@ return [
         'senior_advisor' => 'Civilian Senior Advisor',
         'advisor' => 'Civilian Advisor',
         'intern' => 'Civilian Intern',
+        'master_civilian' => 'Master Civilian',
         'senior_civilian' => 'Senior Civilian',
-        'civilian3' => 'Civilian III',
-        'civilian2' => 'Civilian II',
-        'civilian1' => 'Civilian I',
-        'probationary_civilian' => 'Probationary Civilian',
+        'civilian3' => 'Civilian',
+        'civilian2' => 'Junior Civilian',
+        'civilian1' => 'Novice Civilian',
+        'probationary' => 'Probationary Civilian',
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
@@ -215,6 +216,7 @@ return [
         'media_one' => 'Civilian Media I',
         'other_admin' => 'DoJ Administration',
         'ia' => 'Internal Affairs',
+        'other_guest' => 'Civilian Guest',
     ],
 
     'rank_groups' => [
@@ -245,6 +247,7 @@ return [
 
         'senior_member' => [
             'intern',
+            'master_civilian',
             'senior_civilian',
         ],
 
@@ -255,7 +258,7 @@ return [
         ],
 
         'probationary_member' => [
-            'probationary_civilian',
+            'probationary',
         ],
 
         'reserve' => [
@@ -269,6 +272,12 @@ return [
             'media_three',
             'media_two',
             'media_one',
+        ],
+
+        'other' => [
+            'other_admin',
+            'ia',
+            'other_guest',
         ],
     ],
 

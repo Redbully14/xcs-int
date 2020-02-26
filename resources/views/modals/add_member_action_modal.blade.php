@@ -67,7 +67,7 @@
               <label>Rank</label>
               <select class="js-example-basic-single" style="width:100%" id="rank" name="rank">
                 @foreach($constants['rank'] as $rank => $value)
-                  <option value="{{ $rank }}" {{ $rank == 'probationary_civilian' ? ' selected' : '' }}>{{ $value }}</option>
+                  <option value="{{ $rank }}" {{ $rank == 'probationary' ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
               </select>
             </div>
