@@ -49,7 +49,9 @@ $('#add_member_clipboard').on('click', function(e) {
       var name = direm[3];
       var website_id = direm[6];
 
-      $.ajax({
+      // safety check
+      if (direm[0] == "Active") {
+        $.ajax({
           type: 'POST',
           url: $url_clipboard_url,
           data: {rank:rank, department_id:department_id, name:name, website_id:website_id},
@@ -64,7 +66,14 @@ $('#add_member_clipboard').on('click', function(e) {
             var toast_color = "#f2a654";
             globalToast(toast_heading, toast_text, toast_icon, toast_color);
           }
-      });
+        });
+      } else {
+        var toast_heading = "User Adding Failed!";
+        var toast_text = "Ensure you are copying the entire row when adding the user!";
+        var toast_icon = "error";
+        var toast_color = "#f2a654";
+        globalToast(toast_heading, toast_text, toast_icon, toast_color);
+      }
 
   })
 });
