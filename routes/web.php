@@ -653,6 +653,20 @@ Route::prefix('member_admin')->group(function () {
       'uses' => 'Auth\NewMemberController@clipboard'
     ]);
 
+    /**
+     * Webdomain: /member_admin/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'member_admin.delete',
+      'uses' => 'Auth\EditProfileController@softDelete'
+    ]);
+
   });
 
   /*

@@ -177,6 +177,13 @@
                     </div>
                     @endif
 
+                    @if(Auth::user()->level() >= $constants['access_level']['admin'])
+                    <div class="form-group">
+                      <label>Delete Account</label>
+                      <button type="button" class="form-control btn btn-outline-danger btn-fw" onclick="deleteUserPopup()">Delete User Account</button>
+                    </div>
+                    @endif
+
                   </div>
                 </div>
               </div>
@@ -209,6 +216,7 @@
 <script type="text/javascript">
   var $url_edit_profile_modal_POST = '{{ url('member/edit/edit_user/') }}/';
   var $url_edit_profile_password_modal_POST = '{{ url('member/edit/edit_user_password/') }}/';
+  var $url_edit_profile_delete_modal_POST = '{{ url('member_admin/delete/') }}/';
 </script>
 <script src="/js/modals/edit_profile_modal_EDIT.js"></script>
 @endif
