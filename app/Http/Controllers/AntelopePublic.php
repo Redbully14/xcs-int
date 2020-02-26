@@ -47,6 +47,8 @@ class AntelopePublic extends Controller
 
     /**
      * Constructs the 'Department Administration' part of the Public Roster
+     * The following SQL STATEMENT is used to strip the Civ-/CivM- away from Civilian Numbers (ensure to use it in a query):
+     * CAST(REPLACE(REPLACE(department_id,"Civ-",""), "CivM-", "") as SIGNED)
      *
      * @author Oliver G.
      * @return DataTable
@@ -62,9 +64,10 @@ class AntelopePublic extends Controller
             'department_id',
             'rank',
             'website_id',
-            'advanced_training'
-        ])->whereIn('rank', $this->constants['rank_groups']['admin'])
-        ->orderBy('department_id');
+            'advanced_training',
+        ])
+        ->whereIn('rank', $this->constants['rank_groups']['admin'])
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -109,9 +112,9 @@ class AntelopePublic extends Controller
             'department_id',
             'rank',
             'website_id',
-            'advanced_training'
+            'advanced_training',
         ])->whereIn('rank', $this->constants['rank_groups']['senior_staff'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -158,7 +161,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['staff'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -205,7 +208,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['sit'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -252,7 +255,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['senior_member'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -299,7 +302,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['member'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -346,7 +349,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['probationary_member'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -393,7 +396,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['reserve'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
@@ -440,7 +443,7 @@ class AntelopePublic extends Controller
             'website_id',
             'advanced_training'
         ])->whereIn('rank', $this->constants['rank_groups']['media'])
-        ->orderBy('department_id');
+        ->orderByRaw("CAST(REPLACE(REPLACE(department_id,'Civ-',''), 'CivM-', '') as SIGNED) asc");
 
         return datatables($query)
         ->editColumn('rank', function($row){
