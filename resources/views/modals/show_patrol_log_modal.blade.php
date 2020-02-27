@@ -120,6 +120,13 @@
                       <label>Automatic Flag: <span id="ajax-span-auto-flag"></span></label>
                       <textarea class="form-control" id="ajax-textarea-auto-flag" rows="6" placeholder="No details." disabled></textarea>
                   </div>
+
+                  @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <label>Delete Patrol Log</label>
+                      <button type="button" class="form-control btn btn-outline-danger btn-fw" id="delete_patrol_log_btn" value="0" onclick="deleteActivityPopup()">Delete Patrol Log</button>
+                    </div>
+                  @endif
                 </div>
               </div>
             </div>
@@ -148,7 +155,7 @@
           <button type="button" class="btn btn-primary" id="ajax_edit_patrol_log-button">Edit</button>
           <button type="submit" class="btn btn-success" id="ajax_submit_edit_patrol_log-button" value="0" hidden>Submit</button>
           @endif
-          <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_new_patrol_log_cancel">Close</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_show_patrol_log_cancel">Close</button>
         </div>
         @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
         </form>
@@ -164,6 +171,7 @@
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
   @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
   var $url_edit_patrol_log = '{{ url('activity/edit/') }}/';
+  var $url_delete_patrol_log = '{{ url('activity/delete/') }}/';
   @endif
 </script>
 <script src="/js/modals/show_patrol_log_modal.js"></script>

@@ -1,3 +1,5 @@
+var id = null;
+
 $table = $($activity_table);
 $table.on('click', '#ajax_view_patrol_log_open', function () {
 
@@ -33,6 +35,7 @@ var id = $(this).val();
         $("#ajax-patrol-log-by").empty();
         $("#ajax-patrol-log-by").append(uniqueunitnumber);
         $("#ajax_submit_edit_patrol_log-button").val(id);
+        $("#delete_patrol_log_btn").val(id);
         $("#ajax-patrol-website-id").empty();
         $("#ajax-patrol-website-id").append(data['website_id']);
         $("#ajax-input-patrol-log-type").val(data['type']).change();

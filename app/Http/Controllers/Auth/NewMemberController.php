@@ -35,6 +35,7 @@ class NewMemberController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->constants = \Config::get('constants');
     }
 
     /**
@@ -88,7 +89,13 @@ class NewMemberController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        //
+        $data = $request->all();
+        $processed_data = [
+            'username' => $user->username,
+            'password' => $data['password'],
+        ];
+
+        return $processed_data;
     }
 
     /**
@@ -102,6 +109,29 @@ class NewMemberController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user);
+    }
+
+    /**
+     * Handles a clipboard new member request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function clipboard(Request $request)
+    {
+        $data = $request->all();
+        $data['username'] = (string) BaseXCS::generateUsername();
+        $data['password'] = BaseXCS::randomPassword();
+        $data['role'] = 'member';
+        $data['rank'] = array_search($data['rank'], $this->constants['rank'], true);
+
+        $request['password'] = $data['password'];
+
+        $this->validator($data)->validate();
+
+        event(new Registered($user = $this->create($data)));
 
         return $this->registered($request, $user);
     }

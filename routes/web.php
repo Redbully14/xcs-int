@@ -542,6 +542,34 @@ Route::prefix('admin')->group(function () {
       'uses' => 'Antelope@adminSettings_manageQuickLink'
     ]);
 
+    /**
+     * Webdomain: /admin/getusername
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/getusername', [
+      'as' => 'getusername',
+      'uses' => 'BaseXCS@generateUsername'
+    ]);
+
+    /**
+     * Webdomain: /admin/getpassworrd
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/getpassword', [
+      'as' => 'getpassword',
+      'uses' => 'BaseXCS@randomPassword'
+    ]);
+
   });
 
   /*
@@ -609,6 +637,34 @@ Route::prefix('member_admin')->group(function () {
     Route::post('/new', [
       'as' => 'member_admin.new',
       'uses' => 'Auth\NewMemberController@register'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/clipboard
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/clipboard', [
+      'as' => 'member_admin.clipboard',
+      'uses' => 'Auth\NewMemberController@clipboard'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'member_admin.delete',
+      'uses' => 'Auth\EditProfileController@softDelete'
     ]);
 
   });
@@ -866,6 +922,20 @@ Route::prefix('activity')->group(function () {
     Route::post('/edit/{id}', [
       'as' => 'activity.edit',
       'uses' => 'AntelopeActivity@edit'
+    ]);
+
+    /**
+     * Webdomain: /activity/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category ActivityRoutes
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'activity.delete',
+      'uses' => 'AntelopeActivity@softDelete'
     ]);
 
   });

@@ -480,4 +480,20 @@ class AntelopeActivity extends Controller
             ->toJson();
         } else return 'pwnd hax0r';
     }
+
+    /**
+     * Soft Deletes a patrol log
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @category AntelopeActivity
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    protected function softDelete($id)
+    {
+        Activity::destroy($id);
+
+        return;
+    }
 }

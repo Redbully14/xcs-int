@@ -184,6 +184,7 @@ return [
     |
     | Rank Constants are the names of the Chain of Command ranks in the
     | community that are also reflected through the website.
+    | Do not change the 'probationary_civilian' key otherwise it will break stuff!
     |
     */
     'rank' => [
@@ -200,11 +201,12 @@ return [
         'senior_advisor' => 'Civilian Senior Advisor',
         'advisor' => 'Civilian Advisor',
         'intern' => 'Civilian Intern',
+        'master_civilian' => 'Master Civilian',
         'senior_civilian' => 'Senior Civilian',
-        'civilian3' => 'Civilian III',
-        'civilian2' => 'Civilian II',
-        'civilian1' => 'Civilian I',
-        'probationary_civilian' => 'Probationary Civilian',
+        'civilian3' => 'Civilian',
+        'civilian2' => 'Junior Civilian',
+        'civilian1' => 'Novice Civilian',
+        'probationary' => 'Probationary Civilian',
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
@@ -214,6 +216,7 @@ return [
         'media_one' => 'Civilian Media I',
         'other_admin' => 'DoJ Administration',
         'ia' => 'Internal Affairs',
+        'other_guest' => 'Civilian Guest',
     ],
 
     'rank_groups' => [
@@ -244,6 +247,7 @@ return [
 
         'senior_member' => [
             'intern',
+            'master_civilian',
             'senior_civilian',
         ],
 
@@ -254,7 +258,7 @@ return [
         ],
 
         'probationary_member' => [
-            'probationary_civilian',
+            'probationary',
         ],
 
         'reserve' => [
@@ -268,6 +272,12 @@ return [
             'media_three',
             'media_two',
             'media_one',
+        ],
+
+        'other' => [
+            'other_admin',
+            'ia',
+            'other_guest',
         ],
     ],
 
@@ -390,7 +400,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Avatar Names
+    | Avatars
     |--------------------------------------------------------------------------
     |
     | Types of avatars that can be accessed by everyone through member setings
@@ -398,26 +408,17 @@ return [
     |
     */
     'avatars' => [
-        'antelope' => 'Antelope Default Avatar',
-        'antelope2' => 'Antelope Better Avatar',
-        'gnomed' => 'Get gnomed',
-        'coolpepe' => 'Cool Pepe',
+        'antelope' => 'Antelope User',
+        'gnomed' => 'Morris Gnome',
+        'coolpepe' => 'Pepe',
+        'bobross' => 'Bob Ross',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Avatar Files
-    |--------------------------------------------------------------------------
-    |
-    | Avatar files inside public/assets/xcs-info/avatars/
-    | BE CAREFUL WHEN EDIITNG THIS!.
-    |
-    */
     'avatar_filename' => [
         'antelope' => 'antelope.png',
-        'antelope2' => 'antelope2.jpg',
         'gnomed' => 'morris.png',
         'coolpepe' => 'coolpepe.png',
+        'bobross' => 'bobross.png',
     ],
 
     /*

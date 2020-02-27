@@ -59,6 +59,55 @@ $("#ajax_edit_patrol_log-button").click(function(e){
 
 });
 
+function deleteActivityPopup() {
+  let modalNode = $('div[tabindex*="-1"]')
+  if (!modalNode) return;
+  var id = $('#delete_patrol_log_btn').val();
+
+  modalNode.removeAttr('tabindex');
+  modalNode.addClass('js-swal-fixed');
+
+  swal({
+      title: 'Are you sure?',
+      text: "This is a destructive method, do you really wish to delete this patrol log? Only Antelope Developers are able to restore it.",
+      icon: 'warning',
+      buttons: {
+        confirm: {
+          text: "Delete Log",
+          value: true,
+          visible: true,
+          className: "btn btn-danger",
+          closeModal: true
+        },
+        cancel: {
+          text: "Cancel",
+          value: null,
+          visible: true,
+          className: "btn btn-primary",
+          closeModal: true,
+        }
+      }
+  }).then( function(isConfirm) {
+    if(isConfirm) {
+      $.ajax({
+          type: 'POST',
+          url: $url_delete_patrol_log + id,
+          success: function() {
+              var toast_heading = "Log Deleted!";
+              var toast_text = "This log has been fully deleted from our database.";
+              var toast_icon = "success";
+              var toast_color = "#f96868";
+              globalToast(toast_heading, toast_text, toast_icon, toast_color);
+              $('#ajax_show_patrol_log_cancel').click();
+              if ($('#tableElement').length) {
+                  $('#tableElement').DataTable().ajax.reload();
+              }
+          },
+      });
+    }
+  })
+}
+
 $('#ajax_edit_patrol_log').on('submit', function(e) {
   e.preventDefault();
   var id = $('#ajax_submit_edit_patrol_log-button').val();

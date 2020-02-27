@@ -128,4 +128,12 @@ class EditProfileController extends Controller
 
         return;
     }
+
+    public function softDelete($id)
+    {
+        User::destroy($id);
+
+        return;
+    }
+
 }
