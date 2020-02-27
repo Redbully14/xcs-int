@@ -924,6 +924,20 @@ Route::prefix('activity')->group(function () {
       'uses' => 'AntelopeActivity@edit'
     ]);
 
+    /**
+     * Webdomain: /activity/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category ActivityRoutes
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'activity.delete',
+      'uses' => 'AntelopeActivity@softDelete'
+    ]);
+
   });
 
   /*

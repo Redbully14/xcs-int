@@ -28,6 +28,7 @@ class CreateActivityTable extends Migration
             $table->char('type', 20);
             $table->json('flag');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

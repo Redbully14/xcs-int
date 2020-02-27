@@ -135,49 +135,49 @@ function changePasswordPopup() {
 }
 
 function deleteUserPopup() {
-    let modalNode = $('div[tabindex*="-1"]')
-    if (!modalNode) return;
+  let modalNode = $('div[tabindex*="-1"]')
+  if (!modalNode) return;
 
-    modalNode.removeAttr('tabindex');
-    modalNode.addClass('js-swal-fixed');
+  modalNode.removeAttr('tabindex');
+  modalNode.addClass('js-swal-fixed');
 
-    swal({
-        title: 'Are you sure?',
-        text: "This is a destructive method, do you really wish to delete this account? Only Antelope Developers are able to restore accounts.",
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            text: "Delete Account",
-            value: true,
-            visible: true,
-            className: "btn btn-danger",
-            closeModal: true
-          },
-          cancel: {
-            text: "Cancel",
-            value: null,
-            visible: true,
-            className: "btn btn-primary",
-            closeModal: true,
-          }
+  swal({
+      title: 'Are you sure?',
+      text: "This is a destructive method, do you really wish to delete this account? Only Antelope Developers are able to restore accounts.",
+      icon: 'warning',
+      buttons: {
+        confirm: {
+          text: "Delete Account",
+          value: true,
+          visible: true,
+          className: "btn btn-danger",
+          closeModal: true
+        },
+        cancel: {
+          text: "Cancel",
+          value: null,
+          visible: true,
+          className: "btn btn-primary",
+          closeModal: true,
         }
-    }).then( function(isConfirm) {
-      if(isConfirm) {
-        $.ajax({
-            type: 'POST',
-            url: $url_edit_profile_delete_modal_POST + $('#ajax_edit_member_save').val(),
-            success: function() {
-                var toast_heading = "Member Deleted!";
-                var toast_text = "This member has been fully deleted from our database.";
-                var toast_icon = "success";
-                var toast_color = "#f96868";
-                globalToast(toast_heading, toast_text, toast_icon, toast_color);
-                $('#cancelEditMember').click();
-                if ($('#tableElement').length) {
-                    $('#tableElement').DataTable().ajax.reload();
-                }
-            },
-        });
       }
-    })
+  }).then( function(isConfirm) {
+    if(isConfirm) {
+      $.ajax({
+          type: 'POST',
+          url: $url_edit_profile_delete_modal_POST + $('#ajax_edit_member_save').val(),
+          success: function() {
+              var toast_heading = "Member Deleted!";
+              var toast_text = "This member has been fully deleted from our database.";
+              var toast_icon = "success";
+              var toast_color = "#f96868";
+              globalToast(toast_heading, toast_text, toast_icon, toast_color);
+              $('#cancelEditMember').click();
+              if ($('#tableElement').length) {
+                  $('#tableElement').DataTable().ajax.reload();
+              }
+          },
+      });
+    }
+  })
 }
