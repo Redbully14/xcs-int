@@ -400,7 +400,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Avatar Names
+    | Avatars
     |--------------------------------------------------------------------------
     |
     | Types of avatars that can be accessed by everyone through member setings
@@ -408,26 +408,17 @@ return [
     |
     */
     'avatars' => [
-        'antelope' => 'Antelope Default Avatar',
-        'antelope2' => 'Antelope Better Avatar',
-        'gnomed' => 'Get gnomed',
-        'coolpepe' => 'Cool Pepe',
+        'antelope' => 'Antelope User',
+        'gnomed' => 'Morris Gnome',
+        'coolpepe' => 'Pepe',
+        'bobross' => 'Bob Ross',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Avatar Files
-    |--------------------------------------------------------------------------
-    |
-    | Avatar files inside public/assets/xcs-info/avatars/
-    | BE CAREFUL WHEN EDIITNG THIS!.
-    |
-    */
     'avatar_filename' => [
         'antelope' => 'antelope.png',
-        'antelope2' => 'antelope2.jpg',
         'gnomed' => 'morris.png',
         'coolpepe' => 'coolpepe.png',
+        'bobross' => 'bobross.png',
     ],
 
     /*
