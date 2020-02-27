@@ -67,7 +67,7 @@ class Antelope extends Controller
         } else $feedback = true;
 
         // To disable feedbacks, uncomment this line:
-        //$feedback = true;
+        $feedback = true;
 
         $dashboard_calculations = [];
 
