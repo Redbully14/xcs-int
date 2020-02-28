@@ -482,6 +482,78 @@ Route::prefix('member')->group(function () {
 
 });
 
+Route::prefix('investigative_search')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: investigative_search
+  | Category Name: InvestigativeSearchRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /investigative_search/[KEY]
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET'), [
+    'as' => 'investigative_search',
+    'uses' => 'Antelope@investigativeSearch'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/{user}
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/{user}', [
+    'as' => 'investigative_search.profile',
+    'uses' => 'Antelope@investigativeSearch_search'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/activity/{user}
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/{user}', [
+    'as' => 'investigative_search.profile.activity',
+    'uses' => 'AntelopeActivity@activityData'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/activity/get_data/{user}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::post('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/get_data/{id}', [
+    'as' => 'investigative_search.profile.activity.get_data',
+    'uses' => 'AntelopeActivity@passActivityInstance'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End InvestigativeSearchRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
 Route::prefix('admin')->group(function () {
   /*
   |--------------------------------------------------------------------------

@@ -358,6 +358,7 @@
                 </div>
               </div>
             </div>
+            @if(!url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/'.substr(url()->current(), strrpos(url()->current(), '/' )+1) == url()->current()))
             <div class="row">
               <div class="col-12 grid-margin">
                 <div class="card">
@@ -387,6 +388,7 @@
                 </div>
               </div>
             </div>
+            @endif
           </div>
         </div>
       </div>
@@ -399,6 +401,9 @@
   @if(url('myprofile/') == url()->current())
   var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ Auth::user()->id }}';
   var $url_user_profile_discipline = '{{ url('discipline/get_profile_discipline/') }}/{{ Auth::user()->id }}';
+  @elseif(url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/'.substr(url()->current(), strrpos(url()->current(), '/' )+1) == url()->current()))
+  var $url_user_profile = '{{ url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
+  var $url_user_profile_discipline = '{{ url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/discipline/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
   @else
   var $url_user_profile = '{{ url('activity/get_profile_logs/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';
   var $url_user_profile_discipline = '{{ url('discipline/get_profile_discipline/') }}/{{ substr(url()->current(), strrpos(url()->current(), '/' )+1) }}';

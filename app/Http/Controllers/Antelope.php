@@ -451,4 +451,55 @@ class Antelope extends Controller
         
         return;
     }
+
+    /**
+     * Investigative Search Function
+     *
+     * @author Oliver G.
+     * @return view
+     * @category Antelope
+     * @access DOJ Admin / Internal Affairs
+     * @version 1.0.0
+     */
+    public function investigativeSearch()
+    {
+
+        $users = User::all();
+        $members_array = array();
+
+        foreach ($users as $user) {
+            $name = $user->name;
+            $department_id = $user->department_id;
+            $website_id = $user->website_id;
+
+            if ($department_id == null) {
+                $member = $website_id.' - '.$name;
+            } else {
+                $member = $website_id.' - '.$name.' '.$department_id;
+            }
+
+            $members_array[url("/investigative_search/".env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET')."/profile/{$user->id}")] = $member;
+        }
+
+        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+            return view('investigative_search')->with('constants', $this->constants)
+                                               ->with('members_array', $members_array);
+        }
+    }
+
+    /**
+     * Investigative Search Function - Profile
+     *
+     * @author Oliver G.
+     * @return view
+     * @category Antelope
+     * @access DOJ Admin / Internal Affairs
+     * @version 1.0.0
+     */
+    public function investigativeSearch_search($id)
+    {
+        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+            return $this->getProfile($id);
+        }
+    }
 }
