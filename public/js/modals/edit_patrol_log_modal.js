@@ -16,6 +16,8 @@ $("#ajax_edit_patrol_log-button").click(function(e){
   }
   $('#ajax_edit_patrol_log-button').prop('hidden', true);
   $('#ajax_submit_edit_patrol_log-button').prop('hidden', false);
+  document.getElementById("start-time-datatoggle").setAttribute("data-toggle", "datetimepicker"); 
+  document.getElementById("end-time-datatoggle").setAttribute("data-toggle", "datetimepicker"); 
 
   (function($) {
     'use strict';
