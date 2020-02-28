@@ -33,8 +33,6 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
     $(elements[element]).prop('hidden', true);
     $(elements[element]).empty();
   }
-  // Specifically empties the AOP select
-    $('#patrol-area').val(null).trigger('change');
 
   $.ajax({
     type: 'POST',
@@ -49,6 +47,9 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
         $(element).val('');
         $(elements[element]).empty();
       }
+      // Specifically empties the AOP select
+      $('#patrol-area').val(null).trigger('change');
+
       var toast_heading = "Patrol Log Submitted!";
       var toast_text = "The patrol log has been submitted and has been logged into our database.";
       var toast_icon = "success";
