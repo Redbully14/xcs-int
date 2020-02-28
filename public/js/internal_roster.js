@@ -2,20 +2,21 @@ $(function() {
 
   var columnsArray = [
     { data: 'name', name: 'name', width: "150px", className: 'text-wrap', render: function (data, type, row) {
-      return '<input type="text" class="form-control internal_roster-input_name" data-user-id="" value="'+data+'" onchange="internalRoster_changed(this)" required>';
+      return '<input type="text" class="form-control internal_roster-input_name" data-user-id="'+row['id']+'" value="'+data+'" onchange="internalRoster_changed(this)" required>';
     } },
     { data: 'department_id', name: 'department_id', width: "80px", className: 'text-wrap', render: function (data, type, row) {
       if (data == null) {
         data = '';
       };
 
-      return '<input type="text" class="form-control internal_roster-input_callsign" onchange="internalRoster_changed(this)" value="'+data+'" required>';
+      return '<input type="text" class="form-control internal_roster-input_callsign" data-user-id="'+row['id']+'" onchange="internalRoster_changed(this)" value="'+data+'" required>';
     } },
     { data: 'website_id', name: 'website_id', width: "60px", className: 'text-wrap', render: function (data, type, row) {
-      return '<input type="text" class="form-control internal_roster-input_websiteid" onchange="internalRoster_changed(this)" value="'+data+'" required>';
+      return '<input type="text" class="form-control internal_roster-input_websiteid" data-user-id="'+row['id']+'" onchange="internalRoster_changed(this)" value="'+data+'" required>';
     } },
     { data: 'rank', name: 'rank', width: "190px", className: 'text-wrap', render: function (data, type, row) {
-      return internal_roster_rankFieldInput(data);
+      var id = row['id'];
+      return internal_roster_rankFieldInput(data, id);
     } },
     { data: 'status', name: 'status', width: "55px", className: 'text-wrap' },
     { data: 'monthly_hours', name: 'monthly_hours', width: "70px", className: 'text-wrap' },
@@ -175,23 +176,55 @@ window.onload = function() {
             return undefined;
         }
 
-        var confirmationMessage = 'It looks like you have been editing something. '
+        if ($('.internal_roster-changed').length) {
+          var confirmationMessage = 'It looks like you have been editing something. '
                                 + 'If you leave before saving, your changes will be lost.';
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+        }
     });
 };
 
 $('#internal_roster-form').on('submit', function(e) {
 
   $('.internal_roster-changed').each(function(i, obj) {
-    
-  });
+    var id = $(obj).data('user-id');
 
-  $.ajax({
-    type: 'POST',
-    url: $url_change_timezone,
-    data: {timezone:timezone},
+    if($(obj).hasClass("internal_roster-input_name")) {
+      var name = $(obj).val();
+      $.ajax({
+        type: 'POST',
+        url: $POST_url_name+id,
+        data: {name:name},
+      });
+    }
+
+    else if($(obj).hasClass("internal_roster-input_websiteid")) {
+      var website_id = $(obj).val();
+      $.ajax({
+        type: 'POST',
+        url: $POST_url_websiteid+id,
+        data: {website_id:website_id},
+      });
+    }
+
+    else if($(obj).hasClass("internal_roster-input_callsign")) {
+      var callsign = $(obj).val();
+      $.ajax({
+        type: 'POST',
+        url: $POST_url_callsign+id,
+        data: {callsign:callsign},
+      });
+    }
+
+    else if($(obj).hasClass("internal_roster-input_rank")) {
+      var rank = $(obj).val();
+      $.ajax({
+        type: 'POST',
+        url: $POST_url_rank+id,
+        data: {rank:rank},
+      });
+    }
   });
 });

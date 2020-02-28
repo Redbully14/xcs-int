@@ -1220,9 +1220,9 @@ Route::prefix('internal_roster')->group(function () {
    * All domains here require an access level to access
    *
    * @category InternalRosterRoutes
-   * @access Staff
+   * @access Senior Staff
    */
-  Route::middleware('level:'.\Config::get('constants.access_level.admin'))->group(function () {
+  Route::middleware('level:'.\Config::get('constants.access_level.seniorstaff'))->group(function () {
 
     /**
      * Webdomain: /internal_roster/
@@ -1230,12 +1230,68 @@ Route::prefix('internal_roster')->group(function () {
      * @author Oliver G.
      * @package GET
      * @category InternalRosterRoutes
-     * @access Staff
+     * @access Senior Staff
      * @version 1.0.0
      */
     Route::get('/', [
       'as' => 'internal_roster',
       'uses' => 'Antelope@internalRoster_view'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/name/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/name/{user}', [
+      'as' => 'internal_roster.edit.name',
+      'uses' => 'Antelope@internalRoster_edit_name'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/websiteid/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/websiteid/{user}', [
+      'as' => 'internal_roster.edit.websiteid',
+      'uses' => 'Antelope@internalRoster_edit_websiteid'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/callsign/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/callsign/{user}', [
+      'as' => 'internal_roster.edit.callsign',
+      'uses' => 'Antelope@internalRoster_edit_callsign'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/rank/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/rank/{user}', [
+      'as' => 'internal_roster.edit.rank',
+      'uses' => 'Antelope@internalRoster_edit_rank'
     ]);
 
   });

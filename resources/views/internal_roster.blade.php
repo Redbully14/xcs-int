@@ -273,14 +273,19 @@ table {
   var $url_reserve = '{{ url('public/roster/reserve') }}';
   var $url_media = '{{ url('public/roster/media') }}';
 
-  function internal_roster_rankFieldInput(data) {
+  var $POST_url_name = '{{ url('internal_roster/edit/name') }}/';
+  var $POST_url_websiteid = '{{ url('internal_roster/edit/websiteid') }}/';
+  var $POST_url_callsign = '{{ url('internal_roster/edit/callsign') }}/';
+  var $POST_url_rank = '{{ url('internal_roster/edit/rank') }}/';
+
+  function internal_roster_rankFieldInput(data, id) {
     var ranks = {
       @foreach($constants['rank'] as $item => $value)
       "{{ $value }}" : "{{ $item }}",
       @endforeach
     };
 
-    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" onchange="internalRoster_changed(this)" style="width:100%"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
+    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" data-user-id="'+id+'" onchange="internalRoster_changed(this)" style="width:100%"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
 
     return returndata;
   }
