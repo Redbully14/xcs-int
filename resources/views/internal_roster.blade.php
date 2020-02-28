@@ -8,6 +8,22 @@ table {
   table-layout: fixed !important;
   word-wrap: break-word !important;
 }
+
+.internal_roster-changed_name {
+    border: 2px solid rgba(71, 164, 71, 1) !important;
+}
+
+.internal_roster-changed_callsign {
+    border: 2px solid rgba(71, 164, 71, 1) !important;
+}
+
+.internal_roster-changed_websiteid {
+    border: 2px solid rgba(71, 164, 71, 1) !important;
+}
+
+.internal_roster-changed_rank {
+    border: 2px solid rgba(71, 164, 71, 1) !important;
+}
 </style>
 <div class="content-wrapper">
 	<div class="row">
@@ -273,7 +289,7 @@ table {
       @endforeach
     };
 
-    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" style="width:100%" id="role" name="role"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
+    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" onchange="internalRoster_changeRank(this)" style="width:100%"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
 
     return returndata;
   }

@@ -2,17 +2,17 @@ $(function() {
 
   var columnsArray = [
     { data: 'name', name: 'name', width: "150px", className: 'text-wrap', render: function (data, type, row) {
-      return '<input type="text" class="form-control internal_roster-input_name" value="'+data+'" required>';
+      return '<input type="text" class="form-control internal_roster-input_name" value="'+data+'" onchange="internalRoster_changeName(this)" required>';
     } },
     { data: 'department_id', name: 'department_id', width: "80px", className: 'text-wrap', render: function (data, type, row) {
       if (data == null) {
         data = '';
       };
 
-      return '<input type="text" class="form-control internal_roster-input_callsign" value="'+data+'" required>';
+      return '<input type="text" class="form-control internal_roster-input_callsign" onchange="internalRoster_changeCallsign(this)" value="'+data+'" required>';
     } },
     { data: 'website_id', name: 'website_id', width: "60px", className: 'text-wrap', render: function (data, type, row) {
-      return '<input type="text" class="form-control internal_roster-input_websiteid" value="'+data+'" required>';
+      return '<input type="text" class="form-control internal_roster-input_websiteid" onchange="internalRoster_changeWebsiteid(this)" value="'+data+'" required>';
     } },
     { data: 'rank', name: 'rank', width: "190px", className: 'text-wrap', render: function (data, type, row) {
       return internal_roster_rankFieldInput(data);
@@ -161,3 +161,19 @@ $(function() {
     "bInfo" : false,
   });
 });
+
+function internalRoster_changeName(data) {
+  $(data).addClass('internal_roster-changed_name');
+};
+
+function internalRoster_changeCallsign(data) {
+  $(data).addClass('internal_roster-changed_callsign');
+};
+
+function internalRoster_changeWebsiteid(data) {
+  $(data).addClass('internal_roster-changed_websiteid');
+};
+
+function internalRoster_changeRank(data) {
+  $(data).addClass('internal_roster-changed_rank');
+};
