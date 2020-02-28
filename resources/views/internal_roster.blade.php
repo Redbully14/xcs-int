@@ -9,29 +9,19 @@ table {
   word-wrap: break-word !important;
 }
 
-.internal_roster-changed_name {
+.internal_roster-changed {
     border: 2px solid rgba(71, 164, 71, 1) !important;
 }
 
-.internal_roster-changed_callsign {
-    border: 2px solid rgba(71, 164, 71, 1) !important;
-}
-
-.internal_roster-changed_websiteid {
-    border: 2px solid rgba(71, 164, 71, 1) !important;
-}
-
-.internal_roster-changed_rank {
-    border: 2px solid rgba(71, 164, 71, 1) !important;
-}
 </style>
 <div class="content-wrapper">
 	<div class="row">
 		<h1>Internal Roster - {{ $constants['department']['department_name'] }}</h1>
 	</div>
-	<br>
-	<br>
   <form id="internal_roster-form" onsubmit="setFormSubmitting()">
+  	<button type="submit" class="btn btn-success mr-2">Save Roster Changes</button>
+  	<br>
+    <br>
   	<div class="row">
   		<h2>Department Chain of Command</h2>
   	</div>
@@ -290,7 +280,7 @@ table {
       @endforeach
     };
 
-    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" onchange="internalRoster_changeRank(this)" style="width:100%"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
+    var returndata = '<select class="antelope_global_select_single-noclear internal_roster-input_rank" onchange="internalRoster_changed(this)" style="width:100%"> @foreach($constants["rank"] as $item => $value) <option value="{{ $item }}" '+checkifMatchthenSelectIt(data, "{{ $value }}")+'>{{ $value }}</option> @endforeach </select>'
 
     return returndata;
   }
