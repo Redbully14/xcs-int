@@ -451,4 +451,17 @@ class Antelope extends Controller
         
         return;
     }
+
+    /**
+     * Backend controller for the internal_roster module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_view()
+    {
+        return view('internal_roster')->with('constants', $this->constants);
+    }
 }

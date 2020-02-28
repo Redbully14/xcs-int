@@ -1205,3 +1205,44 @@ Route::prefix('absence')->group(function () {
   |--------------------------------------------------------------------------
   */
 });
+
+Route::prefix('internal_roster')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: internal_roster
+  | Category Name: InternalRosterRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category InternalRosterRoutes
+   * @access Staff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.admin'))->group(function () {
+
+    /**
+     * Webdomain: /internal_roster/
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category InternalRosterRoutes
+     * @access Staff
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'internal_roster',
+      'uses' => 'Antelope@internalRoster_view'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End InternalRosterRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
