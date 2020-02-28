@@ -75,7 +75,7 @@ Route::get('/profile/{user}', [
 Route::get('/myprofile', [
   'as' => 'myprofile',
   'uses' => 'Antelope@myProfile'
-]);
+])->middleware('level:'.\Config::get('constants.access_level.member'));
 
 /**
  * Webdomain: /myprofile

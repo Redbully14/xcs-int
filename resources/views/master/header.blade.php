@@ -19,6 +19,7 @@
     </ul>
     @endif
     <ul class="navbar-nav navbar-nav-right">
+      @if(Auth::user()->level() >= $constants['access_level']['member'])
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Submit</a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
@@ -47,6 +48,8 @@
           </a>
         </div>
       </li>
+      @endif
+      <!--
       <li class="nav-item dropdown border-left">
         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
           <i class="mdi mdi-bell"></i>
@@ -93,7 +96,7 @@
           <div class="dropdown-divider"></div>
           <p class="p-3 mb-0 text-center">This is all a placeholder :)</p>
         </div>
-      </li>
+      </li>-->
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
