@@ -417,38 +417,44 @@ class Antelope extends Controller
             'type' => 'quicklink',
             'metadata' => $data,
         ]);
-        
+
         return;
     }
 
     /**
      * Controls the manage function of the Quicklink form
      *
-     * @author Oliver G.
+     * @author Oliver G. & Christopher M.
      * @param Request $request
      * @return void
      * @category Antelope
-     * @version 1.0.0
+     * @version 1.0.1
      */
     public function adminSettings_manageQuickLink(Request $request)
     {
         $data = ($request->all());
-        $data = $data['data'];
+        if (!empty($data)) {
+            $data = $data['data'];
 
-        foreach($data as $key) {
-            Validator::make($key, [
-                0 => ['required', 'string'],
-                1 => ['required', 'string'],
-                2 => ['required', 'url'],
-                3 => ['required', 'integer'],
-            ]);
+            foreach ($data as $key) {
+                Validator::make($key, [
+                    0 => ['required', 'string'],
+                    1 => ['required', 'string'],
+                    2 => ['required', 'url'],
+                    3 => ['required', 'integer'],
+                ]);
 
-            $id = $key[3];
-            $key = json_encode([$key[0], $key[1], $key[2]]);
+                $id = $key[3];
+                $key = json_encode([$key[0], $key[1], $key[2]]);
 
-            Settings::find($id)->update(['metadata' => $key]);
+                Settings::find($id)->update(['metadata' => $key]);
+            }
+
+            return;
+        } else {
+            return response()->json([
+                'error' => 'Not sure how, but you really messed this bit up not found'
+            ], 400);
         }
-        
-        return;
     }
 }

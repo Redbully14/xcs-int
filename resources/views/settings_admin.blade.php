@@ -45,7 +45,11 @@
                   </div>
                 </div>
                 @endforeach
-                <button type="submit" class="btn btn-primary mr-2">Save Quicklinks</button>
+                @if (count($quicklinks))
+                  <button type="submit" class="btn btn-primary mr-2">Save Quicklinks</button>
+                @else
+                  <p>Add some Quicklinks below!</p>
+                @endif
               </form>
 
         </div>
@@ -101,7 +105,7 @@
 <script type="text/javascript">
   var $url_add_quicklink = '{{ url('/admin/quicklink/add') }}';
   var $url_manage_quicklink = '{{ url('/admin/quicklink/manage') }}';
-  var $admin_manage_quicklink_count = <?php $count = 0; ?>@foreach($quicklinks as $quicklink)<?php $count++; ?>@endforeach{{ $count }};
+  var $admin_manage_quicklink_count = '{{ count($quicklinks) }}';
 </script>
 <script src="/js/settings_admin.js"></script>
 @endsection
