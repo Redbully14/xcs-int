@@ -90,6 +90,9 @@ PUSHER_APP_CLUSTER=mt1
 
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+
+ROUTE_INVESTIGATIVE_SEARCH_KEY=NO_KEY_SET
 ```
 
 Afterwards, create a database with the name **xcs-int**.
