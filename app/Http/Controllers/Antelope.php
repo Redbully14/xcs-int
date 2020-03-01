@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Antelope extends Controller
 {
@@ -499,7 +500,8 @@ class Antelope extends Controller
     public function investigativeSearch_search($id)
     {
         if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+            Log::warning("User id ".auth()->user()->id." is accessing data via the investigative search tool for user id ".$id.".");
             return $this->getProfile($id);
-        }
+        } else Log::critical("User id ".auth()->user()->id.' attempted to use the investigative search tool without the proper access.');
     }
 }
