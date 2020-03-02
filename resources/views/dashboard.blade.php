@@ -248,7 +248,7 @@
 	                <div class="preview-item-content d-sm-flex flex-grow">
 	                  <div class="flex-grow">
 	                    <h6 class="preview-subject">{{ $quicklink[1] }}</h6>
-	                    <a class="mb-0" href="{{ $quicklink[2] }}">Click here to view</a>
+	                    <a class="mb-0" href="{{ $quicklink[2] }}" target="_blank">Click here to view</a>
 	                  </div>
 	                </div>
 	              </div>

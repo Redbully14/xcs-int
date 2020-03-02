@@ -176,7 +176,7 @@ return [
         'sit' => 'primary',
         'intern' => 'primary',
         'member' => 'primary',
-        'guest' => 'bright',
+        'guest' => 'light',
     ],
 
     /*

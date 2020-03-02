@@ -76,7 +76,7 @@ class AntelopeActivity extends Controller
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
-            'patrol_priorities' => ['required', 'integer', 'min:0'],
+            'patrol_priorities' => ['required', 'integer', 'min:0', 'max:20'],
             'flag' => ['required', 'boolean'],
             'flag_reason' => ['string']
         ]);
@@ -241,7 +241,7 @@ class AntelopeActivity extends Controller
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
-            'patrol_priorities' => ['required', 'integer', 'min:0'],
+            'patrol_priorities' => ['required', 'integer', 'min:0', 'max:20'],
         ]);
     }
 

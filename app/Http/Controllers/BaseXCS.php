@@ -195,7 +195,12 @@ class BaseXCS extends Controller
      * @version 1.0.0
      */
     public static function getAllMembersSearchable() {
-        $users = User::all();
+        $users = User::where([
+            ['rank', '!=', 'ia'],
+            ['rank', '!=', 'other_guest'],
+            ['rank', '!=', 'other_admin'],
+        ])
+        ->get();
         $members_array = array();
 
         foreach ($users as $user) {

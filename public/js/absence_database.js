@@ -17,7 +17,7 @@ $(function() {
       { data: 'website_id', name: 'website_id' },
       { data: 'start_end_date', name: 'start_end_date' },
       { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
-      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button>'; } }
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" title="Send back to queue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button>'; } }
      ]
     });
   } else {
@@ -43,7 +43,7 @@ $(function() {
         } 
       },
       { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
-      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-success" id="absence_btn_approve" title="Approve" value="'+data+'"><i class="mdi mdi-check"></i></button> <button class="btn btn-social-icon btn-danger" title="Reject" id="absence_btn_block" value="'+data+'"><i class="mdi mdi-minus-circle"></i></button>'; } }
      ],
       drawCallback: function() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -79,7 +79,7 @@ $(function() {
         } 
       },
       { data: 'forum_post', name: 'forum_post', render: function(data, type, row) { return '<a href="'+data+'">FORUM POST</a>'; } },
-      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button> <button class="btn btn-social-icon btn-warning" id="absence_btn_archive" value="'+data+'"><i class="mdi mdi-archive"></i></button>'; } }
+      { data: 'id', render: function(data, type, row) { return '<button class="btn btn-social-icon btn-primary" id="absence_btn_backtoqueue" title="Send back to queue" value="'+data+'"><i class="mdi mdi-arrow-up-bold-circle-outline"></i></button> <button class="btn btn-social-icon btn-warning" title="Archive" id="absence_btn_archive" value="'+data+'"><i class="mdi mdi-archive"></i></button>'; } }
      ],
       "createdRow": function( row, data, dataIndex ) {
          if(new Date(data['end_date']) < new Date()) {
