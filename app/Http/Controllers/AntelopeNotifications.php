@@ -68,4 +68,18 @@ class AntelopeNotifications extends Controller
     	$user = auth()->user();
     	return $user->unreadNotifications;
     }
+
+    /**
+     * Clears all notifications
+     *
+     * @author Oliver G.
+     * @return void
+     * @category AntelopeNotifications
+     * @version 1.0.0
+     */
+    public static function clearAllNotifications()
+    {
+    	$user = auth()->user();
+    	$user->unreadNotifications->markAsRead();
+    }
 }

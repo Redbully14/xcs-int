@@ -40,7 +40,7 @@ class Promotion extends Notification
     {
         return [
             'title' => 'Promoted',
-            'text' => 'You have been promoted to '.$constants['rank'][$this->rank],
+            'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank],
             'icon' => 'mdi mdi-file-document',
             'color' => 'success',
         ];

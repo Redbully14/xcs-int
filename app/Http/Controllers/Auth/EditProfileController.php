@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Http\Controllers\BaseXCS;
+use App\Notifications\Promotion;
 
 class EditProfileController extends Controller
 {
@@ -101,7 +102,11 @@ class EditProfileController extends Controller
 
         $user->name = $request['name'];
         $user->website_id = $request['website_id'];
+        if(\Config::get('constants')['rank_level'][$user->rank] < \Config::get('constants')['rank_level'][$request['rank']]) {
+            $user->notify(new Promotion($request['rank']));
+        }
         $user->rank = $request['rank'];
+        
         $user->department_id = $request['department_id'];
         $user->antelope_status = $request['antelope_status'];
         $role = Role::where('slug', '=', $request['role'])->first();
