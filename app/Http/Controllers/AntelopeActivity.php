@@ -355,7 +355,7 @@ class AntelopeActivity extends Controller
      */
     public function passActivityInstance($id)
     {
-        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id or Auth::user()->rank == 'ia' or Auth::user()->rank == 'other_admin') {
             $log = Activity::find($id);
 
             $log->user_name = User::find($log['user_id'])->name;
@@ -437,7 +437,7 @@ class AntelopeActivity extends Controller
      */
     protected function activityData($id)
     {
-        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id or Auth::user()->rank == 'ia' or Auth::user()->rank == 'other_admin') {
             $query = Activity::query()
             ->select([
                 'id',

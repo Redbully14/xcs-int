@@ -66,6 +66,26 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->rank == 'ia')
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/investigative_search/{{ env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET') }}">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-search text-danger"></i>
+        </span>
+        <span class="menu-title">Internal Affairs</span>
+      </a>
+    </li>
+    @endif
+    @if(Auth::user()->rank == 'other_admin')
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/investigative_search/{{ env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET') }}">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-search text-danger"></i>
+        </span>
+        <span class="menu-title">DoJ Admin</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() <= $constants['access_level']['member'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/myprofile">

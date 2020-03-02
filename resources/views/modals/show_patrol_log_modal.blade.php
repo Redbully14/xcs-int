@@ -168,7 +168,12 @@
 .select2-selection {background-color:#2A3038 !important;}
 </style>
 <script type="text/javascript">
+
+  @if(url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/'.substr(url()->current(), strrpos(url()->current(), '/' )+1) == url()->current()))
+  var $url_show_patrol_log = '{{ url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/get_data/') }}/';
+  @else
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
+  @endif
   @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
   var $url_edit_patrol_log = '{{ url('activity/edit/') }}/';
   var $url_delete_patrol_log = '{{ url('activity/delete/') }}/';
