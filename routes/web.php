@@ -75,7 +75,7 @@ Route::get('/profile/{user}', [
 Route::get('/myprofile', [
   'as' => 'myprofile',
   'uses' => 'Antelope@myProfile'
-]);
+])->middleware('level:'.\Config::get('constants.access_level.member'));
 
 /**
  * Webdomain: /myprofile
@@ -482,6 +482,78 @@ Route::prefix('member')->group(function () {
 
 });
 
+Route::prefix('investigative_search')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: investigative_search
+  | Category Name: InvestigativeSearchRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /investigative_search/[KEY]
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET'), [
+    'as' => 'investigative_search',
+    'uses' => 'Antelope@investigativeSearch'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/{user}
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/{user}', [
+    'as' => 'investigative_search.profile',
+    'uses' => 'Antelope@investigativeSearch_search'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/activity/{user}
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::get('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/{user}', [
+    'as' => 'investigative_search.profile.activity',
+    'uses' => 'AntelopeActivity@activityData'
+  ]);
+
+  /**
+   * Webdomain: /investigative_search/[KEY]/profile/activity/get_data/{user}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category InvestigativeSearchRoutes
+   * @access Encrypted Route
+   * @version 1.0.0
+   */
+  Route::post('/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/get_data/{id}', [
+    'as' => 'investigative_search.profile.activity.get_data',
+    'uses' => 'AntelopeActivity@passActivityInstance'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End InvestigativeSearchRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
 Route::prefix('admin')->group(function () {
   /*
   |--------------------------------------------------------------------------
@@ -540,6 +612,34 @@ Route::prefix('admin')->group(function () {
     Route::post('/quicklink/manage', [
       'as' => 'admin.quicklink.manage',
       'uses' => 'Antelope@adminSettings_manageQuickLink'
+    ]);
+
+    /**
+     * Webdomain: /admin/getusername
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/getusername', [
+      'as' => 'getusername',
+      'uses' => 'BaseXCS@generateUsername'
+    ]);
+
+    /**
+     * Webdomain: /admin/getpassworrd
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category AdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::get('/getpassword', [
+      'as' => 'getpassword',
+      'uses' => 'BaseXCS@randomPassword'
     ]);
 
   });
@@ -609,6 +709,34 @@ Route::prefix('member_admin')->group(function () {
     Route::post('/new', [
       'as' => 'member_admin.new',
       'uses' => 'Auth\NewMemberController@register'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/clipboard
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/clipboard', [
+      'as' => 'member_admin.clipboard',
+      'uses' => 'Auth\NewMemberController@clipboard'
+    ]);
+
+    /**
+     * Webdomain: /member_admin/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category MemberAdminRoutes
+     * @access Admin
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'member_admin.delete',
+      'uses' => 'Auth\EditProfileController@softDelete'
     ]);
 
   });
@@ -866,6 +994,20 @@ Route::prefix('activity')->group(function () {
     Route::post('/edit/{id}', [
       'as' => 'activity.edit',
       'uses' => 'AntelopeActivity@edit'
+    ]);
+
+    /**
+     * Webdomain: /activity/delete/{id}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category ActivityRoutes
+     * @access SeniorStaff
+     * @version 1.0.0
+     */
+    Route::post('/delete/{id}', [
+      'as' => 'activity.delete',
+      'uses' => 'AntelopeActivity@softDelete'
     ]);
 
   });
@@ -1134,4 +1276,170 @@ Route::prefix('absence')->group(function () {
   | x End AbsenceRoutes x
   |--------------------------------------------------------------------------
   */
+});
+
+Route::prefix('internal_roster')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: internal_roster
+  | Category Name: InternalRosterRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Middleware check
+   * All domains here require an access level to access
+   *
+   * @category InternalRosterRoutes
+   * @access Senior Staff
+   */
+  Route::middleware('level:'.\Config::get('constants.access_level.seniorstaff'))->group(function () {
+
+    /**
+     * Webdomain: /internal_roster/
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::get('/', [
+      'as' => 'internal_roster',
+      'uses' => 'Antelope@internalRoster_view'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/name/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/name/{user}', [
+      'as' => 'internal_roster.edit.name',
+      'uses' => 'Antelope@internalRoster_edit_name'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/websiteid/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/websiteid/{user}', [
+      'as' => 'internal_roster.edit.websiteid',
+      'uses' => 'Antelope@internalRoster_edit_websiteid'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/callsign/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/callsign/{user}', [
+      'as' => 'internal_roster.edit.callsign',
+      'uses' => 'Antelope@internalRoster_edit_callsign'
+    ]);
+
+    /**
+     * Webdomain: /internal_roster/edit/rank/{user}
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category InternalRosterRoutes
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    Route::post('/edit/rank/{user}', [
+      'as' => 'internal_roster.edit.rank',
+      'uses' => 'Antelope@internalRoster_edit_rank'
+    ]);
+
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End InternalRosterRoutes x
+  |--------------------------------------------------------------------------
+  */
+});
+
+Route::prefix('notifications')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: notifications
+  | Category Name: NotificationRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /notifications
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/', [
+    'as' => 'notifications',
+    'uses' => 'AntelopeNotifications@view'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clearall
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::post('/clearall', [
+    'as' => 'notifications.clearall',
+    'uses' => 'AntelopeNotifications@clearAllNotifications'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clearall_center
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clearall_center', [
+    'as' => 'notifications.clearall_center',
+    'uses' => 'AntelopeNotifications@clearAllNotificationsinCenter'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clear/{id}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clear/{id}', [
+    'as' => 'notifications.clear',
+    'uses' => 'AntelopeNotifications@clearNotification'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End SettingsRoutes x
+  |--------------------------------------------------------------------------
+  */
+
 });

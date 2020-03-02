@@ -42,14 +42,20 @@
                   </div>
 
                   <div class="form-group">
+                    <label for="new_username" style="vertical-align: middle;">New Username<i class="input-helper"></i><i class="input-helper"></i> <div class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" style="margin-left:2px;" title="This will be used by yourself to login into your account. Only administration has access to see this and you can set this to anything that you will most remember.">?</div></label>
+                    <input type="text" class="form-control" id="new_username" placeholder="New Username" autocomplete="off" required>
+                    <label id="new_username-error" class="error mt-2 text-danger" for="new_username" hidden></label>
+                  </div>
+
+                  <div class="form-group">
                     <label for="new_password">New Password</label>
-                    <input type="password" class="form-control" id="new_password" placeholder="Password" autocomplete="off">
+                    <input type="password" class="form-control" id="new_password" placeholder="********" autocomplete="off" required>
                     <label id="new_password-error" class="error mt-2 text-danger" for="new_password" hidden></label>
                   </div>
 
                   <div class="form-group">
                     <label for="confirm_new_password">Confirm New Password</label>
-                    <input type="password" class="form-control" id="confirm_new_password" placeholder="Password" autocomplete="off">
+                    <input type="password" class="form-control" id="confirm_new_password" placeholder="********" autocomplete="off" required>
                     <label id="confirm_new_password-error" class="error mt-2 text-danger" for="confirm_new_password" hidden></label>
                   </div>
 
@@ -104,10 +110,12 @@
     <script type="text/javascript">
     $('#register').on('submit', function(e) {
       e.preventDefault();
+      var username = $('#new_username').val();
       var new_password = $('#new_password').val();
       var new_confirm_password = $('#confirm_new_password').val();
       var timezone = $('#timezone').val();
       var elements = {
+        '#new_username' : '#new_username-error',
         '#new_password' : '#new_password-error',
         '#confirm_new_password' : '#current_password-error',
         '#timezone' : '#timezone-error'
@@ -117,14 +125,12 @@
         $(element).parent().removeClass('has-danger');
         $(element).removeClass('form-control-danger');
         $(elements[element]).prop('hidden', true);
-        $(element).val('');
-        $(elements[element]).empty();
       }
 
       $.ajax({
         type: 'POST',
         url: '{{ url('register/submit') }}',
-        data: {"_token": "{{ csrf_token() }}", new_password:new_password, new_confirm_password:new_confirm_password, timezone:timezone},
+        data: {"_token": "{{ csrf_token() }}", username:username, new_password:new_password, new_confirm_password:new_confirm_password, timezone:timezone},
         success: function(data) {
           for (var element in elements) {
             $(element).parent().removeClass('has-danger');
@@ -136,17 +142,22 @@
           }
         },
         error: function(data) {
-          for (var element in elements) {
-            $(element).parent().removeClass('has-danger');
-            $(element).removeClass('form-control-danger');
-            $(elements[element]).prop('hidden', true);
-            $(element).val('');
-            $(elements[element]).empty();
-          }
+          $('#new_password').val('');
+          $('#new_password-error').empty();
+          $('#confirm_new_password').val('');
+          $('#confirm_new_password-error').empty();
           var errors = data['responseJSON'].errors;
 
           for (var key in errors) {
             switch (key) {
+              case 'username':
+                var element = '#new_username';
+                var label = '#new_username-error';
+                $(element).parent().addClass('has-danger');
+                $(element).addClass('form-control-danger');
+                $(label).append(errors[key]);
+                $(label).prop('hidden', false);
+              break;
               case 'new_password':
                 var element = '#new_password';
                 var label = '#new_password-error';
@@ -155,7 +166,7 @@
                 $(label).append(errors[key]);
                 $(label).prop('hidden', false);
               break;
-              case 'confirm_new_password':
+              case 'new_confirm_password':
                 var element = '#confirm_new_password';
                 var label = '#confirm_new_password-error';
                 $(element).parent().addClass('has-danger');

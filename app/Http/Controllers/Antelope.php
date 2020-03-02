@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\AntelopeCalculate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Antelope extends Controller
 {
@@ -84,6 +85,7 @@ class Antelope extends Controller
 
         if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
             $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
+            $dashboard_calculations['invalidated_logs'] = AntelopeCalculate::activity_flagged($id);
         }
 
         $quicklinks = Settings::where('type', '=', 'quicklink')->get();
@@ -416,38 +418,193 @@ class Antelope extends Controller
             'type' => 'quicklink',
             'metadata' => $data,
         ]);
-        
+
         return;
     }
 
     /**
      * Controls the manage function of the Quicklink form
      *
-     * @author Oliver G.
+     * @author Oliver G. & Christopher M.
      * @param Request $request
      * @return void
      * @category Antelope
-     * @version 1.0.0
+     * @version 1.0.1
      */
     public function adminSettings_manageQuickLink(Request $request)
     {
         $data = ($request->all());
-        $data = $data['data'];
+        if (!empty($data)) {
+            $data = $data['data'];
 
-        foreach($data as $key) {
-            Validator::make($key, [
-                0 => ['required', 'string'],
-                1 => ['required', 'string'],
-                2 => ['required', 'url'],
-                3 => ['required', 'integer'],
-            ]);
+            foreach ($data as $key) {
+                Validator::make($key, [
+                    0 => ['required', 'string'],
+                    1 => ['required', 'string'],
+                    2 => ['required', 'url'],
+                    3 => ['required', 'integer'],
+                ]);
 
-            $id = $key[3];
-            $key = json_encode([$key[0], $key[1], $key[2]]);
+                $id = $key[3];
+                $key = json_encode([$key[0], $key[1], $key[2]]);
 
-            Settings::find($id)->update(['metadata' => $key]);
+                Settings::find($id)->update(['metadata' => $key]);
+            }
+
+            return;
+        } else {
+            return response()->json([
+                'error' => 'Not sure how, but you really messed this bit up not found'
+            ], 400);
         }
-        
+    }
+
+    /**
+     * Investigative Search Function
+     *
+     * @author Oliver G.
+     * @return view
+     * @category Antelope
+     * @access DOJ Admin / Internal Affairs
+     * @version 1.0.0
+     */
+    public function investigativeSearch()
+    {
+
+        $users = User::all();
+        $members_array = array();
+
+        foreach ($users as $user) {
+            $name = $user->name;
+            $department_id = $user->department_id;
+            $website_id = $user->website_id;
+
+            if ($department_id == null) {
+                $member = $website_id.' - '.$name;
+            } else {
+                $member = $website_id.' - '.$name.' '.$department_id;
+            }
+
+            $members_array[url("/investigative_search/".env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET')."/profile/{$user->id}")] = $member;
+        }
+
+        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+            return view('investigative_search')->with('constants', $this->constants)
+                                               ->with('members_array', $members_array);
+        }
+    }
+
+    /**
+     * Investigative Search Function - Profile
+     *
+     * @author Oliver G.
+     * @return view
+     * @category Antelope
+     * @access DOJ Admin / Internal Affairs
+     * @version 1.0.0
+     */
+    public function investigativeSearch_search($id)
+    {
+        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+            Log::warning("User id ".auth()->user()->id." is accessing data via the investigative search tool for user id ".$id.".");
+            return $this->getProfile($id);
+        } else Log::critical("User id ".auth()->user()->id.' attempted to use the investigative search tool without the proper access.');
+    }
+
+    /**
+     * Backend controller for the internal_roster module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_view()
+    {
+        return view('internal_roster')->with('constants', $this->constants);
+    }
+
+    /**
+     * Backend controller for editing a person's name on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_name(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->name = $request['name'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's website ID on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_websiteid(Request $request)
+    {
+        $request->validate([
+            'callsign' => ['required', 'integer']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->website_id = $request['website_id'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's callsign on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_callsign(Request $request)
+    {
+        $request->validate([
+            'callsign' => ['required', 'string', 'max:30']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->department_id = $request['callsign'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's rank on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_rank(Request $request)
+    {
+        $request->validate([
+            'rank' => ['required', 'string', 'max:30']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->rank = $request['rank'];
+        $user->save();
+
         return;
     }
 }

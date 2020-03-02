@@ -4,10 +4,10 @@
 <!-- Open modal with button (ON PAGE) id #ajax_open_modal_edit_button -->
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document" style="padding-left: 75px; padding-right: 75px;">
+  <div class="modal-dialog modal-lg" role="document" style="padding-left: 300px; padding-right: 300px;">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel">Profile</h5>
+        <h5 class="modal-title" id="editProfileModalLabel">Profile Settings</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,7 +18,7 @@
           <div class="modal-body">
 
             <div class="row">
-              <div class="col-md-4 grid-margin stretch-card">
+              <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h2 class="card-title" id="profile-display-name">ajax-profile-display-name</h2>
@@ -130,25 +130,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">This section is still work in progress</h4>
-                      <p class="text-muted mb-1">Your data status</p>
-                    </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="preview-list">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 grid-margin stretch-card">
+              <div class="col-md-6 grid-margin">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Antelope Data</h5>
@@ -195,6 +177,13 @@
                     </div>
                     @endif
 
+                    @if(Auth::user()->level() >= $constants['access_level']['admin'])
+                    <div class="form-group">
+                      <label>Delete Account</label>
+                      <button type="button" class="form-control btn btn-outline-danger btn-fw" onclick="deleteUserPopup()">Delete User Account</button>
+                    </div>
+                    @endif
+
                   </div>
                 </div>
               </div>
@@ -227,6 +216,7 @@
 <script type="text/javascript">
   var $url_edit_profile_modal_POST = '{{ url('member/edit/edit_user/') }}/';
   var $url_edit_profile_password_modal_POST = '{{ url('member/edit/edit_user_password/') }}/';
+  var $url_edit_profile_delete_modal_POST = '{{ url('member_admin/delete/') }}/';
 </script>
 <script src="/js/modals/edit_profile_modal_EDIT.js"></script>
 @endif

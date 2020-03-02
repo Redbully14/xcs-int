@@ -10,6 +10,10 @@ Laravel has the most extensive and thorough [documentation](https://laravel.com/
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library. Did I mention it's completely free?
 
+## Documentation
+
+The AntelopePHP Development Wiki can be accessed through [this](https://github.com/Redbully14/xcs-int/wiki) link.
+
 ## Setting up AntelopePHP
 
 Clone the repository somewhere on your local drive (if using windows, go into your xampp folder and clone it in the root folder of htdocs -- the folder must be empty prior to cloning it).
@@ -23,11 +27,21 @@ $ composer install
 
 Once that is finished create a .env file in the root directory of the application and paste the following into the directory:
 ```bash
-APP_NAME=Laravel
+FRAMEWORK_NAME=xcs-int
+
+APP_NAME=Antelope
+APP_SUBNAME=PHP
+APP_FOOTER="Department of Justice RP"
 APP_ENV=local
 APP_KEY=base64:FGwRL2VvWImG3kPyO4coNAwZ9Kmf9tl7gkiL9fTotwA=
-APP_DEBUG=false
+APP_DEBUG=true
 APP_URL=http://localhost
+
+DEPARTMENT_NAME="Civilian Operations"
+DEPARTMENT_SHORT_NAME=Civilians
+DEPARTMENT_UNIT_NAME=Civilian
+DEPARTMENT_CALLSIGN="Civilian Number"
+DEPARTMENT_DIRECTOR="Ryan S. Civ-1"
 
 LOG_CHANNEL=stack
 LOG_DISCORD_WEBHOOK_URL=https://discordapp.com/api/webhooks/abcd/1234
@@ -76,6 +90,9 @@ PUSHER_APP_CLUSTER=mt1
 
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+
+ROUTE_INVESTIGATIVE_SEARCH_KEY=NO_KEY_SET
 ```
 
 Afterwards, create a database with the name **xcs-int**.

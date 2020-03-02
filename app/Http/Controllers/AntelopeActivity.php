@@ -76,7 +76,7 @@ class AntelopeActivity extends Controller
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
-            'patrol_priorities' => ['required', 'integer', 'min:0'],
+            'patrol_priorities' => ['required', 'integer', 'min:0', 'max:20'],
             'flag' => ['required', 'boolean'],
             'flag_reason' => ['string']
         ]);
@@ -241,7 +241,7 @@ class AntelopeActivity extends Controller
             'details' => ['required', 'string'],
             'patrol_area' => ['required', 'array', 'min:1'],
             'patrol_area.*' => ['required', 'string'],
-            'patrol_priorities' => ['required', 'integer', 'min:0'],
+            'patrol_priorities' => ['required', 'integer', 'min:0', 'max:20'],
         ]);
     }
 
@@ -355,7 +355,7 @@ class AntelopeActivity extends Controller
      */
     public function passActivityInstance($id)
     {
-        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == Activity::find($id)->user_id or Auth::user()->rank == 'ia' or Auth::user()->rank == 'other_admin') {
             $log = Activity::find($id);
 
             $log->user_name = User::find($log['user_id'])->name;
@@ -437,7 +437,7 @@ class AntelopeActivity extends Controller
      */
     protected function activityData($id)
     {
-        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id) {
+        if(Auth::user()->level() >= $this->constants['access_level']['sit'] or Auth::user()->id == $id or Auth::user()->rank == 'ia' or Auth::user()->rank == 'other_admin') {
             $query = Activity::query()
             ->select([
                 'id',
@@ -479,5 +479,21 @@ class AntelopeActivity extends Controller
             ->rawColumns(['details'])
             ->toJson();
         } else return 'pwnd hax0r';
+    }
+
+    /**
+     * Soft Deletes a patrol log
+     *
+     * @author Oliver G.
+     * @param var $id
+     * @category AntelopeActivity
+     * @access Senior Staff
+     * @version 1.0.0
+     */
+    protected function softDelete($id)
+    {
+        Activity::destroy($id);
+
+        return;
     }
 }

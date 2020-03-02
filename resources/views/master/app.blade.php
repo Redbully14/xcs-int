@@ -90,22 +90,18 @@
     @yield('pluginjs')
     <!-- endinject -->
 
-    <!-- inject:js -->
-    <script src="/assets/js/off-canvas.js"></script>
-    <script src="/assets/js/hoverable-collapse.js"></script>
-    <script src="/assets/js/misc.js"></script>
-    <script src="/assets/js/settings.js"></script>
-    <script src="/assets/js/todolist.js"></script>
-    @yield('injectjs')
+    <!-- page:js -->
+    <script type="text/javascript">
+        var $url_clear_notifications = "{{ url('/notifications/clearall') }}";
+    </script>
     <!-- endinject -->
 
-    <!-- Custom js for this page -->
-    @yield('customjs')
-    <!-- End custom js for this page -->
-
-    <!-- Ajax for this page -->
-    @yield('ajax')
-    <!-- End ajax for this page -->
+    <!-- inject:js -->
+    <script src="/assets/js/misc.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/js/notifications.js"></script>
+    @yield('injectjs')
+    <!-- endinject -->
 
     <!-- Global modals for this page-->
     @include('modals.submit_patrol_log_modal')

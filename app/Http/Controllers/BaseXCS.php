@@ -195,7 +195,12 @@ class BaseXCS extends Controller
      * @version 1.0.0
      */
     public static function getAllMembersSearchable() {
-        $users = User::all();
+        $users = User::where([
+            ['rank', '!=', 'ia'],
+            ['rank', '!=', 'other_guest'],
+            ['rank', '!=', 'other_admin'],
+        ])
+        ->get();
         $members_array = array();
 
         foreach ($users as $user) {
@@ -243,5 +248,42 @@ class BaseXCS extends Controller
         }
 
         return $members_array;
+    }
+
+    /**
+     * Generates a random user login number
+     *
+     * @author Oliver G.
+     * @return int
+     * @category BaseXCS
+     * @version 1.0.0
+     */
+    public static function generateUsername() {
+        $username = mt_rand(10000000, 99999999);
+
+        if(User::where('username', $username)->exists()) {
+            return self::generateUsername();
+        }
+
+        return $username;
+    }
+
+    /**
+     * Generates a random user password
+     *
+     * @author Oliver G.
+     * @return string
+     * @category BaseXCS
+     * @version 1.0.0
+     */
+    public static function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array();
+        $alphaLength = strlen($alphabet) - 1;
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass);
     }
 }

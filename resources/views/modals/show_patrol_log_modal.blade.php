@@ -64,7 +64,7 @@
                   <div class="form-group">
                     <label>Patrol Start Time</label>
                     <div class="input-group date" id="ajax-patrol-start-time" data-target-input="nearest">
-                      <div class="input-group" data-target="#ajax-patrol-start-time" data-toggle="datetimepicker">
+                      <div class="input-group" id="start-time-datatoggle" data-target="#ajax-patrol-start-time" data-toggle="#change-me">
                         <input type="text" class="form-control datetimepicker-input" data-target="#ajax-patrol-start-time" id="ajax-input-patrol-start-time" disabled>
                         <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                       </div>
@@ -75,7 +75,7 @@
                   <div class="form-group">
                     <label>Patrol End Time</label>
                     <div class="input-group date" id="ajax-patrol-end-time" data-target-input="nearest">
-                      <div class="input-group" data-target="#ajax-patrol-end-time" data-toggle="datetimepicker">
+                      <div class="input-group" id="end-time-datatoggle" data-target="#ajax-patrol-end-time" data-toggle="#change-me">
                         <input type="text" class="form-control datetimepicker-input" data-target="#ajax-patrol-end-time" id="ajax-input-patrol-end-time" disabled>
                         <div class="input-group-addon input-group-append"><i class="mdi mdi-clock input-group-text"></i></div>
                       </div>
@@ -120,6 +120,13 @@
                       <label>Automatic Flag: <span id="ajax-span-auto-flag"></span></label>
                       <textarea class="form-control" id="ajax-textarea-auto-flag" rows="6" placeholder="No details." disabled></textarea>
                   </div>
+
+                  @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+                    <div class="form-group">
+                      <label>Delete Patrol Log</label>
+                      <button type="button" class="form-control btn btn-outline-danger btn-fw" id="delete_patrol_log_btn" value="0" onclick="deleteActivityPopup()">Delete Patrol Log</button>
+                    </div>
+                  @endif
                 </div>
               </div>
             </div>
@@ -148,7 +155,7 @@
           <button type="button" class="btn btn-primary" id="ajax_edit_patrol_log-button">Edit</button>
           <button type="submit" class="btn btn-success" id="ajax_submit_edit_patrol_log-button" value="0" hidden>Submit</button>
           @endif
-          <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_new_patrol_log_cancel">Close</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_show_patrol_log_cancel">Close</button>
         </div>
         @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
         </form>
@@ -161,9 +168,15 @@
 .select2-selection {background-color:#2A3038 !important;}
 </style>
 <script type="text/javascript">
+
+  @if(url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/'.substr(url()->current(), strrpos(url()->current(), '/' )+1) == url()->current()))
+  var $url_show_patrol_log = '{{ url('investigative_search/'.env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET').'/profile/activity/get_data/') }}/';
+  @else
   var $url_show_patrol_log = '{{ url('activity/get_data/') }}/';
+  @endif
   @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
   var $url_edit_patrol_log = '{{ url('activity/edit/') }}/';
+  var $url_delete_patrol_log = '{{ url('activity/delete/') }}/';
   @endif
 </script>
 <script src="/js/modals/show_patrol_log_modal.js"></script>

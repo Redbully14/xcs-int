@@ -13,11 +13,13 @@ return [
     */
 
     'global' => [
-        'framework_name' => 'xcs_int',
-        'application_name' => 'Antelope',
-        'application_subname' => 'PHP',
-        'application_version' => 'canary',
-        'application_footer' => 'Department of Justice RP',
+        // ENV CONFIG:
+        'framework_name' => env('FRAMEWORK_NAME', 'Laravel'),
+        'application_name' => env('APP_NAME', 'Antelope'),
+        'application_subname' => env('APP_SUBNAME', 'PHP'),
+        'application_version' => '1.0.0',
+        'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
+        // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',
         'application_favicon' => 'favicon.png',
     ],
@@ -55,11 +57,11 @@ return [
     |
     */
     'department' => [
-        'department_name' => 'Civilian Operations',
-        'department_short_name' => 'Civilians',
-        'department_unit_name' => 'Civilian',
-        'department_callsign' => 'Civilian Number',
-        'department_director' => 'Ryan S. Civ-1',
+        'department_name' => env('DEPARTMENT_NAME', 'Civilian Operations'),
+        'department_short_name' => env('DEPARTMENT_SHORT_NAME', 'Civilians'),
+        'department_unit_name' => env('DEPARTMENT_UNIT_NAME', 'Civilian'),
+        'department_callsign' => env('DEPARTMENT_CALLSIGN', 'Civilian Number'),
+        'department_director' => env('DEPARTMENT_DIRECTOR', 'Ryan S. Civ-1'),
     ],
 
     /*
@@ -83,6 +85,9 @@ return [
         'superadmin' => 'SuperAdmin',
         'settings_admin' => 'Administrator Settings',
         'public_roster' => 'Public Roster',
+        'internal_roster' => 'Internal Roster',
+        'investigative_search' => 'Investigative Search',
+        'notification_center' => 'Notification Center',
     ],
 
     /*
@@ -172,7 +177,7 @@ return [
         'sit' => 'primary',
         'intern' => 'primary',
         'member' => 'primary',
-        'guest' => 'bright',
+        'guest' => 'light',
     ],
 
     /*
@@ -182,6 +187,7 @@ return [
     |
     | Rank Constants are the names of the Chain of Command ranks in the
     | community that are also reflected through the website.
+    | Do not change the 'probationary_civilian' key otherwise it will break stuff!
     |
     */
     'rank' => [
@@ -198,11 +204,12 @@ return [
         'senior_advisor' => 'Civilian Senior Advisor',
         'advisor' => 'Civilian Advisor',
         'intern' => 'Civilian Intern',
+        'master_civilian' => 'Master Civilian',
         'senior_civilian' => 'Senior Civilian',
-        'civilian3' => 'Civilian III',
-        'civilian2' => 'Civilian II',
-        'civilian1' => 'Civilian I',
-        'probationary_civilian' => 'Probationary Civilian',
+        'civilian3' => 'Civilian',
+        'civilian2' => 'Junior Civilian',
+        'civilian1' => 'Novice Civilian',
+        'probationary' => 'Probationary Civilian',
         'reserve_senior' => 'Senior Civilian Reserve',
         'reserve_civilian' => 'Civilian Reserve',
         'reserve_probationary' => 'Probationary Civilian Reserve',
@@ -212,6 +219,7 @@ return [
         'media_one' => 'Civilian Media I',
         'other_admin' => 'DoJ Administration',
         'ia' => 'Internal Affairs',
+        'other_guest' => 'Civilian Guest',
     ],
 
     'rank_groups' => [
@@ -242,6 +250,7 @@ return [
 
         'senior_member' => [
             'intern',
+            'master_civilian',
             'senior_civilian',
         ],
 
@@ -252,7 +261,7 @@ return [
         ],
 
         'probationary_member' => [
-            'probationary_civilian',
+            'probationary',
         ],
 
         'reserve' => [
@@ -267,6 +276,47 @@ return [
             'media_two',
             'media_one',
         ],
+
+        'other' => [
+            'other_admin',
+            'ia',
+            'other_guest',
+        ],
+    ],
+
+    'rank_level' => [
+        'director' => 999,
+        'deputy_director' => 170,
+        'chief_of_staff' => 160,
+        'deputy_chief_of_staff' => 150,
+        'secretary_of_staff' => 140,
+        'manager' => 130,
+        'assistant_manager' => 120,
+        'senior_supervisor' => 110,
+        'supervisor' => 100,
+        'assistant_supervisor' => 90,
+        'senior_advisor' => 80,
+        'advisor' => 70,
+        'intern' => 60,
+        'master_civilian' => 50,
+        'senior_civilian' => 40,
+        'civilian3' => 30,
+        'civilian2' => 20,
+        'civilian1' => 10,
+        'probationary' => 0,
+        // Reserve Ranks
+        'reserve_senior' => 40,
+        'reserve_civilian' => 20,
+        'reserve_probationary' => 0,
+        // Media Ranks
+        'media_four' => 40,
+        'media_three' => 30,
+        'media_two' => 20,
+        'media_one' => 10,
+        // Other Ranks
+        'other_admin' => 0,
+        'ia' => 0,
+        'other_guest' => 0,
     ],
 
     /*
@@ -388,7 +438,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Avatar Names
+    | Avatars
     |--------------------------------------------------------------------------
     |
     | Types of avatars that can be accessed by everyone through member setings
@@ -396,26 +446,17 @@ return [
     |
     */
     'avatars' => [
-        'antelope' => 'Antelope Default Avatar',
-        'antelope2' => 'Antelope Better Avatar',
-        'gnomed' => 'Get gnomed',
-        'coolpepe' => 'Cool Pepe',
+        'antelope' => 'Antelope User',
+        'gnomed' => 'Morris Gnome',
+        'coolpepe' => 'Pepe',
+        'bobross' => 'Bob Ross',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Avatar Files
-    |--------------------------------------------------------------------------
-    |
-    | Avatar files inside public/assets/xcs-info/avatars/
-    | BE CAREFUL WHEN EDIITNG THIS!.
-    |
-    */
     'avatar_filename' => [
         'antelope' => 'antelope.png',
-        'antelope2' => 'antelope2.jpg',
         'gnomed' => 'morris.png',
         'coolpepe' => 'coolpepe.png',
+        'bobross' => 'bobross.png',
     ],
 
     /*

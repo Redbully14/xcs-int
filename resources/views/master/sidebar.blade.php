@@ -21,6 +21,7 @@
         </div>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+          @if(Auth::user()->level() >= $constants['access_level']['member'])
           <a href="/myprofile" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
@@ -31,6 +32,7 @@
               <p class="preview-subject ellipsis mb-1 text-small">My Profile</p>
             </div>
           </a>
+          @endif
           <a href="/settings" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
@@ -66,7 +68,38 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/internal_roster">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-key text-white"></i>
+        </span>
+        <span class="menu-title">Internal Roster</span>
+      </a>
+    </li>
+    @endif
+    @if(Auth::user()->rank == 'ia')
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/investigative_search/{{ env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET') }}">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-search text-danger"></i>
+        </span>
+        <span class="menu-title">Internal Affairs</span>
+      </a>
+    </li>
+    @endif
+    @if(Auth::user()->rank == 'other_admin')
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/investigative_search/{{ env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET') }}">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-search text-danger"></i>
+        </span>
+        <span class="menu-title">DoJ Admin</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->level() <= $constants['access_level']['member'])
+    @if(Auth::user()->level() == $constants['access_level']['member'] or Auth::user()->level() == $constants['access_level']['intern'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/myprofile">
         <span class="menu-icon">
