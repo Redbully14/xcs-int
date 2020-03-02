@@ -12,7 +12,7 @@
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
-            <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</h5>
+            <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }} @if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }} @endif</h5>
             <span style="max-width:134px; display: block; white-space: normal;">{{ $constants['rank'][Auth::user()->rank] }}</span>
             @impersonating
             <span style="max-width:134px; display: block; white-space: normal;" class="text-warning">Godmode</span>
@@ -98,7 +98,6 @@
       </a>
     </li>
     @endif
-    @if(Auth::user()->level() <= $constants['access_level']['member'])
     @if(Auth::user()->level() == $constants['access_level']['member'] or Auth::user()->level() == $constants['access_level']['intern'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/myprofile">

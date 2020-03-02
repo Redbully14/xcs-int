@@ -48,6 +48,7 @@
           </a>
         </div>
       </li>
+      @endif
       @include('master.notifications')
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
