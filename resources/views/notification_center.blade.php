@@ -6,6 +6,9 @@
 <div class="content-wrapper">
   <div class="page-header">
     <h3 class="page-title"> Notification Center </h3>
+    <nav aria-label="breadcrumb">
+      <a class="nav-link btn btn-primary" href="/notifications/clearall_center">Mark all as read</a>
+    </nav>
   </div>
 
   <div class="row">

@@ -84,6 +84,21 @@ class AntelopeNotifications extends Controller
     }
 
     /**
+     * Clears all notifications in the notifications center
+     *
+     * @author Oliver G.
+     * @return void
+     * @category AntelopeNotifications
+     * @version 1.0.0
+     */
+    public function clearAllNotificationsinCenter()
+    {
+    	$user = auth()->user();
+    	$user->unreadNotifications->markAsRead();
+    	return redirect(url('/notifications'));
+    }
+
+    /**
      * Backend controller for the notification_center module
      *
      * @author Oliver G.
