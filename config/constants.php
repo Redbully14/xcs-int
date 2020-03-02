@@ -17,7 +17,7 @@ return [
         'framework_name' => env('FRAMEWORK_NAME', 'Laravel'),
         'application_name' => env('APP_NAME', 'Antelope'),
         'application_subname' => env('APP_SUBNAME', 'PHP'),
-//      'application_version' => 'canary',
+        'application_version' => '1.0.0',
         'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
         // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',

@@ -51,7 +51,7 @@
                 </div>
               </a>
               <div class="dropdown-divider"></div>
-              <p class="p-3 mb-0 text-center">More coming soon!</p>
+              <p class="p-3 mb-0 text-center">AntelopePHP</p>
             </div>
           </li>
           @endif

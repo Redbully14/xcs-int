@@ -70,6 +70,32 @@ class AntelopeNotifications extends Controller
     }
 
     /**
+     * Gets a funny notification quirk and returns it for public view
+     *
+     * @author Oliver G.
+     * @return int
+     * @category AntelopeNotifications
+     * @version 1.0.0
+     */
+    public static function notificationQuirk()
+    {
+        $quirks = [
+            "Wow this place is empty.",
+            "No new promotions, sorry bud!",
+            "Still no new meetings, sorry!",
+            "No new disciplinary actions yet!",
+            "Hey, I'm pretty empty!",
+            "There is no gnome here yet!",
+            "Nope, still nothing.",
+            "Hey! Guess what! Still nothing!",
+            "This genuinely isn't broken.",
+            "No new policies... Yet..."
+        ];
+
+        return $quirks[mt_rand(0, 9)];
+    }
+
+    /**
      * Clears all notifications
      *
      * @author Oliver G.
@@ -111,5 +137,19 @@ class AntelopeNotifications extends Controller
     	$notifications = auth()->user()->notifications->skip(0)->take(30);
     	return view('notification_center')->with('constants', $this->constants)
     									  ->with('notifications', $notifications);
+    }
+
+    /**
+     * Marks a certain notification as read
+     *
+     * @author Oliver G.
+     * @return view
+     * @category AntelopeNotifications
+     * @version 1.0.0
+     */
+    public function clearNotification($id)
+    {
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+        return redirect(url('/notifications'));
     }
 }

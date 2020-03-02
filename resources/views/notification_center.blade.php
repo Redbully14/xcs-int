@@ -7,7 +7,7 @@
   <div class="page-header">
     <h3 class="page-title"> Notification Center </h3>
     <nav aria-label="breadcrumb">
-      <a class="nav-link btn btn-primary" href="/notifications/clearall_center">Mark all as read</a>
+      <a class="nav-link btn btn-primary" href="/notifications/clearall_center"><i class="mdi mdi-notification-clear-all"></i> Mark all as read</a>
     </nav>
   </div>
 
@@ -30,10 +30,16 @@
                   <p class="mb-0">{{ $notification->data['text'] }}</p>
                 </div>
               </div>
+              @if(!$notification->read_at)
+              <nav aria-label="breadcrumb">
+                <a class="nav-link btn btn-success" href="/notifications/clear/{{ $notification->id }}"><i class="mdi mdi-bell-outline"></i> Mark as Read</a>
+              </nav>
+              @endif
             </div>
             @endforeach
-
           </div>
+          <br>
+          <p>The notification center only allows you to view up to 30 notifications.</p>
         </div>
       </div>
     </div>

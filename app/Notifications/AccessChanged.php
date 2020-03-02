@@ -4,19 +4,22 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class Promotion extends Notification
+class AccessChanged extends Notification
 {
-    public $rank;
+    public $constants;
+    public $oldAccess;
+    public $newAccess;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($rank)
+    public function __construct($oldAccess, $newAccess)
     {
-        $this->rank = $rank;
         $this->constants = \Config::get('constants');
+        $this->oldAccess = $oldAccess;
+        $this->newAccess = $newAccess;
     }
 
     /**
@@ -39,10 +42,10 @@ class Promotion extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Promoted',
-            'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank].".",
-            'icon' => 'mdi mdi-trophy-award',
-            'color' => 'success',
+            'title' => 'Access Changed',
+            'text' => 'Your Antelope Access has been changed from '.$this->constants['role'][array_search($this->oldAccess, $this->constants['access_level'])]." to ".$this->constants['role'][$this->newAccess].".",
+            'icon' => 'mdi mdi-account-key',
+            'color' => 'warning',
         ];
     }
 }

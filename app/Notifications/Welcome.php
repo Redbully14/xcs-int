@@ -4,18 +4,17 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class Promotion extends Notification
+class Welcome extends Notification
 {
-    public $rank;
+    public $constants;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($rank)
+    public function __construct()
     {
-        $this->rank = $rank;
         $this->constants = \Config::get('constants');
     }
 
@@ -39,10 +38,10 @@ class Promotion extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Promoted',
-            'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank].".",
-            'icon' => 'mdi mdi-trophy-award',
-            'color' => 'success',
+            'title' => 'Welcome',
+            'text' => 'Welcome to AntelopePHP! Please let us know what you think about the new system through the Feedback Form!',
+            'icon' => 'fab fa-asymmetrik rotate-n-15',
+            'color' => 'info',
         ];
     }
 }

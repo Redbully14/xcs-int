@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Registered;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Http\Controllers\BaseXCS;
+use App\Notifications\Welcome;
 
 class NewMemberController extends Controller
 {
@@ -76,6 +77,8 @@ class NewMemberController extends Controller
 
         $role = Role::where('slug', '=', $data['role'])->first();
         $user->attachRole($role);
+
+        $user->notify(new Welcome());
 
         return $user;
     }

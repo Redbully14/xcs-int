@@ -4,19 +4,22 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class Promotion extends Notification
+class NewUnitNumber extends Notification
 {
-    public $rank;
+    public $constants;
+    public $oldNumber;
+    public $newAccess;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($rank)
+    public function __construct($oldNumber, $newNumber)
     {
-        $this->rank = $rank;
         $this->constants = \Config::get('constants');
+        $this->oldNumber = $oldNumber;
+        $this->newNumber = $newNumber;
     }
 
     /**
@@ -39,10 +42,10 @@ class Promotion extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Promoted',
-            'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank].".",
-            'icon' => 'mdi mdi-trophy-award',
-            'color' => 'success',
+            'title' => 'Unit Number Changed',
+            'text' => 'Your Unit Number has been changed from '.$this->oldNumber." to ".$this->newNumber.".",
+            'icon' => 'mdi mdi-account-card-details',
+            'color' => 'primary',
         ];
     }
 }

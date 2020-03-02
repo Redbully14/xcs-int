@@ -1241,6 +1241,32 @@ Route::prefix('notifications')->group(function () {
     'uses' => 'AntelopeNotifications@clearAllNotifications'
   ]);
 
+  /**
+   * Webdomain: /notifications/clearall_center
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clearall_center', [
+    'as' => 'notifications.clearall_center',
+    'uses' => 'AntelopeNotifications@clearAllNotificationsinCenter'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clear/{id}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clear/{id}', [
+    'as' => 'notifications.clear',
+    'uses' => 'AntelopeNotifications@clearNotification'
+  ]);
+
   /*
   |--------------------------------------------------------------------------
   | x End SettingsRoutes x

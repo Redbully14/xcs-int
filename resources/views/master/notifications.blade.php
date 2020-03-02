@@ -8,9 +8,11 @@
 
 <li class="nav-item dropdown border-left">
   <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-    <i class="mdi mdi-bell"></i>
     @if($notification_count)
+    <i class="mdi mdi-bell-ring"></i>
     <span class="count bg-danger" id="notificationAlert"></span>
+    @else
+    <i class="mdi mdi-bell"></i>
     @endif
   </a>
   <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
@@ -29,7 +31,11 @@
       </div>
     </a>
     @endforeach
-    <p class="p-3 mb-0 text-center antelope-notifications-none" @if($notification_count) hidden @endif>Wow this place is empty!</p>
+    @if(!$notification_count)
+    <a class="dropdown-item preview-item antelope-notification" href="/notifications">
+      <p class="p-3 mb-0 text-center antelope-notifications-none"> {{ $notifications::notificationQuirk() }} </p>
+    </a>
+    @endif
     <div class="dropdown-divider"></div>
     <a class="p-2 mb-0 text-small text-danger" href="#" onclick="clearAllNotifications()">Mark all as read</a>
   </div>

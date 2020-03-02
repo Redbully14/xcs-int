@@ -15,6 +15,8 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Http\Controllers\BaseXCS;
 use App\Notifications\Promotion;
+use App\Notifications\AccessChanged;
+use App\Notifications\NewUnitNumber;
 
 class EditProfileController extends Controller
 {
@@ -107,8 +109,16 @@ class EditProfileController extends Controller
         }
         $user->rank = $request['rank'];
         
+        if($user->department_id != $request['department_id']) {
+            $user->notify(new NewUnitNumber($user->department_id, $request['department_id']));
+        }
         $user->department_id = $request['department_id'];
+
         $user->antelope_status = $request['antelope_status'];
+        if($user->roles()->first()->slug != $request['role']) {
+            $user->notify(new AccessChanged($user->roles()->first()->level, $request['role']));
+        }
+
         $role = Role::where('slug', '=', $request['role'])->first();
         $user->username = $request['username'];
         $user->requirements_exempt = $request['requirements_exempt'];
