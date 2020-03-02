@@ -66,7 +66,7 @@ class AntelopeNotifications extends Controller
     public static function unreadNotifications()
     {
     	$user = auth()->user();
-    	return $user->unreadNotifications;
+    	return $user->unreadNotifications->skip(0)->take(5);
     }
 
     /**
@@ -77,9 +77,24 @@ class AntelopeNotifications extends Controller
      * @category AntelopeNotifications
      * @version 1.0.0
      */
-    public static function clearAllNotifications()
+    public function clearAllNotifications()
     {
     	$user = auth()->user();
     	$user->unreadNotifications->markAsRead();
+    }
+
+    /**
+     * Backend controller for the notification_center module
+     *
+     * @author Oliver G.
+     * @return view
+     * @category AntelopeNotifications
+     * @version 1.0.0
+     */
+    public function view()
+    {
+    	$notifications = auth()->user()->notifications->skip(0)->take(30);
+    	return view('notification_center')->with('constants', $this->constants)
+    									  ->with('notifications', $notifications);
     }
 }

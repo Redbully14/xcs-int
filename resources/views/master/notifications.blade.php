@@ -17,7 +17,7 @@
     <h6 class="p-3 mb-0">Notifications</h6>
     <div class="dropdown-divider"></div>
     @foreach($notifications::unreadNotifications() as $notification)
-    <a class="dropdown-item preview-item antelope-notification" data-notification-id="{{ $notification->notifiable_id }}">
+    <a class="dropdown-item preview-item antelope-notification" data-notification-id="{{ $notification->notifiable_id }}" href="/notifications">
       <div class="preview-thumbnail">
         <div class="preview-icon bg-dark rounded-circle">
           <i class="{{ $notification->data['icon'] }} text-{{ $notification->data['color'] }}"></i> 
@@ -25,7 +25,7 @@
       </div>
       <div class="preview-item-content">
         <p class="preview-subject mb-1">{{ $notification->data['title'] }}</p>
-        <p class="text-muted ellipsis mb-0"> {{ $notification->data['text'] }} </p>
+        <p class="ellipsis mb-0"> {{ $notification->data['text'] }} </p>
       </div>
     </a>
     @endforeach

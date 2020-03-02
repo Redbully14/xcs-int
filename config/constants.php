@@ -85,6 +85,7 @@ return [
         'superadmin' => 'SuperAdmin',
         'settings_admin' => 'Administrator Settings',
         'public_roster' => 'Public Roster',
+        'notification_center' => 'Notification Center',
     ],
 
     /*
