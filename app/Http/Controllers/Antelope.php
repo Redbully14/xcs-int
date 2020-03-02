@@ -510,4 +510,101 @@ class Antelope extends Controller
             return $this->getProfile($id);
         } else Log::critical("User id ".auth()->user()->id.' attempted to use the investigative search tool without the proper access.');
     }
+
+    /**
+     * Backend controller for the internal_roster module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_view()
+    {
+        return view('internal_roster')->with('constants', $this->constants);
+    }
+
+    /**
+     * Backend controller for editing a person's name on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_name(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->name = $request['name'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's website ID on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_websiteid(Request $request)
+    {
+        $request->validate([
+            'callsign' => ['required', 'integer']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->website_id = $request['website_id'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's callsign on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_callsign(Request $request)
+    {
+        $request->validate([
+            'callsign' => ['required', 'string', 'max:30']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->department_id = $request['callsign'];
+        $user->save();
+
+        return;
+    }
+
+    /**
+     * Backend controller for editing a person's rank on the internal roster
+     *
+     * @author Oliver G.
+     * @param Request $request
+     * @category AntelopePublic
+     * @version 1.0.0
+     */
+    public function internalRoster_edit_rank(Request $request)
+    {
+        $request->validate([
+            'rank' => ['required', 'string', 'max:30']
+        ]);
+
+        $user = User::find($request->route('user'));
+        $user->rank = $request['rank'];
+        $user->save();
+
+        return;
+    }
 }

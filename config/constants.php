@@ -85,6 +85,7 @@ return [
         'superadmin' => 'SuperAdmin',
         'settings_admin' => 'Administrator Settings',
         'public_roster' => 'Public Roster',
+        'internal_roster' => 'Internal Roster',
         'investigative_search' => 'Investigative Search',
         'notification_center' => 'Notification Center',
     ],

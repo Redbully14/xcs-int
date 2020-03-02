@@ -68,6 +68,16 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/internal_roster">
+        <span class="menu-icon">
+          <i class="mdi mdi-account-key text-white"></i>
+        </span>
+        <span class="menu-title">Internal Roster</span>
+      </a>
+    </li>
+    @endif
     @if(Auth::user()->rank == 'ia')
     <li class="nav-item menu-items">
       <a class="nav-link" href="/investigative_search/{{ env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET') }}">
