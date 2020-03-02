@@ -1205,3 +1205,72 @@ Route::prefix('absence')->group(function () {
   |--------------------------------------------------------------------------
   */
 });
+
+Route::prefix('notifications')->group(function () {
+  /*
+  |--------------------------------------------------------------------------
+  | Route Group: notifications
+  | Category Name: NotificationRoutes
+  |--------------------------------------------------------------------------
+  |
+  */
+
+  /**
+   * Webdomain: /notifications
+   *
+   * @author Oliver G.
+   * @package GET
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/', [
+    'as' => 'notifications',
+    'uses' => 'AntelopeNotifications@view'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clearall
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::post('/clearall', [
+    'as' => 'notifications.clearall',
+    'uses' => 'AntelopeNotifications@clearAllNotifications'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clearall_center
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clearall_center', [
+    'as' => 'notifications.clearall_center',
+    'uses' => 'AntelopeNotifications@clearAllNotificationsinCenter'
+  ]);
+
+  /**
+   * Webdomain: /notifications/clear/{id}
+   *
+   * @author Oliver G.
+   * @package POST
+   * @category SettingsRoutes
+   * @version 1.0.0
+   */
+  Route::get('/clear/{id}', [
+    'as' => 'notifications.clear',
+    'uses' => 'AntelopeNotifications@clearNotification'
+  ]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | x End SettingsRoutes x
+  |--------------------------------------------------------------------------
+  */
+
+});

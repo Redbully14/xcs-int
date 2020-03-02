@@ -17,7 +17,7 @@ return [
         'framework_name' => env('FRAMEWORK_NAME', 'Laravel'),
         'application_name' => env('APP_NAME', 'Antelope'),
         'application_subname' => env('APP_SUBNAME', 'PHP'),
-//      'application_version' => 'canary',
+        'application_version' => '1.0.0',
         'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
         // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',
@@ -85,6 +85,7 @@ return [
         'superadmin' => 'SuperAdmin',
         'settings_admin' => 'Administrator Settings',
         'public_roster' => 'Public Roster',
+        'notification_center' => 'Notification Center',
     ],
 
     /*
@@ -279,6 +280,41 @@ return [
             'ia',
             'other_guest',
         ],
+    ],
+
+    'rank_level' => [
+        'director' => 999,
+        'deputy_director' => 170,
+        'chief_of_staff' => 160,
+        'deputy_chief_of_staff' => 150,
+        'secretary_of_staff' => 140,
+        'manager' => 130,
+        'assistant_manager' => 120,
+        'senior_supervisor' => 110,
+        'supervisor' => 100,
+        'assistant_supervisor' => 90,
+        'senior_advisor' => 80,
+        'advisor' => 70,
+        'intern' => 60,
+        'master_civilian' => 50,
+        'senior_civilian' => 40,
+        'civilian3' => 30,
+        'civilian2' => 20,
+        'civilian1' => 10,
+        'probationary' => 0,
+        // Reserve Ranks
+        'reserve_senior' => 40,
+        'reserve_civilian' => 20,
+        'reserve_probationary' => 0,
+        // Media Ranks
+        'media_four' => 40,
+        'media_three' => 30,
+        'media_two' => 20,
+        'media_one' => 10,
+        // Other Ranks
+        'other_admin' => 0,
+        'ia' => 0,
+        'other_guest' => 0,
     ],
 
     /*

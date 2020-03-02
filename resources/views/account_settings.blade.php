@@ -9,6 +9,9 @@
   <div class="content-wrapper" style="padding-left: 300px; padding-right: 300px;">
     <div class="page-header">
       <h3 class="page-title"> Account Settings </h3>
+      <nav aria-label="breadcrumb">
+      <a class="nav-link btn btn-primary" href="/notifications"><i class="mdi mdi-bell"></i> Notification Center</a>
+      </nav>
     </div>
     <div class="row">
       <div class="col-12">
