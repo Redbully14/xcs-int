@@ -50,7 +50,7 @@ $('#add_member_clipboard').on('click', function(e) {
       var website_id = direm[6];
 
       // safety check
-      if (direm[0] == "Active" or direm[0] == "Update Roster") {
+      if (direm[0] == "Active" || direm[0] == "Update Roster") {
         $.ajax({
           type: 'POST',
           url: $url_clipboard_url,
