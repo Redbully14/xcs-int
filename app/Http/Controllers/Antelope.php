@@ -488,7 +488,7 @@ class Antelope extends Controller
             $members_array[url("/investigative_search/".env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET')."/profile/{$user->id}")] = $member;
         }
 
-        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+        if ((auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') and auth()->user()->level() >= $this->constants['access_level']['guest']) {
             return view('investigative_search')->with('constants', $this->constants)
                                                ->with('members_array', $members_array);
         }
@@ -505,7 +505,7 @@ class Antelope extends Controller
      */
     public function investigativeSearch_search($id)
     {
-        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+        if ((auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') and auth()->user()->level() == $this->constants['access_level']['guest']) {
             Log::warning("User id ".auth()->user()->id." is accessing data via the investigative search tool for user id ".$id.".");
             return $this->getProfile($id);
         } else Log::critical("User id ".auth()->user()->id.' attempted to use the investigative search tool without the proper access.');
