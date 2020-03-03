@@ -98,6 +98,7 @@
               </div>
           </div>
           <div class="modal-footer">
+            <input id="current-page" type="hidden" value="{{ Request::url() }}">
             <button type="submit" class="btn btn-success">Submit</button>
             <button type="button" class="btn btn-light" data-dismiss="modal" id="ajax_new_patrol_log_cancel">Cancel</button>
           </div>

@@ -10,6 +10,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
   var patrol_priorities = $('#patrol-priorities').val();
   var flag_patrol_log = $('#flag-patrol-log').is(":checked");
   var reason_for_flag = $('#reason-for-flag').val();
+  var current_page = $('#current-page').val();
+  current_page = current_page.substring(current_page.lastIndexOf('/') + 1);
 
   var elements = {
     '#patrol_start_date' : '#patrol-date-error',
@@ -49,6 +51,8 @@ $('#ajax_submit_patrol_log').on('submit', function(e) {
       }
       // Specifically empties the AOP select
       $('#patrol-area').val(null).trigger('change');
+
+      if (current_page === 'dashboard') $('.content-wrapper').load('dashboard' +  ' .content-wrapper > *');
 
       var toast_heading = "Patrol Log Submitted!";
       var toast_text = "The patrol log has been submitted and has been logged into our database.";
