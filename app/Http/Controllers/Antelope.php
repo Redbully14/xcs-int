@@ -16,6 +16,8 @@ use App\Http\Controllers\AntelopeCalculate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Notifications\Promotion;
+use App\Notifications\NewUnitNumber;
 
 class Antelope extends Controller
 {
@@ -581,6 +583,9 @@ class Antelope extends Controller
         ]);
 
         $user = User::find($request->route('user'));
+
+        $user->notify(new NewUnitNumber($user->department_id, $request['callsign']));
+
         $user->department_id = $request['callsign'];
         $user->save();
 
@@ -602,6 +607,11 @@ class Antelope extends Controller
         ]);
 
         $user = User::find($request->route('user'));
+
+        if($this->constants['rank_level'][$user->rank] < $this->constants['rank_level'][$request['rank']]) {
+            $user->notify(new Promotion($request['rank']));
+        }
+
         $user->rank = $request['rank'];
         $user->save();
 

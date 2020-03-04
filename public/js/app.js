@@ -1,3 +1,6 @@
+var getURL = window.location;
+const baseURL = getURL .protocol + "//" + getURL.host + "/" + getURL.pathname.split('/')[1];
+
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

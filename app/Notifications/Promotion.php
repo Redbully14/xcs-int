@@ -42,7 +42,7 @@ class Promotion extends Notification
             'title' => 'Promoted',
             'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank].".",
             'icon' => 'mdi mdi-trophy-award',
-            'color' => 'success',
+            'color' => 'warning',
         ];
     }
 }
