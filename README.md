@@ -118,7 +118,7 @@ As of the official release of 1.0.0 of this application, making the first two ac
 
 If you have done everything above correctly, simply use the following information below to login:
 ```
-Username: Antelope
+Username: antelope
 Password: password
 ```
 
