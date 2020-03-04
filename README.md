@@ -112,11 +112,15 @@ Finally, start the development server:
 $ php artisan serve
 ```
 
-### (Optional) Logging in, the easy way:
-
-Because the users table is empty, there is no way to actually log into the application, therefor, without seeding the database.
+### Logging in:
 
 As of the official release of 1.0.0 of this application, making the first two accounts on the website has been deleted for security reasons.
+
+If you have done everything above correctly, simply use the following information below to login:
+```
+Username: Antelope
+Password: password
+```
 
 ## License
 
