@@ -1,3 +1,62 @@
+/*
+|------------------------------------------------------------------------------------
+|                           BASEXCS MAIN WEBSITE INFO
+|------------------------------------------------------------------------------------
+|
+| FRAMEWORK NAME: XCS-int
+| FRAMEWORK AUTHOR: Oliver G.
+| FRAMEWORK CONTACT EMAIL: Redbully14urh@gmail.com
+|------------------------------------------------------------------------------------
+|                           BASEXCS APPLICATION INFO
+|------------------------------------------------------------------------------------
+| 
+| APPLICATION NAME: AntelopePHP
+| APPLICATION AUTHOR: Oliver G.
+| APPLICATION CONTACT EMAIL: Redbully14urh@gmail.com
+| APPLICATION WEBSITE: /
+| APPLICATION GITHUB: https://github.com/Redbully14/xcs-int
+| APPLICATION SUBSIDIARIES: + AntelopePHP Base
+|                           + 
+|                           + 
+|                           + 
+| 
+| CREATED FOR: Department of Justice Roleplay Community (www.dojrp.com)
+| 
+|-----------------------------------------------------------------------------------
+|                           BASEXCS LICENSE INFO
+|-----------------------------------------------------------------------------------
+| 
+|    MIT License
+|
+|    Copyright (c) 2020 XCS-int
+|
+|    Permission is hereby granted, free of charge, to any person obtaining a copy
+|    of this software and associated documentation files (the "Software"), to deal
+|    in the Software without restriction, including without limitation the rights
+|    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+|    copies of the Software, and to permit persons to whom the Software is
+|    furnished to do so, subject to the following conditions:
+|
+|    The above copyright notice and this permission notice shall be included in all
+|    copies or substantial portions of the Software.
+|
+|    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+|    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+|    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+|    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+|    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+|    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+|    SOFTWARE.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Application Main Javascript File
+|--------------------------------------------------------------------------
+|
+*/
+
 var getURL = window.location;
 const baseURL = getURL .protocol + "//" + getURL.host + "/" + getURL.pathname.split('/')[1];
 
@@ -7,6 +66,13 @@ $.ajaxSetup({
   }
 });
 
+/**
+ * Creates a Toast on the top right of the page
+ *
+ * @author Oliver G.
+ * @file app.js
+ * @version 1.1.0
+ */
 globalToast = function(heading, text, icon, color) {
   'use strict';
   $.toast({
@@ -18,7 +84,14 @@ globalToast = function(heading, text, icon, color) {
     position: 'top-right'
   })
 };
-  
+
+/**
+ * Basic select2 on the website
+ *
+ * @author Oliver G.
+ * @file app.js
+ * @version 1.1.0
+ */  
 (function($) {
   'use strict';
 
@@ -30,6 +103,13 @@ globalToast = function(heading, text, icon, color) {
   }
 })(jQuery);
 
+/**
+ * Bootstrap tooltip
+ *
+ * @author Oliver G.
+ * @file app.js
+ * @version 1.1.0
+ */  
 (function($) {
   'use strict';
 
@@ -64,6 +144,13 @@ globalToast = function(heading, text, icon, color) {
   });
 })(jQuery);
 
+/**
+ * Rating bar 1-5
+ *
+ * @author Oliver G.
+ * @file app.js
+ * @version 1.1.0
+ */  
 (function($) {
   'use strict';
 
@@ -105,6 +192,13 @@ globalToast = function(heading, text, icon, color) {
 
 })(jQuery);
 
+/**
+ * Defining Webpage Elements
+ *
+ * @author Oliver G.
+ * @file app.js
+ * @version 1.1.0
+ */  
 $(".ajax_search_member-class").select2({
     placeholder: "Search by Website ID, Name or Unit Number",
     allowClear: true
