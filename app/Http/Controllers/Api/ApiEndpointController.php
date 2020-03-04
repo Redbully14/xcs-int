@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Activity;
 use App\Discipline;
 use App\Http\Resources\ApiError;
+use App\Settings;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,22 @@ class ApiEndpointController extends Controller
                         'totalActivity' => Activity::count(),
                         'totalUsers' => User::count()
                     ]))->response()->setStatusCode(200);
+                    break;
+
+                // Get all quicklinks
+                case 'quicklinks':
+                    $quicklinks = Settings::where('type', '=', 'quicklink')->get();
+
+                    $quicklinks = json_decode($quicklinks);
+                    $array = [];
+                    $count = 0;
+
+                    foreach($quicklinks as $quicklink) {
+                        $array[$count] = json_decode($quicklink->metadata);
+                        $count++;
+                    }
+
+                    return (new Api($array))->response()->setStatusCode(200);
                     break;
 
                 // Pull a specific user's data - SIT+
