@@ -19,15 +19,6 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| REMOVE THESE FOLLOWING ROUTES BEFORE THE APPLICATION GOES INTO PRODUCTION
-|--------------------------------------------------------------------------
-|
-*/
-Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
-Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
-
-/*
-|--------------------------------------------------------------------------
 | Main Website Routes
 |--------------------------------------------------------------------------
 |

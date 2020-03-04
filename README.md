@@ -114,20 +114,9 @@ $ php artisan serve
 
 ### (Optional) Logging in, the easy way:
 
-Because the users table is empty, there is no way to actually log into the application, therefor, without seeding the database, there is an alternative that is already made in the system that will automatically plant two users into your application, both with superadmin access.
+Because the users table is empty, there is no way to actually log into the application, therefor, without seeding the database.
 
-Visiting the link: http://127.0.0.1:8000/oliver will create the two users for you.
-
-Once that has been completed, you are able to login with the following login information:
-```
-Username: antelope
-Password: password
-
-OR
-
-Username: redbully14
-Password: password
-```
+As of the official release of 1.0.0 of this application, making the first two accounts on the website has been deleted for security reasons.
 
 ## License
 
