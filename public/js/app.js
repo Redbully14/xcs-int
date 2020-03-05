@@ -57,8 +57,7 @@
 |
 */
 
-var getURL = window.location;
-const baseURL = getURL .protocol + "//" + getURL.host + "/" + getURL.pathname.split('/')[1];
+const baseURL = location.protocol + '//' + location.host;
 
 $.ajaxSetup({
   headers: {

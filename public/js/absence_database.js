@@ -5,7 +5,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "desc" ]],
-     ajax: $url_absence_archive,
+     ajax: baseURL + '/absence/datatable/2',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
@@ -26,7 +26,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "asc" ]],
-     ajax: $url_absence_awaiting_approval,
+     ajax: baseURL + '/absence/datatable/0',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
@@ -62,7 +62,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "asc" ]],
-     ajax: $url_absence_active,
+     ajax: baseURL + '/absence/datatable/1',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
