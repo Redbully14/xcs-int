@@ -151,7 +151,7 @@
                 <h6 class="text-muted font-weight-normal">Currently overdue</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                <i class="icon-lg mdi mdi-monitor text-danger ml-auto"></i>
+                <i class="icon-lg mdi mdi-clock-alert text-danger ml-auto"></i>
               </div>
             </div>
           </div>
