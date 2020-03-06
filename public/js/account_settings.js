@@ -43,7 +43,7 @@ $('#ajax_change_password').on('submit', function(e) {
 
   $.ajax({
     type: 'POST',
-    url: $url_change_password,
+    url: baseURL + '/settings/change_password/',
     data: {current_password:current_password, new_password:new_password, new_confirm_password:new_confirm_password},
     success: function() {
       showSuccessToast_ChangePassword();
@@ -104,7 +104,7 @@ $('#ajax_change_avatar').on('submit', function(e) {
 
   $.ajax({
     type: 'POST',
-    url: $url_change_avatar,
+    url: baseURL + '/settings/change_avatar/',
     data: {avatar:avatar},
     success: function() {
       var toast_heading = "Avatar Changed!";
@@ -129,7 +129,7 @@ $('#ajax_change_timezone').on('submit', function(e) {
 
   $.ajax({
     type: 'POST',
-    url: $url_change_timezone,
+    url: baseURL + '/settings/change_timezone/',
     data: {timezone:timezone},
     success: function() {
       var toast_heading = "Timezone Changed!";

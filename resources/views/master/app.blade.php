@@ -106,12 +106,6 @@
     <script src="/js/app.js"></script>
     <!-- End XCS-Int Javascript-->
 
-    <!-- page:js -->
-    <script type="text/javascript">
-        var $url_clear_notifications = "{{ url('/notifications/clearall') }}";
-    </script>
-    <!-- endinject -->
-
     <!-- inject:js -->
     <script src="/assets/js/misc.js"></script>
     <script src="/assets/js/settings.js"></script>

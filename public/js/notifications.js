@@ -1,7 +1,7 @@
 function clearAllNotifications() {
 	$.ajax({
 	  type: 'POST',
-	  url: $url_clear_notifications,
+	  url: baseURL + '/notifications/clearall_center',
 	  success: function(data) {
 	    $("#notificationAlert").hide();
 	  },
