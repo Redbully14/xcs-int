@@ -488,8 +488,16 @@ return [
     ],
     
     'patrol_area' => [
-        'BC' => 'Blaine County',
-        'LS' => 'Los Santos',
+        'LS1' => 'LS - Del Perro, Vespucci, Rockford, Little Seoul',
+        'LS2' => 'LS - Richman, Vinewood Hills, Vinewood',
+        'LS3' => 'LS - East Los Santos, Palomino, Tataviam',
+        'LS4' => 'LS - LSIA, Port of Los Santos, La Puerta',
+        'LS5' => 'LS - Downtown & South Los Santos',
+        'BC1' => 'BC - Chumash & The West Coast',
+        'BC2' => 'BC - Paleto Bay, Chiliad & Josiah',
+        'BC3' => 'BC - Grapeseed, San Chianski & Gordo',
+        'BC4' => 'BC - The Town of Sandy Shores',
+        'BC5' => 'BC - Senora, Harmony, Great Chaparral',
     ],
 
     'quicklink_types' => [
