@@ -92,31 +92,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Antelope Member Status Colors
+    | Antelope Status
     |--------------------------------------------------------------------------
     |
-    | Antelope Member Status Colors Constant defines the type of color that
-    | that would reflect a member when access is marked as either active or
-    | inactive on the website.
-    |
-    */
-    'antelope_status_color' => [
-        true => 'success',
-        false => 'danger',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Antelope Member Status Text
-    |--------------------------------------------------------------------------
-    |
-    | Antelope Member Status Colors Constant defines the type of text that
-    | would appear on the website when searching up a member.
+    | Antelope Status defines their ANTELOPE profile status, this usually
+    | means if the profile is activated or deactivated.
     |
     */
     'antelope_status_text' => [
         true => 'Profile Activated',
         false => 'Profile Deactivated',
+    ],
+
+    'antelope_status_color' => [
+        true => 'success',
+        false => 'danger',
     ],
 
     /*
@@ -140,15 +130,6 @@ return [
         'guest' => 'Guest Access',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Auth Levels
-    |--------------------------------------------------------------------------
-    |
-    | Auth Levels show what type of level each role is, this should only be
-    | changed if you really know what you are doing. 
-    |
-    */
     'access_level' => [
         'superadmin' => 8,
         'admin' => 7,
@@ -160,15 +141,6 @@ return [
         'guest' => 1,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Auth Colors
-    |--------------------------------------------------------------------------
-    |
-    | Auth Colors are mainly for customization only, it doesn't use RGB so
-    | don't change anything if you really know what you are doing. 
-    |
-    */
     'access_color' => [
         'superadmin' => 'info',
         'admin' => 'danger',
@@ -352,15 +324,6 @@ return [
         'absent' => 'LOA',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Department Status Colors
-    |--------------------------------------------------------------------------
-    |
-    | Colors for status that will be displayed on users profiles, this is not
-    | RGB so do not change it if you don't know what you're doing.
-    |
-    */
     'department_status_colors' => [
         'active' => 'success',
         'inactive' => 'danger',
