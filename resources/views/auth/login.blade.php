@@ -21,6 +21,16 @@
     <link rel="shortcut icon" href="/assets/images/xcs-int/{{ $constants['global']['application_favicon'] }}" />
   </head>
   <body>
+    @if($constants['announcement']['enabled'] && $constants['announcement']['visible']['login_page'])
+    <!-- main-panel-announcement begins -->
+    <div class="main-panel-announcement bg-{{ $constants['announcement']['content']['background-color'] }}">
+      @if($constants['announcement']['content']['icon'])
+      <i class="{{ $constants['announcement']['content']['icon'] }}"></i> 
+      @endif
+      {{ $constants['announcement']['content']['content'] }}
+    </div>
+    <!-- main-panel-announcement ends -->
+    @endif
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="row w-100" style="margin-left: 0px">

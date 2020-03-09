@@ -26,6 +26,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global Website Announcement
+    |--------------------------------------------------------------------------
+    |
+    | This controls the global website announcement that will be shown on every
+    | page of the website.
+    |
+    */
+    'announcement' => [
+        'enabled' => false,
+        'visible' => [
+            'main_application' => false,
+            'public_roster' => false,
+            'login_page' => false,
+        ],
+        'content' => [
+            'icon' => 'fab fa-asymmetrik rotate-n-15',
+            'background-color' => 'info',
+            'content' => 'Enter the contect for the announcement here!',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | System Calculations
     |--------------------------------------------------------------------------
     |

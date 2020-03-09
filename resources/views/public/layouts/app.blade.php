@@ -50,6 +50,19 @@
       </div>
       <!-- end:partial -->
 
+        @if($constants['announcement']['enabled'] && $constants['announcement']['visible']['public_roster'])
+        <!-- main-panel-announcement begins -->
+        <div class="main-panel-announcement bg-{{ $constants['announcement']['content']['background-color'] }}">
+          <div class="container">
+          @if($constants['announcement']['content']['icon'])
+          <i class="{{ $constants['announcement']['content']['icon'] }}"></i> 
+          @endif
+          {{ $constants['announcement']['content']['content'] }}
+          </div>
+        </div>
+        <!-- main-panel-announcement ends -->
+        @endif
+
       <div class="container-fluid page-body-wrapper">
 
         @yield('content')

@@ -60,6 +60,17 @@
 
         <div class="main-panel">
 
+        @if($constants['announcement']['enabled'] && $constants['announcement']['visible']['main_application'])
+        <!-- main-panel-announcement begins -->
+        <div class="main-panel-announcement bg-{{ $constants['announcement']['content']['background-color'] }}">
+          @if($constants['announcement']['content']['icon'])
+          <i class="{{ $constants['announcement']['content']['icon'] }}"></i> 
+          @endif
+          {{ $constants['announcement']['content']['content'] }}
+        </div>
+        <!-- main-panel-announcement ends -->
+        @endif
+
           <!-- content-wrapper begins -->
           @yield('content')
           <!-- content-wrapper ends -->
