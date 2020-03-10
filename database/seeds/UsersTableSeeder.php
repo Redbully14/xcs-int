@@ -15,8 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'antelope',
-            'password' => Hash::make('password'),
+            'username' => env('SUPERADMIN_USERNAME', 'antelope'),
+            'password' => Hash::make(env('SUPERADMIN_PASSWORD' ,'password')),
             'name' => 'AntelopePHP',
             'rank' => 'other_guest',
             'website_id' => 1,

@@ -34,16 +34,16 @@ return [
     |
     */
     'announcement' => [
-        'enabled' => false,
+        'enabled' => true,
         'visible' => [
-            'main_application' => false,
-            'public_roster' => false,
-            'login_page' => false,
+            'main_application' => true,
+            'public_roster' => true,
+            'login_page' => true,
         ],
         'content' => [
             'icon' => 'fab fa-asymmetrik rotate-n-15',
             'background-color' => 'info',
-            'content' => 'Enter the contect for the announcement here!',
+            'content' => 'Development Enviroment - All data on this website is testing data, any and all data can be modified, changed, destroyed or broken.',
         ],
     ],
 
