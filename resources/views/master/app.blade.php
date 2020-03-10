@@ -12,6 +12,7 @@
 
     <!-- Global Plugin CSS -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/vendors/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
