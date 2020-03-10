@@ -498,4 +498,13 @@ return [
             'color' => 'danger',
         ],
     ],
+
+    'font_colors' => [
+        'info',
+        'danger',
+        'warning',
+        'success',
+        'primary',
+        'light',
+    ],
 ];

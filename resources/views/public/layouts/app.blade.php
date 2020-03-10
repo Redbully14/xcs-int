@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="/assets/vendors/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css">
     <!-- End plugin css for this page -->
 
     <!-- inject:css -->

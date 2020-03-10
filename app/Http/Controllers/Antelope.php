@@ -16,8 +16,10 @@ use App\Http\Controllers\AntelopeCalculate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\Promotion;
 use App\Notifications\NewUnitNumber;
+use App\Notifications\CustomSANotify;
 
 class Antelope extends Controller
 {
@@ -304,6 +306,20 @@ class Antelope extends Controller
     public function superAdminIcons()
     {
         return view('developers.superadmin_icons')->with('constants', $this->constants);
+    }
+
+    /**
+     * Backend sub-controller for the superadmin->icons2 module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    public function superAdminIcons2()
+    {
+        return view('developers.superadmin_icons2')->with('constants', $this->constants);
     }
 
     /**
@@ -617,5 +633,25 @@ class Antelope extends Controller
         $user->save();
 
         return;
+    }
+
+    /**
+     * Send a notification to all users on the website
+     *
+     * @author Oliver G.
+     * @return redirect
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    public function superAdminNotify(Request $request)
+    {
+        Log::notice(auth()->user()->id." has sent a notification to all members on the website.");
+
+        $users = User::where('antelope_status', '=', true)->get();
+
+        Notification::send($users, new CustomSANotify($request['title'], $request['text'], $request['icon'], $request['color']));
+
+        return redirect()->route('superadmin');
     }
 }
