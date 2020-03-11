@@ -336,6 +336,8 @@ class Antelope extends Controller
     {
         auth()->user()->impersonate(User::find($request->id));
 
+        Log::notice(auth()->user()->id.' is entering godmode for user '.$request->id);
+
         return response()->json([
           'redirect_to' => route('dashboard')
         ]); 

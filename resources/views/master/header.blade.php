@@ -1,6 +1,6 @@
 <nav class="navbar p-0 fixed-top d-flex flex-row">
   <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo-mini" href="/" id='xcs-header'><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i></a>
+    <a class="navbar-brand brand-logo-mini text-{{ $constants['global']['application_color'] }}" href="/" id='xcs-header'><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i></a>
   </div>
   <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">

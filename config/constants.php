@@ -19,6 +19,8 @@ return [
         'application_subname' => env('APP_SUBNAME', 'PHP'),
         'application_version' => '1.0.0',
         'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
+        'application_enviroment' => env('APP_ENV', 'local'),
+        'application_color' => env('APP_COLOR', 'success'),
         // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',
         'application_favicon' => 'favicon.png',
