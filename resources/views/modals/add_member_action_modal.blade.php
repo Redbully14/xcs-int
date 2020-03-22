@@ -1,5 +1,3 @@
-@inject('baseXCS', 'App\Http\Controllers\BaseXCS')
-
 @if(Auth::user()->level() >= $constants['access_level']['admin'])
 <!-- Adding a Member - Modal -->
 <div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
@@ -23,7 +21,7 @@
             <div class="form-group">
               <label>Username</label><sup class="text-danger">*</sup>
               <div class="input-group" data-target-input="nearest">
-                <input type="text" class="form-control p_input" require id="username" name="username" value="{{ $baseXCS::generateUsername() }}" autocomplete="off" >
+                <input type="text" class="form-control p_input" require id="username" name="username" placeholder="sahpjohnd" autocomplete="off" >
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-secondary" type="button" id="add_generate_username"><i class="mdi mdi-reload"></i></button>
                 </div>
@@ -34,7 +32,7 @@
             <div class="form-group">
               <label>Temporary Password</label><sup class="text-danger">*</sup>
               <div class="input-group" data-target-input="nearest">
-                <input type="text" class="form-control p_input" require id="password" name="password" autocomplete="off" value="{{ $baseXCS::randomPassword() }}">
+                <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="off" placeholder="********">
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-secondary" type="button" id="add_generate_password"><i class="mdi mdi-reload"></i></button>
                 </div>
@@ -44,7 +42,7 @@
 
             <div class="form-group">
               <label>{{ $constants['department']['department_callsign'] }}</label>
-              <input type="text" class="form-control p_input" require id="department_id" name="department_id" placeholder="Civ-412">
+              <input type="text" class="form-control p_input" require id="department_id" name="department_id" placeholder="5D or 5S-123">
               <label id="add-department_id-error" class="error mt-2 text-danger" for="department_id" hidden></label>
             </div>
 

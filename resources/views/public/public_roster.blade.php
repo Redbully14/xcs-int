@@ -124,7 +124,7 @@ table {
 		<h2>Department Members</h2>
 	</div>
 	<div class="row">
-		<h3>Senior Members</h1>
+		<h3>BPS Instructors</h1>
 	</div>
 	<div class="row">
 		<div class="col-12">

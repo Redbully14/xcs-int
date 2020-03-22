@@ -64,8 +64,8 @@ return [
         'custom_one_week' => 604800, // Set one week here (default 7 days)
         'custom_one_month' => 2678400, // Set one month here (default 31 days)
         'custom_two_month' => 5356800, // Set two month here (default 62 days)
-        'min_requirements_logs' => 4, // 4 logs required
-        'min_requirements_hours' => 14400, // 4 hours required
+        'min_requirements_logs' => 1, // 1 logs required
+        'min_requirements_hours' => 28800, // 5 hours required
         'patrol_restriction_90' => 604800, // 1 week
         'patrol_restriction_93' => 1209600, // 2 weeks
         'recent_loa' => 604800, // 1 week
@@ -82,11 +82,11 @@ return [
     |
     */
     'department' => [
-        'department_name' => env('DEPARTMENT_NAME', 'Civilian Operations'),
-        'department_short_name' => env('DEPARTMENT_SHORT_NAME', 'Civilians'),
-        'department_unit_name' => env('DEPARTMENT_UNIT_NAME', 'Civilian'),
-        'department_callsign' => env('DEPARTMENT_CALLSIGN', 'Civilian Number'),
-        'department_director' => env('DEPARTMENT_DIRECTOR', 'Ryan S. Civ-1'),
+        'department_name' => env('DEPARTMENT_NAME', 'San Andreas Highway Patrol'),
+        'department_short_name' => env('DEPARTMENT_SHORT_NAME', 'SAHP'),
+        'department_unit_name' => env('DEPARTMENT_UNIT_NAME', 'Trooper'),
+        'department_callsign' => env('DEPARTMENT_CALLSIGN', 'Unit Number'),
+        'department_director' => env('DEPARTMENT_DIRECTOR', 'Devon C. 5E-1'),
     ],
 
     /*
@@ -150,7 +150,7 @@ return [
         'seniorstaff' => 'Senior Staff Access',
         'staff' => 'Staff Access',
         'sit' => 'Staff in Training Access',
-        'intern' => 'Intern Access',
+        'cmt' => 'Chief Master Trooper Access',
         'member' => 'Member Access',
         'guest' => 'Guest Access',
     ],
@@ -161,7 +161,7 @@ return [
         'seniorstaff' => 6,
         'staff' => 5,
         'sit' => 4,
-        'intern' => 3,
+        'cmt' => 3,
         'member' => 2,
         'guest' => 1,
     ],
@@ -172,7 +172,7 @@ return [
         'seniorstaff' => 'danger',
         'staff' => 'warning',
         'sit' => 'primary',
-        'intern' => 'primary',
+        'cmt' => 'primary',
         'member' => 'primary',
         'guest' => 'light',
     ],
@@ -188,73 +188,73 @@ return [
     |
     */
     'rank' => [
-        'director' => 'Civilian Director',
-        'deputy_director' => 'Civilian Deputy Director',
-        'chief_of_staff' => 'Civilian Chief of Staff',
-        'deputy_chief_of_staff' => 'Civilian Deputy Chief of Staff',
-        'secretary_of_staff' => 'Civilian Secretary of Staff',
-        'manager' => 'Civilian Manager',
-        'assistant_manager' => 'Civilian Assistant Manager',
-        'senior_supervisor' => 'Civilian Senior Supervisor',
-        'supervisor' => 'Civilian Supervisor',
-        'assistant_supervisor' => 'Civilian Assistant Supervisor',
-        'senior_advisor' => 'Civilian Senior Advisor',
-        'advisor' => 'Civilian Advisor',
-        'intern' => 'Civilian Intern',
-        'master_civilian' => 'Master Civilian',
-        'senior_civilian' => 'Senior Civilian',
-        'civilian3' => 'Civilian',
-        'civilian2' => 'Junior Civilian',
-        'civilian1' => 'Novice Civilian',
-        'probationary' => 'Probationary Civilian',
-        'reserve_senior' => 'Senior Civilian Reserve',
-        'reserve_civilian' => 'Civilian Reserve',
-        'reserve_probationary' => 'Probationary Civilian Reserve',
-        'media_four' => 'Civilian Media IV',
-        'media_three' => 'Civilian Media III',
-        'media_two' => 'Civilian Media II',
-        'media_one' => 'Civilian Media I',
+        'commissioner' => 'Commissioner',
+        'deputy_commissioner' => 'Deputy Commissioner',
+        'asst_commissioner' => 'Assistant Commissioner',
+        'chief' => 'Chief',
+        'asst_chief' => 'Assistant Chief',
+        'captain' => 'Captain',
+        'lieutenant' => 'Lieutenant',
+        'master_sergeant' => 'Master Sergeant',
+        'staff_sergeant' => 'Staff Sergeant',
+        'sergeant' => 'Sergeant',
+        'senior_corporal' => 'Senior Corporal',
+        'corporal' => 'Corporal',
+        'chief_master_trooper' => 'Chief Master Trooper',
+        //'master_civilian' => 'Master Trooper',
+        'master_trooper' => 'Master Trooper',
+        'senior_trooper' => 'Senior Trooper',
+        'trooper_first_class' => 'Trooper First Class',
+        'trooper' => 'Trooper',
+        'probationary' => 'Probationary Trooper',
+        'reserve_master' => 'Master Auxiliary Trooper',
+        'reserve_senior' => 'Senior Auxiliary Trooper',
+        'reserve_probationary' => 'Auxiliary Trooper',
+        'media_four' => 'SAHP Media IV',
+        'media_three' => 'SAHP Media III',
+        'media_two' => 'SAHP Media II',
+        'media_one' => 'SAHP Media I',
         'other_admin' => 'DoJ Administration',
         'ia' => 'Internal Affairs',
-        'other_guest' => 'Civilian Guest',
+        'other_guest' => 'Highway Guest',
     ],
 
     'rank_groups' => [
 
         'admin' => [
-            'director',
-            'deputy_director',
-            'chief_of_staff',
-            'deputy_chief_of_staff',
-            'secretary_of_staff',
+            'commissioner',
+            'deputy_commissioner',
+            'asst_commissioner',
+            'chief',
+            'asst_chief',
         ],
 
         'senior_staff' => [
-            'manager',
-            'assistant_manager',
+            'captain',
+            'lieutenant',
         ],
 
         'staff' => [
-            'senior_supervisor',
-            'supervisor',
-            'assistant_supervisor',
+            'master_sergeant',
+            'staff_sergeant',
+            'sergeant',
         ],
 
         'sit' => [
-            'senior_advisor',
-            'advisor',
+            'senior_corporal',
+            'corporal',
         ],
 
         'senior_member' => [
-            'intern',
-            'master_civilian',
-            'senior_civilian',
+            'chief_master_trooper',
+            //'master_civilian',
         ],
 
         'member' => [
-            'civilian3',
-            'civilian2',
-            'civilian1',
+	    'master_trooper',
+            'senior_trooper',
+            'trooper_first_class',
+            'trooper',
         ],
 
         'probationary_member' => [
@@ -262,8 +262,8 @@ return [
         ],
 
         'reserve' => [
+            'reserve_master',
             'reserve_senior',
-            'reserve_civilian',
             'reserve_probationary',
         ],
 
@@ -282,28 +282,28 @@ return [
     ],
 
     'rank_level' => [
-        'director' => 999,
-        'deputy_director' => 170,
-        'chief_of_staff' => 160,
-        'deputy_chief_of_staff' => 150,
-        'secretary_of_staff' => 140,
-        'manager' => 130,
-        'assistant_manager' => 120,
-        'senior_supervisor' => 110,
-        'supervisor' => 100,
-        'assistant_supervisor' => 90,
-        'senior_advisor' => 80,
-        'advisor' => 70,
-        'intern' => 60,
+        'commissioner' => 999,
+        'deputy_commissioner' => 170,
+        'asst_commissioner' => 160,
+        'chief' => 150,
+        'asst_chief' => 140,
+        'captain' => 130,
+        'lieutenant' => 120,
+        'master_sergeant' => 110,
+        'staff_sergeant' => 100,
+        'sergeant' => 90,
+        'senior_corporal' => 80,
+        'corporal' => 70,
+        'chief_master_trooper' => 60,
         'master_civilian' => 50,
-        'senior_civilian' => 40,
-        'civilian3' => 30,
-        'civilian2' => 20,
-        'civilian1' => 10,
+        'master_trooper' => 40,
+        'senior_trooper' => 30,
+        'trooper_first_class' => 20,
+        'trooper' => 10,
         'probationary' => 0,
         // Reserve Ranks
-        'reserve_senior' => 40,
-        'reserve_civilian' => 20,
+        'reserve_master' => 40,
+        'reserve_senior' => 20,
         'reserve_probationary' => 0,
         // Media Ranks
         'media_four' => 40,

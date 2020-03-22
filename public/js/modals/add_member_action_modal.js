@@ -50,7 +50,7 @@ $('#add_member_clipboard').on('click', function(e) {
       var website_id = direm[6];
 
       // safety check
-      if (direm[0] == "Active" || direm[0] == "Update Roster") {
+      if (direm[0] == "Active" or direm[0] == "Update Roster") {
         $.ajax({
           type: 'POST',
           url: $url_clipboard_url,
@@ -90,7 +90,7 @@ memberCreatedSwal = function(data) {
       content: {
         element: "textarea",
         attributes: {
-          value: "This login information is used to access the Civilian Operations Digital System where you will be logging all of your patrol logs and will have access to all of your information.\n\nWebsite: "+$base_url+"\nUsername: "+data['username']+"\nPassword: "+data['password'],
+          value: "This login information is used to access the CHIPPER Digital System where you will be logging all of your patrol logs and will have access to all of your current information.\n\nWebsite: "+$base_url+"\nUsername: "+data['username']+"\nPassword: "+data['password'],
           rows: "6",
           disabled: "disabled",
         },

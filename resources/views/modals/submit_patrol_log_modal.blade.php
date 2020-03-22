@@ -71,7 +71,7 @@
               <label id="patrol-details-error" class="error mt-2 text-danger" for="patrol-details" hidden></label>
             </div>
               <div class="form-group">
-                  <label>How many priorities did you do?<sup class="text-danger">*</sup></label>
+                  <label>How many calls were you a part of?<sup class="text-danger">*</sup></label>
                   <div class="input-group" id="patrol-priorities2" data-target-input="nearest">
                       <input type="number" class="form-control" id="patrol-priorities" required>
                       <div class="input-group-addon input-group-append"><i class=" mdi mdi-apple-keyboard-caps input-group-text"></i></div>

@@ -312,8 +312,8 @@
                           <div class="col-sm">
                               <span>
 							    <div>
-							      @if(Auth::user()->level() >= $constants['access_level']['sit'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['sit']) && $user_data['id'] != Auth::user()->id)
-								    <button class="btn btn-danger" id="ajax_add_disciplinary_action-button" value="{{ $user_data['id'] }}" disabled><i class="mdi mdi-gavel"></i> Discipline member </button>
+							      @if(Auth::user()->level() >= $constants['access_level']['staff'] && (Auth::user()->level() > $role[0]['level'] or Auth::user()->level() >= $constants['access_level']['staff']) && $user_data['id'] != Auth::user()->id)
+								    <button class="btn btn-danger" id="ajax_add_disciplinary_action-button" value="{{ $user_data['id'] }}"><i class="mdi mdi-gavel"></i> Discipline member </button>
 							      @else
 								    <button class="btn btn-secondary" id="ajax_add_disciplinary_action-button" disabled><i class="mdi mdi-gavel"></i> Discipline member </button>
 								  @endif

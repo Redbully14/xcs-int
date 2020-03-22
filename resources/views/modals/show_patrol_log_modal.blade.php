@@ -104,7 +104,7 @@
                   </div>
                   
                   <div class="form-group">
-                      <label>Patrol Priorities</label>
+                      <label>Total Calls</label>
                       <div class="input-group" id="ajax-input-patrol-priorities2" data-target-input="nearest">
                         <input type="number" class="form-control" id="ajax-input-patrol-priorities" disabled>
                         <div class="input-group-addon input-group-append"><i class=" mdi mdi-apple-keyboard-caps input-group-text"></i></div>
