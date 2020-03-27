@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,36 +14,19 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $userRole = config('roles.models.role')::where('name', '=', 'User')->first();
-        $adminRole = config('roles.models.role')::where('name', '=', 'Admin')->first();
-        $permissions = config('roles.models.permission')::all();
+        DB::table('users')->insert([
+            'username' => env('SUPERADMIN_USERNAME', 'antelope'),
+            'password' => Hash::make(env('SUPERADMIN_PASSWORD' ,'password')),
+            'name' => 'AntelopePHP',
+            'rank' => 'other_guest',
+            'website_id' => 1,
+            'department_id' => null,
+            'temp_password' => 0,
+        ]);
 
-        /*
-         * Add Users
-         *
-         */
-        if (config('roles.models.defaultUser')::where('email', '=', 'admin@admin.com')->first() === null) {
-            $newUser = config('roles.models.defaultUser')::create([
-                'name'     => 'Admin',
-                'email'    => 'admin@admin.com',
-                'password' => bcrypt('password'),
-            ]);
-
-            $newUser->attachRole($adminRole);
-            foreach ($permissions as $permission) {
-                $newUser->attachPermission($permission);
-            }
-        }
-
-        if (config('roles.models.defaultUser')::where('email', '=', 'user@user.com')->first() === null) {
-            $newUser = config('roles.models.defaultUser')::create([
-                'name'     => 'User',
-                'email'    => 'user@user.com',
-                'password' => bcrypt('password'),
-            ]);
-
-            $newUser;
-            $newUser->attachRole($userRole);
-        }
+        DB::table('role_user')->insert([
+            'role_id' => 1,
+            'user_id' => 1,
+        ]);
     }
 }

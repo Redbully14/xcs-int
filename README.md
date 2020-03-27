@@ -36,6 +36,7 @@ APP_ENV=local
 APP_KEY=base64:FGwRL2VvWImG3kPyO4coNAwZ9Kmf9tl7gkiL9fTotwA=
 APP_DEBUG=true
 APP_URL=http://localhost
+APP_COLOR=white
 
 DEPARTMENT_NAME="Civilian Operations"
 DEPARTMENT_SHORT_NAME=Civilians
@@ -43,16 +44,8 @@ DEPARTMENT_UNIT_NAME=Civilian
 DEPARTMENT_CALLSIGN="Civilian Number"
 DEPARTMENT_DIRECTOR="Ryan S. Civ-1"
 
-LOG_CHANNEL=stack
-LOG_DISCORD_WEBHOOK_URL=https://discordapp.com/api/webhooks/abcd/1234
-LOG_DB_CONNECTION='default'
-LOG_DB_DETAILED=false
-LOG_DB_MAX=100
-LOG_DB_QUEUE=false
-LOG_DB_QUEUE_NAME='logToDBQueue'
-LOG_DB_QUEUE_CONNECTION='default'
-LOG_DB_MAX_COUNT=false
-LOG_DB_MAX_HOURS=false
+SUPERADMIN_USERNAME=antelope
+SUPERADMIN_PASSWORD=password
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -60,6 +53,19 @@ DB_PORT=3306
 DB_DATABASE=xcs-int
 DB_USERNAME=root
 DB_PASSWORD=
+
+ROUTE_INVESTIGATIVE_SEARCH_KEY=NO_KEY_SET
+
+LOG_CHANNEL=stack
+LOG_DISCORD_WEBHOOK_URL=https://discordapp.com/api/webhooks/abcd/1234
+LOG_DB_CONNECTION='default'
+LOG_DB_DETAILED=false
+LOG_DB_MAX=100
+LOG_DB_QUEUE=true
+LOG_DB_QUEUE_NAME='logToDBQueue'
+LOG_DB_QUEUE_CONNECTION='default'
+LOG_DB_MAX_COUNT=false
+LOG_DB_MAX_HOURS=false
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
@@ -90,9 +96,6 @@ PUSHER_APP_CLUSTER=mt1
 
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-
-
-ROUTE_INVESTIGATIVE_SEARCH_KEY=NO_KEY_SET
 ```
 
 Afterwards, create a database with the name **xcs-int**.
@@ -112,20 +115,13 @@ Finally, start the development server:
 $ php artisan serve
 ```
 
-### (Optional) Logging in, the easy way:
+### Logging in:
 
-Because the users table is empty, there is no way to actually log into the application, therefor, without seeding the database, there is an alternative that is already made in the system that will automatically plant two users into your application, both with superadmin access.
+As of the official release of 1.0.0 of this application, making the first two accounts on the website has been deleted for security reasons.
 
-Visiting the link: http://127.0.0.1:8000/oliver will create the two users for you.
-
-Once that has been completed, you are able to login with the following login information:
+If you have done everything above correctly, simply use the following information below to login:
 ```
 Username: antelope
-Password: password
-
-OR
-
-Username: redbully14
 Password: password
 ```
 

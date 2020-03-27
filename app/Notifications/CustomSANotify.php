@@ -4,19 +4,24 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class Promotion extends Notification
+class CustomSANotify extends Notification
 {
-    public $rank;
+    public $title;
+    public $text;
+    public $icon;
+    public $color;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($rank)
+    public function __construct($title, $text, $icon, $color)
     {
-        $this->rank = $rank;
-        $this->constants = \Config::get('constants');
+        $this->title = $title;
+        $this->text = $text;
+        $this->icon = $icon;
+        $this->color = $color;
     }
 
     /**
@@ -39,10 +44,10 @@ class Promotion extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Promoted',
-            'text' => 'You have been promoted to '.$this->constants['rank'][$this->rank].".",
-            'icon' => 'mdi mdi-trophy-award',
-            'color' => 'warning',
+            'title' => $this->title,
+            'text' => $this->text,
+            'icon' => $this->icon,
+            'color' => $this->color,
         ];
     }
 }

@@ -5,7 +5,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "desc" ]],
-     ajax: $url_absence_archive,
+     ajax: baseURL + '/absence/datatable/2',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
@@ -26,7 +26,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "asc" ]],
-     ajax: $url_absence_awaiting_approval,
+     ajax: baseURL + '/absence/datatable/0',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
@@ -62,7 +62,7 @@ $(function() {
      serverSide: true,
      searching: false,
      order: [[ 0  , "asc" ]],
-     ajax: $url_absence_active,
+     ajax: baseURL + '/absence/datatable/1',
      columns: [
       { data: 'id', name: 'id', render: function (data, type, row) {
         if(row['admin_approval']) {
@@ -101,7 +101,7 @@ awaiting_review_table.on('click', '#absence_btn_approve', function () {
   var id = $(this).val();
   $.ajax({
     type: 'POST',
-    url: $url_absence_btn_approve + id,
+    url: baseURL + '/absence/approve/' + id,
     success: function() {
       var toast_heading = "Leave of Absence Approved!";
       var toast_text = "The Leave of Absence has been approved.";
@@ -137,7 +137,7 @@ active_table.on('click', '#absence_btn_backtoqueue', function () {
 function archiveAbsence(id) {
   $.ajax({
     type: 'POST',
-    url: $url_absence_btn_archive + id,
+    url: baseURL + '/absence/archive/' + id,
     success: function() {
       var toast_heading = "Leave of Absence Archived!";
       var toast_text = "The Leave of Absence has been archived.";
@@ -152,7 +152,7 @@ function archiveAbsence(id) {
 function queueAbsence(id) {
   $.ajax({
     type: 'POST',
-    url: $url_absence_btn_queue + id,
+    url: baseURL + '/absence/queue/' + id,
     success: function() {
       var toast_heading = "Absence Sent to Queue!";
       var toast_text = "The Leave of Absence has been sent back to the reviewal queue for approval.";

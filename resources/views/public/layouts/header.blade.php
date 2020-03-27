@@ -1,7 +1,7 @@
   <nav class="navbar top-navbar col-lg-12 col-12 p-0">
     <div class="container">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="sidebar-brand brand-logo" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></a>
+        <a class="sidebar-brand brand-logo text-{{ $constants['global']['application_color'] }}" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav navbar-nav-right">

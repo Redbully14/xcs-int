@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top fixpaddingright">
-    <a class="sidebar-brand brand-logo" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></a>
-    <a class="sidebar-brand brand-logo-mini" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i></a>
+    <a class="sidebar-brand brand-logo text-{{ $constants['global']['application_color'] }}" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></a>
+    <a class="sidebar-brand brand-logo-mini text-{{ $constants['global']['application_color'] }}" href="/" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i></a>
   </div>
   <ul class="nav">
     <li class="nav-item profile">
@@ -12,7 +12,7 @@
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
-            <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}@if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }}@endif</h5>
+            <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }} @if(!is_null(Auth::user()->department_id)) {{ Auth::user()->department_id }} @endif</h5>
             <span style="max-width:134px; display: block; white-space: normal;">{{ $constants['rank'][Auth::user()->rank] }}</span>
             @impersonating
             <span style="max-width:134px; display: block; white-space: normal;" class="text-warning">Godmode</span>
@@ -98,7 +98,6 @@
       </a>
     </li>
     @endif
-    @if(Auth::user()->level() <= $constants['access_level']['member'])
     @if(Auth::user()->level() == $constants['access_level']['member'] or Auth::user()->level() == $constants['access_level']['intern'])
     <li class="nav-item menu-items">
       <a class="nav-link" href="/myprofile">

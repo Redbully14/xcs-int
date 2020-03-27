@@ -263,20 +263,6 @@ table {
 
 @section('injectjs')
 <script text="text/javascript">
-  var $url_admins = '{{ url('public/roster/admins') }}';
-  var $url_senior_staff = '{{ url('public/roster/seniorstaff') }}';
-  var $url_staff = '{{ url('public/roster/staff') }}';
-  var $url_staff_in_training = '{{ url('public/roster/staffintraining') }}';
-  var $url_senior_member = '{{ url('public/roster/seniormember') }}';
-  var $url_member = '{{ url('public/roster/member') }}';
-  var $url_probationary_member = '{{ url('public/roster/probationarymember') }}';
-  var $url_reserve = '{{ url('public/roster/reserve') }}';
-  var $url_media = '{{ url('public/roster/media') }}';
-
-  var $POST_url_name = '{{ url('internal_roster/edit/name') }}/';
-  var $POST_url_websiteid = '{{ url('internal_roster/edit/websiteid') }}/';
-  var $POST_url_callsign = '{{ url('internal_roster/edit/callsign') }}/';
-  var $POST_url_rank = '{{ url('internal_roster/edit/rank') }}/';
 
   function internal_roster_rankFieldInput(data, id) {
     var ranks = {

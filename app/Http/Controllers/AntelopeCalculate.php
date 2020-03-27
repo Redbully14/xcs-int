@@ -598,7 +598,7 @@ class AntelopeCalculate extends Controller
             if($start_date <= $today) {
                 if($today <= $end_date) {
                     return 'Active';
-                } else return 'Expired';
+                } else return 'Overdue';
             } else return 'Upcoming - '.date('Y-m-d', $start_date);
         } else return $constants['absence_status'][$absence->status];
     }
@@ -706,6 +706,30 @@ class AntelopeCalculate extends Controller
             $log = json_decode($log['flag']);
             $log = $log[0];
             if(($log[0] or $log[1]) and ($log[2] == false)) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+    /**
+     * Calculates and fetches the amount of absences that are flagged as overdue
+     *
+     * @author Oliver G.
+     * @return int $total
+     * @category AntelopeCalculate
+     * @version 1.0.0
+     */
+    public static function overdue_absences() {
+
+        $absences = Absence::where('status', '=', 1)->get();
+        $total = 0;
+        $today = strtotime(Carbon::now()->toDateString());
+
+        foreach($absences as $absence) {
+            $end_date = strtotime($absence->end_date);
+            if ($today >= $end_date) {
                 $total++;
             }
         }

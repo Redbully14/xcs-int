@@ -42,7 +42,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="new_username" style="vertical-align: middle;">New Username<i class="input-helper"></i><i class="input-helper"></i> <div class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" style="margin-left:2px;" title="This will be used by yourself to login into your account. Only administration has access to see this and you can set this to anything that you will most remember.">?</div></label>
+                    <label for="new_username" style="vertical-align: middle;">New Username<i class="input-helper"></i><i class="input-helper"></i> <div class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" style="margin-left:2px;" title="This will be used by yourself to login into your account. Only administration has access to see this and you can set this to anything that you will most remember. In case you are resetting your password, you can also use your old one.">?</div></label>
                     <input type="text" class="form-control" id="new_username" placeholder="New Username" autocomplete="off" required>
                     <label id="new_username-error" class="error mt-2 text-danger" for="new_username" hidden></label>
                   </div>

@@ -14,6 +14,7 @@
     <!-- endinject -->
 
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/assets/vendors/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
     <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/jquery-toast-plugin/jquery.toast.min.css">
     <link rel="stylesheet" href="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="/assets/vendors/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css">
     <!-- End plugin css for this page -->
 
     <!-- inject:css -->
@@ -49,6 +50,19 @@
         @include('public.layouts.navbar')
       </div>
       <!-- end:partial -->
+
+        @if($constants['announcement']['enabled'] && $constants['announcement']['visible']['public_roster'])
+        <!-- main-panel-announcement begins -->
+        <div class="main-panel-announcement bg-{{ $constants['announcement']['content']['background-color'] }}">
+          <div class="container">
+          @if($constants['announcement']['content']['icon'])
+          <i class="{{ $constants['announcement']['content']['icon'] }}"></i> 
+          @endif
+          {{ $constants['announcement']['content']['content'] }}
+          </div>
+        </div>
+        <!-- main-panel-announcement ends -->
+        @endif
 
       <div class="container-fluid page-body-wrapper">
 

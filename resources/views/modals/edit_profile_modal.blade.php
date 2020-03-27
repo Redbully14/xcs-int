@@ -66,7 +66,7 @@
                     @if(Auth::user()->level() >= $constants['access_level']['seniorstaff'])
                     <div class="form-group">
                       <label>Rank</label>
-                      <select class="js-example-basic-single" style="width:100%" id="profile-rank-field" name="rank">
+                      <select class="antelope_global_select_single-noclear" style="width:100%" id="profile-rank-field" name="rank">
                         @foreach($constants['rank'] as $rank => $value)
                           <option value="{{ $rank }}">{{ $value }}</option>
                         @endforeach
@@ -75,7 +75,7 @@
                     @else
                     <div class="form-group">
                       <label>Rank</label>
-                      <select class="js-example-basic-single" style="width:100%" id="profile-rank-field" name="rank" disabled>
+                      <select class="antelope_global_select_single-noclear" style="width:100%" id="profile-rank-field" name="rank" disabled>
                         @foreach($constants['rank'] as $rank => $value)
                           <option value="{{ $rank }}">{{ $value }}</option>
                         @endforeach

@@ -1,3 +1,5 @@
+@inject('baseXCS', 'App\Http\Controllers\BaseXCS')
+
 @if(Auth::user()->level() >= $constants['access_level']['admin'])
 <!-- Adding a Member - Modal -->
 <div class="modal fade" id="memberAddModal" tabindex="-1" role="dialog" aria-labelledby="memberAddModalLabel" aria-hidden="true">
@@ -21,7 +23,7 @@
             <div class="form-group">
               <label>Username</label><sup class="text-danger">*</sup>
               <div class="input-group" data-target-input="nearest">
-                <input type="text" class="form-control p_input" require id="username" name="username" placeholder="civjohnd" autocomplete="off" >
+                <input type="text" class="form-control p_input" require id="username" name="username" value="{{ $baseXCS::generateUsername() }}" autocomplete="off" >
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-secondary" type="button" id="add_generate_username"><i class="mdi mdi-reload"></i></button>
                 </div>
@@ -32,7 +34,7 @@
             <div class="form-group">
               <label>Temporary Password</label><sup class="text-danger">*</sup>
               <div class="input-group" data-target-input="nearest">
-                <input type="password" class="form-control p_input" require id="password" name="password" autocomplete="off" placeholder="********">
+                <input type="text" class="form-control p_input" require id="password" name="password" autocomplete="off" value="{{ $baseXCS::randomPassword() }}">
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-secondary" type="button" id="add_generate_password"><i class="mdi mdi-reload"></i></button>
                 </div>

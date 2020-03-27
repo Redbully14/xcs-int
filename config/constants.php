@@ -19,9 +19,34 @@ return [
         'application_subname' => env('APP_SUBNAME', 'PHP'),
         'application_version' => '1.0.0',
         'application_footer' => env('APP_FOOTER', 'Department of Justice RP'),
+        'application_enviroment' => env('APP_ENV', 'local'),
+        'application_color' => env('APP_COLOR', 'success'),
         // NON-ENV CONFIG:
         'application_icon' => 'fab fa-asymmetrik',
         'application_favicon' => 'favicon.png',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Website Announcement
+    |--------------------------------------------------------------------------
+    |
+    | This controls the global website announcement that will be shown on every
+    | page of the website.
+    |
+    */
+    'announcement' => [
+        'enabled' => false,
+        'visible' => [
+            'main_application' => false,
+            'public_roster' => false,
+            'login_page' => false,
+        ],
+        'content' => [
+            'icon' => 'fab fa-asymmetrik rotate-n-15',
+            'background-color' => 'info',
+            'content' => 'Enter the contect for the announcement here!',
+        ],
     ],
 
     /*
@@ -92,31 +117,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Antelope Member Status Colors
+    | Antelope Status
     |--------------------------------------------------------------------------
     |
-    | Antelope Member Status Colors Constant defines the type of color that
-    | that would reflect a member when access is marked as either active or
-    | inactive on the website.
-    |
-    */
-    'antelope_status_color' => [
-        true => 'success',
-        false => 'danger',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Antelope Member Status Text
-    |--------------------------------------------------------------------------
-    |
-    | Antelope Member Status Colors Constant defines the type of text that
-    | would appear on the website when searching up a member.
+    | Antelope Status defines their ANTELOPE profile status, this usually
+    | means if the profile is activated or deactivated.
     |
     */
     'antelope_status_text' => [
         true => 'Profile Activated',
         false => 'Profile Deactivated',
+    ],
+
+    'antelope_status_color' => [
+        true => 'success',
+        false => 'danger',
     ],
 
     /*
@@ -140,15 +155,6 @@ return [
         'guest' => 'Guest Access',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Auth Levels
-    |--------------------------------------------------------------------------
-    |
-    | Auth Levels show what type of level each role is, this should only be
-    | changed if you really know what you are doing. 
-    |
-    */
     'access_level' => [
         'superadmin' => 8,
         'admin' => 7,
@@ -160,15 +166,6 @@ return [
         'guest' => 1,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Auth Colors
-    |--------------------------------------------------------------------------
-    |
-    | Auth Colors are mainly for customization only, it doesn't use RGB so
-    | don't change anything if you really know what you are doing. 
-    |
-    */
     'access_color' => [
         'superadmin' => 'info',
         'admin' => 'danger',
@@ -352,15 +349,6 @@ return [
         'absent' => 'LOA',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Department Status Colors
-    |--------------------------------------------------------------------------
-    |
-    | Colors for status that will be displayed on users profiles, this is not
-    | RGB so do not change it if you don't know what you're doing.
-    |
-    */
     'department_status_colors' => [
         'active' => 'success',
         'inactive' => 'danger',
@@ -488,8 +476,16 @@ return [
     ],
     
     'patrol_area' => [
-        'BC' => 'Blaine County',
-        'LS' => 'Los Santos',
+        'LS1' => 'LS - Del Perro, Vespucci, Rockford, Little Seoul',
+        'LS2' => 'LS - Richman, Vinewood Hills, Vinewood',
+        'LS3' => 'LS - East Los Santos, Palomino, Tataviam',
+        'LS4' => 'LS - LSIA, Port of Los Santos, La Puerta',
+        'LS5' => 'LS - Downtown & South Los Santos',
+        'BC1' => 'BC - Chumash & The West Coast',
+        'BC2' => 'BC - Paleto Bay, Chiliad & Josiah',
+        'BC3' => 'BC - Grapeseed, San Chianski & Gordo',
+        'BC4' => 'BC - The Town of Sandy Shores',
+        'BC5' => 'BC - Senora, Harmony, Great Chaparral',
     ],
 
     'quicklink_types' => [
@@ -503,5 +499,14 @@ return [
             'icon' => 'mdi mdi-file-lock',
             'color' => 'danger',
         ],
+    ],
+
+    'font_colors' => [
+        'info',
+        'danger',
+        'warning',
+        'success',
+        'primary',
+        'light',
     ],
 ];

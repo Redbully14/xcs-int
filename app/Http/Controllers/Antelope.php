@@ -16,6 +16,10 @@ use App\Http\Controllers\AntelopeCalculate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Promotion;
+use App\Notifications\NewUnitNumber;
+use App\Notifications\CustomSANotify;
 
 class Antelope extends Controller
 {
@@ -63,7 +67,7 @@ class Antelope extends Controller
         } else $feedback = true;
 
         // To disable feedbacks, uncomment this line:
-        //$feedback = true;
+        $feedback = true;
 
         $dashboard_calculations = [];
 
@@ -84,8 +88,9 @@ class Antelope extends Controller
         }
 
         if(auth()->user()->level() >= $this->constants['access_level']['staff']) {
-            $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval($id);
-            $dashboard_calculations['invalidated_logs'] = AntelopeCalculate::activity_flagged($id);
+            $dashboard_calculations['needs_approval'] = AntelopeCalculate::absences_needing_approval();
+            $dashboard_calculations['invalidated_logs'] = AntelopeCalculate::activity_flagged();
+            $dashboard_calculations['overdue_absences'] = AntelopeCalculate::overdue_absences();
         }
 
         $quicklinks = Settings::where('type', '=', 'quicklink')->get();
@@ -304,6 +309,20 @@ class Antelope extends Controller
     }
 
     /**
+     * Backend sub-controller for the superadmin->icons2 module
+     *
+     * @author Oliver G.
+     * @return View
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    public function superAdminIcons2()
+    {
+        return view('developers.superadmin_icons2')->with('constants', $this->constants);
+    }
+
+    /**
      * Enter and godmode into an active user's profile
      *
      * @author Oliver G.
@@ -316,6 +335,8 @@ class Antelope extends Controller
     public function superAdminGodmode(Request $request)
     {
         auth()->user()->impersonate(User::find($request->id));
+
+        Log::notice(auth()->user()->id.' is entering godmode for user '.$request->id);
 
         return response()->json([
           'redirect_to' => route('dashboard')
@@ -488,7 +509,7 @@ class Antelope extends Controller
             $members_array[url("/investigative_search/".env('ROUTE_INVESTIGATIVE_SEARCH_KEY', 'NO_KEY_SET')."/profile/{$user->id}")] = $member;
         }
 
-        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+        if ((auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') and auth()->user()->level() >= $this->constants['access_level']['guest']) {
             return view('investigative_search')->with('constants', $this->constants)
                                                ->with('members_array', $members_array);
         }
@@ -505,7 +526,7 @@ class Antelope extends Controller
      */
     public function investigativeSearch_search($id)
     {
-        if (auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') {
+        if ((auth()->user()->rank == 'other_admin' or auth()->user()->rank == 'ia') and auth()->user()->level() == $this->constants['access_level']['guest']) {
             Log::warning("User id ".auth()->user()->id." is accessing data via the investigative search tool for user id ".$id.".");
             return $this->getProfile($id);
         } else Log::critical("User id ".auth()->user()->id.' attempted to use the investigative search tool without the proper access.');
@@ -581,6 +602,9 @@ class Antelope extends Controller
         ]);
 
         $user = User::find($request->route('user'));
+
+        $user->notify(new NewUnitNumber($user->department_id, $request['callsign']));
+
         $user->department_id = $request['callsign'];
         $user->save();
 
@@ -602,9 +626,34 @@ class Antelope extends Controller
         ]);
 
         $user = User::find($request->route('user'));
+
+        if($this->constants['rank_level'][$user->rank] < $this->constants['rank_level'][$request['rank']]) {
+            $user->notify(new Promotion($request['rank']));
+        }
+
         $user->rank = $request['rank'];
         $user->save();
 
         return;
+    }
+
+    /**
+     * Send a notification to all users on the website
+     *
+     * @author Oliver G.
+     * @return redirect
+     * @category Antelope
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    public function superAdminNotify(Request $request)
+    {
+        Log::notice(auth()->user()->id." has sent a notification to all members on the website.");
+
+        $users = User::where('antelope_status', '=', true)->get();
+
+        Notification::send($users, new CustomSANotify($request['title'], $request['text'], $request['icon'], $request['color']));
+
+        return redirect()->route('superadmin');
     }
 }

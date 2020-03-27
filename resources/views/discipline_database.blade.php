@@ -51,7 +51,6 @@
 
 @section('injectjs')
 <script type="text/javascript">
-  var $url = '{{ url('discipline/collection') }}';
   var $discipline_id = '{{ $constants['global_id']['disciplinary_action'] }}';
   var $discipline_table = "#ajax_disciplinary_actions_table_element";
 </script>
