@@ -93,6 +93,9 @@ class AntelopeActivity extends Controller
      */
     protected function create(array $data)
     {
+        if (is_null($data['patrol_end_date'])) {
+            $data['patrol_end_date'] = $data['patrol_start_date'];
+        }
         $data = $this->convertTimezone($data);
 
         if ($data['flag'] === "true") {

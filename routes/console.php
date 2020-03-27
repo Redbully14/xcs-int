@@ -73,11 +73,8 @@ Artisan::command('memcache', function() {
 	$this->comment("👷 Turning on maintenance mode...");
 	$this->call('down');
 
-	$this->question("🗑️ Clearing application cache...");
-	$this->call('cache:clear');
-
-	$this->question("🗑️ Clearing and caching config...");
-	$this->call('config:cache');
+	$this->question("🗑️ Clearing all cache...");
+	$this->call('optimize:clear');
 
 	$this->comment("👷 Turning off maintenance mode...");
 	$this->call('up');

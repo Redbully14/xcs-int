@@ -83,3 +83,7 @@ textarea:focus, input:focus {
 .tooltip {
     z-index: 100000000 !important; 
 }
+
+.main-panel-announcement {
+  padding: 10px 25px 10px 25px;
+}

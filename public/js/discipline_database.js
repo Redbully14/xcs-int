@@ -3,7 +3,7 @@ $(function() {
    ordering: true,
    serverSide: true,
    searching: true,
-   ajax: $url,
+   ajax: baseURL + '/discipline/collection/',
    order: [[ 0  , "desc" ]],
    columns: [
     { data: 'discipline_id', name: 'discipline_id', render: function (data, type, row) {

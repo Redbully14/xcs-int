@@ -50,7 +50,6 @@
   var $constants_access = @json($constants['role']);
   var $constants_status_text = @json($constants['antelope_status_text']);
   var $constants_status_color = @json($constants['antelope_status_color']);
-  var $url = '{{ url('member_admin/get_users') }}';
 </script>
 <script src="/js/member_admin.js"></script>
 @endsection

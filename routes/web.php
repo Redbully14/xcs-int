@@ -19,15 +19,6 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| REMOVE THESE FOLLOWING ROUTES BEFORE THE APPLICATION GOES INTO PRODUCTION
-|--------------------------------------------------------------------------
-|
-*/
-Route::get('/oliver', 'Auth\MakeMyAccountController@makeOliver');
-Route::get('/api/gimme', 'Api\ApiTokenController@gimme');
-
-/*
-|--------------------------------------------------------------------------
 | Main Website Routes
 |--------------------------------------------------------------------------
 |
@@ -822,6 +813,20 @@ Route::prefix('superadmin')->group(function () {
     ]);
 
     /**
+     * Webdomain: /superadmin/icons2
+     *
+     * @author Oliver G.
+     * @package GET
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::get('/icons2', [
+      'as' => 'superadmin.icons2',
+      'uses' => 'Antelope@superAdminIcons2'
+    ]);
+
+    /**
      * Webdomain: /superadmin/icons
      *
      * @author Oliver G.
@@ -833,6 +838,20 @@ Route::prefix('superadmin')->group(function () {
     Route::post('/godmode', [
       'as' => 'superadmin.godmode',
       'uses' => 'Antelope@superAdminGodmode'
+    ]);
+
+    /**
+     * Webdomain: /superadmin/notify
+     *
+     * @author Oliver G.
+     * @package POST
+     * @category SuperAdminRoutes
+     * @access SuperAdmin
+     * @version 1.0.0
+     */
+    Route::post('/notify', [
+      'as' => 'superadmin.notify',
+      'uses' => 'Antelope@superAdminNotify'
     ]);
 
   });

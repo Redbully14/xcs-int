@@ -47,7 +47,6 @@
 
 @section('injectjs')
 <script text="text/javascript">
-  var $url = '{{ url('activity/collection') }}';
   var $patrol_id = '{{ $constants['global_id']['patrol_log'] }}';
   var $activity_table = "#tableElement";
 </script>

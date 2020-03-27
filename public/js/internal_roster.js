@@ -32,7 +32,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_admins,
+   ajax: baseURL + '/public/roster/admins',
    columns: columnsArray,
    "createdRow": function( row, data, dataIndex ) {
      $(row).css('background-color', 'rgba(70, 1, 1, 1.0)');
@@ -47,7 +47,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_senior_staff,
+   ajax: baseURL + '/public/roster/seniorstaff',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(70, 36, 1, 1.0)');
@@ -62,7 +62,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_staff,
+   ajax: baseURL + '/public/roster/staff',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(70, 53, 1, 1.0)');
@@ -78,7 +78,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_staff_in_training,
+   ajax: baseURL + '/public/roster/staffintraining',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 70, 70, 1.0)');
@@ -93,7 +93,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_senior_member,
+   ajax: baseURL + '/public/roster/seniormember',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 53, 70, 1.0)');
@@ -108,7 +108,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_member,
+   ajax: baseURL + '/public/roster/member',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
@@ -123,7 +123,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_probationary_member,
+   ajax: baseURL + '/public/roster/probationarymember',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 70, 53, 1.0)');
@@ -138,7 +138,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_reserve,
+   ajax: baseURL + '/public/roster/reserve',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
@@ -153,7 +153,7 @@ $(function() {
    searching: false,
    paging: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url_media,
+   ajax: baseURL + '/public/roster/media',
    columns: columnsArray,
     "createdRow": function( row, data, dataIndex ) {
        $(row).css('background-color', 'rgba(1, 36, 70, 1.0)');
@@ -195,7 +195,7 @@ $('#internal_roster-form').on('submit', function(e) {
       var name = $(obj).val();
       $.ajax({
         type: 'POST',
-        url: $POST_url_name+id,
+        url: baseURL + '/internal_roster/edit/name/' + id,
         data: {name:name},
       });
     }
@@ -204,7 +204,7 @@ $('#internal_roster-form').on('submit', function(e) {
       var website_id = $(obj).val();
       $.ajax({
         type: 'POST',
-        url: $POST_url_websiteid+id,
+        url: baseURL + '/internal_roster/edit/websiteid/' + id,
         data: {website_id:website_id},
       });
     }
@@ -213,7 +213,7 @@ $('#internal_roster-form').on('submit', function(e) {
       var callsign = $(obj).val();
       $.ajax({
         type: 'POST',
-        url: $POST_url_callsign+id,
+        url: baseURL + '/internal_roster/edit/callsign/' + id,
         data: {callsign:callsign},
       });
     }
@@ -222,7 +222,7 @@ $('#internal_roster-form').on('submit', function(e) {
       var rank = $(obj).val();
       $.ajax({
         type: 'POST',
-        url: $POST_url_rank+id,
+        url: baseURL + '/internal_roster/edit/rank/' + id,
         data: {rank:rank},
       });
     }

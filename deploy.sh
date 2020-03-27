@@ -43,7 +43,7 @@ php artisan cache:clear
 # php artisan route:cache
 
 # Clear and cache config
-echo "🗑️ Clearing configuration and resetting config cache...\e[0m"
+echo "🗑️ Clearing configuration and resetting config cache..."
 php artisan config:clear
 php artisan config:cache
 

@@ -21,13 +21,23 @@
     <link rel="shortcut icon" href="/assets/images/xcs-int/{{ $constants['global']['application_favicon'] }}" />
   </head>
   <body>
+    @if($constants['announcement']['enabled'] && $constants['announcement']['visible']['login_page'])
+    <!-- main-panel-announcement begins -->
+    <div class="main-panel-announcement bg-{{ $constants['announcement']['content']['background-color'] }}">
+      @if($constants['announcement']['content']['icon'])
+      <i class="{{ $constants['announcement']['content']['icon'] }}"></i> 
+      @endif
+      {{ $constants['announcement']['content']['content'] }}
+    </div>
+    <!-- main-panel-announcement ends -->
+    @endif
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="row w-100" style="margin-left: 0px">
           <div class="content-wrapper full-page-wrapper auth login-2 login-bg"  style="background: url('{{$constants['backgrounds']['login']}}'); background-size: cover;">
             <div class="card col-lg-4">
               <div class="card-body px-5 py-5">
-                <h1 class="card-title text-left mb-3" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></h1>
+                <h1 class="card-title text-left mb-3 text-{{ $constants['global']['application_color'] }}" id="xcs-header"><i id="xcs-header-icon" class="{{ $constants['global']['application_icon'] }} rotate-n-15"></i> {{ $constants['global']['application_name'] }}<sup id='xcs-header-sub'>{{ $constants['global']['application_subname'] }}</sup></h1>
 
                 @if($errors->any())
                     <div class="alert alert-danger" role="alert"><i class="mdi mdi-alert-circle"></i> The username or password is incorrect. </div>

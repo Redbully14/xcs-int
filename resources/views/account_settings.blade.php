@@ -79,9 +79,6 @@
 
 @section('injectjs')
 <script type="text/javascript">
-  var $url_change_password = '{{ url('settings/change_password') }}';
-  var $url_change_avatar = '{{ url('settings/change_avatar') }}';
-  var $url_change_timezone = '{{ url('settings/change_timezone') }}';
   var $change_avatar_type = '{{ Auth::user()->avatar }}';
 </script>
 <script src="/js/account_settings.js"></script>

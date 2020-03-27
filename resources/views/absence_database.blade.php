@@ -67,12 +67,7 @@
 
 @section('injectjs')
 <script text="text/javascript">
-  var $url_absence_awaiting_approval = "{{ url('/absence/datatable/0') }}";
-  var $url_absence_active = "{{ url('/absence/datatable/1') }}";
   var $absence_id = "{{ $constants['global_id']['absence'] }}";
-  var $url_absence_btn_approve = "{{ url('/absence/approve/') }}/";
-  var $url_absence_btn_archive = "{{ url('/absence/archive/') }}/";
-  var $url_absence_btn_queue = "{{ url('/absence/queue/') }}/";
 </script>
 <script src="/js/absence_database.js"></script>
 @endsection

@@ -2,7 +2,7 @@ $(function() {
   $('#tableElement').DataTable({
    ordering: false,
    serverSide: true,
-   ajax: $url,
+   ajax: baseURL + '/member_admin/get_users',
    columns: [
     { data: 'id', name: 'id', searchable: true },
     { data: 'name', name: 'name', searchable: true },
