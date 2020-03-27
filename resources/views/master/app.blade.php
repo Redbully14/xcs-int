@@ -102,10 +102,6 @@
     @yield('pluginjs')
     <!-- endinject -->
 
-    <!-- XCS-Int Javascript-->
-    <script src="/js/app.js"></script>
-    <!-- End XCS-Int Javascript-->
-
     <!-- inject:js -->
     <script src="/assets/js/misc.js"></script>
     <script src="/assets/js/settings.js"></script>
@@ -121,6 +117,10 @@
     <!-- Modals for this page-->
     @yield('modals')
     <!-- End modals for this page -->
+
+    <!-- XCS-Int Javascript-->
+    <script src="/js/app.js"></script>
+    <!-- End XCS-Int Javascript-->
 
   </body>
 </html>
