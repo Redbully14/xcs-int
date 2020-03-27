@@ -4,7 +4,7 @@ $(function() {
    serverSide: true,
    searching: false,
    order: [[ 0  , "desc" ]],
-   ajax: $url,
+   ajax: baseURL + '/activity/collection/',
    columns: [
     { data: 'id', name: 'id', render: function (data, type, row) {
       return  $patrol_id + data;

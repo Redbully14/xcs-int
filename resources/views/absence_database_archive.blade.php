@@ -48,7 +48,6 @@
 
 @section('injectjs')
 <script text="text/javascript">
-  var $url_absence_archive = "{{ url('/absence/datatable/2') }}";
   var $absence_id = "{{ $constants['global_id']['absence'] }}";
   var $url_absence_btn_queue = "{{ url('/absence/queue/') }}/";
 </script>
